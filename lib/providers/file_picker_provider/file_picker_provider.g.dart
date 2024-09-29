@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'data_tree_provider.dart';
+part of 'file_picker_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dataTreeNotifierHash() => r'672b6451ad5999e4e067ba31482e84ec4b679e44';
+String _$filerPickerNotifierHash() =>
+    r'd25efc4d8204e3e98dce597f93ad5a043db7c9bd';
 
-/// See also [DataTreeNotifier].
-@ProviderFor(DataTreeNotifier)
-final dataTreeNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<DataTreeNotifier, Folder>.internal(
-  DataTreeNotifier.new,
-  name: r'dataTreeNotifierProvider',
+/// See also [FilerPickerNotifier].
+@ProviderFor(FilerPickerNotifier)
+final filerPickerNotifierProvider =
+    AutoDisposeNotifierProvider<FilerPickerNotifier, FilePicker>.internal(
+  FilerPickerNotifier.new,
+  name: r'filerPickerNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$dataTreeNotifierHash,
+      : _$filerPickerNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$DataTreeNotifier = AutoDisposeAsyncNotifier<Folder>;
+typedef _$FilerPickerNotifier = AutoDisposeNotifier<FilePicker>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

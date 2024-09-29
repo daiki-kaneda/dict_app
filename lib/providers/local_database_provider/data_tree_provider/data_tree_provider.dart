@@ -55,7 +55,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
   }
 
   // CRUD operations for Dict,Folder
-    Future<void> createDict(String nodeId, Dict newDict) async {
+  Future<void> createDict(String nodeId, Dict newDict) async {
     final previousFolder = await future;
     state = AsyncData(previousFolder.createLeaf(nodeId: nodeId, leaf: newDict));
   }
@@ -149,5 +149,20 @@ class DataTreeNotifier extends _$DataTreeNotifier {
         Node(value: FolderMetadata(title: 'newFolder', createdAt: DateTime.now()), subTrees:[])
       ])));
     saveData();
+  }
+
+  Future<void> addNewDict({
+    required String nodeId
+  })async{
+    /*
+    1. pick audio file
+    2. save audio file to app documents directory with random path
+    3. get Transcript model by api_helper and audio data
+    4. get Dict data from Transcript model
+    5. add Dict data to specified node
+
+    if error occur while above process,
+    delete saved audio data and show alert dialog
+    */
   }
 }

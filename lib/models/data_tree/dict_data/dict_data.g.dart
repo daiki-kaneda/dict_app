@@ -9,6 +9,7 @@ part of 'dict_data.dart';
 DictData _$DictDataFromJson(Map<String, dynamic> json) => DictData(
       title: json['title'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
+      audioPath: json['audioPath'] as String,
       description: json['description'] as String?,
       isFavorite: json['isFavorite'] as bool,
       duration: (json['duration'] as num).toDouble(),
@@ -23,6 +24,7 @@ Map<String, dynamic> _$DictDataToJson(DictData instance) {
   final val = <String, dynamic>{
     'title': instance.title,
     'createdAt': instance.createdAt.toIso8601String(),
+    'audioPath': instance.audioPath,
   };
 
   void writeNotNull(String key, dynamic value) {

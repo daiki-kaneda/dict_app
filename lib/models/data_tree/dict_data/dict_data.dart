@@ -8,6 +8,7 @@ part 'dict_data.g.dart';
 class DictData {
   final String title;
   final DateTime createdAt;
+  final String audioPath;
   final String? description;
   final bool isFavorite;
   final double duration;
@@ -18,6 +19,7 @@ class DictData {
   const DictData(
       {required this.title,
       required this.createdAt,
+      required this.audioPath,
       required this.description,
       required this.isFavorite,
       required this.duration,
@@ -31,13 +33,15 @@ class DictData {
   Map<String, dynamic> toJson() => _$DictDataToJson(this);
 
   factory DictData.from(TranscriptModel transcript,
-      {String? title, String? description}) {
+      {required String audioPath,
+        String? title, String? description}) {
     final alternative =
         transcript.channels.firstOrNull?.alternatives.firstOrNull;
     if (alternative == null) throw UnsupportedError('no result data');
     return DictData(
         title: title ?? DateFormat.yMEd().format(transcript.metadata.created),
         createdAt: transcript.metadata.created,
+        audioPath: audioPath,
         description: description ?? '',
         isFavorite: false,
         duration: transcript.metadata.duration,
@@ -49,6 +53,7 @@ class DictData {
   DictData copyWith({
     String? title,
     DateTime? createdAt,
+    String? audioPath,
     String? description,
     bool? isFavorite,
     double? duration,
@@ -59,6 +64,7 @@ class DictData {
     return DictData(
       title: title ?? this.title,
       createdAt: createdAt ?? this.createdAt,
+      audioPath: audioPath ?? this.audioPath,
       description: description ?? this.description,
       isFavorite: isFavorite ?? this.isFavorite,
       duration: duration ?? this.duration,

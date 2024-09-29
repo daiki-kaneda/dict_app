@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 import 'package:dio/dio.dart';
 
 class ApiRepository {
@@ -44,7 +45,7 @@ class ApiRepository {
   //   }
   // }
 
-  Future<Response<String>> speechToTextRequest(
+  Future<TranscriptModel?> speechToTextRequest(
     Uint8List audioBytes,
     {required CancelToken cancelToken}) async {
     const  url = 'https://api.deepgram.com/v1/listen';
@@ -71,7 +72,12 @@ class ApiRepository {
         cancelToken: cancelToken,
         data: audioBytes,
       );
-      return response;
+      if(response.data==null){
+        return null;
+      }
+      return TranscriptModel.fromJson(
+        jsonDecode(response.data!)
+      );
     } catch (e) {
       rethrow;
     }
