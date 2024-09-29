@@ -342,6 +342,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      sha256: "167bb619cdddaa10ef2907609feb8a79c16dfa479d3afaf960f8e223f754bf12"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.1.2"
   file_selector_linux:
     dependency: transitive
     description:
@@ -538,22 +546,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  google_mlkit_commons:
-    dependency: transitive
-    description:
-      name: google_mlkit_commons
-      sha256: "9990a65f407a3ef6bae646bf10143faa93fec126683771465bc6c0b43fb0e6e9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.1"
-  google_mlkit_text_recognition:
-    dependency: "direct main"
-    description:
-      name: google_mlkit_text_recognition
-      sha256: "179349417066fa2c275d7a6ed6cbceeb7fa265d73aacdb2d732f1a2991face0a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.13.1"
   google_mobile_ads:
     dependency: "direct main"
     description:
@@ -1175,6 +1167,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  tree_data_model:
+    dependency: "direct main"
+    description:
+      name: tree_data_model
+      sha256: e030141111343b9f44715fb9bebbc302439d703c34c9bca812a8eca09ac939fb
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   typed_data:
     dependency: transitive
     description:

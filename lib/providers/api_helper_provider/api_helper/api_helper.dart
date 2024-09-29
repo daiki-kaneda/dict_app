@@ -44,38 +44,38 @@ class ApiRepository {
   //   }
   // }
 
-  // Future<Response<String>> speechToTextRequest(
-  //   Uint8List audioBytes,
-  //   {required CancelToken cancelToken}) async {
-  //   const  url = 'https://api.deepgram.com/v1/listen';
+  Future<Response<String>> speechToTextRequest(
+    Uint8List audioBytes,
+    {required CancelToken cancelToken}) async {
+    const  url = 'https://api.deepgram.com/v1/listen';
 
-  //   final queryParameters = {
-  //     'model': 'nova-2',
-  //     'language': 'en',
-  //     'paragraphs': 'true',
-  //     'punctuate': 'true',
-  //     'smart_format': 'true',
-  //   };
+    final queryParameters = {
+      'model': 'nova-2',
+      'language': 'en',
+      'paragraphs': 'true',
+      'punctuate': 'true',
+      'smart_format': 'true',
+    };
 
-  //   try {
-  //     final response = await _dio.post<String>(
-  //       url,
-  //       queryParameters: queryParameters,
-  //       options: Options(
-  //         headers: {
-  //           'Content-Type': 'audio/mp3',
-  //           'Authorization': 'Token $apiKey',
-  //         },
-  //         responseType: ResponseType.json
-  //       ),
-  //       cancelToken: cancelToken,
-  //       data: audioBytes,
-  //     );
-  //     return response;
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
+    try {
+      final response = await _dio.post<String>(
+        url,
+        queryParameters: queryParameters,
+        options: Options(
+          headers: {
+            'Content-Type': 'audio/mp3',
+            'Authorization': 'Token $apiKey',
+          },
+          responseType: ResponseType.json
+        ),
+        cancelToken: cancelToken,
+        data: audioBytes,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
   
   Future<Response<String>> balanceRequest() async {
     const url = 'https://api.deepgram.com/v1/projects/$projectId/balances';

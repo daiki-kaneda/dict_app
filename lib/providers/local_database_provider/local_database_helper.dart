@@ -1,5 +1,5 @@
 
-import 'package:dict_app/helper/local_database_helper/local_data_status.dart';
+import 'package:dict_app/providers/local_database_provider/local_data_status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalDatabaseHelper {
