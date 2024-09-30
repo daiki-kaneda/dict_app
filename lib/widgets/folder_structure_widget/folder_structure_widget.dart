@@ -2,8 +2,8 @@
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
-import 'package:dict_app/widgets/folder_structure_widget/pop_button.dart';
-import 'package:dict_app/widgets/folder_structure_widget/tree_list_tile/tree_list_tile.dart';
+import 'package:dict_app/widgets/folder_structure_widget/buttons/pop_button.dart';
+import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/tree_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -51,7 +51,7 @@ class FolderStructureWidget extends ConsumerWidget {
             middle: Text(dict.value.title),
           ),
           child: Center(
-            child: Text(tree.value.title),
+            child: Text(tree.value.toJson().toString()),
           ));
     } else if (tree is Folder) {
       final folder = tree;
