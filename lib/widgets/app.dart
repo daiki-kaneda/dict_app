@@ -1,4 +1,5 @@
 
+import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_structure_widget.dart';
@@ -62,6 +63,7 @@ class _EagerInitialization extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(dataTreeNotifierProvider);
+    ref.read(appDocumentsDirectoryNotifierProvider);
     ref.watch(currentTreeIdNotifierProvider);
     ref.watch(isDictShowingProvider);
     ref.watch(isEditingNotifierProvider);

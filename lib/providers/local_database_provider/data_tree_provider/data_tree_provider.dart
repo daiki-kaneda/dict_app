@@ -70,6 +70,9 @@ class DataTreeNotifier extends _$DataTreeNotifier {
   Future<void> deleteDict(String leafId) async {
     final previousFolder = await future;
     state = AsyncData(previousFolder.deleteLeafById(leafId: leafId));
+    // delete audio data
+    ref.read(appDocumentsDirectoryNotifierProvider.notifier)
+    .deleteAllWasteFile();
   }
 
   Future<void> createFolder(String nodeId, Folder newFolder) async {
@@ -91,6 +94,9 @@ class DataTreeNotifier extends _$DataTreeNotifier {
       return;
     }
     state = AsyncData(previousFolder.deleteNodeById(nodeId: nodeId)!);
+    // delete audio data
+    ref.read(appDocumentsDirectoryNotifierProvider.notifier)
+    .deleteAllWasteFile();
   }
 
   Future<void> deleteAll() async {
@@ -156,6 +162,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
   /// This function is for add new dictation data from local file user picked
   Future<void> addNewDict({required String nodeId,String? title}) async {
     try {
+      print(await ref.read(appDocumentsDirectoryNotifierProvider.notifier).fileNames());
       final result = await ref.read(filerPickerNotifierProvider.notifier)
       .getAudioData();
       if(result!=null){
@@ -178,6 +185,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
       }
     } catch (e) {
       print(e.toString());
+      ref.read(appDocumentsDirectoryNotifierProvider.notifier).deleteAllWasteFile();
     }
   }
 }

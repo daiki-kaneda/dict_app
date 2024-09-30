@@ -56,4 +56,13 @@ class AppDocumentsHelper{
       print(e.toString());
     }
   }
+
+  Future<List<String>?> fileNames()async{
+    final directory = Directory(appDocumentDir);
+    if(await directory.exists()){
+      return directory.listSync()
+      .whereType<File>().map((e)=>e.path
+      .split('/').lastOrNull).whereType<String>().toList();
+    }
+  }
 }

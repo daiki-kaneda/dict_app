@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_helper.dart';
+import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -15,10 +17,8 @@ class AppDocumentsDirectoryNotifier extends _$AppDocumentsDirectoryNotifier {
     return appDocumentHelper;
   }
 
-  Future<String> saveFile({
-    required String ext,
-    required Uint8List bytes
-  })async{
+  Future<String> saveFile(
+      {required String ext, required Uint8List bytes}) async {
     final previousState = await future;
     final randomName = Uuid().v4();
     final randomPath = '$randomName.$ext';
@@ -26,13 +26,37 @@ class AppDocumentsDirectoryNotifier extends _$AppDocumentsDirectoryNotifier {
     return randomPath;
   }
 
-  Future<String> fullPath(String filePath)async{
+  Future<String> fullPath(String filePath) async {
     final previousState = await future;
     return previousState.fullPath(filePath);
   }
 
-  Future<void> delete(String filePath)async{
+  Future<void> delete(String filePath) async {
     final previousState = await future;
     previousState.deleteFile(filePath);
+  }
+
+  Future<List<String>?> fileNames() async {
+    final previousState = await future;
+    return await previousState.fileNames();
+  }
+
+  // if file path don't belong to any dict data,delete it
+  Future<void> deleteAllWasteFile() async {
+    final List<String> validPaths =
+        (await ref.read(dataTreeNotifierProvider.future))
+            .leaves()
+            .map((d) => d.value.audioPath)
+            .toList();
+    final allPath = await fileNames();
+    if (allPath == null) return;
+
+    for (final path in allPath) {
+      if (!validPaths.contains(path)) {
+        delete(path).whenComplete(() {
+          print('deleted $path');
+        });
+      }
+    }
   }
 }
