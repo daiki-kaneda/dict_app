@@ -1,15 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:intl/intl.dart';
+import 'package:collection/collection.dart';
 
 part 'transcript_model.g.dart';
 
 @JsonSerializable()
 class TranscriptModel {
-  final Metadata metadata;
-  final List<Channel> channels;
+  final Metadata? metadata;
+  final Results? results; 
 
   TranscriptModel({
-    required this.metadata,
-    required this.channels,
+    this.metadata,
+    this.results, 
   });
 
   factory TranscriptModel.fromJson(Map<String, dynamic> json) =>
@@ -21,25 +23,25 @@ class TranscriptModel {
 @JsonSerializable()
 class Metadata {
   @JsonKey(name: 'transaction_key')
-  final String transactionKey;
+  final String? transactionKey;
   @JsonKey(name: 'request_id')
-  final String requestId;
-  final String sha256;
-  final DateTime created;
-  final double duration;
-  final int channels;
-  final List<String> models;
-  final ModelInfo modelInfo;
+  final String? requestId;
+  final String? sha256;
+  final DateTime? created;
+  final double? duration;
+  final int? channels;
+  final List<String>? models;
+  final ModelInfo? modelInfo;
 
   Metadata({
-    required this.transactionKey,
-    required this.requestId,
-    required this.sha256,
-    required this.created,
-    required this.duration,
-    required this.channels,
-    required this.models,
-    required this.modelInfo,
+    this.transactionKey,
+    this.requestId,
+    this.sha256,
+    this.created,
+    this.duration,
+    this.channels,
+    this.models,
+    this.modelInfo,
   });
 
   factory Metadata.fromJson(Map<String, dynamic> json) =>
@@ -49,11 +51,24 @@ class Metadata {
 }
 
 @JsonSerializable()
+class Results { 
+  final List<Channel>? channels;
+
+  Results({
+    this.channels,
+  });
+
+  factory Results.fromJson(Map<String, dynamic> json) => _$ResultsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ResultsToJson(this);
+}
+
+@JsonSerializable()
 class ModelInfo {
-  final Map<String, Model> models;
+  final Map<String, Model>? models;
 
   ModelInfo({
-    required this.models,
+    this.models,
   });
 
   factory ModelInfo.fromJson(Map<String, dynamic> json) =>
@@ -64,14 +79,14 @@ class ModelInfo {
 
 @JsonSerializable()
 class Model {
-  final String name;
-  final String version;
-  final String arch;
+  final String? name;
+  final String? version;
+  final String? arch;
 
   Model({
-    required this.name,
-    required this.version,
-    required this.arch,
+    this.name,
+    this.version,
+    this.arch,
   });
 
   factory Model.fromJson(Map<String, dynamic> json) => _$ModelFromJson(json);
@@ -81,10 +96,10 @@ class Model {
 
 @JsonSerializable()
 class Channel {
-  final List<Alternative> alternatives;
+  final List<Alternative>? alternatives;
 
   Channel({
-    required this.alternatives,
+    this.alternatives,
   });
 
   factory Channel.fromJson(Map<String, dynamic> json) =>
@@ -95,16 +110,16 @@ class Channel {
 
 @JsonSerializable()
 class Alternative {
-  final String transcript;
-  final double confidence;
-  final List<Word> words;
-  final Paragraphs paragraphs;
+  final String? transcript;
+  final double? confidence;
+  final List<Word>? words;
+  final Paragraphs? paragraphs;
 
   Alternative({
-    required this.transcript,
-    required this.confidence,
-    required this.words,
-    required this.paragraphs,
+    this.transcript,
+    this.confidence,
+    this.words,
+    this.paragraphs,
   });
 
   factory Alternative.fromJson(Map<String, dynamic> json) =>
@@ -115,19 +130,19 @@ class Alternative {
 
 @JsonSerializable()
 class Word {
-  final String word;
-  final double start;
-  final double end;
-  final double confidence;
+  final String? word;
+  final double? start;
+  final double? end;
+  final double? confidence;
   @JsonKey(name: 'punctuated_word')
-  final String punctuatedWord;
+  final String? punctuatedWord;
 
   Word({
-    required this.word,
-    required this.start,
-    required this.end,
-    required this.confidence,
-    required this.punctuatedWord,
+    this.word,
+    this.start,
+    this.end,
+    this.confidence,
+    this.punctuatedWord,
   });
 
   factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
@@ -137,12 +152,12 @@ class Word {
 
 @JsonSerializable()
 class Paragraphs {
-  final String transcript;
-  final List<Paragraph> paragraphs;
+  final String? transcript;
+  final List<Paragraph>? paragraphs;
 
   Paragraphs({
-    required this.transcript,
-    required this.paragraphs,
+    this.transcript,
+    this.paragraphs,
   });
 
   factory Paragraphs.fromJson(Map<String, dynamic> json) =>
@@ -153,17 +168,17 @@ class Paragraphs {
 
 @JsonSerializable()
 class Paragraph {
-  final List<Sentence> sentences;
+  final List<Sentence>? sentences;
   @JsonKey(name: 'num_words')
-  final int numWords;
-  final double start;
-  final double end;
+  final int? numWords;
+  final double? start;
+  final double? end;
 
   Paragraph({
-    required this.sentences,
-    required this.numWords,
-    required this.start,
-    required this.end,
+    this.sentences,
+    this.numWords,
+    this.start,
+    this.end,
   });
 
   factory Paragraph.fromJson(Map<String, dynamic> json) =>
@@ -174,14 +189,14 @@ class Paragraph {
 
 @JsonSerializable()
 class Sentence {
-  final String text;
-  final double start;
-  final double end;
+  final String? text;
+  final double? start;
+  final double? end;
 
   Sentence({
-    required this.text,
-    required this.start,
-    required this.end,
+    this.text,
+    this.start,
+    this.end,
   });
 
   factory Sentence.fromJson(Map<String, dynamic> json) =>

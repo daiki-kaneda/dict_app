@@ -47,7 +47,8 @@ class ApiRepository {
 
   Future<TranscriptModel?> speechToTextRequest(
     Uint8List audioBytes,
-    {required CancelToken cancelToken}) async {
+    {required String ext,
+      required CancelToken cancelToken}) async {
     const  url = 'https://api.deepgram.com/v1/listen';
 
     final queryParameters = {
@@ -64,10 +65,10 @@ class ApiRepository {
         queryParameters: queryParameters,
         options: Options(
           headers: {
-            'Content-Type': 'audio/mp3',
+            'Content-Type': 'audio/$ext',
             'Authorization': 'Token $apiKey',
           },
-          responseType: ResponseType.json
+          responseType: ResponseType.plain
         ),
         cancelToken: cancelToken,
         data: audioBytes,
@@ -75,9 +76,10 @@ class ApiRepository {
       if(response.data==null){
         return null;
       }
-      return TranscriptModel.fromJson(
-        jsonDecode(response.data!)
-      );
+      print(response.data);
+      final json = jsonDecode(response.data!) as Map<String,dynamic>;
+      print('json:$json');
+      return TranscriptModel.fromJson(json);
     } catch (e) {
       rethrow;
     }

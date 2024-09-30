@@ -7,7 +7,7 @@ part of 'file_picker_provider.dart';
 // **************************************************************************
 
 String _$filerPickerNotifierHash() =>
-    r'd25efc4d8204e3e98dce597f93ad5a043db7c9bd';
+    r'c8f2912e72b0d4e4fa243a9742f660f43e30f841';
 
 /// See also [FilerPickerNotifier].
 @ProviderFor(FilerPickerNotifier)

@@ -34,20 +34,20 @@ class DictData {
 
   factory DictData.from(TranscriptModel transcript,
       {required String audioPath,
-        String? title, String? description}) {
+        required String title, String? description}) {
     final alternative =
-        transcript.channels.firstOrNull?.alternatives.firstOrNull;
+        transcript.results?.channels?.firstOrNull?.alternatives?.firstOrNull;
     if (alternative == null) throw UnsupportedError('no result data');
     return DictData(
-        title: title ?? DateFormat.yMEd().format(transcript.metadata.created),
-        createdAt: transcript.metadata.created,
+        title: title,
+        createdAt: transcript.metadata?.created ?? DateTime.now(),
         audioPath: audioPath,
         description: description ?? '',
         isFavorite: false,
-        duration: transcript.metadata.duration,
-        transcript: alternative.transcript,
-        words: alternative.words,
-        paragraph: alternative.paragraphs);
+        duration: transcript.metadata?.duration ?? 0,
+        transcript: alternative.transcript ?? '',
+        words: alternative.words ?? [],
+        paragraph: alternative.paragraphs ?? Paragraphs ());
   }
 
   DictData copyWith({

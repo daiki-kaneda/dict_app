@@ -41,6 +41,8 @@ class FooterButton extends ConsumerWidget {
               onPressed: () {
                 final currentId = ref.read(currentTreeIdNotifierProvider).value;
                 if (currentId != null) {
+                  ref.read(dataTreeNotifierProvider.notifier).
+                  addNewDict(nodeId: currentId);
                   // ref.read(dataTreeNotifierProvider.notifier).createTask(
                   //     currentId,
                   //     Leaf(value: DictData(title: 'new', completed: false)));

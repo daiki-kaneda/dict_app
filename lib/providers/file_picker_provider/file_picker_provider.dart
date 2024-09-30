@@ -9,17 +9,24 @@ part 'file_picker_provider.g.dart';
 class FilerPickerNotifier extends _$FilerPickerNotifier {
   @override
   FilePicker build() {
-    return FilePicker.platform;;
+    return FilePicker.platform;
   }
 
-  // Future<Uint8List?> getAudioData()async{
-  //   final result = await state.pickFiles(
-  //     type: FileType.media,
-  //     allowMultiple: false
-  //   );
+  Future<(String path,Uint8List bytes)?> getAudioData()async{
+    final result = await state.pickFiles(
+      type: FileType.custom,
+      allowMultiple: false,
+        allowedExtensions: [
+          'mp3',
+          'aac'
+          'wav',
+          'flac',
+          'ogg',
+        ]
+    );
 
-  //   if(result!=null&&result.xFiles.isNotEmpty){
-  //     return await result.xFiles.first.readAsBytes();
-  //   }
-  // }
+    if(result!=null&&result.paths.whereType<String>().isNotEmpty&&result.xFiles.isNotEmpty){
+      return (result.paths.first!,await result.xFiles.first.readAsBytes());
+    }
+  }
 }

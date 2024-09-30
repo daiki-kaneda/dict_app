@@ -4,10 +4,14 @@ import 'dart:developer';
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/models/data_tree/dict_data/dict_data.dart';
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
+import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
+import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_data_status.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_helper.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tree_data_model/tree_data_model.dart';
 import 'package:dict_app/extension/extension.dart';
@@ -34,7 +38,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
       );
       return savedData;
       }catch(e){
-        log(e.toString());
+       print(e.toString());
       }
     }
     return Node<DictData,FolderMetadata>(
@@ -151,18 +155,31 @@ class DataTreeNotifier extends _$DataTreeNotifier {
     saveData();
   }
 
-  Future<void> addNewDict({
-    required String nodeId
-  })async{
-    /*
-    1. pick audio file
-    2. save audio file to app documents directory with random path
-    3. get Transcript model by api_helper and audio data
-    4. get Dict data from Transcript model
-    5. add Dict data to specified node
-
-    if error occur while above process,
-    delete saved audio data and show alert dialog
-    */
+  /// This function is for add new dictation data from local file user picked
+  Future<void> addNewDict({required String nodeId,String? title}) async {
+    try {
+      final result = await ref.read(filerPickerNotifierProvider.notifier)
+      .getAudioData();
+      if(result!=null){
+        print('got result!');
+        final (path,bytes)=result;
+        final ext = path.split('.').lastOrNull;
+        print('got path:$path');
+        if(ext==null)throw Exception('could not get file extension!');
+        final filePath = await ref.read(appDocumentsDirectoryNotifierProvider.notifier)
+        .saveFile(ext: ext, bytes: bytes);
+        print('savedTo:$filePath ');
+        final transcript = await ref.read(apiHelperNotiferProvider.notifier)
+        .stt(ext: ext, bytes: bytes);
+        if(transcript==null)return;
+        print('got transcription:${transcript.results?.channels?.firstOrNull
+        ?.alternatives?.firstOrNull?.transcript}');
+        final dictData = DictData.from(title:title ?? DateFormat.yMEd().format(DateTime.now()),
+        transcript, audioPath: filePath);
+        createDict(nodeId, Leaf(value: dictData));
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

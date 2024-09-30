@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_helper.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'app_documents_directory_provider.g.dart';
 
@@ -10,6 +13,17 @@ class AppDocumentsDirectoryNotifier extends _$AppDocumentsDirectoryNotifier {
     final appDocumentHelper = AppDocumentsHelper();
     await appDocumentHelper.init();
     return appDocumentHelper;
+  }
+
+  Future<String> saveFile({
+    required String ext,
+    required Uint8List bytes
+  })async{
+    final previousState = await future;
+    final randomName = Uuid().v4();
+    final randomPath = '$randomName.$ext';
+    previousState.saveFile(randomPath, bytes);
+    return randomPath;
   }
 
   Future<String> fullPath(String filePath)async{

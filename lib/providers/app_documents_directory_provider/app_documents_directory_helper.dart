@@ -30,7 +30,7 @@ class AppDocumentsHelper{
 
       return filePath;
     }catch(e){
-      log(e.toString());
+      print(e.toString());
       return null;
     }
   }
@@ -42,7 +42,7 @@ class AppDocumentsHelper{
       final path =  fullPath(filePath);
       return await File(path).readAsBytes();
     }catch(e){
-      log(e.toString());
+      print(e.toString());
       return null;
     }
   }
@@ -54,7 +54,7 @@ class AppDocumentsHelper{
       final path =  fullPath(filePath);
       await File(path).delete(recursive: true);
     }catch(e){
-      log(e.toString());
+      print(e.toString());
     }
   }
 }
