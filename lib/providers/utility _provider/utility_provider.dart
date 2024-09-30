@@ -30,7 +30,7 @@ class CurrentTreeIdNotifier extends _$CurrentTreeIdNotifier {
     final root = await ref.read(dataTreeNotifierProvider.future);
     final currentId = await future;
     final parentId = root.parentId(childId: currentId);
-    log('parentId is ${parentId}');
+    log('parentId is $parentId');
 
     if (parentId != null) state = AsyncData(parentId);
   }

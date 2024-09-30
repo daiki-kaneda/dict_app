@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:tree_data_model/tree_data_model.dart';
 
 final innerNavigatorKey = GlobalKey<NavigatorState>();
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -57,7 +55,7 @@ class App extends ConsumerWidget {
 }
 
 class _EagerInitialization extends ConsumerWidget {
-  const _EagerInitialization(this.child,{super.key});
+  const _EagerInitialization(this.child);
 
   final Widget child;
 

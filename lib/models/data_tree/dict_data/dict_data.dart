@@ -1,6 +1,5 @@
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:intl/intl.dart';
 
 part 'dict_data.g.dart';
 

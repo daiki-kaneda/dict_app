@@ -1,6 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:intl/intl.dart';
-import 'package:collection/collection.dart';
 
 part 'transcript_model.g.dart';
 

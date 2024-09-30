@@ -19,6 +19,7 @@ extension NodeEx on Node{
         return node.id;
       }
     }
+    return null;
     // if (root.subTrees.where((t) {
     //   if (t is Node) {
     //     return t.id == childId;

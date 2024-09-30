@@ -28,5 +28,6 @@ class FilerPickerNotifier extends _$FilerPickerNotifier {
     if(result!=null&&result.paths.whereType<String>().isNotEmpty&&result.xFiles.isNotEmpty){
       return (result.paths.first!,await result.xFiles.first.readAsBytes());
     }
+    return null;
   }
 }
