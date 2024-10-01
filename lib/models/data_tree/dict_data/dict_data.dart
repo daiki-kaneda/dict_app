@@ -13,7 +13,8 @@ class DictData {
   final double duration;
   final String transcript;
   final List<Word> words;
-  final Paragraphs paragraph;
+  final Paragraphs paragraphs;
+  final List<bool> completion;
 
   const DictData(
       {required this.title,
@@ -24,7 +25,8 @@ class DictData {
       required this.duration,
       required this.transcript,
       required this.words,
-      required this.paragraph});
+      required this.paragraphs,
+      required this.completion});
 
   factory DictData.fromJson(Map<String, dynamic> json) =>
       _$DictDataFromJson(json);
@@ -36,6 +38,7 @@ class DictData {
         required String title, String? description}) {
     final alternative =
         transcript.results?.channels?.firstOrNull?.alternatives?.firstOrNull;
+    final sentenceLength =  alternative?.paragraphs?.paragraphs?.firstOrNull?.sentences?.length;
     if (alternative == null) throw UnsupportedError('no result data');
     return DictData(
         title: title,
@@ -46,7 +49,8 @@ class DictData {
         duration: transcript.metadata?.duration ?? 0,
         transcript: alternative.transcript ?? '',
         words: alternative.words ?? [],
-        paragraph: alternative.paragraphs ?? Paragraphs ());
+        paragraphs: alternative.paragraphs ?? Paragraphs (),
+        completion:sentenceLength!=null ? List.generate(sentenceLength, (_)=>false,):[]);
   }
 
   DictData copyWith({
@@ -58,7 +62,8 @@ class DictData {
     double? duration,
     String? transcript,
     List<Word>? words,
-    Paragraphs? paragraph,
+    Paragraphs? paragraphs,
+    List<bool>? completion
   }) {
     return DictData(
       title: title ?? this.title,
@@ -69,7 +74,8 @@ class DictData {
       duration: duration ?? this.duration,
       transcript: transcript ?? this.transcript,
       words: words ?? this.words.toList(),
-      paragraph: paragraph ?? this.paragraph,
+      paragraphs: paragraphs ?? this.paragraphs,
+      completion: completion ?? this.completion
     );
   }
   

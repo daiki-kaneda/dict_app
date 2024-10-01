@@ -1,8 +1,9 @@
-
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/buttons/pop_button.dart';
+import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_view.dart';
+import 'package:dict_app/widgets/folder_structure_widget/folder_view/folder_view.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/tree_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,31 +45,9 @@ class FolderStructureWidget extends ConsumerWidget {
     }
 
     if (tree is Dict) {
-      final dict = tree;
-      return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            leading: const PopButton(),
-            middle: Text(dict.value.title),
-          ),
-          child: Center(
-            child: Text(tree.value.toJson().toString()),
-          ));
+      return DictView(tree);
     } else if (tree is Folder) {
-      final folder = tree;
-      return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            leading: const PopButton(),
-            middle: Text(folder.value.title),
-            //trailing: const EditButton()
-          ),
-          child: ListView(
-            children: [
-              for (final subFolder in folder.subTrees.whereType<Folder>())
-                TreeListTile(subFolder),
-              for (final dict in folder.subTrees.whereType<Dict>())
-                TreeListTile(dict)
-            ],
-          ));
+      return FolderView(tree);
     } else {
       throw UnsupportedError('DataTree must be Dict or Folder');
     }

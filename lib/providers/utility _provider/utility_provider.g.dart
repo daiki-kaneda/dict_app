@@ -36,7 +36,7 @@ final isDictShowingProvider = AutoDisposeFutureProvider<bool>.internal(
 
 typedef IsDictShowingRef = AutoDisposeFutureProviderRef<bool>;
 String _$currentTreeIdNotifierHash() =>
-    r'1b8ef1ec2be04798417dd0fe62099f2da19190c7';
+    r'b8ed9c925948aae762e2f9f2d5ddcd35f3f6bd60';
 
 /// See also [CurrentTreeIdNotifier].
 @ProviderFor(CurrentTreeIdNotifier)

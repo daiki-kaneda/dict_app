@@ -7,7 +7,7 @@ part of 'app_documents_directory_provider.dart';
 // **************************************************************************
 
 String _$appDocumentsDirectoryNotifierHash() =>
-    r'74c3df7154a7ad8a442c9caaa91e327963040efc';
+    r'cfbbdf556a4c76141a96dcb9e533eeac34c42009';
 
 /// See also [AppDocumentsDirectoryNotifier].
 @ProviderFor(AppDocumentsDirectoryNotifier)
