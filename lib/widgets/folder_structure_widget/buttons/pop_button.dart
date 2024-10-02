@@ -1,3 +1,4 @@
+import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,6 +22,7 @@ class PopButton extends ConsumerWidget{
                 .clear();
                 ref.read(inputTextFieldFocusNodeProvider.notifier)
                 .unfocus();
+                ref.read(audioPlayerNotifierProvider.notifier).pause();
                 Navigator.of(context).pop();
               },
             ):const SizedBox();

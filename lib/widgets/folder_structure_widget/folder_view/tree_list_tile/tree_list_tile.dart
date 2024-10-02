@@ -1,4 +1,5 @@
 import 'package:dict_app/models/data_tree/data_tree.dart';
+import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_structure_widget.dart';
@@ -61,9 +62,8 @@ class TreeListTile extends ConsumerWidget {
             DateFormat.yMMMd().format(dict.value.createdAt )),
         onTap:isEditing ? null: () {
           onTap(dict.id);
-          // test
-          ref.read(inputTextFieldFocusNodeProvider.notifier)
-          .requestFocus();
+          ref.read(audioPlayerNotifierProvider.notifier)
+          .setSource(dict.value.audioPath);
         },
         trailing: TrailingEditButton(dict.id,isTask: true,),
       );

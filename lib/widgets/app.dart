@@ -1,5 +1,10 @@
 
 import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/player_completion_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
@@ -73,6 +78,11 @@ class _EagerInitialization extends ConsumerWidget {
     ref.watch(isSheetShowingProvider);
     ref.watch(inputTextFieldFocusNodeProvider);
     ref.watch(typedTextNotifierProvider);
+    ref.watch(audioPlayerNotifierProvider);
+    ref.watch(playerCompletionProvider);
+    ref.watch(playerDurationProvider);
+    ref.watch(playerPositionProvider);
+    ref.watch(playerStateProvider);
     return child;
   }
 }
