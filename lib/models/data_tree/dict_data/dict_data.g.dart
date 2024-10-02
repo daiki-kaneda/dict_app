@@ -19,8 +19,10 @@ DictData _$DictDataFromJson(Map<String, dynamic> json) => DictData(
           .toList(),
       paragraphs:
           Paragraphs.fromJson(json['paragraphs'] as Map<String, dynamic>),
-      completion:
-          (json['completion'] as List<dynamic>).map((e) => e as bool).toList(),
+      problems: (json['problems'] as List<dynamic>)
+          .map((e) =>
+              DictationSentenceProblem.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$DictDataToJson(DictData instance) {
@@ -42,6 +44,6 @@ Map<String, dynamic> _$DictDataToJson(DictData instance) {
   val['transcript'] = instance.transcript;
   val['words'] = instance.words.map((e) => e.toJson()).toList();
   val['paragraphs'] = instance.paragraphs.toJson();
-  val['completion'] = instance.completion;
+  val['problems'] = instance.problems.map((e) => e.toJson()).toList();
   return val;
 }

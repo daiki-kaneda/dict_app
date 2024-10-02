@@ -1,3 +1,4 @@
+import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_sentence_problem.dart';
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,7 +15,7 @@ class DictData {
   final String transcript;
   final List<Word> words;
   final Paragraphs paragraphs;
-  final List<bool> completion;
+  final List<DictationSentenceProblem> problems;
 
   const DictData(
       {required this.title,
@@ -26,7 +27,7 @@ class DictData {
       required this.transcript,
       required this.words,
       required this.paragraphs,
-      required this.completion});
+      required this.problems});
 
   factory DictData.fromJson(Map<String, dynamic> json) =>
       _$DictDataFromJson(json);
@@ -38,8 +39,9 @@ class DictData {
         required String title, String? description}) {
     final alternative =
         transcript.results?.channels?.firstOrNull?.alternatives?.firstOrNull;
-    final sentenceLength =  alternative?.paragraphs?.paragraphs?.firstOrNull?.sentences?.length;
+    final sentences =  alternative?.paragraphs?.paragraphs?.firstOrNull?.sentences;
     if (alternative == null) throw UnsupportedError('no result data');
+    if(sentences==null || sentences.isEmpty)throw UnsupportedError('audio do not have english audio');
     return DictData(
         title: title,
         createdAt: transcript.metadata?.created ?? DateTime.now(),
@@ -50,7 +52,15 @@ class DictData {
         transcript: alternative.transcript ?? '',
         words: alternative.words ?? [],
         paragraphs: alternative.paragraphs ?? Paragraphs (),
-        completion:sentenceLength!=null ? List.generate(sentenceLength, (_)=>false,):[]);
+        problems: sentences.map(
+          (e){
+            if(e.text!=null){
+              return DictationSentenceProblem.from(sentence: e.text!);
+            }else{
+              return null;
+            }
+          }
+        ).whereType<DictationSentenceProblem>().toList());
   }
 
   DictData copyWith({
@@ -63,7 +73,7 @@ class DictData {
     String? transcript,
     List<Word>? words,
     Paragraphs? paragraphs,
-    List<bool>? completion
+    List<DictationSentenceProblem>? problems
   }) {
     return DictData(
       title: title ?? this.title,
@@ -75,7 +85,7 @@ class DictData {
       transcript: transcript ?? this.transcript,
       words: words ?? this.words.toList(),
       paragraphs: paragraphs ?? this.paragraphs,
-      completion: completion ?? this.completion
+      problems: problems ?? this.problems
     );
   }
   
