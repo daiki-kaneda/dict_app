@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_sentence.dart';
+import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_data_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

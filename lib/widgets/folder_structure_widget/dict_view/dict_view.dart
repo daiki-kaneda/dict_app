@@ -2,7 +2,6 @@ import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/buttons/pop_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_text_widget/input_text_field.dart';
-import 'package:dict_app/widgets/folder_structure_widget/dict_view/sentence_list_view/sentence_list_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
