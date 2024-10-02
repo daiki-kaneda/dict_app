@@ -23,7 +23,7 @@ class App extends ConsumerWidget {
     return _EagerInitialization(
       CupertinoApp(
       theme: const CupertinoThemeData(
-        brightness: Brightness.light, // ライトモードを指定
+        //brightness: Brightness.light, // ライトモードを指定
       ),
       builder: (context, child) {
         if(todoTree.hasValue){
