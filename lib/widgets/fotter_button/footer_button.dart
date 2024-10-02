@@ -18,8 +18,10 @@ class FooterButton extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         if (isDictShowing.value == true) ...[
-          const SizedBox(),
-          IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.play))
+          // IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.chevron_forward),
+          // color: CupertinoColors.activeBlue,),
+          // IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.chevron_forward,
+          // color: CupertinoColors.activeBlue,))
         ],
         if (isDictShowing.value != true && !isEditing) ...[
           IconButton(

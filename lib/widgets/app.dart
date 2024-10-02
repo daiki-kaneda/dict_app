@@ -1,5 +1,6 @@
 
 import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_structure_widget.dart';
@@ -17,8 +18,8 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoTree = ref.watch(dataTreeNotifierProvider);
-    final isTaskShowing = ref.watch(isDictShowingProvider);
-    final IsSheetShowing = ref.watch(isSheetShowingProvider);
+    final isDictShowing = ref.watch(isDictShowingProvider);
+    final isSheetShowing = ref.watch(isSheetShowingProvider);
     return _EagerInitialization(
       CupertinoApp(
       theme: const CupertinoThemeData(
@@ -37,7 +38,7 @@ class App extends ConsumerWidget {
               );
             },
           ),
-          persistentFooterButtons:!IsSheetShowing ? const [
+          persistentFooterButtons:(!isSheetShowing && isDictShowing.value==false) ? const [
              FooterButton()
           ]:null,
         );
@@ -70,6 +71,8 @@ class _EagerInitialization extends ConsumerWidget {
     ref.watch(selectedIdsProvider);
     ref.watch(canPopProvider);
     ref.watch(isSheetShowingProvider);
+    ref.watch(inputTextFieldFocusNodeProvider);
+    ref.watch(typedTextNotifierProvider);
     return child;
   }
 }

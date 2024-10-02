@@ -1,3 +1,4 @@
+import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +19,8 @@ class PopButton extends ConsumerWidget{
                 .updateMode(false);
                 ref.read(selectedIdsProvider.notifier)
                 .clear();
+                ref.read(inputTextFieldFocusNodeProvider.notifier)
+                .unfocus();
                 Navigator.of(context).pop();
               },
             ):const SizedBox();
