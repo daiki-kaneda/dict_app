@@ -6,38 +6,6 @@ part of 'dict_view_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$correctWordHash() => r'01ad3fe4d8add68cfea974e4828725ec7b1450de';
-
-/// See also [correctWord].
-@ProviderFor(correctWord)
-final correctWordProvider = AutoDisposeProvider<String>.internal(
-  correctWord,
-  name: r'correctWordProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$correctWordHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef CorrectWordRef = AutoDisposeProviderRef<String>;
-String _$dictationSentenceProblemNotifierHash() =>
-    r'3e781c556b5fcbf2211c311a340a0eddd441fc5c';
-
-/// See also [DictationSentenceProblemNotifier].
-@ProviderFor(DictationSentenceProblemNotifier)
-final dictationSentenceProblemNotifierProvider = AutoDisposeNotifierProvider<
-    DictationSentenceProblemNotifier, DictationSentenceProblem>.internal(
-  DictationSentenceProblemNotifier.new,
-  name: r'dictationSentenceProblemNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$dictationSentenceProblemNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$DictationSentenceProblemNotifier
-    = AutoDisposeNotifier<DictationSentenceProblem>;
 String _$typedTextNotifierHash() => r'769386fb3302d29057cc277792be4ab95a767c14';
 
 /// See also [TypedTextNotifier].

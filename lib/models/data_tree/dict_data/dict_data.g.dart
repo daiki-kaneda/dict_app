@@ -14,14 +14,8 @@ DictData _$DictDataFromJson(Map<String, dynamic> json) => DictData(
       isFavorite: json['isFavorite'] as bool,
       duration: (json['duration'] as num).toDouble(),
       transcript: json['transcript'] as String,
-      words: (json['words'] as List<dynamic>)
-          .map((e) => Word.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      paragraphs:
-          Paragraphs.fromJson(json['paragraphs'] as Map<String, dynamic>),
       problems: (json['problems'] as List<dynamic>)
-          .map((e) =>
-              DictationSentenceProblem.fromJson(e as Map<String, dynamic>))
+          .map((e) => DictationSentence.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -42,8 +36,6 @@ Map<String, dynamic> _$DictDataToJson(DictData instance) {
   val['isFavorite'] = instance.isFavorite;
   val['duration'] = instance.duration;
   val['transcript'] = instance.transcript;
-  val['words'] = instance.words.map((e) => e.toJson()).toList();
-  val['paragraphs'] = instance.paragraphs.toJson();
   val['problems'] = instance.problems.map((e) => e.toJson()).toList();
   return val;
 }

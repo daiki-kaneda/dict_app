@@ -25,7 +25,6 @@ class DictView extends ConsumerWidget {
           child: SingleChildScrollView(
             child: Text(dict.toJson((t)=>t.toJson(), (u)=>u.toJson()).toString()),
           )
-          //SentenceListView(dict.id) 
         ));
   }
 }

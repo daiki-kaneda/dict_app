@@ -1,4 +1,4 @@
-import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_sentence_problem.dart';
+import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_sentence.dart';
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -13,9 +13,8 @@ class DictData {
   final bool isFavorite;
   final double duration;
   final String transcript;
-  final List<Word> words;
-  final Paragraphs paragraphs;
-  final List<DictationSentenceProblem> problems;
+  final List<DictationSentence> problems;
+
 
   const DictData(
       {required this.title,
@@ -25,8 +24,6 @@ class DictData {
       required this.isFavorite,
       required this.duration,
       required this.transcript,
-      required this.words,
-      required this.paragraphs,
       required this.problems});
 
   factory DictData.fromJson(Map<String, dynamic> json) =>
@@ -50,17 +47,15 @@ class DictData {
         isFavorite: false,
         duration: transcript.metadata?.duration ?? 0,
         transcript: alternative.transcript ?? '',
-        words: alternative.words ?? [],
-        paragraphs: alternative.paragraphs ?? Paragraphs (),
         problems: sentences.map(
           (e){
             if(e.text!=null){
-              return DictationSentenceProblem.from(sentence: e.text!);
+              return DictationSentence.from(sentence: e);
             }else{
               return null;
             }
           }
-        ).whereType<DictationSentenceProblem>().toList());
+        ).whereType<DictationSentence>().toList());
   }
 
   DictData copyWith({
@@ -73,7 +68,7 @@ class DictData {
     String? transcript,
     List<Word>? words,
     Paragraphs? paragraphs,
-    List<DictationSentenceProblem>? problems
+    List<DictationSentence>? problems
   }) {
     return DictData(
       title: title ?? this.title,
@@ -83,8 +78,6 @@ class DictData {
       isFavorite: isFavorite ?? this.isFavorite,
       duration: duration ?? this.duration,
       transcript: transcript ?? this.transcript,
-      words: words ?? this.words.toList(),
-      paragraphs: paragraphs ?? this.paragraphs,
       problems: problems ?? this.problems
     );
   }
