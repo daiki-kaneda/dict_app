@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/models/data_tree/dict_data/dict_data.dart';
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
@@ -9,6 +10,7 @@ import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dar
 import 'package:dict_app/providers/local_database_provider/local_data_status.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tree_data_model/tree_data_model.dart';
@@ -187,5 +189,44 @@ class DataTreeNotifier extends _$DataTreeNotifier {
       print(e.toString());
       ref.read(appDocumentsDirectoryNotifierProvider.notifier).deleteAllWasteFile();
     }
+  }
+
+  /// This function try to update completion of DictationCharacter in specific DictData
+  /// if wordIndex is null,wordIndex will be set as index of first unsolved word.
+  Future<void> tryCharacter({
+    required String dictId,
+    int? wordIndex,
+    required String character,
+  })async{
+
+    final perviousState = await future;
+    var dict = perviousState.readLeafById(id: dictId);
+    
+    if(dict==null){
+      print('error:dict==null');
+      return;
+    }
+    int index = wordIndex ?? dict.value.wordProblems.indexWhere(
+      (w)=>w.isCompleted==false
+    );
+    if(index==-1){
+      print('all solved!');
+      return;
+    }
+
+    final updatedWord = dict.value.wordProblems[index].copyWith(
+          ).tryCharacter(input: character);
+
+    dict = dict.copyWith(
+      value: dict.value.copyWith(
+        wordProblems: [
+          ...dict.value.wordProblems.sublist(0,index),
+          updatedWord,
+          ...dict.value.wordProblems.sublist(index+1)
+        ]
+      )
+    );
+    updateDict(dictId, dict);
+
   }
 }

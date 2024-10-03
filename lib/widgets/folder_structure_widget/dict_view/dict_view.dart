@@ -27,14 +27,22 @@ class DictView extends ConsumerWidget {
           children: [
             Column(
               children: [
-                Expanded(child: SizedBox()),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: PlayerWidget(),
+                Expanded(child: SingleChildScrollView(
+                  child: Text(
+                    dict.toJson((t)=>t.toJson(), (u)=>u.toJson()).toString()
                   ),
+                ),)
+                
                 ],
             ),
-            InputTextField()
+            InputTextField(),
+            Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      color: CupertinoColors.systemGrey2,
+                      child: PlayerWidget(),
+                    ),
+                  ),
           ],
         )),));
   }

@@ -1,27 +1,43 @@
 import 'dart:async';
 
 import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_data_model.dart';
+import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
+import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dict_view_provider.g.dart';
 
-
 @riverpod
 class TypedTextNotifier extends _$TypedTextNotifier {
   final controller = StreamController<String>();
   @override
-  Stream<String> build() async*{
-    ref.onDispose((){
+  Stream<String> build() async* {
+    ref.onDispose(() {
       controller.close();
+    });
+
+    ref.listenSelf((prev, next) {
+      final currentId = ref.read(currentTreeIdNotifierProvider);
+      final isDictShowing = ref.read(isDictShowingProvider);
+      if (isDictShowing.value != true || currentId.value == null) return;
+
+      final prevText = prev?.value;
+      final nextText = next.value;
+      if (nextText == null) return;
+      if (prevText == null || prevText.length >= nextText.length) return;
+
+      ref.read(dataTreeNotifierProvider.notifier).tryCharacter(
+          dictId: currentId.value!, character: nextText.characters.last);
+      print('tryCharacter: ${nextText.characters.last}');
     });
     yield* controller.stream;
   }
-  void emitCharacter(String character){
-    controller.add(character);
+
+  void emitText(String text) {
+    controller.add(text);
   }
 }
-
 
 @riverpod
 class InputTextFieldFocusNode extends _$InputTextFieldFocusNode {
@@ -30,30 +46,33 @@ class InputTextFieldFocusNode extends _$InputTextFieldFocusNode {
     return FocusNode();
   }
 
-  void requestFocus(){
+  void requestFocus() {
     state.requestFocus();
   }
 
-  void unfocus(){
+  void unfocus() {
     state.unfocus();
   }
 
-  void toggle(){
-    if(state.hasFocus){
+  void toggle() {
+    if (state.hasFocus) {
       state.unfocus();
-    }else{
+    } else {
       state.requestFocus();
     }
   }
 }
 
 @riverpod
-class InputTextFieldControllerNotifier extends _$InputTextFieldControllerNotifier {
+class InputTextFieldControllerNotifier
+    extends _$InputTextFieldControllerNotifier {
   @override
   TextEditingController build() {
-    ref.onDispose((){
-      state.dispose();
-    },);
+    ref.onDispose(
+      () {
+        state.dispose();
+      },
+    );
     final controller = TextEditingController();
     return controller;
   }

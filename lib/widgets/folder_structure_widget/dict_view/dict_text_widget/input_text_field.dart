@@ -36,10 +36,9 @@ class _InputTextFieldState extends ConsumerState<InputTextField> {
           focusNode: focusNode,
           onChanged: (value) {
             if (value.isEmpty) return;
-            final lastCharacter = value.characters.toList().last;
             ref
                 .read(typedTextNotifierProvider.notifier)
-                .emitCharacter(lastCharacter);
+                .emitText(value);
           },
         ),
       ),
