@@ -14,6 +14,8 @@ class DictCharacterWidget extends ConsumerWidget {
       duration: const Duration(milliseconds: 200),
       child: AnimatedDefaultTextStyle(
         style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
           color: isSolved ? CupertinoColors.black:CupertinoColors.systemGrey
         ), duration: const Duration(milliseconds: 200),
         child: Text(

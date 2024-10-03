@@ -5,33 +5,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictTextWidget extends ConsumerWidget {
-  const DictTextWidget(this.dictId,{super.key});
+  const DictTextWidget(this.dictId, {super.key});
 
   final String dictId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<DictationWord>? wordProblems = ref.watch(dataTreeNotifierProvider.select(
-      (dataTreeAsync){
-        return dataTreeAsync.when(data: 
-        (dataTree){
-          return dataTree.readLeafById(id: dictId)
-          ?.value.wordProblems;
-        }, 
-        error: (_,__)=>null, 
-        loading: ()=>null);
-      }
-    ));
-    if(wordProblems==null){
+    final List<DictationWord>? wordProblems =
+        ref.watch(dataTreeNotifierProvider.select((dataTreeAsync) {
+      return dataTreeAsync.when(
+          data: (dataTree) {
+            return dataTree.readLeafById(id: dictId)?.value.wordProblems;
+          },
+          error: (_, __) => null,
+          loading: () => null);
+    }));
+    if (wordProblems == null) {
       return Center(
         child: CupertinoActivityIndicator(),
       );
     }
-    return Wrap(
-      spacing: 10,
-      children: [
-        for(final word in wordProblems)
-        DictWordWidget(word)
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: 
+      //CupertinoScrollbar(child: 
+      SingleChildScrollView(
+        child: Wrap(
+        spacing: 10,
+        children: [for (final word in wordProblems) DictWordWidget(word)],
+      ),
+     // )
+      )
     );
   }
 }

@@ -20,6 +20,7 @@ class _PopButtonState extends ConsumerState<PopButton> {
   void initState() {
     Future.delayed(const Duration(milliseconds: 1000))
     .whenComplete((){
+      if(!mounted)return;
       setState(() {
         showing=true;
       });

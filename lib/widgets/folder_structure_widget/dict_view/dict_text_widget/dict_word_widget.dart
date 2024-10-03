@@ -27,7 +27,9 @@ class DictWordWidget extends ConsumerWidget {
         border: Border(bottom: 
         shouldFocus ? BorderSide(
           color: CupertinoColors.black
-        ):BorderSide.none
+        ):BorderSide(
+          color: CupertinoColors.transparent
+        )
         )
       ),
       child: Row(
