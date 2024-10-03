@@ -49,8 +49,8 @@ class DictData {
         transcript: alternative.transcript ?? '',
         wordProblems: words.map(
           (e){
-            if(e.word!=null && e.start!=null && e.end!=null){
-              return DictationWord.from(word: e.word!, start: e.start!, end: e.end!);
+            if(e.punctuatedWord!=null && e.start!=null && e.end!=null){
+              return DictationWord.from(word: e.punctuatedWord!, start: e.start!, end: e.end!);
             }else{
               return null;
             }

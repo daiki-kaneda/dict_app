@@ -25,7 +25,7 @@ class TypedTextNotifier extends _$TypedTextNotifier {
       final prevText = prev?.value;
       final nextText = next.value;
       if (nextText == null) return;
-      if (prevText == null || prevText.length >= nextText.length) return;
+      if (prevText!=null && prevText.length >= nextText.length) return;
 
       ref.read(dataTreeNotifierProvider.notifier).tryCharacter(
           dictId: currentId.value!, character: nextText.characters.last);

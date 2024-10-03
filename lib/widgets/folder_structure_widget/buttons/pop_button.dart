@@ -20,8 +20,8 @@ class PopButton extends ConsumerWidget{
                 .updateMode(false);
                 ref.read(selectedIdsProvider.notifier)
                 .clear();
-                ref.read(inputTextFieldFocusNodeProvider.notifier)
-                .unfocus();
+                // ref.read(inputTextFieldFocusNodeProvider.notifier)
+                // .unfocus();
                 ref.read(audioPlayerNotifierProvider.notifier).pause();
                 Navigator.of(context).pop();
               },
