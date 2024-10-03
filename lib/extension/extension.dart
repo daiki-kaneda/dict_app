@@ -49,3 +49,14 @@ extension LeafEx<T,U> on Leaf<T,U>{
     );
   }
 }
+
+extension ListEx<T> on List<T>{
+  List<T> replace(int index,T newValue){
+    if(index<0 || length-1<index) return this;
+    return [
+      ...sublist(0,index),
+      newValue,
+      ...sublist(index+1)
+    ];
+  }
+}

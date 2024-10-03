@@ -1,6 +1,7 @@
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/buttons/pop_button.dart';
+import 'package:dict_app/widgets/folder_structure_widget/buttons/reset_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_text_widget/dict_text_widget.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_text_widget/input_text_field.dart';
 import 'package:dict_app/widgets/player_widget/player_widget.dart';
@@ -19,6 +20,7 @@ class DictView extends ConsumerWidget {
     return CupertinoPageScaffold(
         resizeToAvoidBottomInset: true,
         navigationBar: CupertinoNavigationBar(
+          trailing: const ResetButton(),
           leading: const PopButton(),
           middle: Text(dict.value.title),
         ),
@@ -28,18 +30,17 @@ class DictView extends ConsumerWidget {
           children: [
             Column(
               children: [
-                Expanded(child: DictTextWidget(dict.id))
-                
-                ],
-            ),
-            InputTextField(),
-            Align(
+                Expanded(child: DictTextWidget(dict.id)),
+                Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       color: CupertinoColors.white,
                       child: PlayerWidget(),
                     ),
                   ),
+                ],
+            ),
+            InputTextField(),
           ],
         )),));
   }

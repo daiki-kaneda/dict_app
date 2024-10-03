@@ -14,7 +14,10 @@ class _InputTextFieldState extends ConsumerState<InputTextField> {
 
   @override
   void initState() {
-    focusNode.requestFocus();
+    Future.delayed(
+      const Duration(milliseconds: 250))
+      .whenComplete(()=>focusNode.requestFocus());
+    
     super.initState();
   }
 

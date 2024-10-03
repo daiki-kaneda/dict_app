@@ -73,11 +73,11 @@ part 'dictation_data_model.g.dart';
 
 @JsonSerializable()
 class DictationWord {
-  const DictationWord({
-    required this.word, 
-    required this.characters,
-    required this.start,
-    required this.end});
+  const DictationWord(
+      {required this.word,
+      required this.characters,
+      required this.start,
+      required this.end});
 
   final String word;
   final List<DictationCharacter> characters;
@@ -90,45 +90,44 @@ class DictationWord {
 
   String get displayText => characters.map((e) => e.character).join();
 
-  factory DictationWord.from({required String word, bool alphabetOnly = true,
-  required double start,required double end}) {
+  factory DictationWord.from(
+      {required String word,
+      bool alphabetOnly = true,
+      required double start,
+      required double end}) {
     return DictationWord(
-      word: word,
-      characters: word.characters
-          .toList()
-          .map(
-            (c) => DictationCharacter.from(
-              character: c,
-              alphabetOnly: alphabetOnly,
-            ),
-          )
-          .toList(),
-      start: start,
-      end: end
-    );
+        word: word,
+        characters: word.characters
+            .toList()
+            .map(
+              (c) => DictationCharacter.from(
+                character: c,
+                alphabetOnly: alphabetOnly,
+              ),
+            )
+            .toList(),
+        start: start,
+        end: end);
   }
 
-
-  DictationWord copyWith({
-    String? word,
-    List<DictationCharacter>? characters,
-    double? start,
-    double? end
-  }) {
+  DictationWord copyWith(
+      {String? word,
+      List<DictationCharacter>? characters,
+      double? start,
+      double? end}) {
     return DictationWord(
-      word: word ?? this.word,
-      characters: characters ?? this.characters,
-      start: start ?? this.start,
-      end: end ?? this.end
-    );
+        word: word ?? this.word,
+        characters: characters ?? this.characters,
+        start: start ?? this.start,
+        end: end ?? this.end);
   }
 
-  DictationWord tryCharacter({required String input}) {
+  DictationWord tryCharacter({required String input,bool solveAnyway = false}) {
     if (isCompleted) return this;
     final firstUnsolvedIndex = characters.indexWhere((e) => !e.isSolved);
     final firstUnsolvedCharacter = characters[firstUnsolvedIndex];
 
-    if (characters[firstUnsolvedIndex].character.toLowerCase() ==
+    if (solveAnyway || characters[firstUnsolvedIndex].character.toLowerCase() ==
         input.toLowerCase()) {
       characters[firstUnsolvedIndex] =
           firstUnsolvedCharacter.copyWith(isSolved: true);
@@ -137,6 +136,13 @@ class DictationWord {
     } else {
       return this;
     }
+  }
+
+  DictationWord updateIsSolved(bool target, {bool alphabetOnly = true}) {
+    return copyWith(
+        characters: characters
+            .map((c) => c.updateIsSolved(target, alphabetOnly: alphabetOnly))
+            .toList());
   }
 
   factory DictationWord.fromJson(Map<String, dynamic> json) =>
@@ -170,8 +176,9 @@ class DictationCharacter {
     );
   }
 
-  DictationCharacter toggleIsSolved() {
-    return copyWith(isSolved: !isSolved);
+  DictationCharacter updateIsSolved(bool target, {bool alphabetOnly = true}) {
+    if (!isAlphabet(character)) return this;
+    return copyWith(isSolved: target);
   }
 
   factory DictationCharacter.fromJson(Map<String, dynamic> json) =>

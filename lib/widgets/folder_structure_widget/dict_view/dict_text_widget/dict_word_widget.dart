@@ -22,14 +22,16 @@ class DictWordWidget extends ConsumerWidget {
 
     final shouldFocus = word.start<=playerPosition && playerPosition<=word.end;
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeOut,
       decoration: BoxDecoration(
         border: Border(bottom: 
         shouldFocus ? BorderSide(
           color: CupertinoColors.activeOrange,
           width: 2.5
         ):BorderSide(
-          color: CupertinoColors.transparent
+          color: CupertinoColors.transparent,
+          width: 2.5
         )
         )
       ),

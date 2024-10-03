@@ -1,3 +1,4 @@
+import 'package:dict_app/widgets/player_widget/buttons/hint_fill_button.dart';
 import 'package:dict_app/widgets/player_widget/buttons/play_pause_button.dart';
 import 'package:dict_app/widgets/player_widget/buttons/speed_button.dart';
 import 'package:dict_app/widgets/player_widget/player_slider/duration_widget.dart';
@@ -32,9 +33,9 @@ class PlayerWidget extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              SizedBox(),
+              const HintFillButton(),
               const PlayPauseButton(),
-              SizedBox(),
+              const SpeedButton(),
             ],
           ),)
       ],

@@ -11,13 +11,14 @@ class DictCharacterWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isSolved = character.isSolved;
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeOut,
       child: AnimatedDefaultTextStyle(
         style: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 20,
           color: isSolved ? CupertinoColors.black:CupertinoColors.systemGrey
-        ), duration: const Duration(milliseconds: 200),
+        ), duration: const Duration(milliseconds: 100),
         child: Text(
           isSolved ? character.character : '-',
           ),),);
