@@ -1,6 +1,7 @@
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/buttons/pop_button.dart';
+import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_text_widget/dict_text_widget.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_text_widget/input_text_field.dart';
 import 'package:dict_app/widgets/player_widget/player_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,11 +28,7 @@ class DictView extends ConsumerWidget {
           children: [
             Column(
               children: [
-                Expanded(child: SingleChildScrollView(
-                  child: Text(
-                    dict.toJson((t)=>t.toJson(), (u)=>u.toJson()).toString()
-                  ),
-                ),)
+                Expanded(child: DictTextWidget(dict.id))
                 
                 ],
             ),
@@ -39,7 +36,7 @@ class DictView extends ConsumerWidget {
             Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      color: CupertinoColors.systemGrey2,
+                      color: CupertinoColors.white,
                       child: PlayerWidget(),
                     ),
                   ),
