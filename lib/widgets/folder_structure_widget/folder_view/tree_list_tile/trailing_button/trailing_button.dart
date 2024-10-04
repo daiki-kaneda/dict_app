@@ -1,9 +1,13 @@
 
+import 'dart:math';
+
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/trailing_button/select_folder_list.dart/select_folder_list.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 
 class TrailingEditButton extends ConsumerWidget {
@@ -33,13 +37,26 @@ class TrailingEditButton extends ConsumerWidget {
                     child: Text('移動'),
                     onPressed: () async{
                       Navigator.of(context).pop();
-                      final targetId = await Navigator.of(context).push<String>(
-                        CupertinoPageRoute(builder: (context) {
-                          return const CupertinoPageScaffold(child:
-                          SelectFolderList() 
+                      final targetId = await showCupertinoModalPopup(
+                        barrierDismissible: false,
+                        context: context, builder:(context) {
+                          return CupertinoPageScaffold(
+                          navigationBar: CupertinoNavigationBar(
+                            leading: TextButton(
+                              onPressed: (){
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('キャンセル',style: TextStyle(
+                                color: CupertinoColors.activeBlue
+                              ),)),
+                          ),
+                          child:
+                          SelectFolderList(
+                            isTask: isTask,
+                            sourceId: treeId,
+                          ) 
                           );
-                        },)
-                      );
+                        },);
                       if(targetId==null)return;
                       if (isTask) {
                         ref
@@ -59,11 +76,11 @@ class TrailingEditButton extends ConsumerWidget {
                       if (isTask) {
                         ref
                             .read(dataTreeNotifierProvider.notifier)
-                            .changeDictName(treeId, 'newName');
+                            .changeDictName(treeId, 'newName${Random().nextInt(100)}');
                       } else {
                         ref
                             .read(dataTreeNotifierProvider.notifier)
-                            .changeFolderName(treeId, 'newName');
+                            .changeFolderName(treeId, 'newName${Random().nextInt(100)}');
                       }
                       Navigator.pop(context);
                     },
