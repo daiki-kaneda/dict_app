@@ -14,15 +14,19 @@ class CupertinoTextFieldDialog extends StatefulWidget {
 class _CupertinoTextFieldDialogState extends State<CupertinoTextFieldDialog> {
   late TextEditingController controller;
 
+  final focusNode = FocusNode();
+
   @override
   void initState() {
     controller = TextEditingController(text: widget.initialValue);
+    focusNode.requestFocus();
     super.initState();
   }
 
   @override
   void dispose() {
     controller.dispose();
+    focusNode.dispose();
     super.dispose();
   }
   @override
@@ -51,6 +55,7 @@ class _CupertinoTextFieldDialogState extends State<CupertinoTextFieldDialog> {
             height: 10,
           ),
           CupertinoTextField(
+            focusNode: focusNode,
             controller: controller,
           ),
         ],

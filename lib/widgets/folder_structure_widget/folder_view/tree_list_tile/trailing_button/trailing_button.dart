@@ -1,14 +1,13 @@
-
 import 'dart:math';
 
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/trailing_button/select_folder_list.dart/select_folder_list.dart';
+import 'package:dict_app/widgets/modal/cupertino_text_field_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 
 class TrailingEditButton extends ConsumerWidget {
   const TrailingEditButton(this.treeId, {super.key, this.isTask = false});
@@ -21,6 +20,15 @@ class TrailingEditButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentId = ref.watch(currentTreeIdNotifierProvider);
     final root = ref.watch(dataTreeNotifierProvider);
+
+    Future<String?> getNewName(String initialValue) async {
+      return await showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoTextFieldDialog(initialValue);
+        },
+      );
+    }
 
     return CupertinoButton(
         onPressed: () {
@@ -35,29 +43,31 @@ class TrailingEditButton extends ConsumerWidget {
                 actions: <CupertinoActionSheetAction>[
                   CupertinoActionSheetAction(
                     child: Text('移動'),
-                    onPressed: () async{
+                    onPressed: () async {
                       Navigator.of(context).pop();
                       final targetId = await showCupertinoModalPopup(
                         barrierDismissible: false,
-                        context: context, builder:(context) {
+                        context: context,
+                        builder: (context) {
                           return CupertinoPageScaffold(
-                          navigationBar: CupertinoNavigationBar(
-                            leading: TextButton(
-                              onPressed: (){
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('キャンセル',style: TextStyle(
-                                color: CupertinoColors.activeBlue
-                              ),)),
-                          ),
-                          child:
-                          SelectFolderList(
-                            isTask: isTask,
-                            sourceId: treeId,
-                          ) 
-                          );
-                        },);
-                      if(targetId==null)return;
+                              navigationBar: CupertinoNavigationBar(
+                                leading: TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      'キャンセル',
+                                      style: TextStyle(
+                                          color: CupertinoColors.activeBlue),
+                                    )),
+                              ),
+                              child: SelectFolderList(
+                                isTask: isTask,
+                                sourceId: treeId,
+                              ));
+                        },
+                      );
+                      if (targetId == null) return;
                       if (isTask) {
                         ref
                             .read(dataTreeNotifierProvider.notifier)
@@ -65,24 +75,36 @@ class TrailingEditButton extends ConsumerWidget {
                       } else {
                         ref
                             .read(dataTreeNotifierProvider.notifier)
-                            .moveFolder(treeId, 
-                            targetId);
+                            .moveFolder(treeId, targetId);
                       }
                     },
                   ),
                   CupertinoActionSheetAction(
                     child: Text('名称変更'),
-                    onPressed: () {
-                      if (isTask) {
-                        ref
-                            .read(dataTreeNotifierProvider.notifier)
-                            .changeDictName(treeId, 'newName${Random().nextInt(100)}');
-                      } else {
-                        ref
-                            .read(dataTreeNotifierProvider.notifier)
-                            .changeFolderName(treeId, 'newName${Random().nextInt(100)}');
-                      }
+                    onPressed: () async {
                       Navigator.pop(context);
+                      if (!root.hasValue) return;
+                      if (isTask) {
+                        final currentName =
+                            root.value!.readLeafById(id: treeId)?.value.title;
+                        if (currentName == null) return;
+                        final newName = await getNewName(currentName);
+                        if (newName == null || newName.isEmpty) return;
+                        ref
+                            .read(dataTreeNotifierProvider.notifier)
+                            .changeDictName(treeId, newName);
+                      } else {
+                        final currentName = root.value!
+                            .readNodeById(nodeId: treeId)
+                            ?.value
+                            .title;
+                        if (currentName == null) return;
+                        final newName = await getNewName(currentName);
+                        if (newName == null || newName.isEmpty) return;
+                        ref
+                            .read(dataTreeNotifierProvider.notifier)
+                            .changeFolderName(treeId, newName);
+                      }                      
                     },
                   ),
                   CupertinoActionSheetAction(
