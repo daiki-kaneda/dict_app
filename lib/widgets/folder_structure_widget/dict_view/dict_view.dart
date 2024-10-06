@@ -31,13 +31,15 @@ class DictView extends ConsumerWidget {
             Column(
               children: [
                 Expanded(child: DictTextWidget(dict.id)),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
+                // Align(
+                //     alignment: Alignment.bottomCenter,
+                //     child: 
+                    Container(
+                      padding: EdgeInsets.only(bottom: 20),
                       color: CupertinoColors.white,
                       child: PlayerWidget(),
                     ),
-                  ),
+                 // ),
                 ],
             ),
             InputTextField(),
