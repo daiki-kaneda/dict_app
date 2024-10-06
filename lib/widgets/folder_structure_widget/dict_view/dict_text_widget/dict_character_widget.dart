@@ -18,7 +18,7 @@ class DictCharacterWidget extends ConsumerWidget {
           fontWeight: FontWeight.w500,
           fontSize: 20,
           color: isSolved ? CupertinoColors.black:CupertinoColors.systemGrey
-        ), duration: const Duration(milliseconds: 100),
+        ), duration: const Duration(milliseconds: 5),
         child: Text(
           isSolved ? character.character : '-',
           ),),);

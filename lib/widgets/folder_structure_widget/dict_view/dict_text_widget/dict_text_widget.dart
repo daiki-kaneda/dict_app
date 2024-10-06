@@ -30,7 +30,7 @@ class DictTextWidget extends ConsumerWidget {
         child:
             ListView.builder(
               itemBuilder:(context, index) {
-            const count = 15;
+            const count = 50;
             final words=wordProblems.splitBySize(count).elementAtOrNull(index);
             if(words==null)return null;
             return
