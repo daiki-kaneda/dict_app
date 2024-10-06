@@ -59,4 +59,13 @@ extension ListEx<T> on List<T>{
       ...sublist(index+1)
     ];
   }
+
+  List<List<T>> splitBySize(int n){
+    final q = length ~/ n;
+    return [
+      for(int i=0;i<q;i++)
+      sublist(i*n,(i+1)*n),
+      sublist(n*q)
+    ];
+  }
 }

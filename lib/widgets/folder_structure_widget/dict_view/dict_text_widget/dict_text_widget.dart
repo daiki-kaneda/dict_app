@@ -1,3 +1,4 @@
+import 'package:dict_app/extension/extension.dart';
 import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_data_model.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_text_widget/dict_word_widget.dart';
@@ -25,16 +26,28 @@ class DictTextWidget extends ConsumerWidget {
       );
     }
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: 
-      //CupertinoScrollbar(child: 
-      SingleChildScrollView(
-        child: Wrap(
-        spacing: 10,
-        children: [for (final word in wordProblems) DictWordWidget(word)],
-      ),
-     // )
-      )
-    );
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        child:
+            ListView.builder(
+              itemBuilder:(context, index) {
+            const count = 15;
+            final words=wordProblems.splitBySize(count).elementAtOrNull(index);
+            if(words==null)return null;
+            return
+              Wrap(
+              spacing: 10,
+              children: words.map((word)=>DictWordWidget(word)).toList(),
+            );
+
+            },)
+            //CupertinoScrollbar(child:
+        //     SingleChildScrollView(
+        //   child: Wrap(
+        //     spacing: 10,
+        //     children: [for (final word in wordProblems) DictWordWidget(word)],
+        //   ),
+        // )
+        //)
+        );
   }
 }
