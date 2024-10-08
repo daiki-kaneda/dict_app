@@ -4,23 +4,27 @@ import 'package:dict_app/providers/local_database_provider/data_tree_provider/da
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_text_widget/dict_word_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 class DictTextWidget extends ConsumerWidget {
-  const DictTextWidget(this.dictId, {super.key});
+  const DictTextWidget(this.dictId, this.focusNode,{super.key});
 
   final String dictId;
+
+  final FocusNode focusNode;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<DictationWord>? wordProblems =
+    final List<MapEntry<int, DictationWord>>? wordProblemsIndexed =
         ref.watch(dataTreeNotifierProvider.select((dataTreeAsync) {
       return dataTreeAsync.when(
           data: (dataTree) {
-            return dataTree.readLeafById(id: dictId)?.value.wordProblems;
+            return dataTree.readLeafById(id: dictId)?.value.wordProblems
+            .asMap().entries.toList();
           },
           error: (_, __) => null,
           loading: () => null);
     }));
-    if (wordProblems == null) {
+    if (wordProblemsIndexed == null) {
       return Center(
         child: CupertinoActivityIndicator(),
       );
@@ -31,12 +35,12 @@ class DictTextWidget extends ConsumerWidget {
             ListView.builder(
               itemBuilder:(context, index) {
             const count = 50;
-            final words=wordProblems.splitBySize(count).elementAtOrNull(index);
+            final words=wordProblemsIndexed.splitBySize(count).elementAtOrNull(index);
             if(words==null)return null;
             return
               Wrap(
               spacing: 10,
-              children: words.map((word)=>DictWordWidget(word)).toList(),
+              children: words.map((e)=>DictWordWidget(e.key, e.value, focusNode)).toList()
             );
 
             },)

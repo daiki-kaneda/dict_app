@@ -99,7 +99,7 @@ final isSheetShowingProvider =
 );
 
 typedef _$IsSheetShowing = AutoDisposeNotifier<bool>;
-String _$expansionNotifierHash() => r'39eb93bc2a86fdff65bc40b969f7be3a206b4caa';
+String _$expansionNotifierHash() => r'b4c57c683bedb4e59eadb8fdd7f9804f44885bf7';
 
 /// Copied from Dart SDK
 class _SystemHash {

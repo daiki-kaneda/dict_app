@@ -20,7 +20,8 @@ class TypedTextNotifier extends _$TypedTextNotifier {
     ref.listenSelf((prev, next) {
       final currentId = ref.read(currentTreeIdNotifierProvider);
       final isDictShowing = ref.read(isDictShowingProvider);
-      if (isDictShowing.value != true || currentId.value == null) return;
+      final currentWordIndex = ref.read(selectedWordIndexProvider);
+      if (isDictShowing.value != true || currentId.value == null ||currentWordIndex==-1) return;
 
       final prevText = prev?.value;
       final nextText = next.value;
@@ -28,7 +29,8 @@ class TypedTextNotifier extends _$TypedTextNotifier {
       if (prevText!=null && prevText.length >= nextText.length) return;
 
       ref.read(dataTreeNotifierProvider.notifier).tryCharacter(
-          dictId: currentId.value!, character: nextText.characters.last);
+          dictId: currentId.value!, character: nextText.characters.last,
+          wordIndex: currentWordIndex);
       print('tryCharacter: ${nextText.characters.last}');
     });
     yield* controller.stream;
@@ -79,5 +81,17 @@ class InputTextFieldControllerNotifier
 
   void update(String newText) {
     state.text = newText;
+  }
+}
+
+@riverpod
+class SelectedWordIndex extends _$SelectedWordIndex {
+  @override
+  int build() {
+    return -1;
+  }
+
+  void setId(int newId){
+    state = newId;
   }
 }

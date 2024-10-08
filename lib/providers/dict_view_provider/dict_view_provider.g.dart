@@ -6,7 +6,7 @@ part of 'dict_view_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$typedTextNotifierHash() => r'213d9ef890e320eda38c9baeba0868eda99347b2';
+String _$typedTextNotifierHash() => r'ff4edc0d501bd2e9ea9468bd3b4ac588492693b4';
 
 /// See also [TypedTextNotifier].
 @ProviderFor(TypedTextNotifier)
@@ -57,5 +57,21 @@ final inputTextFieldControllerNotifierProvider = AutoDisposeNotifierProvider<
 
 typedef _$InputTextFieldControllerNotifier
     = AutoDisposeNotifier<TextEditingController>;
+String _$selectedWordIndexHash() => r'44d911434219ec5f02b8132d2ac232a746fbf35f';
+
+/// See also [SelectedWordIndex].
+@ProviderFor(SelectedWordIndex)
+final selectedWordIndexProvider =
+    AutoDisposeNotifierProvider<SelectedWordIndex, int>.internal(
+  SelectedWordIndex.new,
+  name: r'selectedWordIndexProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedWordIndexHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SelectedWordIndex = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -3,29 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InputTextField extends ConsumerStatefulWidget {
-  const InputTextField({super.key});
+  const InputTextField(this.focusNode,{super.key});
+
+  final FocusNode focusNode;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _InputTextFieldState();
 }
 
 class _InputTextFieldState extends ConsumerState<InputTextField> {
-  final focusNode = FocusNode();
-
-  @override
-  void initState() {
-    Future.delayed(
-      const Duration(milliseconds: 250))
-      .whenComplete(()=>focusNode.requestFocus());
-    
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    focusNode.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +22,7 @@ class _InputTextFieldState extends ConsumerState<InputTextField> {
           maxLines: null,
           maxLength: null,
           autocorrect: false,
-          focusNode: focusNode,
+          focusNode: widget.focusNode,
           onChanged: (value) {
             if (value.isEmpty) return;
             ref

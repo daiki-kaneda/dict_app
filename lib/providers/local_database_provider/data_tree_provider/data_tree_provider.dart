@@ -7,6 +7,7 @@ import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_data_
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
 import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_data_status.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
@@ -252,14 +253,14 @@ class DataTreeNotifier extends _$DataTreeNotifier {
 
   /// This function set first unsolved word(or character) to solved
   Future<void> fillWord(
-      {required String dictId, bool fillCharacter = false}) async {
+      {required String dictId, bool fillCharacter = false,}) async {
     final perviousState = await future;
     var dict = perviousState.readLeafById(id: dictId);
     if (dict == null) return;
-    int index = _firstUnsolvedWordIndex(dict.value.wordProblems);
-    if (index == -1) return; //all solved!
+    int index = ref.read(selectedWordIndexProvider);
 
-    DictationWord updatedWord = dict.value.wordProblems[index];
+    DictationWord? updatedWord = dict.value.wordProblems.elementAtOrNull(index);
+    if(updatedWord==null)return;
 
     if (fillCharacter) {
       updatedWord = updatedWord
@@ -276,4 +277,29 @@ class DataTreeNotifier extends _$DataTreeNotifier {
             )));
     updateDict(dictId, dict);
   }
+  // Future<void> fillWord(
+  //     {required String dictId, bool fillCharacter = false,}) async {
+  //   final perviousState = await future;
+  //   var dict = perviousState.readLeafById(id: dictId);
+  //   if (dict == null) return;
+  //   int index = _firstUnsolvedWordIndex(dict.value.wordProblems);
+  //   if (index == -1) return; //all solved!
+
+  //   DictationWord updatedWord = dict.value.wordProblems[index];
+
+  //   if (fillCharacter) {
+  //     updatedWord = updatedWord
+  //     .tryCharacter(input: '',solveAnyway: true);
+  //   } else {
+  //     updatedWord = updatedWord
+  //     .updateIsSolved(true);
+  //   }
+
+  //   dict = dict.copyWith(
+  //       value: dict.value.copyWith(
+  //         wordProblems:dict.value.wordProblems.replace(
+  //           index, updatedWord
+  //           )));
+  //   updateDict(dictId, dict);
+  // }
 }

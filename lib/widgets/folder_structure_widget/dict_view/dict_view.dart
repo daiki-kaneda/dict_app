@@ -10,19 +10,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DictView extends ConsumerWidget {
-  const DictView(this.dict, {super.key});
+class DictView extends ConsumerStatefulWidget {
+  const DictView(this.dict,{super.key});
 
   final Dict dict;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _DictViewState();
+}
+
+class _DictViewState extends ConsumerState<DictView> {
+  final focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    ref.watch(selectedWordIndexProvider);
+    
     return CupertinoPageScaffold(
         resizeToAvoidBottomInset: true,
         navigationBar: CupertinoNavigationBar(
           trailing: const ResetButton(),
           leading: const PopButton(),
-          middle: Text(dict.value.title),
+          middle: Text(widget.dict.value.title),
         ),
         child: Center(child: 
         SafeArea(
@@ -30,7 +44,7 @@ class DictView extends ConsumerWidget {
           children: [
             Column(
               children: [
-                Expanded(child: DictTextWidget(dict.id)),
+                Expanded(child: DictTextWidget(widget.dict.id,focusNode)),
                 // Align(
                 //     alignment: Alignment.bottomCenter,
                 //     child: 
@@ -42,7 +56,7 @@ class DictView extends ConsumerWidget {
                  // ),
                 ],
             ),
-            InputTextField(),
+            InputTextField(focusNode),
           ],
         )),));
   }
