@@ -37,11 +37,11 @@ class ResetButton extends ConsumerWidget {
                       onPressed: () {
                         Navigator.of(context).pop();
                         if (currentId.value != null) {
-                          ref
-                              .read(dataTreeNotifierProvider.notifier)
-                              .resetProblem(
-                                currentId.value!,
-                              );
+                          // ref
+                          //     .read(dataTreeNotifierProvider.notifier)
+                          //     .resetProblem(
+                          //       currentId.value!,
+                          //     );
                         }
                       },
                     ),

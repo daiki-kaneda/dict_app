@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_data_model.dart';
+import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,9 +28,9 @@ class TypedTextNotifier extends _$TypedTextNotifier {
       if (nextText == null) return;
       if (prevText!=null && prevText.length >= nextText.length) return;
 
-      ref.read(dataTreeNotifierProvider.notifier).tryCharacter(
-          dictId: currentId.value!, character: nextText.characters.last,
-          wordIndex: currentWordIndex);
+      // ref.read(dataTreeNotifierProvider.notifier).tryCharacter(
+      //     dictId: currentId.value!, character: nextText.characters.last,
+      //     wordIndex: currentWordIndex);
       print('tryCharacter: ${nextText.characters.last}');
     });
     yield* controller.stream;

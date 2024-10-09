@@ -12,8 +12,8 @@ class HintFillButton extends ConsumerWidget {
     return CupertinoButton(
       onPressed: (){
         if(currentId.value==null)return;
-        ref.read(dataTreeNotifierProvider.notifier)
-        .fillWord(dictId: currentId.value!);
+        // ref.read(dataTreeNotifierProvider.notifier)
+        // .fillWord(dictId: currentId.value!);
       },
       child: Icon(
         CupertinoIcons.eye_fill,

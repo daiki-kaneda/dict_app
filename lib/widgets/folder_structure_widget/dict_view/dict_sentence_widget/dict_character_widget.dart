@@ -1,4 +1,4 @@
-import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_data_model.dart';
+import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

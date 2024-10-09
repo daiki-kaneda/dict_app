@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/models/data_tree/dict_data/dict_data.dart';
-import 'package:dict_app/models/data_tree/dict_data/dict_problem/dictation_data_model.dart';
+import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
 import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
@@ -216,67 +216,67 @@ class DataTreeNotifier extends _$DataTreeNotifier {
 
   /// This function try to update completion of DictationCharacter in specific DictData
   /// if wordIndex is null,wordIndex will be set as index of first unsolved word.
-  Future<void> tryCharacter({
-    required String dictId,
-    int? wordIndex,
-    required String character,
-  }) async {
-    final perviousState = await future;
-    var dict = perviousState.readLeafById(id: dictId);
-    if (dict == null) return;
-    int index = wordIndex ?? _firstUnsolvedWordIndex(dict.value.wordProblems);
-    if (index == -1) return; //all solved!
+  // Future<void> tryCharacter({
+  //   required String dictId,
+  //   int? wordIndex,
+  //   required String character,
+  // }) async {
+  //   final perviousState = await future;
+  //   var dict = perviousState.readLeafById(id: dictId);
+  //   if (dict == null) return;
+  //   int index = wordIndex ?? _firstUnsolvedWordIndex(dict.value.paragraphProblems);
+  //   if (index == -1) return; //all solved!
 
-    final updatedWord = dict.value.wordProblems[index]
-        .copyWith()
-        .tryCharacter(input: character);
-    dict = dict.copyWith(
-        value: dict.value.copyWith(
-            wordProblems: dict.value.wordProblems.replace(index, updatedWord)));
-    updateDict(dictId, dict);
-  }
+  //   final updatedWord = dict.value.paragraphProblems[index]
+  //       .copyWith()
+  //       .tryCharacter(input: character);
+  //   dict = dict.copyWith(
+  //       value: dict.value.copyWith(
+  //           paragraphProblems: dict.value.paragraphProblems.replace(index, updatedWord)));
+  //   updateDict(dictId, dict);
+  // }
 
-  /// This function reset progress(or all completed) of specific List<DictationWord> of DictData
-  Future<void> resetProblem(String dictId, {bool target = false}) async {
-    final previousState = await future;
-    final dict = previousState.readLeafById(id: dictId);
-    if (dict == null) return;
+  // /// This function reset progress(or all completed) of specific List<DictationWord> of DictData
+  // Future<void> resetProblem(String dictId, {bool target = false}) async {
+  //   final previousState = await future;
+  //   final dict = previousState.readLeafById(id: dictId);
+  //   if (dict == null) return;
 
-    updateDict(
-        dictId,
-        dict.copyWith(
-            value: dict.value.copyWith(
-                wordProblems: dict.value.wordProblems
-                    .map((w) => w.updateIsSolved(target))
-                    .toList())));
-  }
+  //   updateDict(
+  //       dictId,
+  //       dict.copyWith(
+  //           value: dict.value.copyWith(
+  //               paragraphProblems: dict.value.paragraphProblems
+  //                   .map((w) => w.updateIsSolved(target))
+  //                   .toList())));
+  // }
 
-  /// This function set first unsolved word(or character) to solved
-  Future<void> fillWord(
-      {required String dictId, bool fillCharacter = false,}) async {
-    final perviousState = await future;
-    var dict = perviousState.readLeafById(id: dictId);
-    if (dict == null) return;
-    int index = ref.read(selectedWordIndexProvider);
+  // /// This function set selected unsolved word(or character) to solved
+  // Future<void> fillWord(
+  //     {required String dictId, bool fillCharacter = false,}) async {
+  //   final perviousState = await future;
+  //   var dict = perviousState.readLeafById(id: dictId);
+  //   if (dict == null) return;
+  //   int index = ref.read(selectedWordIndexProvider);
 
-    DictationWord? updatedWord = dict.value.wordProblems.elementAtOrNull(index);
-    if(updatedWord==null)return;
+  //   DictationWord? updatedWord = dict.value.paragraphProblems.elementAtOrNull(index);
+  //   if(updatedWord==null)return;
 
-    if (fillCharacter) {
-      updatedWord = updatedWord
-      .tryCharacter(input: '',solveAnyway: true);
-    } else {
-      updatedWord = updatedWord
-      .updateIsSolved(true);
-    }
+  //   if (fillCharacter) {
+  //     updatedWord = updatedWord
+  //     .tryCharacter(input: '',solveAnyway: true);
+  //   } else {
+  //     updatedWord = updatedWord
+  //     .updateIsSolved(true);
+  //   }
 
-    dict = dict.copyWith(
-        value: dict.value.copyWith(
-          wordProblems:dict.value.wordProblems.replace(
-            index, updatedWord
-            )));
-    updateDict(dictId, dict);
-  }
+  //   dict = dict.copyWith(
+  //       value: dict.value.copyWith(
+  //         paragraphProblems:dict.value.paragraphProblems.replace(
+  //           index, updatedWord
+  //           )));
+  //   updateDict(dictId, dict);
+  // }
   // Future<void> fillWord(
   //     {required String dictId, bool fillCharacter = false,}) async {
   //   final perviousState = await future;

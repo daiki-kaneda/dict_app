@@ -2,8 +2,9 @@ import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/buttons/pop_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/buttons/reset_button.dart';
-import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_text_widget/dict_text_widget.dart';
-import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_text_widget/input_text_field.dart';
+import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_paragraph_listview/dict_paragraph_listview.dart';
+import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence_widget/dict_sentence_widget.dart';
+import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence_widget/input_text_field.dart';
 import 'package:dict_app/widgets/player_widget/player_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,24 +41,26 @@ class _DictViewState extends ConsumerState<DictView> {
         ),
         child: Center(child: 
         SafeArea(
-            child: Stack(
-          children: [
-            Column(
-              children: [
-                Expanded(child: DictTextWidget(widget.dict.id,focusNode)),
-                // Align(
-                //     alignment: Alignment.bottomCenter,
-                //     child: 
-                    Container(
-                      padding: EdgeInsets.only(bottom: 20),
-                      color: CupertinoColors.white,
-                      child: PlayerWidget(),
-                    ),
-                 // ),
-                ],
-            ),
-            InputTextField(focusNode),
-          ],
-        )),));
+          child: DictParagraphListview(widget.dict.id, focusNode),
+        //     child: Stack(
+        //   children: [
+        //     Column(
+        //       children: [
+        //         Expanded(child: DictSentenceWidget(widget.dict.id,focusNode)),
+        //         // Align(
+        //         //     alignment: Alignment.bottomCenter,
+        //         //     child: 
+        //             Container(
+        //               padding: EdgeInsets.only(bottom: 20),
+        //               color: CupertinoColors.white,
+        //               child: PlayerWidget(),
+        //             ),
+        //          // ),
+        //         ],
+        //     ),
+        //     InputTextField(focusNode),
+        //   ],
+        // )
+        ),));
   }
 }

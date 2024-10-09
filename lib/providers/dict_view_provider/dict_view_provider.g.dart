@@ -6,7 +6,7 @@ part of 'dict_view_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$typedTextNotifierHash() => r'ff4edc0d501bd2e9ea9468bd3b4ac588492693b4';
+String _$typedTextNotifierHash() => r'1078fa0fe131a770af7bf3979f783be5cd5e42fd';
 
 /// See also [TypedTextNotifier].
 @ProviderFor(TypedTextNotifier)
@@ -57,7 +57,7 @@ final inputTextFieldControllerNotifierProvider = AutoDisposeNotifierProvider<
 
 typedef _$InputTextFieldControllerNotifier
     = AutoDisposeNotifier<TextEditingController>;
-String _$selectedWordIndexHash() => r'44d911434219ec5f02b8132d2ac232a746fbf35f';
+String _$selectedWordIndexHash() => r'186a5bce3bd8756a7045e4ad5f51e0e8fb66a329';
 
 /// See also [SelectedWordIndex].
 @ProviderFor(SelectedWordIndex)
