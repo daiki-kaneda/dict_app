@@ -63,8 +63,7 @@ class TreeListTile extends ConsumerWidget {
         onTap:isEditing ? null: () {
           onTap(dict.id);
           ref.read(audioPlayerNotifierProvider.notifier)
-          ..setSource(dict.value.audioPath)
-          ..setPlayBackrate(SpeedStatus.normal);
+          .setSource(dict.value.audioPath);
         },
         trailing: TrailingEditButton(dict.id,isTask: true,),
       );
