@@ -219,11 +219,7 @@ class DictationSentence {
     if (words.elementAtOrNull(wordIndex) == null) return this;
     final updatedWord = words[wordIndex].tryCharacter(input: input,solveAnyway: solveAnyway);
     return copyWith(
-      words: [
-        ...words.sublist(0, wordIndex),
-        updatedWord,
-        ...words.sublist(wordIndex + 1),
-      ],
+      words: words.replace(wordIndex, updatedWord),
     );
   }
 
