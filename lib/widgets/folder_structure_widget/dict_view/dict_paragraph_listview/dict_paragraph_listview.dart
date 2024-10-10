@@ -17,7 +17,7 @@ class DictParagraphListview extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final paragraphs = ref.watch(dataTreeNotifierProvider.select(
       (dataTreeAsync){
-        if(dataTreeAsync.hasValue)return dataTreeAsync.value!.readLeafById(id: id)?.value.paragraphProblems;
+        if(dataTreeAsync.hasValue)return dataTreeAsync.value!.readLeafById(id: id)?.value.paragraphs;
         return null;
       }
     ));

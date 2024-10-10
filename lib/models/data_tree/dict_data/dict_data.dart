@@ -13,7 +13,7 @@ class DictData {
   final bool isFavorite;
   final double duration;
   final String transcript;
-  final List<DictationParagraph> paragraphProblems;
+  final DictationParagraphs paragraphs;
 
 
   const DictData(
@@ -24,7 +24,7 @@ class DictData {
       required this.isFavorite,
       required this.duration,
       required this.transcript,
-      required this.paragraphProblems});
+      required this.paragraphs});
 
   factory DictData.fromJson(Map<String, dynamic> json) =>
       _$DictDataFromJson(json);
@@ -47,15 +47,7 @@ class DictData {
         isFavorite: false,
         duration: transcript.metadata?.duration ?? 0,
         transcript: alternative.transcript ?? '',
-        paragraphProblems: paragraphs!.paragraphs!.map(
-          (p){
-            if(p.sentences!=null && p.start!=null && p.end!=null){
-              return DictationParagraph.from(paragraph: p);
-            }else{
-              return null;
-            }
-          }
-        ).whereType<DictationParagraph>().toList());
+        paragraphs: DictationParagraphs.from(paragraphs: paragraphs!));
   }
 
   DictData copyWith({
@@ -67,8 +59,7 @@ class DictData {
     double? duration,
     String? transcript,
     List<Word>? words,
-    Paragraphs? paragraphs,
-    List<DictationParagraph>? paragraphProblems
+    DictationParagraphs? paragraphs
   }) {
     return DictData(
       title: title ?? this.title,
@@ -78,7 +69,7 @@ class DictData {
       isFavorite: isFavorite ?? this.isFavorite,
       duration: duration ?? this.duration,
       transcript: transcript ?? this.transcript,
-      paragraphProblems: paragraphProblems ?? this.paragraphProblems
+      paragraphs: paragraphs ?? this.paragraphs
     );
   }
   

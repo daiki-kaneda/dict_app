@@ -6,6 +6,19 @@ part of 'dictation_data_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+DictationParagraphs _$DictationParagraphsFromJson(Map<String, dynamic> json) =>
+    DictationParagraphs(
+      paragraphs: (json['paragraphs'] as List<dynamic>)
+          .map((e) => DictationParagraph.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$DictationParagraphsToJson(
+        DictationParagraphs instance) =>
+    <String, dynamic>{
+      'paragraphs': instance.paragraphs.map((e) => e.toJson()).toList(),
+    };
+
 DictationParagraph _$DictationParagraphFromJson(Map<String, dynamic> json) =>
     DictationParagraph(
       sentences: (json['sentences'] as List<dynamic>)

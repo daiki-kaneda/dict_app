@@ -208,11 +208,57 @@ class DataTreeNotifier extends _$DataTreeNotifier {
     }
   }
 
+  // TODO:implement reset problem data logic per paragraphs,paragraph,sentence,word
+  // Future<void> resetParagraphs({required String dictId}) async {
+  //   final previousDict = (await future).readLeafById(id: dictId);
+  //   if (previousDict == null) return;
+
+  //   final updatedDict = previousDict.copyWith(
+  //       value: previousDict.value
+  //           .copyWith(paragraphs: previousDict.value.paragraphs.reset()));
+  //   updateDict(dictId, updatedDict);
+  // }
+
+  // Future<void> resetParagraph({required String dictId,required int paragraphIndex}) async {
+  //   final previousDict = (await future).readLeafById(id: dictId);
+  //   if (previousDict == null || previousDict.value.paragraphs.paragraphs.elementAtOrNull(paragraphIndex)==null) return;
+
+  //   final updatedDict = previousDict.copyWith(
+  //       value: previousDict.value
+  //           .copyWith(paragraphs: previousDict.value.paragraphs.copyWith(
+  //             paragraphs: 
+  //           )));
+  //   updateDict(dictId, updatedDict);
+  // }
+
+  // Future<void> resetParagraphs({required String dictId}) async {
+  //   final previousDict = (await future).readLeafById(id: dictId);
+  //   if (previousDict == null) return;
+
+  //   final updatedDict = previousDict.copyWith(
+  //       value: previousDict.value
+  //           .copyWith(paragraphs: previousDict.value.paragraphs.reset()));
+  //   updateDict(dictId, updatedDict);
+  // }
+
+  // Future<void> resetParagraphs({required String dictId}) async {
+  //   final previousDict = (await future).readLeafById(id: dictId);
+  //   if (previousDict == null) return;
+
+  //   final updatedDict = previousDict.copyWith(
+  //       value: previousDict.value
+  //           .copyWith(paragraphs: previousDict.value.paragraphs.reset()));
+  //   updateDict(dictId, updatedDict);
+  // }
+
+  // TODO:try character logic for specific dictId and paragrah index and sentence index and word index
+
+  // TODO: fill word loginc for specific dictId and paragraph index and sentence index and word index
   // utility
-  int _firstUnsolvedWordIndex(List<DictationWord> wordProblems) {
-    int index = wordProblems.indexWhere((w) => w.isCompleted == false);
-    return index;
-  }
+  // int _firstUnsolvedWordIndex(List<DictationWord> wordProblems) {
+  //   int index = wordProblems.indexWhere((w) => w.isCompleted == false);
+  //   return index;
+  // }
 
   /// This function try to update completion of DictationCharacter in specific DictData
   /// if wordIndex is null,wordIndex will be set as index of first unsolved word.

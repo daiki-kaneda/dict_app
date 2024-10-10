@@ -1,9 +1,107 @@
+import 'package:dict_app/extension/extension.dart';
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:characters/characters.dart';
 
 part 'dictation_data_model.g.dart';
+
+@JsonSerializable()
+class DictationParagraphs {
+  const DictationParagraphs(
+      {required this.paragraphs});
+
+  final List<DictationParagraph> paragraphs;
+
+  bool get isCompleted =>
+      paragraphs.map((e) => e.isCompleted).where((e) => e == false).isEmpty;
+
+  String get displayText => paragraphs.map((e) => e.displayText).join(' ');
+
+  factory DictationParagraphs.from({
+    required Paragraphs paragraphs,
+    bool alphabetOnly = true,
+  }) {
+    if (paragraphs.paragraphs == null ) {
+      return DictationParagraphs(paragraphs: [], );
+    }
+    final ps = paragraphs.paragraphs!
+        .map((paragraph) => DictationParagraph.from(paragraph: paragraph,alphabetOnly: alphabetOnly))
+        .toList();
+    return DictationParagraphs(
+        paragraphs: ps);
+  }
+
+  DictationParagraphs copyWith(
+      {List<DictationParagraph>? paragraphs}) {
+    return DictationParagraphs(
+        paragraphs: paragraphs ?? this.paragraphs);
+  }
+
+  DictationParagraphs tryCharacter({required String input,required int paragraphIndex,required int sentenceIndex,required int wordIndex,bool solveAnyway = false}) {
+    if (isCompleted) return this;
+    
+    if (paragraphs.elementAtOrNull(sentenceIndex) == null) return this;
+    final updateParagraph = paragraphs[paragraphIndex].tryCharacter(
+      input: input,sentenceIndex: sentenceIndex,wordIndex: wordIndex,solveAnyway: solveAnyway);
+    return copyWith(
+      paragraphs: [
+        ...paragraphs.sublist(0, wordIndex),
+        updateParagraph,
+        ...paragraphs.sublist(wordIndex + 1),
+      ],
+    );
+  }
+
+  DictationParagraphs reset(){
+    return copyWith(
+      paragraphs: paragraphs.map((p)=>p.reset()).toList()
+    );
+  }
+
+  DictationParagraphs resetParagraph({required int paragraphIndex}){
+    final target = paragraphs.elementAtOrNull(paragraphIndex);
+    if(target==null) return this;
+    
+    return copyWith(
+      paragraphs: paragraphs.replace(paragraphIndex, target.reset())
+    );
+  }
+
+  DictationParagraphs resetSentence({required int paragraphIndex,required int sentenceIndex}){
+    final targetParagraph = paragraphs.elementAtOrNull(paragraphIndex);
+    final targetSentence = targetParagraph?.sentences.elementAtOrNull(sentenceIndex);
+    if(targetSentence==null) return this;
+    
+    return copyWith(
+      paragraphs: paragraphs.replace(paragraphIndex, targetParagraph!
+      .copyWith(sentences: targetParagraph.sentences.replace(
+        sentenceIndex, targetSentence.reset())
+      ))
+    );
+  }
+
+  DictationParagraphs resetWord({required int paragraphIndex,required int sentenceIndex,required int wordIndex}){
+    final targetParagraph = paragraphs.elementAtOrNull(paragraphIndex);
+    final targetSentence = targetParagraph?.sentences.elementAtOrNull(sentenceIndex);
+    final targetWord = targetSentence?.words.elementAtOrNull(wordIndex);
+    if(targetWord==null) return this;
+    
+    return copyWith(
+      paragraphs: paragraphs.replace(paragraphIndex, targetParagraph!
+      .copyWith(sentences:  targetParagraph.sentences.replace(
+        sentenceIndex, targetSentence!.copyWith(
+          words: targetSentence.words.replace(
+            wordIndex, targetWord.reset())
+        ))
+      ))
+    );
+  }
+
+  factory DictationParagraphs.fromJson(Map<String, dynamic> json) =>
+      _$DictationParagraphsFromJson(json);
+  Map<String, dynamic> toJson() => _$DictationParagraphsToJson(this);
+}
 
 @JsonSerializable()
 class DictationParagraph {
@@ -56,6 +154,12 @@ class DictationParagraph {
         updatedSentence,
         ...sentences.sublist(wordIndex + 1),
       ],
+    );
+  }
+
+  DictationParagraph reset(){
+    return copyWith(
+      sentences: sentences.map((p)=>p.reset()).toList()
     );
   }
 
@@ -131,6 +235,12 @@ class DictationSentence {
     );
   }
 
+  DictationSentence reset(){
+    return copyWith(
+      words: words.map((p)=>p.reset()).toList()
+    );
+  }
+
   factory DictationSentence.fromJson(Map<String, dynamic> json) =>
       _$DictationSentenceFromJson(json);
   Map<String, dynamic> toJson() => _$DictationSentenceToJson(this);
@@ -202,6 +312,12 @@ class DictationWord {
     }
   }
 
+  DictationWord reset(){
+    return copyWith(
+      characters: characters.map((p)=>p.reset()).toList()
+    );
+  }
+
   DictationWord updateIsSolved(bool target, {bool alphabetOnly = true}) {
     return copyWith(
         characters: characters
@@ -244,6 +360,14 @@ class DictationCharacter {
     if (!isAlphabet(character)) return this;
     return copyWith(isSolved: target);
   }
+
+  DictationCharacter reset(){
+    return copyWith(
+      isSolved: false
+    );
+  }
+
+
 
   factory DictationCharacter.fromJson(Map<String, dynamic> json) =>
       _$DictationCharacterFromJson(json);
