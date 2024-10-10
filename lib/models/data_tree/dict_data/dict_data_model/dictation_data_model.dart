@@ -45,11 +45,7 @@ class DictationParagraphs {
     final updateParagraph = paragraphs[paragraphIndex].tryCharacter(
       input: input,sentenceIndex: sentenceIndex,wordIndex: wordIndex,solveAnyway: solveAnyway);
     return copyWith(
-      paragraphs: [
-        ...paragraphs.sublist(0, wordIndex),
-        updateParagraph,
-        ...paragraphs.sublist(wordIndex + 1),
-      ],
+      paragraphs: paragraphs.replace(paragraphIndex, updateParagraph),
     );
   }
 
@@ -149,11 +145,7 @@ class DictationParagraph {
     if (sentences.elementAtOrNull(sentenceIndex) == null) return this;
     final updatedSentence = sentences[sentenceIndex].tryCharacter(input: input,wordIndex: wordIndex,solveAnyway: solveAnyway);
     return copyWith(
-      sentences: [
-        ...sentences.sublist(0, wordIndex),
-        updatedSentence,
-        ...sentences.sublist(wordIndex + 1),
-      ],
+      sentences: sentences.replace(sentenceIndex, updatedSentence)
     );
   }
 
