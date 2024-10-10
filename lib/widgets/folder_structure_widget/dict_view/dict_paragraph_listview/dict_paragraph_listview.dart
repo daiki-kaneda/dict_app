@@ -23,7 +23,7 @@ class DictParagraphListview extends ConsumerWidget {
     ));
     if(paragraphs==null) return Center(child: CircularProgressIndicator(),);
     return ListView(
-      children: paragraphs
+      children: paragraphs.paragraphs
           .asMap()
           .entries
           .map((e) => ListTile(
