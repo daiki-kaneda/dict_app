@@ -57,21 +57,5 @@ final inputTextFieldControllerNotifierProvider = AutoDisposeNotifierProvider<
 
 typedef _$InputTextFieldControllerNotifier
     = AutoDisposeNotifier<TextEditingController>;
-String _$selectedWordIndexHash() => r'186a5bce3bd8756a7045e4ad5f51e0e8fb66a329';
-
-/// See also [SelectedWordIndex].
-@ProviderFor(SelectedWordIndex)
-final selectedWordIndexProvider =
-    AutoDisposeNotifierProvider<SelectedWordIndex, int>.internal(
-  SelectedWordIndex.new,
-  name: r'selectedWordIndexProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$selectedWordIndexHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$SelectedWordIndex = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

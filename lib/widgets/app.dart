@@ -85,6 +85,10 @@ class _EagerInitialization extends ConsumerWidget {
     ref.watch(playerDurationProvider);
     ref.watch(playerPositionProvider);
     ref.watch(playerStateProvider);
+    
+    ref.watch(wordIndexNotifierProvider);
+    ref.watch(sentenceIndexNotifierProvider);
+    ref.watch(paragraphIndexNotifierProvider);
     return child;
   }
 }

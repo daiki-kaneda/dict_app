@@ -30,7 +30,6 @@ class _DictViewState extends ConsumerState<DictView> {
   }
   @override
   Widget build(BuildContext context) {
-    ref.watch(selectedWordIndexProvider);
     
     return CupertinoPageScaffold(
         resizeToAvoidBottomInset: true,

@@ -132,3 +132,39 @@ class ExpansionNotifier extends _$ExpansionNotifier {
     state = !state;
   }
 }
+
+@riverpod
+class ParagraphIndexNotifier extends _$ParagraphIndexNotifier {
+  @override
+  int build() {
+    return -1;
+  }
+
+  void updateIndex(int index){
+    state = index;
+  }
+}
+
+@riverpod
+class SentenceIndexNotifier extends _$SentenceIndexNotifier {
+  @override
+  int build() {
+    return -1;
+  }
+
+  void updateIndex(int index){
+    state = index;
+  }
+}
+
+@riverpod
+class WordIndexNotifier extends _$WordIndexNotifier {
+  @override
+  int build() {
+    return -1;
+  }
+
+  void updateIndex(int index){
+    state = index;
+  }
+}

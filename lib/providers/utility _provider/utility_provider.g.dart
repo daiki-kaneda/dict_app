@@ -261,5 +261,56 @@ class _ExpansionNotifierProviderElement
   @override
   String get id => (origin as ExpansionNotifierProvider).id;
 }
+
+String _$paragraphIndexNotifierHash() =>
+    r'be70cc068a27e151b6ecdb55eec1e7c7e879a21b';
+
+/// See also [ParagraphIndexNotifier].
+@ProviderFor(ParagraphIndexNotifier)
+final paragraphIndexNotifierProvider =
+    AutoDisposeNotifierProvider<ParagraphIndexNotifier, int>.internal(
+  ParagraphIndexNotifier.new,
+  name: r'paragraphIndexNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$paragraphIndexNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ParagraphIndexNotifier = AutoDisposeNotifier<int>;
+String _$sentenceIndexNotifierHash() =>
+    r'21a64c3ebe3d621ec6a8d5ed9b7ec623dc2f7496';
+
+/// See also [SentenceIndexNotifier].
+@ProviderFor(SentenceIndexNotifier)
+final sentenceIndexNotifierProvider =
+    AutoDisposeNotifierProvider<SentenceIndexNotifier, int>.internal(
+  SentenceIndexNotifier.new,
+  name: r'sentenceIndexNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$sentenceIndexNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SentenceIndexNotifier = AutoDisposeNotifier<int>;
+String _$wordIndexNotifierHash() => r'828099c523d0beb58e406f12b7ad15ad735ffcd4';
+
+/// See also [WordIndexNotifier].
+@ProviderFor(WordIndexNotifier)
+final wordIndexNotifierProvider =
+    AutoDisposeNotifierProvider<WordIndexNotifier, int>.internal(
+  WordIndexNotifier.new,
+  name: r'wordIndexNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$wordIndexNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$WordIndexNotifier = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
