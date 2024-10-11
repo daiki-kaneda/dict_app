@@ -8,12 +8,22 @@ class HintFillButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentId = ref.watch(currentTreeIdNotifierProvider);
+
     return CupertinoButton(
       onPressed: (){
+        final currentId = ref.read(currentTreeIdNotifierProvider);
         if(currentId.value==null)return;
-        // ref.read(dataTreeNotifierProvider.notifier)
-        // .fillWord(dictId: currentId.value!);
+        final paragraphIndex = ref.read(paragraphIndexNotifierProvider);
+        final sentenceIndex = ref.read(sentenceIndexNotifierProvider);
+        final wordIndex = ref.read(wordIndexNotifierProvider);
+        ref.read(dataTreeNotifierProvider.notifier)
+        .tryCharacter(
+          input: '', 
+          dictId: currentId.value!, 
+          paragraphIndex: paragraphIndex, 
+          sentenceIndex: sentenceIndex, 
+          wordIndex: wordIndex,
+          solveAnyway: true);
       },
       child: Icon(
         CupertinoIcons.eye_fill,

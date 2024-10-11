@@ -210,14 +210,14 @@ class DataTreeNotifier extends _$DataTreeNotifier {
 
   Future<void> tryCharacter({
     required String input,required String dictId,required int paragraphIndex,
-    required int sentenceIndex,required int wordIndex,
+    required int sentenceIndex,required int wordIndex,bool solveAnyway=false
   })async{
     final previousDict = (await future).readLeafById(id: dictId);
     if(previousDict==null)return;
     final updatedDict = previousDict.copyWith(
       value: previousDict.value.copyWith(
         paragraphs: previousDict.value.paragraphs.tryCharacter(
-          input: input, paragraphIndex: paragraphIndex, sentenceIndex: sentenceIndex, wordIndex: wordIndex)
+          input: input, paragraphIndex: paragraphIndex, sentenceIndex: sentenceIndex, wordIndex: wordIndex,solveAnyway: solveAnyway)
       )
     );
     updateDict(dictId, updatedDict);
