@@ -23,10 +23,10 @@ class PlayerWidget extends ConsumerWidget {
             height: 1,
           );
         },),
-         const PlayerSlider(),
-         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child:  DurationWidget(),),
+         const CustomPlayerSlider(),
+        //  const Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 10),
+        //   child:  DurationWidget(),),
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),

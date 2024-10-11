@@ -27,13 +27,22 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
       (p)=>((p.start*1000).toInt(),(p.end*1000).toInt())
     ));
 
+    // if reached end, reset first position
+    ref.listen(playerPositionProvider, (prev,next){
+      if(next.hasValue&&next.value!.inMilliseconds>=endInMilliseconds){
+        ref.read(audioPlayerNotifierProvider.notifier)
+          .seek(Duration(milliseconds: startInMilliseconds));
+      }
+    });
+
     final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
     final color = isDarkMode ? CupertinoColors.white:CupertinoColors.black;
     final customDuration = endInMilliseconds-startInMilliseconds;
     if(duration.hasValue&&position.hasValue&&state.hasValue){
       return Slider(
-        max: customDuration.toDouble(),
-        value: position.value!.inMilliseconds.toDouble().clamp(0.0, customDuration.toDouble()), 
+        min: startInMilliseconds.toDouble(),
+        max: endInMilliseconds.toDouble(),
+        value: position.value!.inMilliseconds.toDouble().clamp(startInMilliseconds.toDouble(), endInMilliseconds.toDouble()), 
         activeColor: color,
         onChangeStart: (_){
           setState(() {
@@ -48,13 +57,14 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
         },
         onChanged: (value){
           ref.read(audioPlayerNotifierProvider.notifier)
-          .seek(Duration(milliseconds: (startInMilliseconds+value).toInt()));
+          .seek(Duration(milliseconds: value.toInt()));
         },
         onChangeEnd: (value) {
           if (wasPlaying) {
             ref.read(audioPlayerNotifierProvider.notifier).resume();
           }
-        },);
+        },
+        );
     }else{
       return Slider(
         value:0, 
