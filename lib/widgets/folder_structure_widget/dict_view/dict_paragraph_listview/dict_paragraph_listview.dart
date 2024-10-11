@@ -1,6 +1,7 @@
 import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
+import 'package:dict_app/widgets/folder_structure_widget/buttons/reset_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_paragraph_widget/dict_paragraph_widget.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence_listview/dict_sentence_listview.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,11 +32,13 @@ class DictParagraphListview extends ConsumerWidget {
                 title: Text(e.key.toString()),
                 onTap: () {
                   ref.read(paragraphIndexNotifierProvider.notifier).updateIndex(e.key);
-                  
+
                   Navigator.of(context).push(CupertinoPageRoute(
                     builder: (context) {
                       return CupertinoPageScaffold(
-                          navigationBar: CupertinoNavigationBar(),
+                          navigationBar: CupertinoNavigationBar(
+                            trailing: const ResetButton(ResetStatus.paragraph),
+                          ),
                           child: SafeArea(
                               child:
                                   // DictParagraphWidget(e.value, focusNode)

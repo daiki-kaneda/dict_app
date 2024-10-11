@@ -49,9 +49,9 @@ class DictationParagraphs {
     );
   }
 
-  DictationParagraphs reset(){
+  DictationParagraphs reset({bool alphabetOnly=true}){
     return copyWith(
-      paragraphs: paragraphs.map((p)=>p.reset()).toList()
+      paragraphs: paragraphs.map((p)=>p.reset(alphabetOnly: alphabetOnly)).toList()
     );
   }
 
@@ -88,7 +88,7 @@ class DictationParagraphs {
       .copyWith(sentences:  targetParagraph.sentences.replace(
         sentenceIndex, targetSentence!.copyWith(
           words: targetSentence.words.replace(
-            wordIndex, targetWord.reset())
+            wordIndex, targetWord.updateIsSolved(false))
         ))
       ))
     );
@@ -149,9 +149,9 @@ class DictationParagraph {
     );
   }
 
-  DictationParagraph reset(){
+  DictationParagraph reset({bool alphabetOnly =true}){
     return copyWith(
-      sentences: sentences.map((p)=>p.reset()).toList()
+      sentences: sentences.map((p)=>p.reset(alphabetOnly: alphabetOnly)).toList()
     );
   }
 
@@ -223,9 +223,9 @@ class DictationSentence {
     );
   }
 
-  DictationSentence reset(){
+  DictationSentence reset({bool alphabetOnly = true}){
     return copyWith(
-      words: words.map((p)=>p.reset()).toList()
+      words: words.map((p)=>p.updateIsSolved(false,alphabetOnly: alphabetOnly)).toList()
     );
   }
 
@@ -300,12 +300,6 @@ class DictationWord {
     }
   }
 
-  DictationWord reset(){
-    return copyWith(
-      characters: characters.map((p)=>p.reset()).toList()
-    );
-  }
-
   DictationWord updateIsSolved(bool target, {bool alphabetOnly = true}) {
     return copyWith(
         characters: characters
@@ -348,13 +342,6 @@ class DictationCharacter {
     if (!isAlphabet(character)) return this;
     return copyWith(isSolved: target);
   }
-
-  DictationCharacter reset(){
-    return copyWith(
-      isSolved: false
-    );
-  }
-
 
 
   factory DictationCharacter.fromJson(Map<String, dynamic> json) =>

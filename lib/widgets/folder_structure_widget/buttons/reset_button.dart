@@ -5,12 +5,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum ResetStatus{
+  paragraphs,paragraph,sentence
+}
+
 class ResetButton extends ConsumerWidget {
-  const ResetButton({super.key});
+  const ResetButton(this.status,{super.key});
+
+  final ResetStatus status;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentId = ref.watch(currentTreeIdNotifierProvider);
+
+    void reset(){
+      final notifier = ref.read(dataTreeNotifierProvider.notifier);
+      final currentId = ref.watch(currentTreeIdNotifierProvider);
+      final paragraphIndex = ref.watch(paragraphIndexNotifierProvider);
+      final sentenceIndex = ref.watch(sentenceIndexNotifierProvider);
+
+      if(currentId.value==null)return;
+      if(status==ResetStatus.paragraphs){
+        notifier.resetParagraphs(dictId: currentId.value!);
+      }else if(status==ResetStatus.paragraph){
+        notifier.resetParagraph(dictId: currentId.value!, paragraphIndex: paragraphIndex);
+      }else{
+        notifier.resetSentence(dictId: currentId.value!, paragraphIndex: paragraphIndex,sentenceIndex: sentenceIndex);
+      }
+    }
 
     return DelayWrapper(
       duration: 2500,
@@ -36,13 +57,7 @@ class ResetButton extends ConsumerWidget {
                       child: Text('リセット'),
                       onPressed: () {
                         Navigator.of(context).pop();
-                        if (currentId.value != null) {
-                          // ref
-                          //     .read(dataTreeNotifierProvider.notifier)
-                          //     .resetProblem(
-                          //       currentId.value!,
-                          //     );
-                        }
+                        reset();
                       },
                     ),
                   ],

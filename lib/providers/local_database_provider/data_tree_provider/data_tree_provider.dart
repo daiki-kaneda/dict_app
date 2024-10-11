@@ -224,143 +224,34 @@ class DataTreeNotifier extends _$DataTreeNotifier {
   }
 
   // TODO:implement reset problem data logic per paragraphs,paragraph,sentence,word
-  // Future<void> resetParagraphs({required String dictId}) async {
-  //   final previousDict = (await future).readLeafById(id: dictId);
-  //   if (previousDict == null) return;
+  Future<void> resetParagraphs({required String dictId}) async {
+    final previousDict = (await future).readLeafById(id: dictId);
+    if (previousDict == null) return;
 
-  //   final updatedDict = previousDict.copyWith(
-  //       value: previousDict.value
-  //           .copyWith(paragraphs: previousDict.value.paragraphs.reset()));
-  //   updateDict(dictId, updatedDict);
-  // }
+    final updatedDict = previousDict.copyWith(
+        value: previousDict.value
+            .copyWith(paragraphs: previousDict.value.paragraphs.reset()));
+    updateDict(dictId, updatedDict);
+  }
 
-  // Future<void> resetParagraph({required String dictId,required int paragraphIndex}) async {
-  //   final previousDict = (await future).readLeafById(id: dictId);
-  //   if (previousDict == null || previousDict.value.paragraphs.paragraphs.elementAtOrNull(paragraphIndex)==null) return;
+  Future<void> resetParagraph({required String dictId,required int paragraphIndex}) async {
+    final previousDict = (await future).readLeafById(id: dictId);
+    if (previousDict == null) return;
 
-  //   final updatedDict = previousDict.copyWith(
-  //       value: previousDict.value
-  //           .copyWith(paragraphs: previousDict.value.paragraphs.copyWith(
-  //             paragraphs: 
-  //           )));
-  //   updateDict(dictId, updatedDict);
-  // }
+    final updatedDict = previousDict.copyWith(
+        value: previousDict.value
+            .copyWith(paragraphs: previousDict.value.paragraphs.resetParagraph(paragraphIndex: paragraphIndex)));
+    updateDict(dictId, updatedDict);
+  }
 
-  // Future<void> resetParagraphs({required String dictId}) async {
-  //   final previousDict = (await future).readLeafById(id: dictId);
-  //   if (previousDict == null) return;
+  Future<void> resetSentence({required String dictId,required int paragraphIndex,required int sentenceIndex}) async {
+    final previousDict = (await future).readLeafById(id: dictId);
+    if (previousDict == null) return;
 
-  //   final updatedDict = previousDict.copyWith(
-  //       value: previousDict.value
-  //           .copyWith(paragraphs: previousDict.value.paragraphs.reset()));
-  //   updateDict(dictId, updatedDict);
-  // }
-
-  // Future<void> resetParagraphs({required String dictId}) async {
-  //   final previousDict = (await future).readLeafById(id: dictId);
-  //   if (previousDict == null) return;
-
-  //   final updatedDict = previousDict.copyWith(
-  //       value: previousDict.value
-  //           .copyWith(paragraphs: previousDict.value.paragraphs.reset()));
-  //   updateDict(dictId, updatedDict);
-  // }
-
-  // TODO:try character logic for specific dictId and paragrah index and sentence index and word index
-
-  // TODO: fill word loginc for specific dictId and paragraph index and sentence index and word index
-  // utility
-  // int _firstUnsolvedWordIndex(List<DictationWord> wordProblems) {
-  //   int index = wordProblems.indexWhere((w) => w.isCompleted == false);
-  //   return index;
-  // }
-
-  /// This function try to update completion of DictationCharacter in specific DictData
-  /// if wordIndex is null,wordIndex will be set as index of first unsolved word.
-  // Future<void> tryCharacter({
-  //   required String dictId,
-  //   int? wordIndex,
-  //   required String character,
-  // }) async {
-  //   final perviousState = await future;
-  //   var dict = perviousState.readLeafById(id: dictId);
-  //   if (dict == null) return;
-  //   int index = wordIndex ?? _firstUnsolvedWordIndex(dict.value.paragraphProblems);
-  //   if (index == -1) return; //all solved!
-
-  //   final updatedWord = dict.value.paragraphProblems[index]
-  //       .copyWith()
-  //       .tryCharacter(input: character);
-  //   dict = dict.copyWith(
-  //       value: dict.value.copyWith(
-  //           paragraphProblems: dict.value.paragraphProblems.replace(index, updatedWord)));
-  //   updateDict(dictId, dict);
-  // }
-
-  // /// This function reset progress(or all completed) of specific List<DictationWord> of DictData
-  // Future<void> resetProblem(String dictId, {bool target = false}) async {
-  //   final previousState = await future;
-  //   final dict = previousState.readLeafById(id: dictId);
-  //   if (dict == null) return;
-
-  //   updateDict(
-  //       dictId,
-  //       dict.copyWith(
-  //           value: dict.value.copyWith(
-  //               paragraphProblems: dict.value.paragraphProblems
-  //                   .map((w) => w.updateIsSolved(target))
-  //                   .toList())));
-  // }
-
-  // /// This function set selected unsolved word(or character) to solved
-  // Future<void> fillWord(
-  //     {required String dictId, bool fillCharacter = false,}) async {
-  //   final perviousState = await future;
-  //   var dict = perviousState.readLeafById(id: dictId);
-  //   if (dict == null) return;
-  //   int index = ref.read(selectedWordIndexProvider);
-
-  //   DictationWord? updatedWord = dict.value.paragraphProblems.elementAtOrNull(index);
-  //   if(updatedWord==null)return;
-
-  //   if (fillCharacter) {
-  //     updatedWord = updatedWord
-  //     .tryCharacter(input: '',solveAnyway: true);
-  //   } else {
-  //     updatedWord = updatedWord
-  //     .updateIsSolved(true);
-  //   }
-
-  //   dict = dict.copyWith(
-  //       value: dict.value.copyWith(
-  //         paragraphProblems:dict.value.paragraphProblems.replace(
-  //           index, updatedWord
-  //           )));
-  //   updateDict(dictId, dict);
-  // }
-  // Future<void> fillWord(
-  //     {required String dictId, bool fillCharacter = false,}) async {
-  //   final perviousState = await future;
-  //   var dict = perviousState.readLeafById(id: dictId);
-  //   if (dict == null) return;
-  //   int index = _firstUnsolvedWordIndex(dict.value.wordProblems);
-  //   if (index == -1) return; //all solved!
-
-  //   DictationWord updatedWord = dict.value.wordProblems[index];
-
-  //   if (fillCharacter) {
-  //     updatedWord = updatedWord
-  //     .tryCharacter(input: '',solveAnyway: true);
-  //   } else {
-  //     updatedWord = updatedWord
-  //     .updateIsSolved(true);
-  //   }
-
-  //   dict = dict.copyWith(
-  //       value: dict.value.copyWith(
-  //         wordProblems:dict.value.wordProblems.replace(
-  //           index, updatedWord
-  //           )));
-  //   updateDict(dictId, dict);
-  // }
+    final updatedDict = previousDict.copyWith(
+        value: previousDict.value
+            .copyWith(paragraphs: previousDict.value.paragraphs.resetSentence(paragraphIndex: paragraphIndex,sentenceIndex: sentenceIndex)));
+    updateDict(dictId, updatedDict);
+  }
+  
 }

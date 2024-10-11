@@ -34,7 +34,7 @@ class _DictViewState extends ConsumerState<DictView> {
     return CupertinoPageScaffold(
         resizeToAvoidBottomInset: true,
         navigationBar: CupertinoNavigationBar(
-          trailing: const ResetButton(),
+          trailing: const ResetButton(ResetStatus.paragraphs),
           leading: const PopButton(),
           middle: Text(widget.dict.value.title),
         ),
