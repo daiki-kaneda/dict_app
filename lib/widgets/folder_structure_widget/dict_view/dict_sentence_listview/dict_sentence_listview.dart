@@ -1,6 +1,7 @@
 import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
+import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/buttons/reset_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_paragraph_widget/dict_paragraph_widget.dart';
@@ -11,14 +12,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictSentenceListview extends ConsumerWidget {
-  const DictSentenceListview(this.paragraph,this.focusNode,{super.key});
+  const DictSentenceListview(this.dictId,this.paragraphIndex,this.focusNode,{super.key});
 
-  final DictationParagraph paragraph;
+  final String dictId;
+  final int paragraphIndex;
 
   final FocusNode focusNode;
 
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+      final paragraph = ref.watch(dataTreeNotifierProvider.select(
+      (dataTreeAsync){
+        if(dataTreeAsync.hasValue)return dataTreeAsync.value!.readLeafById(id: dictId)?.value.paragraphs.paragraphs.elementAtOrNull(paragraphIndex);
+        return null;
+      }
+    ));
+    if(paragraph==null) return Center(child: CircularProgressIndicator(),);
     return ListView(
       children: paragraph.sentences.asMap().entries.map(
         (e)=>ListTile(
@@ -36,7 +46,7 @@ class DictSentenceListview extends ConsumerWidget {
                   trailing: const ResetButton(ResetStatus.sentence),
                 ),
                 child: SafeArea(child: 
-                DictSentenceProblemView(e.value, focusNode)));
+                DictSentenceProblemView(focusNode)));
             },));
           },
         )

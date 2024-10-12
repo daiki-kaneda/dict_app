@@ -6,9 +6,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictSentenceProblemView extends ConsumerWidget {
-  const DictSentenceProblemView(this.sentence,this.focusNode,{super.key});
+  const DictSentenceProblemView(
+    this.dictId,
+    this.paragraphIndex,
+    this.sentenceIndex,
+    this.focusNode,{super.key});
 
-  final DictationSentence sentence;
+  final String dictId;
+  final int paragraphIndex;
+  final int sentenceIndex;
   final FocusNode focusNode;
 
   @override
@@ -17,7 +23,7 @@ class DictSentenceProblemView extends ConsumerWidget {
           children: [
             Column(
               children: [
-                Expanded(child: DictSentenceWidget(sentence,focusNode)),
+                Expanded(child: DictSentenceWidget(focusNode)),
                 // Align(
                 //     alignment: Alignment.bottomCenter,
                 //     child: 

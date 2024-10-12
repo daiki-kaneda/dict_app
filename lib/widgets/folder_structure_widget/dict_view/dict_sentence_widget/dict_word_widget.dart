@@ -11,11 +11,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictWordWidget extends ConsumerWidget {
-  const DictWordWidget(this.index,this.word,this.focusNode,{super.key});
+  const DictWordWidget(this.index,this.focusNode,{super.key});
 
   final int index;
-
-  final DictationWord word;
 
   final FocusNode focusNode;
   @override
@@ -35,6 +33,13 @@ class DictWordWidget extends ConsumerWidget {
       (i)=>index==i
     ));
 
+    final word = ref.watch(selectedWordProvider);
+    if(word.value==null){
+      return Center(
+        child: CupertinoActivityIndicator(),
+      );
+    }
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 100),
       curve: Curves.easeOut,
@@ -53,9 +58,9 @@ class DictWordWidget extends ConsumerWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          if(word.isCompleted){
+          if(word.value!.isCompleted){
             focusNode.unfocus();
-            platform.invokeMethod('searchDictionary',{'word':word.word});
+            platform.invokeMethod('searchDictionary',{'word':word.value!.word});
           }else{
             HapticFeedback.lightImpact();
             ref.read(wordIndexNotifierProvider.notifier).updateIndex(index);
@@ -73,7 +78,7 @@ class DictWordWidget extends ConsumerWidget {
         child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          for(final c in word.characters)
+          for(final c in word.value!.characters)
           DictCharacterWidget(c)
         ],
       ),

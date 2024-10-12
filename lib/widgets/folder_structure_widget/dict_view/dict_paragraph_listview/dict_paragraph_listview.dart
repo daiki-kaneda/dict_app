@@ -42,7 +42,7 @@ class DictParagraphListview extends ConsumerWidget {
                           child: SafeArea(
                               child:
                                   // DictParagraphWidget(e.value, focusNode)
-                                  DictSentenceListview(e.value, focusNode)));
+                                  DictSentenceListview(id,e.key, focusNode)));
                     },
                   ));
                 },

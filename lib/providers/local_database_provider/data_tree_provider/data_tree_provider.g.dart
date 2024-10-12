@@ -6,7 +6,7 @@ part of 'data_tree_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dataTreeNotifierHash() => r'26f3ef459fcb476562961e65fe16b7bb584b06d9';
+String _$dataTreeNotifierHash() => r'41a507aed9c1face897cde09e766a8005c9acd14';
 
 /// See also [DataTreeNotifier].
 @ProviderFor(DataTreeNotifier)

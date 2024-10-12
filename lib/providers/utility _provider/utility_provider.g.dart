@@ -35,6 +35,53 @@ final isDictShowingProvider = AutoDisposeFutureProvider<bool>.internal(
 );
 
 typedef IsDictShowingRef = AutoDisposeFutureProviderRef<bool>;
+String _$selectedWordHash() => r'155b9bb1944a2edd450d4000b4172d86108aba59';
+
+/// See also [selectedWord].
+@ProviderFor(selectedWord)
+final selectedWordProvider = AutoDisposeFutureProvider<DictationWord?>.internal(
+  selectedWord,
+  name: r'selectedWordProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$selectedWordHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SelectedWordRef = AutoDisposeFutureProviderRef<DictationWord?>;
+String _$selectedSentenceHash() => r'1aa3911b6be7ceca5f8ea533519ada52f367e70a';
+
+/// See also [selectedSentence].
+@ProviderFor(selectedSentence)
+final selectedSentenceProvider =
+    AutoDisposeFutureProvider<DictationSentence?>.internal(
+  selectedSentence,
+  name: r'selectedSentenceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedSentenceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SelectedSentenceRef = AutoDisposeFutureProviderRef<DictationSentence?>;
+String _$selectedParagraphHash() => r'2514ef9aacb8d7b1d2461e49a2ca7e4be661a7e2';
+
+/// See also [selectedParagraph].
+@ProviderFor(selectedParagraph)
+final selectedParagraphProvider =
+    AutoDisposeFutureProvider<DictationParagraph?>.internal(
+  selectedParagraph,
+  name: r'selectedParagraphProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedParagraphHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SelectedParagraphRef
+    = AutoDisposeFutureProviderRef<DictationParagraph?>;
 String _$currentTreeIdNotifierHash() =>
     r'b8ed9c925948aae762e2f9f2d5ddcd35f3f6bd60';
 

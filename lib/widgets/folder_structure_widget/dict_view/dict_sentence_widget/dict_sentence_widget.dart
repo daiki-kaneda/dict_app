@@ -8,19 +8,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 class DictSentenceWidget extends ConsumerWidget {
-  const DictSentenceWidget(this.sentence, this.focusNode,{super.key});
+  const DictSentenceWidget(this.focusNode,{super.key});
 
-  final DictationSentence sentence;
+
 
   final FocusNode focusNode;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(wordIndexNotifierProvider);
+    final sentence = ref.watch(selectedSentenceProvider);
+    if(sentence.value==null){
+      return Center(
+        child: CupertinoActivityIndicator(),
+      );
+    }
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child:Wrap(
               spacing: 10,
-              children: sentence.words.asMap().entries.map((e)=>DictWordWidget(e.key, e.value, focusNode)).toList()
+              children: sentence.value!.words.asMap().entries.map((e)=>DictWordWidget(e.key,  focusNode)).toList()
             ) 
         );
   }

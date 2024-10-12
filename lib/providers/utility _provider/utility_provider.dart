@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dict_app/extension/extension.dart';
+import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -167,4 +168,48 @@ class WordIndexNotifier extends _$WordIndexNotifier {
   void updateIndex(int index){
     state = index;
   }
+}
+
+@riverpod
+FutureOr<DictationWord?> selectedWord(SelectedWordRef ref) {
+  final dictId = ref.watch(currentTreeIdNotifierProvider);
+  if(dictId.value==null) return null;
+  final paragpraphs = ref.watch(dataTreeNotifierProvider.select(
+    (tree)=>tree.value?.readLeafById(id: dictId.value!)?.value.paragraphs
+  ));
+  if(paragpraphs==null) return null;
+  final paragraphIndex = ref.watch(paragraphIndexNotifierProvider);
+  final sentenceIndex = ref.watch(sentenceIndexNotifierProvider);
+  final wordIndex = ref.watch(wordIndexNotifierProvider);
+
+  return paragpraphs.paragraphs.elementAtOrNull(paragraphIndex)
+  ?.sentences.elementAtOrNull(sentenceIndex)?.words.elementAtOrNull(wordIndex);
+}
+
+@riverpod
+FutureOr<DictationSentence?> selectedSentence(SelectedSentenceRef ref) {
+  final dictId = ref.watch(currentTreeIdNotifierProvider);
+  if(dictId.value==null) return null;
+  final paragpraphs = ref.watch(dataTreeNotifierProvider.select(
+    (tree)=>tree.value?.readLeafById(id: dictId.value!)?.value.paragraphs
+  ));
+  if(paragpraphs==null) return null;
+  final paragraphIndex = ref.watch(paragraphIndexNotifierProvider);
+  final sentenceIndex = ref.watch(sentenceIndexNotifierProvider);
+
+  return paragpraphs.paragraphs.elementAtOrNull(paragraphIndex)
+  ?.sentences.elementAtOrNull(sentenceIndex);
+}
+
+@riverpod
+FutureOr<DictationParagraph?> selectedParagraph(SelectedParagraphRef ref) {
+  final dictId = ref.watch(currentTreeIdNotifierProvider);
+  if(dictId.value==null) return null;
+  final paragpraphs = ref.watch(dataTreeNotifierProvider.select(
+    (tree)=>tree.value?.readLeafById(id: dictId.value!)?.value.paragraphs
+  ));
+  if(paragpraphs==null) return null;
+  final paragraphIndex = ref.watch(paragraphIndexNotifierProvider);
+
+  return paragpraphs.paragraphs.elementAtOrNull(paragraphIndex);
 }
