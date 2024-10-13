@@ -10,8 +10,9 @@ class PlayPauseButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(playerStateProvider);
-    final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    final color = isDarkMode ? CupertinoColors.white:CupertinoColors.black;
+    // final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    // final color = isDarkMode ? CupertinoColors.white:CupertinoColors.black;
+    final color = CupertinoColors.black;
 
     if (state.hasValue) {
       final playerState = state.value!;

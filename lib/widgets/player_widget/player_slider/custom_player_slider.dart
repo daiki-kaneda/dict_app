@@ -35,8 +35,9 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
       }
     });
 
-    final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    final color = isDarkMode ? CupertinoColors.white:CupertinoColors.black;
+    // final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    // final color = isDarkMode ? CupertinoColors.white:CupertinoColors.black;
+    final color = CupertinoColors.black;
     final customDuration = endInMilliseconds-startInMilliseconds;
     if(duration.hasValue&&position.hasValue&&state.hasValue){
       return Slider(
