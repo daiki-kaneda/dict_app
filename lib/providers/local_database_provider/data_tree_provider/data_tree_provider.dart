@@ -12,6 +12,7 @@ import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dar
 import 'package:dict_app/providers/local_database_provider/local_data_status.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
+import 'package:dict_app/utils/dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -201,6 +202,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
         createDict(nodeId, Leaf(value: dictData));
       }
     } catch (e) {
+      showCustomDialog(DialogStatus.unExpectedError);
       print(e.toString());
       ref
           .read(appDocumentsDirectoryNotifierProvider.notifier)
