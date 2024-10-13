@@ -7,14 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictSentenceProblemView extends ConsumerWidget {
   const DictSentenceProblemView(
-    this.dictId,
-    this.paragraphIndex,
-    this.sentenceIndex,
     this.focusNode,{super.key});
 
-  final String dictId;
-  final int paragraphIndex;
-  final int sentenceIndex;
   final FocusNode focusNode;
 
   @override

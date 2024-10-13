@@ -33,8 +33,10 @@ class DictWordWidget extends ConsumerWidget {
       (i)=>index==i
     ));
 
-    final word = ref.watch(selectedWordProvider);
-    if(word.value==null){
+    final word = ref.watch(selectedSentenceProvider.select(
+      (sentence)=>sentence.value?.words.elementAtOrNull(index)
+    ));
+    if(word==null){
       return Center(
         child: CupertinoActivityIndicator(),
       );
@@ -58,9 +60,9 @@ class DictWordWidget extends ConsumerWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          if(word.value!.isCompleted){
+          if(word.isCompleted){
             focusNode.unfocus();
-            platform.invokeMethod('searchDictionary',{'word':word.value!.word});
+            platform.invokeMethod('searchDictionary',{'word':word.word});
           }else{
             HapticFeedback.lightImpact();
             ref.read(wordIndexNotifierProvider.notifier).updateIndex(index);
@@ -78,7 +80,7 @@ class DictWordWidget extends ConsumerWidget {
         child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          for(final c in word.value!.characters)
+          for(final c in word.characters)
           DictCharacterWidget(c)
         ],
       ),
