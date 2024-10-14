@@ -13,6 +13,7 @@ import 'package:dict_app/providers/local_database_provider/local_data_status.dar
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/utils/dialog.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -181,7 +182,11 @@ class DataTreeNotifier extends _$DataTreeNotifier {
           await ref.read(filerPickerNotifierProvider.notifier).getAudioData();
       if (result != null) {
         print('got result!');
-        final (path, bytes) = result;
+        final (path, bytes,size) = result;
+        if(!validateAudioSize(size, maxSizeMbs)){
+          showCustomDialog(DialogStatus.maxFileSizeLimitExceededError);
+          return;
+        }
         final ext = path.split('.').lastOrNull;
         print('got path:$path');
         if (ext == null) throw Exception('could not get file extension!');
