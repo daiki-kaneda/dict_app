@@ -4,8 +4,8 @@ import 'package:dict_app/widgets/delay_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PopButton extends ConsumerWidget {
-  const PopButton({super.key});
+class FolderPopButton extends ConsumerWidget {
+  const FolderPopButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

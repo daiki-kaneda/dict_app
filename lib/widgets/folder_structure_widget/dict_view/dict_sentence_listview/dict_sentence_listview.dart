@@ -4,6 +4,7 @@ import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/buttons/reset_button.dart';
+import 'package:dict_app/widgets/folder_structure_widget/dict_view/button/dict_pop_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_paragraph_widget/dict_paragraph_widget.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence_widget/dict_sentence_problem.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence_widget/dict_sentence_widget.dart';
@@ -35,6 +36,7 @@ class DictSentenceListview extends ConsumerWidget {
           title: Text(e.key.toString()),
           onTap: () {
             ref.read(sentenceIndexNotifierProvider.notifier).updateIndex(e.key);
+            ref.read(wordIndexNotifierProvider.notifier).updateIndex(-1);
             ref.read(audioPlayerNotifierProvider.notifier)
             .setPlayBackrate(SpeedStatus.normal);
             ref.read(startEndProviderProvider.notifier)
@@ -43,6 +45,8 @@ class DictSentenceListview extends ConsumerWidget {
             Navigator.of(context).push(CupertinoPageRoute(builder:(context) {
               return CupertinoPageScaffold(
                 navigationBar: CupertinoNavigationBar(
+                  leading: DictPopButton(),
+                  middle: Text('sentence-${e.key}'),
                   trailing: const ResetButton(ResetStatus.sentence),
                 ),
                 child: SafeArea(child: 

@@ -14,7 +14,7 @@ class FolderView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          leading: const PopButton(),
+          leading: const FolderPopButton(),
           middle: Text(folder.value.title),
           //trailing: const EditButton()
         ),

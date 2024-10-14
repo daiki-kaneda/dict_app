@@ -60,6 +60,7 @@ class TrailingEditButton extends ConsumerWidget {
                                       style: TextStyle(
                                           color: CupertinoColors.activeBlue),
                                     )),
+                                middle: Text('フォルダを選択'),
                               ),
                               child: SelectFolderList(
                                 isTask: isTask,

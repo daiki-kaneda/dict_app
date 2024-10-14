@@ -35,8 +35,10 @@ class _DictViewState extends ConsumerState<DictView> {
         resizeToAvoidBottomInset: true,
         navigationBar: CupertinoNavigationBar(
           trailing: const ResetButton(ResetStatus.paragraphs),
-          leading: const PopButton(),
-          middle: Text(widget.dict.value.title),
+          leading: const FolderPopButton(),
+          middle: Text('paragraphs'
+           // widget.dict.value.title
+            ),
         ),
         child: Center(child: 
         SafeArea(
