@@ -35,7 +35,7 @@ final isDictShowingProvider = AutoDisposeFutureProvider<bool>.internal(
 );
 
 typedef IsDictShowingRef = AutoDisposeFutureProviderRef<bool>;
-String _$selectedWordHash() => r'155b9bb1944a2edd450d4000b4172d86108aba59';
+String _$selectedWordHash() => r'6554c13bcbe2f767d7d1fbe6a73c76a3722fddba';
 
 /// See also [selectedWord].
 @ProviderFor(selectedWord)
@@ -49,7 +49,7 @@ final selectedWordProvider = AutoDisposeFutureProvider<DictationWord?>.internal(
 );
 
 typedef SelectedWordRef = AutoDisposeFutureProviderRef<DictationWord?>;
-String _$selectedSentenceHash() => r'1aa3911b6be7ceca5f8ea533519ada52f367e70a';
+String _$selectedSentenceHash() => r'f64adf549e3d57e60ee4d58375a91e4755b69f7d';
 
 /// See also [selectedSentence].
 @ProviderFor(selectedSentence)
@@ -65,7 +65,7 @@ final selectedSentenceProvider =
 );
 
 typedef SelectedSentenceRef = AutoDisposeFutureProviderRef<DictationSentence?>;
-String _$selectedParagraphHash() => r'2514ef9aacb8d7b1d2461e49a2ca7e4be661a7e2';
+String _$selectedParagraphHash() => r'9d1889e3e762c5f4ba5d641357e6af3f924dabb6';
 
 /// See also [selectedParagraph].
 @ProviderFor(selectedParagraph)

@@ -1,5 +1,6 @@
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
+import 'package:dict_app/providers/pending_dict_provider/pending_dict_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +43,10 @@ class FooterButton extends ConsumerWidget {
               onPressed: () {
                 final currentId = ref.read(currentTreeIdNotifierProvider).value;
                 if (currentId != null) {
-                  ref.read(dataTreeNotifierProvider.notifier).
-                  addNewDict(nodeId: currentId);
+                  ref.read(pendingDictListNotifierProvider.notifier)
+                  .tryAddNewDict(nodeId: currentId);
+                  // ref.read(dataTreeNotifierProvider.notifier).
+                  // addNewDict(nodeId: currentId);
                   // ref.read(dataTreeNotifierProvider.notifier).createTask(
                   //     currentId,
                   //     Leaf(value: DictData(title: 'new', completed: false)));
