@@ -41,7 +41,7 @@ class DictData {
     if(paragraphs?.paragraphs?.isEmpty != false)throw UnsupportedError('audio do not have english audio');
     return DictData(
         title: title,
-        createdAt: transcript.metadata?.created ?? DateTime.now(),
+        createdAt: DateTime.now(),
         audioPath: audioPath,
         description: description ?? '',
         isFavorite: false,

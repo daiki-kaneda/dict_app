@@ -173,7 +173,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
   }
 
   /// This function is for add new dictation data from local file user picked
-  Future<void> addNewDict({required String nodeId, String? title}) async {
+  Future<void> addNewDict({required String nodeId, String? title,}) async {
     try {
       print(await ref
           .read(appDocumentsDirectoryNotifierProvider.notifier)
@@ -201,7 +201,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
         print(
             'got transcription:${transcript.results?.channels?.firstOrNull?.alternatives?.firstOrNull?.transcript}');
         final dictData = DictData.from(
-            title: title ?? DateFormat.yMEd().format(DateTime.now()),
+            title: title ?? '新規ディクテーション',
             transcript,
             audioPath: filePath);
         createDict(nodeId, Leaf(value: dictData));

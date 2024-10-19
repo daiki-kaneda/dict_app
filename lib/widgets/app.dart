@@ -35,6 +35,7 @@ class App extends ConsumerWidget {
       builder: (context, child) {
         if(todoTree.hasValue){
           return Scaffold(
+          key: scaffoldKey,
           body: Navigator(
             key: innerNavigatorKey,
             onGenerateRoute: (settings) {

@@ -1,4 +1,7 @@
+import 'package:dict_app/constants/scaffold_key.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 bool isAlphabet(String character){
   final rxp = RegExp(r'[a-zA-Z]');
@@ -11,6 +14,25 @@ String formatDuration(Duration duration) {
   return '$minutes:$seconds';
 }
 
+String formatDateTime(DateTime dateTime) {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final startOfWeek = today.subtract(Duration(days: today.weekday - 1));
+  final endOfWeek = startOfWeek.add(const Duration(days: 6));
+
+  if (dateTime.isAfter(today) && dateTime.isBefore(today.add(const Duration(days: 1)))) {
+    // 今日の日付の場合
+    return DateFormat('HH:mm').format(dateTime);
+  } else if (dateTime.isAfter(startOfWeek) && dateTime.isBefore(endOfWeek.add(const Duration(days: 1)))) {
+    // 今週の日付の場合
+    return DateFormat.EEEE(
+      Localizations.localeOf(scaffoldKey.currentContext!).toLanguageTag() // 'ja'
+      ).format(dateTime); // 曜日を日本語で表示
+  } else {
+    // 今日でも今週でもない場合
+    return DateFormat('yyyy/MM/dd').format(dateTime);
+  }
+}
 
 final int maxSizeMbs = 10;
 
