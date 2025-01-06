@@ -39,37 +39,48 @@ class TreeListTile extends ConsumerWidget {
       }
     }
 
-    if (tree is Folder) {
-      final folder = tree as Folder;
-      return ListTile(
-        leading: const Icon(
-          CupertinoIcons.folder,
-          color: CupertinoColors.black,),
-        title: Text(folder.value.title),
-        trailing:TrailingEditButton(folder.id),
-        onTap:isEditing ? null: () {
-          onTap(folder.id);
-        },
-      );
-    } else if (tree is Dict) {
-      final dict = tree as Dict;
-      return ListTile(
-        leading: isEditing ? SelectButton(dict.id) : null,
-        title: Text(
-          dict.value.title,
-          style: const TextStyle(fontWeight: FontWeight.w600),
-        ),
-        subtitle: Text(
-            formatDateTime(dict.value.createdAt )),
-        onTap:isEditing ? null: () {
-          onTap(dict.id);
-          ref.read(audioPlayerNotifierProvider.notifier)
-          .setSource(dict.value.audioPath);
-        },
-        trailing: TrailingEditButton(dict.id,isTask: true,),
-      );
-    } else {
-      throw UnsupportedError('DataTree must be Dict or Folder');
+    switch (tree) {
+      case Dict():
+        {
+          final dict = tree as Dict;
+          return ListTile(
+            leading: isEditing ? SelectButton(dict.id) : null,
+            title: Text(
+              dict.value.title,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+            subtitle: Text(formatDateTime(dict.value.createdAt)),
+            onTap: isEditing
+                ? null
+                : () {
+                    onTap(dict.id);
+                    ref
+                        .read(audioPlayerNotifierProvider.notifier)
+                        .setSource(dict.value.audioPath);
+                  },
+            trailing: TrailingEditButton(
+              dict.id,
+              isTask: true,
+            ),
+          );
+        }
+      case Folder():
+        {
+          final folder = tree as Folder;
+          return ListTile(
+            leading: const Icon(
+              CupertinoIcons.folder,
+              color: CupertinoColors.black,
+            ),
+            title: Text(folder.value.title),
+            trailing: TrailingEditButton(folder.id),
+            onTap: isEditing
+                ? null
+                : () {
+                    onTap(folder.id);
+                  },
+          );
+        }
     }
   }
 }

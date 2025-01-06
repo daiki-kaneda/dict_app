@@ -1171,10 +1171,10 @@ packages:
     dependency: "direct main"
     description:
       name: tree_data_model
-      sha256: e030141111343b9f44715fb9bebbc302439d703c34c9bca812a8eca09ac939fb
+      sha256: "5741e445461e0610f68915ab55534ca681aa09c57f75d84ba4d67c2175832cbe"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.2"
   typed_data:
     dependency: transitive
     description:

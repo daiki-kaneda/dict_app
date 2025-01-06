@@ -44,12 +44,9 @@ class FolderStructureWidget extends ConsumerWidget {
       );
     }
 
-    if (tree is Dict) {
-      return DictView(tree);
-    } else if (tree is Folder) {
-      return FolderView(tree);
-    } else {
-      throw UnsupportedError('DataTree must be Dict or Folder');
+    switch(tree){
+      case Dict():return DictView(tree);
+      case Folder():return FolderView(tree);
     }
   }
 }
