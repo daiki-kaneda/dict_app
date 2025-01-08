@@ -14,11 +14,11 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: DictApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class DictApp extends StatelessWidget {
+  const DictApp({super.key});
 
   // This widget is the root of your application.
   @override

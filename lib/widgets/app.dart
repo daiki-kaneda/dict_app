@@ -20,7 +20,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 class App extends ConsumerWidget {
-  const App({super.key});
+  const  App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
