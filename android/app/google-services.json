@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "135767615744",
+    "project_id": "dict-app-cbf85",
+    "storage_bucket": "dict-app-cbf85.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135767615744:android:f76d33f9e3f1728a686be5",
+        "android_client_info": {
+          "package_name": "com.daikikaneda.dict_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo0L1sZbmxhEV4X-HQvcF4I6USugLfAS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
