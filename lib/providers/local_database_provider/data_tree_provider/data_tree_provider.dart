@@ -17,6 +17,7 @@ import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tree_data_model/tree_data_model.dart';
 import 'package:dict_app/extension/extension.dart';
 
@@ -173,7 +174,10 @@ class DataTreeNotifier extends _$DataTreeNotifier {
   }
 
   /// This function is for add new dictation data from local file user picked
-  Future<void> addNewDict({required String nodeId, String? title,}) async {
+  Future<void> addNewDict({
+    required String nodeId,
+    String? title,
+  }) async {
     try {
       print(await ref
           .read(appDocumentsDirectoryNotifierProvider.notifier)
@@ -182,8 +186,8 @@ class DataTreeNotifier extends _$DataTreeNotifier {
           await ref.read(filerPickerNotifierProvider.notifier).getAudioData();
       if (result != null) {
         print('got result!');
-        final (path, bytes,size) = result;
-        if(!validateAudioSize(size, maxSizeMbs)){
+        final (path, bytes, size) = result;
+        if (!validateAudioSize(size, maxSizeMbs)) {
           showCustomDialog(DialogStatus.maxFileSizeLimitExceededError);
           return;
         }
@@ -201,9 +205,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
         print(
             'got transcription:${transcript.results?.channels?.firstOrNull?.alternatives?.firstOrNull?.transcript}');
         final dictData = DictData.from(
-            title: title ?? '新規ディクテーション',
-            transcript,
-            audioPath: filePath);
+            title: title ?? '新規ディクテーション', transcript, audioPath: filePath);
         createDict(nodeId, Leaf(value: dictData));
       }
     } catch (e) {
@@ -215,18 +217,23 @@ class DataTreeNotifier extends _$DataTreeNotifier {
     }
   }
 
-  Future<void> tryCharacter({
-    required String input,required String dictId,required int paragraphIndex,
-    required int sentenceIndex,required int wordIndex,bool solveAnyway=false
-  })async{
+  Future<void> tryCharacter(
+      {required String input,
+      required String dictId,
+      required int paragraphIndex,
+      required int sentenceIndex,
+      required int wordIndex,
+      bool solveAnyway = false}) async {
     final previousDict = (await future).readLeafById(id: dictId);
-    if(previousDict==null)return;
+    if (previousDict == null) return;
     final updatedDict = previousDict.copyWith(
-      value: previousDict.value.copyWith(
-        paragraphs: previousDict.value.paragraphs.tryCharacter(
-          input: input, paragraphIndex: paragraphIndex, sentenceIndex: sentenceIndex, wordIndex: wordIndex,solveAnyway: solveAnyway)
-      )
-    );
+        value: previousDict.value.copyWith(
+            paragraphs: previousDict.value.paragraphs.tryCharacter(
+                input: input,
+                paragraphIndex: paragraphIndex,
+                sentenceIndex: sentenceIndex,
+                wordIndex: wordIndex,
+                solveAnyway: solveAnyway)));
     updateDict(dictId, updatedDict);
   }
 
@@ -241,24 +248,42 @@ class DataTreeNotifier extends _$DataTreeNotifier {
     updateDict(dictId, updatedDict);
   }
 
-  Future<void> resetParagraph({required String dictId,required int paragraphIndex}) async {
+  Future<void> resetParagraph(
+      {required String dictId, required int paragraphIndex}) async {
     final previousDict = (await future).readLeafById(id: dictId);
     if (previousDict == null) return;
 
     final updatedDict = previousDict.copyWith(
-        value: previousDict.value
-            .copyWith(paragraphs: previousDict.value.paragraphs.resetParagraph(paragraphIndex: paragraphIndex)));
+        value: previousDict.value.copyWith(
+            paragraphs: previousDict.value.paragraphs
+                .resetParagraph(paragraphIndex: paragraphIndex)));
     updateDict(dictId, updatedDict);
   }
 
-  Future<void> resetSentence({required String dictId,required int paragraphIndex,required int sentenceIndex}) async {
+  Future<void> resetSentence(
+      {required String dictId,
+      required int paragraphIndex,
+      required int sentenceIndex}) async {
     final previousDict = (await future).readLeafById(id: dictId);
     if (previousDict == null) return;
 
     final updatedDict = previousDict.copyWith(
-        value: previousDict.value
-            .copyWith(paragraphs: previousDict.value.paragraphs.resetSentence(paragraphIndex: paragraphIndex,sentenceIndex: sentenceIndex)));
+        value: previousDict.value.copyWith(
+            paragraphs: previousDict.value.paragraphs.resetSentence(
+                paragraphIndex: paragraphIndex, sentenceIndex: sentenceIndex)));
     updateDict(dictId, updatedDict);
   }
-  
+
+  Future<void> shareJsonString(
+      {required String treeId, bool isDict = false}) async {
+    final root = await future;
+    DataTree? target;
+    if (isDict) {
+      target = root.readLeafById(id: treeId);
+    } else {
+      target = root.readNodeById(nodeId: treeId);
+    }
+    if (target == null) return;
+    Share.share(jsonEncode(target));
+  }
 }

@@ -105,7 +105,7 @@ class TrailingEditButton extends ConsumerWidget {
                         ref
                             .read(dataTreeNotifierProvider.notifier)
                             .changeFolderName(treeId, newName);
-                      }                      
+                      }
                     },
                   ),
                   CupertinoActionSheetAction(
@@ -121,6 +121,21 @@ class TrailingEditButton extends ConsumerWidget {
                         ref
                             .read(dataTreeNotifierProvider.notifier)
                             .deleteFolder(treeId);
+                      }
+                    },
+                  ),
+                  CupertinoActionSheetAction(
+                    child: Text('jsonデータをシェアする'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      if (isTask) {
+                        ref
+                            .read(dataTreeNotifierProvider.notifier)
+                            .shareJsonString(treeId: treeId, isDict: true);
+                      } else {
+                        ref
+                            .read(dataTreeNotifierProvider.notifier)
+                            .shareJsonString(treeId: treeId);
                       }
                     },
                   ),

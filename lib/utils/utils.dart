@@ -34,7 +34,7 @@ String formatDateTime(DateTime dateTime) {
   }
 }
 
-final int maxSizeMbs = 10;
+final int maxSizeMbs = 999999999999999;
 
 bool validateAudioSize(int size,int maxMbs){
   return maxMbs > (size/(1024*1024));
