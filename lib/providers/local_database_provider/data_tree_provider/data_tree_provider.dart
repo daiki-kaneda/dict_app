@@ -284,6 +284,6 @@ class DataTreeNotifier extends _$DataTreeNotifier {
       target = root.readNodeById(nodeId: treeId);
     }
     if (target == null) return;
-    Share.share(jsonEncode(target));
+    Share.share(jsonEncode(target.toJson((t) => t.toJson(), (u) => u.toJson())));
   }
 }
