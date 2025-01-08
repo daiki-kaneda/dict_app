@@ -7,7 +7,7 @@ part of 'pending_dict_provider.dart';
 // **************************************************************************
 
 String _$pendingDictListNotifierHash() =>
-    r'ef07ecc6df9bdc4fc526075c578f802f4fd82dea';
+    r'21de68d048f60f7144540be67aebeb7d8e2d2de0';
 
 /// See also [PendingDictListNotifier].
 @ProviderFor(PendingDictListNotifier)
