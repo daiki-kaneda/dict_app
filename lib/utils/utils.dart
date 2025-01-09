@@ -1,5 +1,4 @@
 import 'package:dict_app/constants/scaffold_key.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 

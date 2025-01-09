@@ -1,25 +1,19 @@
 import 'dart:convert';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/models/data_tree/dict_data/dict_data.dart';
-import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
 import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
-import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_data_status.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/utils/dialog.dart';
 import 'package:dict_app/utils/utils.dart';
-import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:tree_data_model/tree_data_model.dart';
-import 'package:dict_app/extension/extension.dart';
 
 part 'data_tree_provider.g.dart';
 

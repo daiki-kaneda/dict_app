@@ -1,5 +1,4 @@
 import 'package:dict_app/constants/inner_navigator_key.dart';
-import 'package:dict_app/constants/scaffold_key.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 

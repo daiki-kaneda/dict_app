@@ -1,6 +1,5 @@
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
-import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_structure_widget.dart';
@@ -9,7 +8,6 @@ import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_t
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class TreeListTile extends ConsumerWidget {
   const TreeListTile(this.tree, {super.key});

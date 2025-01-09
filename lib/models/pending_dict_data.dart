@@ -1,5 +1,3 @@
-import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
-import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 
 
 class PendingDictData {

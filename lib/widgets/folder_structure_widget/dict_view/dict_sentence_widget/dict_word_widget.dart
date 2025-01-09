@@ -1,12 +1,7 @@
-import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
-import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
-import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence_widget/dict_character_widget.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

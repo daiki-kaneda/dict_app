@@ -1,7 +1,5 @@
 import 'package:dict_app/models/pending_dict_data.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
-import 'package:dict_app/utils/utils.dart';
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pending_dict_provider.g.dart';

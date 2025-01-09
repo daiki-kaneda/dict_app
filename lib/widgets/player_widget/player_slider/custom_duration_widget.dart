@@ -1,4 +1,3 @@
-import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/utils/utils.dart';

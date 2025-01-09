@@ -1,10 +1,8 @@
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
-import 'package:dict_app/widgets/folder_structure_widget/buttons/pop_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_view.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/folder_view.dart';
-import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/tree_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
@@ -7,7 +6,6 @@ import 'package:dict_app/widgets/modal/cupertino_text_field_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 class TrailingEditButton extends ConsumerWidget {
   const TrailingEditButton(this.treeId, {super.key, this.isTask = false});
