@@ -29,8 +29,15 @@ class TypedTextNotifier extends _$TypedTextNotifier {
       if (nextText == null) return;
       if (prevText!=null && prevText.length >= nextText.length) return;
 
+      final targetCharacter = nextText.characters.last;
+      // Space key move word selection
+      if(targetCharacter==' '){
+        ref.read(wordIndexNotifierProvider.notifier)
+        .updateIndex(currentWordIndex+1);
+        return;
+      }
       ref.read(dataTreeNotifierProvider.notifier).tryCharacter(
-        input: nextText.characters.last, 
+        input: targetCharacter, 
         dictId: currentId.value!, 
         paragraphIndex: currentParagraphIndex, 
         sentenceIndex: currentSentenceIndex, 
