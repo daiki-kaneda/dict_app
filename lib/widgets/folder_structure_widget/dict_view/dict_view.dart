@@ -28,6 +28,7 @@ class _DictViewState extends ConsumerState<DictView> {
     return CupertinoPageScaffold(
         resizeToAvoidBottomInset: true,
         navigationBar: CupertinoNavigationBar(
+          backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
           trailing: const ResetButton(ResetStatus.paragraphs),
           leading: const FolderPopButton(),
           middle: Text('paragraphs'

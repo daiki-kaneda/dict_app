@@ -49,6 +49,7 @@ class TrailingEditButton extends ConsumerWidget {
                         builder: (context) {
                           return CupertinoPageScaffold(
                               navigationBar: CupertinoNavigationBar(
+                                brightness: CupertinoTheme.brightnessOf(context),
                                 leading: TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();

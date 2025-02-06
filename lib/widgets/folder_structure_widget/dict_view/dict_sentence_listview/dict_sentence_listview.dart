@@ -42,6 +42,7 @@ class DictSentenceListview extends ConsumerWidget {
             Navigator.of(context).push(CupertinoPageRoute(builder:(context) {
               return CupertinoPageScaffold(
                 navigationBar: CupertinoNavigationBar(
+                  backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
                   leading: DictPopButton(),
                   middle: Text('sentence-${e.key}'),
                   trailing: const ResetButton(ResetStatus.sentence),

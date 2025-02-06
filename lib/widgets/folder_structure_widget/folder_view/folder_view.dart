@@ -18,6 +18,7 @@ class FolderView extends ConsumerWidget {
     ));
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
+          backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
           leading: const FolderPopButton(),
           middle: Text(folder.value.title),
           //trailing: const EditButton()

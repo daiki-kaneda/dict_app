@@ -27,15 +27,46 @@ class App extends ConsumerWidget {
     final todoTree = ref.watch(dataTreeNotifierProvider);
     final isDictShowing = ref.watch(isDictShowingProvider);
     final isSheetShowing = ref.watch(isSheetShowingProvider);
-    return _EagerInitialization(
-      CupertinoApp(
-      theme: const CupertinoThemeData(
+
+      const defaultCupertinoTheme = CupertinoThemeData(
+      brightness: null,
+      primaryColor: CupertinoColors.systemBlue,
+      barBackgroundColor: CupertinoDynamicColor.withBrightness(
+        color: Color(0xF0F9F9F9),
+        darkColor: Color(0xF01D1D1D),
       ),
+      scaffoldBackgroundColor: CupertinoColors.systemBackground,
+      textTheme: CupertinoTextThemeData(
+        primaryColor: CupertinoColors.label,
+      ),
+    );
+    return _EagerInitialization(
+      MaterialApp(
+            theme: ThemeData.from(
+              colorScheme:
+                  ColorScheme.fromSeed(seedColor: const Color(0xff6750a4)))
+          .copyWith(
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              brightness: Brightness.light,
+              cupertinoOverrideTheme:
+                  defaultCupertinoTheme.copyWith(brightness: Brightness.light)),
+      darkTheme: ThemeData.from(
+              colorScheme: ColorScheme.fromSeed(
+                  brightness: Brightness.dark,
+                  seedColor: const Color(0xff6750a4)))
+          .copyWith(
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              brightness: Brightness.dark,
+              cupertinoOverrideTheme:
+                  defaultCupertinoTheme.copyWith(brightness: Brightness.dark)),
+      themeMode: ThemeMode.system,
       builder: (context, child) {
         if(todoTree.hasValue){
-          return Scaffold(
+          return 
+          Scaffold(
           key: scaffoldKey,
-          body: Navigator(
+          body: 
+          Navigator(
             key: innerNavigatorKey,
             onGenerateRoute: (settings) {
               return CupertinoPageRoute(
@@ -44,7 +75,8 @@ class App extends ConsumerWidget {
                 },
               );
             },
-          ),
+          )
+          ,
           persistentFooterButtons:(!isSheetShowing && isDictShowing.value==false) ? const [
              FooterButton()
           ]:null,
