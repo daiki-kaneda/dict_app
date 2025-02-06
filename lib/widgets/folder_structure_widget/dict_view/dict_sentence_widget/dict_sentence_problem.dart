@@ -22,7 +22,7 @@ class DictSentenceProblemView extends ConsumerWidget {
                 //     child: 
                     Container(
                       padding: EdgeInsets.only(bottom: 20),
-                      color: CupertinoColors.white,
+                      color: CupertinoTheme.of(context).scaffoldBackgroundColor,
                       child: PlayerWidget(),
                     ),
                  // ),

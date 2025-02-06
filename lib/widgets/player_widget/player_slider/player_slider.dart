@@ -23,9 +23,7 @@ class _PlayerSliderState extends ConsumerState<PlayerSlider> {
     final position = ref.watch(playerPositionProvider);
     final state = ref.watch(playerStateProvider);
 
-    // final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    // final color = isDarkMode ? CupertinoColors.white:CupertinoColors.black;
-    final color = CupertinoColors.black;
+    final color = CupertinoColors.label.resolveFrom(context);
     if(duration.hasValue&&position.hasValue&&state.hasValue){
       return Slider(
         max: duration.value!.inMilliseconds.toDouble(),

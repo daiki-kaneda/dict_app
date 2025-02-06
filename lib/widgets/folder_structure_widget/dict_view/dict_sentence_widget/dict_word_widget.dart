@@ -42,7 +42,7 @@ class DictWordWidget extends ConsumerWidget {
       curve: Curves.easeOut,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: isSelected ? CupertinoColors.extraLightBackgroundGray:null,
+        color: isSelected ? CupertinoColors.secondarySystemFill.resolveFrom(context):null,
         // border: Border(bottom: 
         // shouldFocus ? BorderSide(
         //   color: CupertinoColors.activeOrange,

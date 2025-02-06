@@ -27,6 +27,6 @@ class HintFillButton extends ConsumerWidget {
       },
       child: Icon(
         CupertinoIcons.eye_fill,
-        color: CupertinoColors.black,),);
+        color: CupertinoColors.label.resolveFrom(context)),);
   }
 }

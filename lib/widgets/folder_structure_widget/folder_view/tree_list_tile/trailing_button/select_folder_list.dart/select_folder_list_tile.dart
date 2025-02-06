@@ -26,7 +26,7 @@ class SelectTargetFolderListTile extends ConsumerWidget {
       return ListTile(
         leading: Icon(
           CupertinoIcons.folder,
-          color: CupertinoColors.black,
+          color:  CupertinoTheme.of(context).textTheme.textStyle.color,
         ),
         title: Text(folder.value.title),
         onTap: onTapTile,
@@ -38,7 +38,7 @@ class SelectTargetFolderListTile extends ConsumerWidget {
           id: folder.id,
           leading: Icon(
             CupertinoIcons.folder,
-            color: CupertinoColors.black,
+            color:  CupertinoTheme.of(context).textTheme.textStyle.color,
           ),
           title: Text(folder.value.title),
           trailing: IconButton(

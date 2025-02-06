@@ -66,9 +66,9 @@ class TreeListTile extends ConsumerWidget {
         {
           final folder = tree as Folder;
           return ListTile(
-            leading: const Icon(
+            leading: Icon(
               CupertinoIcons.folder,
-              color: CupertinoColors.black,
+              color: CupertinoTheme.of(context).textTheme.textStyle.color,
             ),
             title: Text(folder.value.title),
             trailing: TrailingEditButton(folder.id),
