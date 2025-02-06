@@ -65,3 +65,7 @@ ETC原則,DRY原則に基づいて、プロトタイプのアプリのアセッ�
 ### 2025-2-06
 #### メモ
 - MaterialAppのcupertinoOverrideThemeを修正して、ダークモード対応した
+
+#### ロジックの修正
+- navigatorObserverを使用する（popのボタンにプレイヤーの停止のロジックを含めない。スライドでpopした場合などを想定）
+- 同様にウィジェットに依存せず、paragraphIndex,sentenceIndex,wordIndexをリッスンして、必要な処理を自動で行うようにする
