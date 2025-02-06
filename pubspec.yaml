@@ -43,6 +43,7 @@ dependencies:
   # cloud_firestore: ^5.6.1
 
   characters: any
+  flutter_platform_widgets: ^7.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
