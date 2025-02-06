@@ -31,32 +31,11 @@ class _DictViewState extends ConsumerState<DictView> {
           backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
           trailing: const ResetButton(ResetStatus.paragraphs),
           leading: const FolderPopButton(),
-          middle: Text('paragraphs'
-           // widget.dict.value.title
-            ),
+          middle: Text(widget.dict.value.title),
         ),
-        child: Center(child: 
+        child: 
         SafeArea(
-          child: DictParagraphListview(widget.dict.id, focusNode),
-        //     child: Stack(
-        //   children: [
-        //     Column(
-        //       children: [
-        //         Expanded(child: DictSentenceWidget(widget.dict.id,focusNode)),
-        //         // Align(
-        //         //     alignment: Alignment.bottomCenter,
-        //         //     child: 
-        //             Container(
-        //               padding: EdgeInsets.only(bottom: 20),
-        //               color: CupertinoColors.white,
-        //               child: PlayerWidget(),
-        //             ),
-        //          // ),
-        //         ],
-        //     ),
-        //     InputTextField(focusNode),
-        //   ],
-        // )
-        ),));
+          child: DictParagraphListview(widget.dict.id, focusNode)
+        ),);
   }
 }
