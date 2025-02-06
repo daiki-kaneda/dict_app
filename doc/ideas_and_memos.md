@@ -66,6 +66,7 @@ ETC原則,DRY原則に基づいて、プロトタイプのアプリのアセッ�
 ### 2025-2-06
 #### メモ
 - MaterialAppのcupertinoOverrideThemeを修正して、ダークモード対応した
+- DictationWordのtryCharacterにはindexに当たる文字の存在をチェックするガードが欠けているかもしれない
 
 #### ロジックの修正
 - navigatorObserverを使用する（popのボタンにプレイヤーの停止のロジックを含めない。スライドでpopした場合などを想定）
