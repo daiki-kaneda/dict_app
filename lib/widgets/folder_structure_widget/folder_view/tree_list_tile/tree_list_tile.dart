@@ -5,6 +5,7 @@ import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_structure_widget.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/select_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/trailing_button/trailing_button.dart';
+import 'package:dict_app/widgets/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,7 +43,7 @@ class TreeListTile extends ConsumerWidget {
         {
           final dict = tree as Dict;
           return ListTile(
-            leading: isEditing ? SelectButton(dict.id) : null,
+            leading: isEditing ? SelectButton(dict.id) : CompletenessIcon(dict.value.paragraphs.isCompleted),
             title: Text(
               dict.value.title,
               style: const TextStyle(fontWeight: FontWeight.w600),

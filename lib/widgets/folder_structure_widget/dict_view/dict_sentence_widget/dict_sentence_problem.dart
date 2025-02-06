@@ -17,15 +17,11 @@ class DictSentenceProblemView extends ConsumerWidget {
             Column(
               children: [
                 Expanded(child: DictSentenceWidget(focusNode)),
-                // Align(
-                //     alignment: Alignment.bottomCenter,
-                //     child: 
                     Container(
                       padding: EdgeInsets.only(bottom: 20),
                       color: CupertinoTheme.of(context).scaffoldBackgroundColor,
                       child: PlayerWidget(),
                     ),
-                 // ),
                 ],
             ),
             InputTextField(focusNode),

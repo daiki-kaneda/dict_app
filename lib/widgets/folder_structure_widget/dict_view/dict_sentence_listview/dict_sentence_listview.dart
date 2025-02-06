@@ -5,6 +5,7 @@ import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/buttons/reset_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/button/dict_pop_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence_widget/dict_sentence_problem.dart';
+import 'package:dict_app/widgets/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +31,7 @@ class DictSentenceListview extends ConsumerWidget {
     return ListView(
       children: paragraph.sentences.asMap().entries.map(
         (e)=>ListTile(
+          leading: CompletenessIcon(paragraph.sentences[e.key].isCompleted),
           title: Text(e.key.toString()),
           onTap: () {
             ref.read(sentenceIndexNotifierProvider.notifier).updateIndex(e.key);
