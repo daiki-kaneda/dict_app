@@ -78,3 +78,4 @@ ProviderRefを持つNavigatorObserverを提供する同期的なproviderを定�
 以下の機能を持つようにしたい
 - DictProblemViewからpopする際に、playerを停止
 - DictViewへpushする際に、対応するオーディオをplayerにセット
+- showingDictViewなども同様に手動ではなくNavigatorObserverによって、更新したい

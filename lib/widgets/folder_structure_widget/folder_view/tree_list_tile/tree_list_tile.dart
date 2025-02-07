@@ -18,7 +18,7 @@ class TreeListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditing = ref.watch(isEditingNotifierProvider);
-    final selectedIds = ref.watch(selectedIdsProvider);
+    // final selectedIds = ref.watch(selectedIdsProvider);
 
     Future<void> pushRoute(String treeId) async {
       Navigator.of(context).push(CupertinoPageRoute(

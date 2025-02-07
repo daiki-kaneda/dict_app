@@ -6,7 +6,7 @@ part of 'dict_view_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$typedTextNotifierHash() => r'215f261ca7a5cf03a12a7615a41f53a26dae00af';
+String _$typedTextNotifierHash() => r'212a7b8d15d0891c3a0a06cc5f57c62c7af5a15f';
 
 /// See also [TypedTextNotifier].
 @ProviderFor(TypedTextNotifier)

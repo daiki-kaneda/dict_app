@@ -12,6 +12,7 @@ import 'package:dict_app/providers/audio_player_provider/player_state_provider.d
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
+import 'package:dict_app/providers/navigator_observer_provider/navigator_observer_provider.dart';
 import 'package:dict_app/providers/pending_dict_provider/pending_dict_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_structure_widget.dart';
@@ -70,6 +71,7 @@ class App extends ConsumerWidget {
           body: 
           Navigator(
             key: innerNavigatorKey,
+            observers: [ref.read(customNavigatorObserverProvider)],
             onGenerateRoute: (settings) {
               return CupertinoPageRoute(
                 builder: (context) {
