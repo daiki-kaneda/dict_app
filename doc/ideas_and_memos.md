@@ -71,3 +71,10 @@ ETC原則,DRY原則に基づいて、プロトタイプのアプリのアセッ�
 #### ロジックの修正
 - navigatorObserverを使用する（popのボタンにプレイヤーの停止のロジックを含めない。スライドでpopした場合などを想定）
 - 同様にウィジェットに依存せず、paragraphIndex,sentenceIndex,wordIndexをリッスンして、必要な処理を自動で行うようにする
+
+### 2025-2-07
+#### NavigatorObserver + ProviderRef
+ProviderRefを持つNavigatorObserverを提供する同期的なproviderを定義して、Navigatorに渡したい.
+以下の機能を持つようにしたい
+- DictProblemViewからpopする際に、playerを停止
+- DictViewへpushする際に、対応するオーディオをplayerにセット
