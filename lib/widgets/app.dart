@@ -63,17 +63,17 @@ class App extends ConsumerWidget {
               cupertinoOverrideTheme:
                   defaultCupertinoTheme.copyWith(brightness: Brightness.dark)),
       themeMode: ThemeMode.system,
-      builder: (context, child) {
+      home: Builder(builder:(context) {
         if(todoTree.hasValue){
           return 
           Scaffold(
           key: scaffoldKey,
-          body: 
-          Navigator(
+          body: Navigator(
             key: innerNavigatorKey,
             observers: [ref.read(customNavigatorObserverProvider)],
             onGenerateRoute: (settings) {
               return CupertinoPageRoute(
+                settings: RouteSettings(arguments: {'treeId':todoTree.value!.id}),
                 builder: (context) {
                   return FolderStructureWidget(todoTree.value!.id);
                 },
@@ -93,7 +93,7 @@ class App extends ConsumerWidget {
             ),)
           );
         }
-      },
+      },)
     )
     );
   }
