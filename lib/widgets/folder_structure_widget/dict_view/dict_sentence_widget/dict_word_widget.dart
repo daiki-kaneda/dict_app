@@ -3,6 +3,7 @@ import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence_widget/dict_character_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictWordWidget extends ConsumerWidget {
@@ -33,7 +34,7 @@ class DictWordWidget extends ConsumerWidget {
     ));
     if(word==null){
       return Center(
-        child: CupertinoActivityIndicator(),
+        child: PlatformCircularProgressIndicator(),
       );
     }
 

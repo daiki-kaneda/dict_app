@@ -19,6 +19,7 @@ import 'package:dict_app/widgets/folder_structure_widget/folder_structure_widget
 import 'package:dict_app/widgets/fotter_button/footer_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -86,11 +87,11 @@ class App extends ConsumerWidget {
           ]:null,
         );
         }else{
-          return const Scaffold(
-            body: CupertinoPageScaffold(child: 
+          return PlatformScaffold(
+            body: 
             Center(
-              child: CupertinoActivityIndicator(),
-            ),)
+              child: PlatformCircularProgressIndicator()
+            )
           );
         }
       },)

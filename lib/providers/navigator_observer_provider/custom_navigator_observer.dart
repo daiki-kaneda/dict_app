@@ -9,7 +9,6 @@ class CustomNavigatorObserver extends NavigatorObserver{
 
   @override
   void didPush(Route route, Route? previousRoute) {
-    print(ref.read(currentTreeIdNotifierProvider).);
     super.didPush(route, previousRoute);
   }
 }

@@ -6,6 +6,7 @@ import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence
 import 'package:dict_app/widgets/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictParagraphListview extends ConsumerWidget {
@@ -23,7 +24,7 @@ class DictParagraphListview extends ConsumerWidget {
         return null;
       }
     ));
-    if(paragraphs==null) return Center(child: CircularProgressIndicator(),);
+    if(paragraphs==null) return Center(child: PlatformCircularProgressIndicator(),);
     return ListView(
       children: paragraphs.paragraphs
           .asMap()

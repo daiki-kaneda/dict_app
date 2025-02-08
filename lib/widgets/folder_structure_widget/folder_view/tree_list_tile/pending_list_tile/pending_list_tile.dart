@@ -2,6 +2,7 @@ import 'package:dict_app/models/pending_dict_data.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PendingListTile extends ConsumerWidget {
@@ -36,7 +37,7 @@ class PendingListTile extends ConsumerWidget {
           trailing: Stack(
             children: [
               if(isWaiting)
-              const CupertinoActivityIndicator(),
+              PlatformCircularProgressIndicator(),
               if(isErrored)
               CupertinoButton(
                 onPressed: (){

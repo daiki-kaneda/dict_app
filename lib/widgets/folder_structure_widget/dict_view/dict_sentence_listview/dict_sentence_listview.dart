@@ -8,6 +8,7 @@ import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence
 import 'package:dict_app/widgets/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictSentenceListview extends ConsumerWidget {
@@ -27,7 +28,7 @@ class DictSentenceListview extends ConsumerWidget {
         return null;
       }
     ));
-    if(paragraph==null) return Center(child: CircularProgressIndicator(),);
+    if(paragraph==null) return Center(child: PlatformCircularProgressIndicator());
     return ListView(
       children: paragraph.sentences.asMap().entries.map(
         (e)=>ListTile(

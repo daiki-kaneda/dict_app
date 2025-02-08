@@ -4,6 +4,7 @@ import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_view.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/folder_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FolderStructureWidget extends ConsumerWidget {
@@ -37,8 +38,8 @@ class FolderStructureWidget extends ConsumerWidget {
     }));
 
     if (tree == null) {
-      return const Center(
-        child: CupertinoActivityIndicator(),
+      return Center(
+        child: PlatformCircularProgressIndicator()
       );
     }
 
