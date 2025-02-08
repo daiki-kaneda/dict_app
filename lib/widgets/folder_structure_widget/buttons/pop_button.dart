@@ -15,9 +15,9 @@ class FolderPopButton extends ConsumerWidget {
         return canPop.value == true
             ? CupertinoNavigationBarBackButton(
                 onPressed: () {
-                  ref
-                      .read(currentTreeIdNotifierProvider.notifier)
-                      .updateToParentId();
+                  // ref
+                  //     .read(currentTreeIdNotifierProvider.notifier)
+                  //     .updateToParentId();
                   ref
                       .read(isEditingNotifierProvider.notifier)
                       .updateMode(false);

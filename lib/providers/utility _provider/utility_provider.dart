@@ -16,7 +16,7 @@ class CurrentTreeIdNotifier extends _$CurrentTreeIdNotifier {
     // for debug
     ref.listenSelf((prev, next) {
       if (prev?.value != next.value) {
-        log('changed current id to ${next.value} from ${prev?.value}');
+        print('changed current id to ${next.value} from ${prev?.value}');
       }
     });
     return root.id;

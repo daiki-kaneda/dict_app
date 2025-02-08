@@ -30,7 +30,7 @@ class _DictViewState extends ConsumerState<DictView> {
         navigationBar: CupertinoNavigationBar(
           backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
           trailing: const ResetButton(ResetStatus.paragraphs),
-          leading: const FolderPopButton(),
+          //leading: const FolderPopButton(),
           middle: Text(widget.dict.value.title),
         ),
         child: 

@@ -7,19 +7,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CurrentTreeWidget extends ConsumerWidget {
+class CurrentTreeWidget extends ConsumerStatefulWidget {
   const CurrentTreeWidget(this.treeId, {super.key});
 
   final String treeId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CurrentTreeWidgetState();
+}
 
+class _CurrentTreeWidgetState extends ConsumerState<CurrentTreeWidget> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(!mounted)return;
+      // track current tree id
+      ref.read(currentTreeIdNotifierProvider.notifier).updateId(widget.treeId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final tree = ref.watch(dataTreeNotifierProvider.select((treeAsync) {
       return treeAsync.when(
           data: (tree) {
-            final nodeMatched = tree.readNodeById(nodeId: treeId);
-            final leafMatched = tree.readLeafById(id: treeId);
+            final nodeMatched = tree.readNodeById(nodeId: widget.treeId);
+            final leafMatched = tree.readLeafById(id: widget.treeId);
             if (nodeMatched != null) return nodeMatched;
             if (leafMatched != null) return leafMatched;
             return null;
@@ -29,14 +44,14 @@ class CurrentTreeWidget extends ConsumerWidget {
     }));
 
     if (tree == null) {
-      return Center(
-        child: PlatformCircularProgressIndicator()
-      );
+      return Center(child: PlatformCircularProgressIndicator());
     }
 
-    switch(tree){
-      case Dict():return DictView(tree);
-      case Folder():return FolderView(tree);
+    switch (tree) {
+      case Dict():
+        return DictView(tree);
+      case Folder():
+        return FolderView(tree);
     }
   }
 }

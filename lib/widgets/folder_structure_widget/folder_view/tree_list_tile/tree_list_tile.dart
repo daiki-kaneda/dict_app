@@ -28,7 +28,7 @@ class TreeListTile extends ConsumerWidget {
         },
       ));
       ref.read(isEditingNotifierProvider.notifier).updateMode(false);
-      ref.read(currentTreeIdNotifierProvider.notifier).updateId(treeId);
+      // ref.read(currentTreeIdNotifierProvider.notifier).updateId(treeId);
     }
 
     void onTap(String treeId) {

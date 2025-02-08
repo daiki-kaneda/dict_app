@@ -39,7 +39,7 @@ class DictParagraphListview extends ConsumerWidget {
                       return CupertinoPageScaffold(
                           navigationBar: CupertinoNavigationBar(
                             backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
-                            leading: DictPopButton(),
+                            //leading: DictPopButton(),
                             middle: Text('paragraph-${e.key}'),
                             trailing: const ResetButton(ResetStatus.paragraph),
                           ),
