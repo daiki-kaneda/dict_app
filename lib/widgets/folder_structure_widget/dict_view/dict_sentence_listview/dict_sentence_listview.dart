@@ -31,7 +31,7 @@ class DictSentenceListview extends ConsumerWidget {
     if(paragraph==null) return Center(child: PlatformCircularProgressIndicator());
     return ListView(
       children: paragraph.sentences.asMap().entries.map(
-        (e)=>ListTile(
+        (e)=>PlatformListTile(
           leading: CompletenessIcon(paragraph.sentences[e.key].isCompleted),
           title: Text(e.key.toString()),
           onTap: () {

@@ -7,22 +7,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FolderStructureWidget extends ConsumerWidget {
-  const FolderStructureWidget(this.treeId, {super.key, this.isRoute = false});
+class CurrentTreeWidget extends ConsumerWidget {
+  const CurrentTreeWidget(this.treeId, {super.key});
 
   final String treeId;
-  final bool isRoute;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Future<void> onTapTile(String treeId) async {
-      Navigator.of(context).push(CupertinoPageRoute(
-        builder: (context) {
-          return FolderStructureWidget(treeId);
-        },
-      ));
-      ref.read(currentTreeIdNotifierProvider.notifier).updateId(treeId);
-    }
 
     final tree = ref.watch(dataTreeNotifierProvider.select((treeAsync) {
       return treeAsync.when(

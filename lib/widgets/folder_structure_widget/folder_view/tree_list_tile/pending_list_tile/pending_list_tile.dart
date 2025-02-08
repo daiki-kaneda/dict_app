@@ -22,7 +22,7 @@ class PendingListTile extends ConsumerWidget {
           return const SizedBox();
         }
 
-        return ListTile(
+        return PlatformListTile(
           title: Text(data.title,style: const TextStyle(fontWeight: FontWeight.w800),),
           subtitle: Row(
         mainAxisSize: MainAxisSize.max,

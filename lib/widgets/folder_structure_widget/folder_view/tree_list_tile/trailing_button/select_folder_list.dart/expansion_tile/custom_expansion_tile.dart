@@ -1,27 +1,27 @@
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 class AnimatedCustomExpansionTile extends ConsumerStatefulWidget {
   const AnimatedCustomExpansionTile(
       {super.key,
       required this.id,
+      required this.title,
       this.leading,
-      this.title,
       this.subtitle,
       this.trailing,
       this.tileColor,
       this.selectedColor,
       this.onTap,
-      this.enabled=true,
+      this.enabled = true,
       required this.child,
       Duration? duration})
       : animationDuration = duration ?? const Duration(milliseconds: 200);
 
   final String id;
   final Widget? leading;
-  final Widget? title;
+  final Widget title;
   final Widget? subtitle;
   final Widget? trailing;
   final Color? tileColor;
@@ -44,11 +44,8 @@ class _AnimatedCustomExpansionTileState
 
   @override
   void initState() {
-    _controller =
-        AnimationController(
-          vsync: this, 
-          value: 1.0,
-          duration: widget.animationDuration);
+    _controller = AnimationController(
+        vsync: this, value: 1.0, duration: widget.animationDuration);
     super.initState();
   }
 
@@ -61,9 +58,8 @@ class _AnimatedCustomExpansionTileState
   @override
   Widget build(BuildContext context) {
     ref.watch(ExpansionNotifierProvider(widget.id));
-    ref.listen(
-        expansionNotifierProvider(widget.id)
-            .select((value) => value), (prev, next) {
+    ref.listen(expansionNotifierProvider(widget.id).select((value) => value),
+        (prev, next) {
       if (next == true) {
         _controller.forward();
       }
@@ -75,15 +71,22 @@ class _AnimatedCustomExpansionTileState
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ListTile(
-            leading: widget.leading,
-            title: widget.title,
-            subtitle: widget.subtitle,
-            trailing: widget.trailing,
+        PlatformListTile(
+          title: widget.title,
+          leading: widget.leading,
+          subtitle: widget.subtitle,
+          trailing: widget.trailing,
+          onTap: widget.enabled ? widget.onTap : null,
+          material: (context, platform) => MaterialListTileData(
             tileColor: widget.tileColor,
             selectedColor: widget.selectedColor,
             enabled: widget.enabled,
-            onTap: widget.onTap),
+          ),
+          cupertino: (context, platform) => CupertinoListTileData(
+            backgroundColor: widget.tileColor,
+            backgroundColorActivated: widget.selectedColor,
+          ),
+        ),
         ExpansionAnimatedWidget(_controller, child: widget.child),
       ],
     );
@@ -91,10 +94,8 @@ class _AnimatedCustomExpansionTileState
 }
 
 class ExpansionAnimatedWidget extends AnimatedWidget {
-  ExpansionAnimatedWidget(this.controller,{
-    super.key,
-    required this.child}):super(listenable: controller
-    ..drive(CurveTween(curve: Curves.easeIn)));
+  ExpansionAnimatedWidget(this.controller, {super.key, required this.child})
+      : super(listenable: controller..drive(CurveTween(curve: Curves.easeIn)));
 
   final AnimationController controller;
   final Widget child;
@@ -104,23 +105,25 @@ class ExpansionAnimatedWidget extends AnimatedWidget {
     return Align(
       heightFactor: controller.value,
       child: ClipRect(
-      clipper: MyClipper(controller.value),
-      child: Opacity(
-      opacity:  controller.status==AnimationStatus.reverse ? 0.0 : controller.value,
-      child: child,),
-    ),
+        clipper: MyClipper(controller.value),
+        child: Opacity(
+          opacity: controller.status == AnimationStatus.reverse
+              ? 0.0
+              : controller.value,
+          child: child,
+        ),
+      ),
     );
   }
 }
 
-class MyClipper extends CustomClipper<Rect>{
+class MyClipper extends CustomClipper<Rect> {
   const MyClipper(this.heightFactor);
 
   final double heightFactor;
   @override
   Rect getClip(Size size) {
-    return Rect.fromLTWH(
-      0, 0, size.width, size.height*heightFactor);
+    return Rect.fromLTWH(0, 0, size.width, size.height * heightFactor);
   }
 
   @override

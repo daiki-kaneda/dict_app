@@ -76,7 +76,7 @@ class App extends ConsumerWidget {
               return CupertinoPageRoute(
                 settings: RouteSettings(arguments: {'treeId':todoTree.value!.id}),
                 builder: (context) {
-                  return FolderStructureWidget(todoTree.value!.id);
+                  return CurrentTreeWidget(todoTree.value!.id);
                 },
               );
             },

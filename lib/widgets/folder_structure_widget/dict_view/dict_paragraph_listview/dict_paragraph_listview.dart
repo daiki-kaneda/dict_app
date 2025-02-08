@@ -29,7 +29,7 @@ class DictParagraphListview extends ConsumerWidget {
       children: paragraphs.paragraphs
           .asMap()
           .entries
-          .map((e) => ListTile(
+          .map((e) => PlatformListTile(
                 leading: CompletenessIcon(paragraphs.paragraphs[e.key].isCompleted),
                 title: Text(e.key.toString()),
                 onTap: () {

@@ -8,6 +8,7 @@ import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_t
 import 'package:dict_app/widgets/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TreeListTile extends ConsumerWidget {
@@ -23,7 +24,7 @@ class TreeListTile extends ConsumerWidget {
     Future<void> pushRoute(String treeId) async {
       Navigator.of(context).push(CupertinoPageRoute(
         builder: (context) {
-          return FolderStructureWidget(treeId);
+          return CurrentTreeWidget(treeId);
         },
       ));
       ref.read(isEditingNotifierProvider.notifier).updateMode(false);
@@ -42,7 +43,7 @@ class TreeListTile extends ConsumerWidget {
       case Dict():
         {
           final dict = tree as Dict;
-          return ListTile(
+          return PlatformListTile(
             leading: isEditing ? SelectButton(dict.id) : CompletenessIcon(dict.value.paragraphs.isCompleted),
             title: Text(
               dict.value.title,
@@ -66,7 +67,7 @@ class TreeListTile extends ConsumerWidget {
       case Folder():
         {
           final folder = tree as Folder;
-          return ListTile(
+          return PlatformListTile(
             leading: Icon(
               CupertinoIcons.folder,
               color: CupertinoTheme.of(context).textTheme.textStyle.color,
