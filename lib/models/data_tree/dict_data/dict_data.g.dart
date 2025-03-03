@@ -16,25 +16,21 @@ DictData _$DictDataFromJson(Map<String, dynamic> json) => DictData(
       transcript: json['transcript'] as String,
       paragraphs: DictationParagraphs.fromJson(
           json['paragraphs'] as Map<String, dynamic>),
+      transcriptModel: json['transcriptModel'] == null
+          ? null
+          : TranscriptModel.fromJson(
+              json['transcriptModel'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$DictDataToJson(DictData instance) {
-  final val = <String, dynamic>{
-    'title': instance.title,
-    'createdAt': instance.createdAt.toIso8601String(),
-    'audioPath': instance.audioPath,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('description', instance.description);
-  val['isFavorite'] = instance.isFavorite;
-  val['duration'] = instance.duration;
-  val['transcript'] = instance.transcript;
-  val['paragraphs'] = instance.paragraphs.toJson();
-  return val;
-}
+Map<String, dynamic> _$DictDataToJson(DictData instance) => <String, dynamic>{
+      'title': instance.title,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'audioPath': instance.audioPath,
+      if (instance.description case final value?) 'description': value,
+      'isFavorite': instance.isFavorite,
+      'duration': instance.duration,
+      'transcript': instance.transcript,
+      'paragraphs': instance.paragraphs.toJson(),
+      if (instance.transcriptModel?.toJson() case final value?)
+        'transcriptModel': value,
+    };

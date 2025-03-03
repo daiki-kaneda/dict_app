@@ -19,6 +19,8 @@ final canPopProvider = AutoDisposeFutureProvider<bool>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef CanPopRef = AutoDisposeFutureProviderRef<bool>;
 String _$isDictShowingHash() => r'a7a8c73bf2d384a5f12fda665ccde1ee491954f5';
 
@@ -34,6 +36,8 @@ final isDictShowingProvider = AutoDisposeFutureProvider<bool>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef IsDictShowingRef = AutoDisposeFutureProviderRef<bool>;
 String _$selectedWordHash() => r'6554c13bcbe2f767d7d1fbe6a73c76a3722fddba';
 
@@ -48,6 +52,8 @@ final selectedWordProvider = AutoDisposeFutureProvider<DictationWord?>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef SelectedWordRef = AutoDisposeFutureProviderRef<DictationWord?>;
 String _$selectedSentenceHash() => r'f64adf549e3d57e60ee4d58375a91e4755b69f7d';
 
@@ -64,6 +70,8 @@ final selectedSentenceProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef SelectedSentenceRef = AutoDisposeFutureProviderRef<DictationSentence?>;
 String _$selectedParagraphHash() => r'9d1889e3e762c5f4ba5d641357e6af3f924dabb6';
 
@@ -80,10 +88,12 @@ final selectedParagraphProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef SelectedParagraphRef
     = AutoDisposeFutureProviderRef<DictationParagraph?>;
 String _$currentTreeIdNotifierHash() =>
-    r'b8ed9c925948aae762e2f9f2d5ddcd35f3f6bd60';
+    r'9b903e5903f2d89f1ab64c41a0d13611a264e214';
 
 /// See also [CurrentTreeIdNotifier].
 @ProviderFor(CurrentTreeIdNotifier)
@@ -295,6 +305,8 @@ class ExpansionNotifierProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin ExpansionNotifierRef on AutoDisposeNotifierProviderRef<bool> {
   /// The parameter `id` of this provider.
   String get id;
@@ -360,4 +372,4 @@ final wordIndexNotifierProvider =
 
 typedef _$WordIndexNotifier = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

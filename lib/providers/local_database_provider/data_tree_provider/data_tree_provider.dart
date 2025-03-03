@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/models/data_tree/dict_data/dict_data.dart';
+import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
 import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
@@ -269,8 +270,14 @@ class DataTreeNotifier extends _$DataTreeNotifier {
   }
 
   Future<void> shareJsonString(
-      {required String treeId, bool isDict = false}) async {
+      {required String treeId, bool isDict = false, bool isRaw = false}) async {
     final root = await future;
+    if (isRaw) {
+      TranscriptModel? target =
+          root.readLeafById(id: treeId)?.value.transcriptModel;
+      if (target == null) return;
+      Share.share(jsonEncode(target.toJson()));
+    }
     DataTree? target;
     if (isDict) {
       target = root.readLeafById(id: treeId);
@@ -278,6 +285,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
       target = root.readNodeById(nodeId: treeId);
     }
     if (target == null) return;
-    Share.share(jsonEncode(target.toJson((t) => t.toJson(), (u) => u.toJson())));
+    Share.share(
+        jsonEncode(target.toJson((t) => t.toJson(), (u) => u.toJson())));
   }
 }

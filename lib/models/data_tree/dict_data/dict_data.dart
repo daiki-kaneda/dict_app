@@ -14,6 +14,7 @@ class DictData {
   final double duration;
   final String transcript;
   final DictationParagraphs paragraphs;
+  final TranscriptModel? transcriptModel;
 
 
   const DictData(
@@ -24,7 +25,8 @@ class DictData {
       required this.isFavorite,
       required this.duration,
       required this.transcript,
-      required this.paragraphs});
+      required this.paragraphs,
+      this.transcriptModel});
 
   factory DictData.fromJson(Map<String, dynamic> json) =>
       _$DictDataFromJson(json);
@@ -47,7 +49,8 @@ class DictData {
         isFavorite: false,
         duration: transcript.metadata?.duration ?? 0,
         transcript: alternative.transcript ?? '',
-        paragraphs: DictationParagraphs.from(paragraphs: paragraphs!));
+        paragraphs: DictationParagraphs.from(paragraphs: paragraphs!),
+        transcriptModel: transcript);
   }
 
   DictData copyWith({
@@ -59,7 +62,8 @@ class DictData {
     double? duration,
     String? transcript,
     List<Word>? words,
-    DictationParagraphs? paragraphs
+    DictationParagraphs? paragraphs,
+    TranscriptModel? transcriptModel
   }) {
     return DictData(
       title: title ?? this.title,
@@ -69,7 +73,8 @@ class DictData {
       isFavorite: isFavorite ?? this.isFavorite,
       duration: duration ?? this.duration,
       transcript: transcript ?? this.transcript,
-      paragraphs: paragraphs ?? this.paragraphs
+      paragraphs: paragraphs ?? this.paragraphs,
+      transcriptModel: transcriptModel ?? this.transcriptModel
     );
   }
   
