@@ -1,0 +1,94 @@
+import 'package:dict_app/isar_widgets/bottom_navigation_bar.dart';
+import 'package:dict_app/isar_widgets/file_details_view.dart';
+import 'package:dict_app/isar_widgets/home.dart';
+import 'package:dict_app/isar_widgets/sub_items_view.dart';
+import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
+
+Future<void> main() async {
+  runApp(const ProviderScope(child: IsarFolderStructureApp()));
+}
+
+final navigatorKey = GlobalKey<NavigatorState>();
+
+class IsarFolderStructureApp extends StatelessWidget {
+  const IsarFolderStructureApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final _router =
+        GoRouter(navigatorKey: navigatorKey, initialLocation: '/', routes: [
+      ShellRoute(
+          builder: (context, state, child) {
+            return Stack(
+              children: [
+                child,
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child:
+                        SafeArea(child: ShareBottomNavigationBar(state: state)))
+              ],
+            );
+          },
+          routes: [
+            GoRoute(
+              path: '/',
+              builder: (context, state) =>
+                  const _EagerInitialization(child: Home()),
+            ),
+            GoRoute(
+              path: '/sub-items/:parentId',
+              builder: (context, state) {
+                final parentId = state.pathParameters['parentId'];
+                return SubItemsView(parentId: int.tryParse(parentId!));
+              },
+            ),
+            GoRoute(
+              path: '/file-details/:id',
+              builder: (context, state) {
+                final id = int.tryParse(state.pathParameters['id']!);
+                if (id == null) {
+                  return const CupertinoPageScaffold(
+                      child: Center(
+                    child: CupertinoActivityIndicator(),
+                  ));
+                }
+                return FileDetailsView(id: id);
+              },
+            )
+          ])
+    ]);
+    return CupertinoApp.router(
+      routerConfig: _router,
+    );
+  }
+}
+
+class _EagerInitialization extends ConsumerWidget {
+  const _EagerInitialization({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isar = ref.watch(isarProvider);
+
+    if (isar.value != null) {
+      return child;
+    } else {
+      return PlatformScaffold(
+        body: Center(
+          child: Center(
+            child: PlatformCircularProgressIndicator(),
+          ),
+        ),
+      );
+    }
+  }
+}
