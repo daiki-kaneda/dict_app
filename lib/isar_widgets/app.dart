@@ -11,9 +11,9 @@ import 'package:go_router/go_router.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-Future<void> main() async {
-  runApp(const ProviderScope(child: IsarFolderStructureApp()));
-}
+// Future<void> main() async {
+//   runApp(const ProviderScope(child: IsarFolderStructureApp()));
+// }
 
 final navigatorKey = GlobalKey<NavigatorState>();
 

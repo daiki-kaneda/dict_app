@@ -15,7 +15,7 @@ class FileDetailsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final file = ref.watch(fileProvider(id));
 
-    return CupertinoPageScaffold(
+    return SafeArea(child: CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           middle: Text(file?.title ?? ''),
         ),
@@ -27,10 +27,11 @@ class FileDetailsView extends ConsumerWidget {
             SliverFillRemaining(
               child: Center(
                   child: file != null
-                      ? Text(jsonEncode(file.toJson()))
+                      ? Text(jsonEncode(file.toJson())
+                      )
                       : PlatformCircularProgressIndicator()),
             )
           ],
-        ));
+        )));
   }
 }

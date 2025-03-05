@@ -1,3 +1,4 @@
+import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +13,7 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(const ProviderScope(child: DictApp()));
+  runApp(const ProviderScope(child:  IsarFolderStructureApp()));
 }
 
 class DictApp extends StatelessWidget {
