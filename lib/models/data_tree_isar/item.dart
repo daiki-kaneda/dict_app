@@ -1,15 +1,50 @@
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
-import 'package:dict_app/models/data_tree_isar/dict_data/dictation_data_model.dart';
+import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
 import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'dict_data.g.dart';
+part 'item.g.dart';
+
+sealed class Item {}
+
+@collection
+@JsonSerializable()
+class Folder extends Item {
+  Folder({
+    required this.parentId,
+    required this.title,
+    required this.createdAt,
+  });
+
+  Id id = Isar.autoIncrement;
+
+  int? parentId;
+  final String title;
+  final DateTime createdAt;
+
+  factory Folder.fromJson(Map<String, dynamic> json) => _$FolderFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FolderToJson(this);
+
+  Folder copyWith({
+    int? parentId,
+    String? title,
+    DateTime? createdAt,
+  }) {
+    return Folder(
+      parentId: parentId ?? this.parentId,
+      title: title ?? this.title,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+}
+
 
 @Collection()
 @JsonSerializable()
-class DictData {
+class File extends Item {
   Id id = Isar.autoIncrement;
-  final int parentId;
+  int? parentId;
   final String title;
   final DateTime createdAt;
   final String audioPath;
@@ -20,7 +55,7 @@ class DictData {
   final DictationParagraphs paragraphs;
   // final TranscriptModel? transcriptModel;
 
-  DictData({
+  File({
     required this.parentId,
     required this.title,
     required this.createdAt,
@@ -33,13 +68,12 @@ class DictData {
     // this.transcriptModel
   });
 
-  factory DictData.fromJson(Map<String, dynamic> json) =>
-      _$DictDataFromJson(json);
+  factory File.fromJson(Map<String, dynamic> json) => _$FileFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DictDataToJson(this);
+  Map<String, dynamic> toJson() => _$FileToJson(this);
 
-  factory DictData.from(TranscriptModel transcript,
-      {required int parentId,
+  factory File.from(TranscriptModel transcript,
+      {required int? parentId,
       required String audioPath,
       required String title,
       String? description}) {
@@ -49,7 +83,7 @@ class DictData {
     final paragraphs = alternative.paragraphs;
     if (paragraphs?.paragraphs?.isEmpty != false)
       throw UnsupportedError('audio do not have english audio');
-    return DictData(
+    return File(
       parentId: parentId,
       title: title,
       createdAt: DateTime.now(),
@@ -63,19 +97,18 @@ class DictData {
     );
   }
 
-  DictData copyWith(
-      {int? parentId,
-      String? title,
-      DateTime? createdAt,
-      String? audioPath,
-      String? description,
-      bool? isFavorite,
-      double? duration,
-      String? transcript,
-      List<Word>? words,
-      DictationParagraphs? paragraphs,
-      TranscriptModel? transcriptModel}) {
-    return DictData(
+  File copyWith({
+    int? parentId,
+    String? title,
+    DateTime? createdAt,
+    String? audioPath,
+    String? description,
+    bool? isFavorite,
+    double? duration,
+    String? transcript,
+    DictationParagraphs? paragraphs,
+  }) {
+    return File(
       parentId: parentId ?? this.parentId,
       title: title ?? this.title,
       createdAt: createdAt ?? this.createdAt,
@@ -85,7 +118,6 @@ class DictData {
       duration: duration ?? this.duration,
       transcript: transcript ?? this.transcript,
       paragraphs: paragraphs ?? this.paragraphs,
-      // transcriptModel: transcriptModel ?? this.transcriptModel
     );
   }
 }

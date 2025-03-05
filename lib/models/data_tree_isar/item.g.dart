@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dict_data.dart';
+part of 'item.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,13 +9,640 @@ part of 'dict_data.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetDictDataCollection on Isar {
-  IsarCollection<DictData> get dictDatas => this.collection();
+extension GetFolderCollection on Isar {
+  IsarCollection<Folder> get folders => this.collection();
 }
 
-const DictDataSchema = CollectionSchema(
-  name: r'DictData',
-  id: 4291043917024510201,
+const FolderSchema = CollectionSchema(
+  name: r'Folder',
+  id: 6793289488482879694,
+  properties: {
+    r'createdAt': PropertySchema(
+      id: 0,
+      name: r'createdAt',
+      type: IsarType.dateTime,
+    ),
+    r'parentId': PropertySchema(
+      id: 1,
+      name: r'parentId',
+      type: IsarType.long,
+    ),
+    r'title': PropertySchema(
+      id: 2,
+      name: r'title',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _folderEstimateSize,
+  serialize: _folderSerialize,
+  deserialize: _folderDeserialize,
+  deserializeProp: _folderDeserializeProp,
+  idName: r'id',
+  indexes: {},
+  links: {},
+  embeddedSchemas: {},
+  getId: _folderGetId,
+  getLinks: _folderGetLinks,
+  attach: _folderAttach,
+  version: '3.1.0+1',
+);
+
+int _folderEstimateSize(
+  Folder object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.title.length * 3;
+  return bytesCount;
+}
+
+void _folderSerialize(
+  Folder object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeDateTime(offsets[0], object.createdAt);
+  writer.writeLong(offsets[1], object.parentId);
+  writer.writeString(offsets[2], object.title);
+}
+
+Folder _folderDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = Folder(
+    createdAt: reader.readDateTime(offsets[0]),
+    parentId: reader.readLongOrNull(offsets[1]),
+    title: reader.readString(offsets[2]),
+  );
+  object.id = id;
+  return object;
+}
+
+P _folderDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readDateTime(offset)) as P;
+    case 1:
+      return (reader.readLongOrNull(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+Id _folderGetId(Folder object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _folderGetLinks(Folder object) {
+  return [];
+}
+
+void _folderAttach(IsarCollection<dynamic> col, Id id, Folder object) {
+  object.id = id;
+}
+
+extension FolderQueryWhereSort on QueryBuilder<Folder, Folder, QWhere> {
+  QueryBuilder<Folder, Folder, QAfterWhere> anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+}
+
+extension FolderQueryWhere on QueryBuilder<Folder, Folder, QWhereClause> {
+  QueryBuilder<Folder, Folder, QAfterWhereClause> idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterWhereClause> idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterWhereClause> idGreaterThan(Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterWhereClause> idBetween(
+    Id lowerId,
+    Id upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension FolderQueryFilter on QueryBuilder<Folder, Folder, QFilterCondition> {
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> createdAtEqualTo(
+      DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> createdAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> createdAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> createdAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'createdAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> idGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> idLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> idBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> parentIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'parentId',
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> parentIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'parentId',
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> parentIdEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'parentId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> parentIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'parentId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> parentIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'parentId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> parentIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'parentId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'title',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'title',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> titleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+}
+
+extension FolderQueryObject on QueryBuilder<Folder, Folder, QFilterCondition> {}
+
+extension FolderQueryLinks on QueryBuilder<Folder, Folder, QFilterCondition> {}
+
+extension FolderQuerySortBy on QueryBuilder<Folder, Folder, QSortBy> {
+  QueryBuilder<Folder, Folder, QAfterSortBy> sortByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> sortByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> sortByParentId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'parentId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> sortByParentIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'parentId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> sortByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> sortByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+}
+
+extension FolderQuerySortThenBy on QueryBuilder<Folder, Folder, QSortThenBy> {
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenByParentId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'parentId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenByParentIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'parentId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+}
+
+extension FolderQueryWhereDistinct on QueryBuilder<Folder, Folder, QDistinct> {
+  QueryBuilder<Folder, Folder, QDistinct> distinctByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'createdAt');
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QDistinct> distinctByParentId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'parentId');
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QDistinct> distinctByTitle(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
+    });
+  }
+}
+
+extension FolderQueryProperty on QueryBuilder<Folder, Folder, QQueryProperty> {
+  QueryBuilder<Folder, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Folder, DateTime, QQueryOperations> createdAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'createdAt');
+    });
+  }
+
+  QueryBuilder<Folder, int?, QQueryOperations> parentIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'parentId');
+    });
+  }
+
+  QueryBuilder<Folder, String, QQueryOperations> titleProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'title');
+    });
+  }
+}
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+extension GetFileCollection on Isar {
+  IsarCollection<File> get files => this.collection();
+}
+
+const FileSchema = CollectionSchema(
+  name: r'File',
+  id: -3161376545294130050,
   properties: {
     r'audioPath': PropertySchema(
       id: 0,
@@ -64,10 +691,10 @@ const DictDataSchema = CollectionSchema(
       type: IsarType.string,
     )
   },
-  estimateSize: _dictDataEstimateSize,
-  serialize: _dictDataSerialize,
-  deserialize: _dictDataDeserialize,
-  deserializeProp: _dictDataDeserializeProp,
+  estimateSize: _fileEstimateSize,
+  serialize: _fileSerialize,
+  deserialize: _fileDeserialize,
+  deserializeProp: _fileDeserializeProp,
   idName: r'id',
   indexes: {},
   links: {},
@@ -78,14 +705,14 @@ const DictDataSchema = CollectionSchema(
     r'DictationWord': DictationWordSchema,
     r'DictationCharacter': DictationCharacterSchema
   },
-  getId: _dictDataGetId,
-  getLinks: _dictDataGetLinks,
-  attach: _dictDataAttach,
+  getId: _fileGetId,
+  getLinks: _fileGetLinks,
+  attach: _fileAttach,
   version: '3.1.0+1',
 );
 
-int _dictDataEstimateSize(
-  DictData object,
+int _fileEstimateSize(
+  File object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -105,8 +732,8 @@ int _dictDataEstimateSize(
   return bytesCount;
 }
 
-void _dictDataSerialize(
-  DictData object,
+void _fileSerialize(
+  File object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -127,13 +754,13 @@ void _dictDataSerialize(
   writer.writeString(offsets[8], object.transcript);
 }
 
-DictData _dictDataDeserialize(
+File _fileDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = DictData(
+  final object = File(
     audioPath: reader.readString(offsets[0]),
     createdAt: reader.readDateTime(offsets[1]),
     description: reader.readStringOrNull(offsets[2]),
@@ -145,7 +772,7 @@ DictData _dictDataDeserialize(
           allOffsets,
         ) ??
         DictationParagraphs(),
-    parentId: reader.readLong(offsets[6]),
+    parentId: reader.readLongOrNull(offsets[6]),
     title: reader.readString(offsets[7]),
     transcript: reader.readString(offsets[8]),
   );
@@ -153,7 +780,7 @@ DictData _dictDataDeserialize(
   return object;
 }
 
-P _dictDataDeserializeProp<P>(
+P _fileDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -178,7 +805,7 @@ P _dictDataDeserializeProp<P>(
           ) ??
           DictationParagraphs()) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 7:
       return (reader.readString(offset)) as P;
     case 8:
@@ -188,28 +815,28 @@ P _dictDataDeserializeProp<P>(
   }
 }
 
-Id _dictDataGetId(DictData object) {
+Id _fileGetId(File object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _dictDataGetLinks(DictData object) {
+List<IsarLinkBase<dynamic>> _fileGetLinks(File object) {
   return [];
 }
 
-void _dictDataAttach(IsarCollection<dynamic> col, Id id, DictData object) {
+void _fileAttach(IsarCollection<dynamic> col, Id id, File object) {
   object.id = id;
 }
 
-extension DictDataQueryWhereSort on QueryBuilder<DictData, DictData, QWhere> {
-  QueryBuilder<DictData, DictData, QAfterWhere> anyId() {
+extension FileQueryWhereSort on QueryBuilder<File, File, QWhere> {
+  QueryBuilder<File, File, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension DictDataQueryWhere on QueryBuilder<DictData, DictData, QWhereClause> {
-  QueryBuilder<DictData, DictData, QAfterWhereClause> idEqualTo(Id id) {
+extension FileQueryWhere on QueryBuilder<File, File, QWhereClause> {
+  QueryBuilder<File, File, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -218,7 +845,7 @@ extension DictDataQueryWhere on QueryBuilder<DictData, DictData, QWhereClause> {
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<File, File, QAfterWhereClause> idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -240,7 +867,7 @@ extension DictDataQueryWhere on QueryBuilder<DictData, DictData, QWhereClause> {
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<File, File, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -249,7 +876,7 @@ extension DictDataQueryWhere on QueryBuilder<DictData, DictData, QWhereClause> {
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<File, File, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -258,7 +885,7 @@ extension DictDataQueryWhere on QueryBuilder<DictData, DictData, QWhereClause> {
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterWhereClause> idBetween(
+  QueryBuilder<File, File, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -275,9 +902,8 @@ extension DictDataQueryWhere on QueryBuilder<DictData, DictData, QWhereClause> {
   }
 }
 
-extension DictDataQueryFilter
-    on QueryBuilder<DictData, DictData, QFilterCondition> {
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> audioPathEqualTo(
+extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -290,7 +916,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> audioPathGreaterThan(
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -305,7 +931,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> audioPathLessThan(
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -320,7 +946,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> audioPathBetween(
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -339,7 +965,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> audioPathStartsWith(
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -352,7 +978,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> audioPathEndsWith(
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -365,7 +991,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> audioPathContains(
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -377,7 +1003,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> audioPathMatches(
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -389,7 +1015,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> audioPathIsEmpty() {
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'audioPath',
@@ -398,8 +1024,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition>
-      audioPathIsNotEmpty() {
+  QueryBuilder<File, File, QAfterFilterCondition> audioPathIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'audioPath',
@@ -408,7 +1033,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> createdAtEqualTo(
+  QueryBuilder<File, File, QAfterFilterCondition> createdAtEqualTo(
       DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -418,7 +1043,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> createdAtGreaterThan(
+  QueryBuilder<File, File, QAfterFilterCondition> createdAtGreaterThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -431,7 +1056,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> createdAtLessThan(
+  QueryBuilder<File, File, QAfterFilterCondition> createdAtLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -444,7 +1069,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<File, File, QAfterFilterCondition> createdAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -461,7 +1086,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> descriptionIsNull() {
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'description',
@@ -469,8 +1094,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition>
-      descriptionIsNotNull() {
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'description',
@@ -478,7 +1102,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> descriptionEqualTo(
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -491,8 +1115,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition>
-      descriptionGreaterThan(
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -507,7 +1130,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> descriptionLessThan(
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -522,7 +1145,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> descriptionBetween(
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -541,7 +1164,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> descriptionStartsWith(
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -554,7 +1177,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> descriptionEndsWith(
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -567,7 +1190,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> descriptionContains(
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -579,7 +1202,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> descriptionMatches(
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -591,7 +1214,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> descriptionIsEmpty() {
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'description',
@@ -600,8 +1223,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition>
-      descriptionIsNotEmpty() {
+  QueryBuilder<File, File, QAfterFilterCondition> descriptionIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'description',
@@ -610,7 +1232,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> durationEqualTo(
+  QueryBuilder<File, File, QAfterFilterCondition> durationEqualTo(
     double value, {
     double epsilon = Query.epsilon,
   }) {
@@ -623,7 +1245,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> durationGreaterThan(
+  QueryBuilder<File, File, QAfterFilterCondition> durationGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -638,7 +1260,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> durationLessThan(
+  QueryBuilder<File, File, QAfterFilterCondition> durationLessThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -653,7 +1275,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> durationBetween(
+  QueryBuilder<File, File, QAfterFilterCondition> durationBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -672,7 +1294,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<File, File, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -681,7 +1303,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<File, File, QAfterFilterCondition> idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -694,7 +1316,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> idLessThan(
+  QueryBuilder<File, File, QAfterFilterCondition> idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -707,7 +1329,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> idBetween(
+  QueryBuilder<File, File, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -724,7 +1346,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> isFavoriteEqualTo(
+  QueryBuilder<File, File, QAfterFilterCondition> isFavoriteEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -734,8 +1356,23 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> parentIdEqualTo(
-      int value) {
+  QueryBuilder<File, File, QAfterFilterCondition> parentIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'parentId',
+      ));
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> parentIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'parentId',
+      ));
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> parentIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'parentId',
@@ -744,8 +1381,8 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> parentIdGreaterThan(
-    int value, {
+  QueryBuilder<File, File, QAfterFilterCondition> parentIdGreaterThan(
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -757,8 +1394,8 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> parentIdLessThan(
-    int value, {
+  QueryBuilder<File, File, QAfterFilterCondition> parentIdLessThan(
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -770,9 +1407,9 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> parentIdBetween(
-    int lower,
-    int upper, {
+  QueryBuilder<File, File, QAfterFilterCondition> parentIdBetween(
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -787,7 +1424,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleEqualTo(
+  QueryBuilder<File, File, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -800,7 +1437,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleGreaterThan(
+  QueryBuilder<File, File, QAfterFilterCondition> titleGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -815,7 +1452,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleLessThan(
+  QueryBuilder<File, File, QAfterFilterCondition> titleLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -830,7 +1467,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleBetween(
+  QueryBuilder<File, File, QAfterFilterCondition> titleBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -849,7 +1486,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleStartsWith(
+  QueryBuilder<File, File, QAfterFilterCondition> titleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -862,7 +1499,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleEndsWith(
+  QueryBuilder<File, File, QAfterFilterCondition> titleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -875,8 +1512,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleContains(
-      String value,
+  QueryBuilder<File, File, QAfterFilterCondition> titleContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -887,8 +1523,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleMatches(
-      String pattern,
+  QueryBuilder<File, File, QAfterFilterCondition> titleMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -899,7 +1534,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleIsEmpty() {
+  QueryBuilder<File, File, QAfterFilterCondition> titleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'title',
@@ -908,7 +1543,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> titleIsNotEmpty() {
+  QueryBuilder<File, File, QAfterFilterCondition> titleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'title',
@@ -917,7 +1552,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> transcriptEqualTo(
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -930,7 +1565,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> transcriptGreaterThan(
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -945,7 +1580,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> transcriptLessThan(
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -960,7 +1595,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> transcriptBetween(
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -979,7 +1614,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> transcriptStartsWith(
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -992,7 +1627,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> transcriptEndsWith(
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1005,7 +1640,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> transcriptContains(
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1017,7 +1652,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> transcriptMatches(
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1029,7 +1664,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> transcriptIsEmpty() {
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'transcript',
@@ -1038,8 +1673,7 @@ extension DictDataQueryFilter
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterFilterCondition>
-      transcriptIsNotEmpty() {
+  QueryBuilder<File, File, QAfterFilterCondition> transcriptIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'transcript',
@@ -1049,9 +1683,8 @@ extension DictDataQueryFilter
   }
 }
 
-extension DictDataQueryObject
-    on QueryBuilder<DictData, DictData, QFilterCondition> {
-  QueryBuilder<DictData, DictData, QAfterFilterCondition> paragraphs(
+extension FileQueryObject on QueryBuilder<File, File, QFilterCondition> {
+  QueryBuilder<File, File, QAfterFilterCondition> paragraphs(
       FilterQuery<DictationParagraphs> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'paragraphs');
@@ -1059,266 +1692,263 @@ extension DictDataQueryObject
   }
 }
 
-extension DictDataQueryLinks
-    on QueryBuilder<DictData, DictData, QFilterCondition> {}
+extension FileQueryLinks on QueryBuilder<File, File, QFilterCondition> {}
 
-extension DictDataQuerySortBy on QueryBuilder<DictData, DictData, QSortBy> {
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByAudioPath() {
+extension FileQuerySortBy on QueryBuilder<File, File, QSortBy> {
+  QueryBuilder<File, File, QAfterSortBy> sortByAudioPath() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'audioPath', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByAudioPathDesc() {
+  QueryBuilder<File, File, QAfterSortBy> sortByAudioPathDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'audioPath', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByCreatedAt() {
+  QueryBuilder<File, File, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByCreatedAtDesc() {
+  QueryBuilder<File, File, QAfterSortBy> sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByDescription() {
+  QueryBuilder<File, File, QAfterSortBy> sortByDescription() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByDescriptionDesc() {
+  QueryBuilder<File, File, QAfterSortBy> sortByDescriptionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByDuration() {
+  QueryBuilder<File, File, QAfterSortBy> sortByDuration() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'duration', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByDurationDesc() {
+  QueryBuilder<File, File, QAfterSortBy> sortByDurationDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'duration', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByIsFavorite() {
+  QueryBuilder<File, File, QAfterSortBy> sortByIsFavorite() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFavorite', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByIsFavoriteDesc() {
+  QueryBuilder<File, File, QAfterSortBy> sortByIsFavoriteDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFavorite', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByParentId() {
+  QueryBuilder<File, File, QAfterSortBy> sortByParentId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentId', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByParentIdDesc() {
+  QueryBuilder<File, File, QAfterSortBy> sortByParentIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentId', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByTitle() {
+  QueryBuilder<File, File, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByTitleDesc() {
+  QueryBuilder<File, File, QAfterSortBy> sortByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByTranscript() {
+  QueryBuilder<File, File, QAfterSortBy> sortByTranscript() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transcript', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> sortByTranscriptDesc() {
+  QueryBuilder<File, File, QAfterSortBy> sortByTranscriptDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transcript', Sort.desc);
     });
   }
 }
 
-extension DictDataQuerySortThenBy
-    on QueryBuilder<DictData, DictData, QSortThenBy> {
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByAudioPath() {
+extension FileQuerySortThenBy on QueryBuilder<File, File, QSortThenBy> {
+  QueryBuilder<File, File, QAfterSortBy> thenByAudioPath() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'audioPath', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByAudioPathDesc() {
+  QueryBuilder<File, File, QAfterSortBy> thenByAudioPathDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'audioPath', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByCreatedAt() {
+  QueryBuilder<File, File, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByCreatedAtDesc() {
+  QueryBuilder<File, File, QAfterSortBy> thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByDescription() {
+  QueryBuilder<File, File, QAfterSortBy> thenByDescription() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByDescriptionDesc() {
+  QueryBuilder<File, File, QAfterSortBy> thenByDescriptionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByDuration() {
+  QueryBuilder<File, File, QAfterSortBy> thenByDuration() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'duration', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByDurationDesc() {
+  QueryBuilder<File, File, QAfterSortBy> thenByDurationDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'duration', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenById() {
+  QueryBuilder<File, File, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<File, File, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByIsFavorite() {
+  QueryBuilder<File, File, QAfterSortBy> thenByIsFavorite() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFavorite', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByIsFavoriteDesc() {
+  QueryBuilder<File, File, QAfterSortBy> thenByIsFavoriteDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFavorite', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByParentId() {
+  QueryBuilder<File, File, QAfterSortBy> thenByParentId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentId', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByParentIdDesc() {
+  QueryBuilder<File, File, QAfterSortBy> thenByParentIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentId', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByTitle() {
+  QueryBuilder<File, File, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByTitleDesc() {
+  QueryBuilder<File, File, QAfterSortBy> thenByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByTranscript() {
+  QueryBuilder<File, File, QAfterSortBy> thenByTranscript() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transcript', Sort.asc);
     });
   }
 
-  QueryBuilder<DictData, DictData, QAfterSortBy> thenByTranscriptDesc() {
+  QueryBuilder<File, File, QAfterSortBy> thenByTranscriptDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transcript', Sort.desc);
     });
   }
 }
 
-extension DictDataQueryWhereDistinct
-    on QueryBuilder<DictData, DictData, QDistinct> {
-  QueryBuilder<DictData, DictData, QDistinct> distinctByAudioPath(
+extension FileQueryWhereDistinct on QueryBuilder<File, File, QDistinct> {
+  QueryBuilder<File, File, QDistinct> distinctByAudioPath(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'audioPath', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DictData, DictData, QDistinct> distinctByCreatedAt() {
+  QueryBuilder<File, File, QDistinct> distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
-  QueryBuilder<DictData, DictData, QDistinct> distinctByDescription(
+  QueryBuilder<File, File, QDistinct> distinctByDescription(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'description', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DictData, DictData, QDistinct> distinctByDuration() {
+  QueryBuilder<File, File, QDistinct> distinctByDuration() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'duration');
     });
   }
 
-  QueryBuilder<DictData, DictData, QDistinct> distinctByIsFavorite() {
+  QueryBuilder<File, File, QDistinct> distinctByIsFavorite() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isFavorite');
     });
   }
 
-  QueryBuilder<DictData, DictData, QDistinct> distinctByParentId() {
+  QueryBuilder<File, File, QDistinct> distinctByParentId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'parentId');
     });
   }
 
-  QueryBuilder<DictData, DictData, QDistinct> distinctByTitle(
+  QueryBuilder<File, File, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DictData, DictData, QDistinct> distinctByTranscript(
+  QueryBuilder<File, File, QDistinct> distinctByTranscript(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'transcript', caseSensitive: caseSensitive);
@@ -1326,64 +1956,63 @@ extension DictDataQueryWhereDistinct
   }
 }
 
-extension DictDataQueryProperty
-    on QueryBuilder<DictData, DictData, QQueryProperty> {
-  QueryBuilder<DictData, int, QQueryOperations> idProperty() {
+extension FileQueryProperty on QueryBuilder<File, File, QQueryProperty> {
+  QueryBuilder<File, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<DictData, String, QQueryOperations> audioPathProperty() {
+  QueryBuilder<File, String, QQueryOperations> audioPathProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'audioPath');
     });
   }
 
-  QueryBuilder<DictData, DateTime, QQueryOperations> createdAtProperty() {
+  QueryBuilder<File, DateTime, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
-  QueryBuilder<DictData, String?, QQueryOperations> descriptionProperty() {
+  QueryBuilder<File, String?, QQueryOperations> descriptionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'description');
     });
   }
 
-  QueryBuilder<DictData, double, QQueryOperations> durationProperty() {
+  QueryBuilder<File, double, QQueryOperations> durationProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'duration');
     });
   }
 
-  QueryBuilder<DictData, bool, QQueryOperations> isFavoriteProperty() {
+  QueryBuilder<File, bool, QQueryOperations> isFavoriteProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isFavorite');
     });
   }
 
-  QueryBuilder<DictData, DictationParagraphs, QQueryOperations>
+  QueryBuilder<File, DictationParagraphs, QQueryOperations>
       paragraphsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'paragraphs');
     });
   }
 
-  QueryBuilder<DictData, int, QQueryOperations> parentIdProperty() {
+  QueryBuilder<File, int?, QQueryOperations> parentIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'parentId');
     });
   }
 
-  QueryBuilder<DictData, String, QQueryOperations> titleProperty() {
+  QueryBuilder<File, String, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
     });
   }
 
-  QueryBuilder<DictData, String, QQueryOperations> transcriptProperty() {
+  QueryBuilder<File, String, QQueryOperations> transcriptProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'transcript');
     });
@@ -1394,8 +2023,31 @@ extension DictDataQueryProperty
 // JsonSerializableGenerator
 // **************************************************************************
 
-DictData _$DictDataFromJson(Map<String, dynamic> json) => DictData(
-      parentId: (json['parentId'] as num).toInt(),
+Folder _$FolderFromJson(Map<String, dynamic> json) => Folder(
+      parentId: (json['parentId'] as num?)?.toInt(),
+      title: json['title'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+    )..id = (json['id'] as num).toInt();
+
+Map<String, dynamic> _$FolderToJson(Folder instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('parentId', instance.parentId);
+  val['title'] = instance.title;
+  val['createdAt'] = instance.createdAt.toIso8601String();
+  return val;
+}
+
+File _$FileFromJson(Map<String, dynamic> json) => File(
+      parentId: (json['parentId'] as num?)?.toInt(),
       title: json['title'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       audioPath: json['audioPath'] as String,
@@ -1407,13 +2059,9 @@ DictData _$DictDataFromJson(Map<String, dynamic> json) => DictData(
           json['paragraphs'] as Map<String, dynamic>),
     )..id = (json['id'] as num).toInt();
 
-Map<String, dynamic> _$DictDataToJson(DictData instance) {
+Map<String, dynamic> _$FileToJson(File instance) {
   final val = <String, dynamic>{
     'id': instance.id,
-    'parentId': instance.parentId,
-    'title': instance.title,
-    'createdAt': instance.createdAt.toIso8601String(),
-    'audioPath': instance.audioPath,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1422,6 +2070,10 @@ Map<String, dynamic> _$DictDataToJson(DictData instance) {
     }
   }
 
+  writeNotNull('parentId', instance.parentId);
+  val['title'] = instance.title;
+  val['createdAt'] = instance.createdAt.toIso8601String();
+  val['audioPath'] = instance.audioPath;
   writeNotNull('description', instance.description);
   val['isFavorite'] = instance.isFavorite;
   val['duration'] = instance.duration;
