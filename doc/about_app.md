@@ -40,6 +40,9 @@ MyDictation
 UI:Flutter
 データ管理:Isar
 
+### 課金関連
+RevenueCat&&Firestore(デバイスIDと利用記録を保存)
+
 ## 運用,収益化
 ### 収益モデル
 勉強アプリのため、気が散る広告はつけない。
