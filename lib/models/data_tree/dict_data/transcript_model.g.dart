@@ -16,11 +16,19 @@ TranscriptModel _$TranscriptModelFromJson(Map<String, dynamic> json) =>
           : Results.fromJson(json['results'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$TranscriptModelToJson(TranscriptModel instance) =>
-    <String, dynamic>{
-      if (instance.metadata?.toJson() case final value?) 'metadata': value,
-      if (instance.results?.toJson() case final value?) 'results': value,
-    };
+Map<String, dynamic> _$TranscriptModelToJson(TranscriptModel instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('metadata', instance.metadata?.toJson());
+  writeNotNull('results', instance.results?.toJson());
+  return val;
+}
 
 Metadata _$MetadataFromJson(Map<String, dynamic> json) => Metadata(
       transactionKey: json['transaction_key'] as String?,
@@ -38,17 +46,25 @@ Metadata _$MetadataFromJson(Map<String, dynamic> json) => Metadata(
           : ModelInfo.fromJson(json['modelInfo'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$MetadataToJson(Metadata instance) => <String, dynamic>{
-      if (instance.transactionKey case final value?) 'transaction_key': value,
-      if (instance.requestId case final value?) 'request_id': value,
-      if (instance.sha256 case final value?) 'sha256': value,
-      if (instance.created?.toIso8601String() case final value?)
-        'created': value,
-      if (instance.duration case final value?) 'duration': value,
-      if (instance.channels case final value?) 'channels': value,
-      if (instance.models case final value?) 'models': value,
-      if (instance.modelInfo?.toJson() case final value?) 'modelInfo': value,
-    };
+Map<String, dynamic> _$MetadataToJson(Metadata instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('transaction_key', instance.transactionKey);
+  writeNotNull('request_id', instance.requestId);
+  writeNotNull('sha256', instance.sha256);
+  writeNotNull('created', instance.created?.toIso8601String());
+  writeNotNull('duration', instance.duration);
+  writeNotNull('channels', instance.channels);
+  writeNotNull('models', instance.models);
+  writeNotNull('modelInfo', instance.modelInfo?.toJson());
+  return val;
+}
 
 Results _$ResultsFromJson(Map<String, dynamic> json) => Results(
       channels: (json['channels'] as List<dynamic>?)
@@ -56,10 +72,18 @@ Results _$ResultsFromJson(Map<String, dynamic> json) => Results(
           .toList(),
     );
 
-Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{
-      if (instance.channels?.map((e) => e.toJson()).toList() case final value?)
-        'channels': value,
-    };
+Map<String, dynamic> _$ResultsToJson(Results instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('channels', instance.channels?.map((e) => e.toJson()).toList());
+  return val;
+}
 
 ModelInfo _$ModelInfoFromJson(Map<String, dynamic> json) => ModelInfo(
       models: (json['models'] as Map<String, dynamic>?)?.map(
@@ -67,11 +91,19 @@ ModelInfo _$ModelInfoFromJson(Map<String, dynamic> json) => ModelInfo(
       ),
     );
 
-Map<String, dynamic> _$ModelInfoToJson(ModelInfo instance) => <String, dynamic>{
-      if (instance.models?.map((k, e) => MapEntry(k, e.toJson()))
-          case final value?)
-        'models': value,
-    };
+Map<String, dynamic> _$ModelInfoToJson(ModelInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'models', instance.models?.map((k, e) => MapEntry(k, e.toJson())));
+  return val;
+}
 
 Model _$ModelFromJson(Map<String, dynamic> json) => Model(
       name: json['name'] as String?,
@@ -79,11 +111,20 @@ Model _$ModelFromJson(Map<String, dynamic> json) => Model(
       arch: json['arch'] as String?,
     );
 
-Map<String, dynamic> _$ModelToJson(Model instance) => <String, dynamic>{
-      if (instance.name case final value?) 'name': value,
-      if (instance.version case final value?) 'version': value,
-      if (instance.arch case final value?) 'arch': value,
-    };
+Map<String, dynamic> _$ModelToJson(Model instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('name', instance.name);
+  writeNotNull('version', instance.version);
+  writeNotNull('arch', instance.arch);
+  return val;
+}
 
 Channel _$ChannelFromJson(Map<String, dynamic> json) => Channel(
       alternatives: (json['alternatives'] as List<dynamic>?)
@@ -91,11 +132,19 @@ Channel _$ChannelFromJson(Map<String, dynamic> json) => Channel(
           .toList(),
     );
 
-Map<String, dynamic> _$ChannelToJson(Channel instance) => <String, dynamic>{
-      if (instance.alternatives?.map((e) => e.toJson()).toList()
-          case final value?)
-        'alternatives': value,
-    };
+Map<String, dynamic> _$ChannelToJson(Channel instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'alternatives', instance.alternatives?.map((e) => e.toJson()).toList());
+  return val;
+}
 
 Alternative _$AlternativeFromJson(Map<String, dynamic> json) => Alternative(
       transcript: json['transcript'] as String?,
@@ -108,14 +157,21 @@ Alternative _$AlternativeFromJson(Map<String, dynamic> json) => Alternative(
           : Paragraphs.fromJson(json['paragraphs'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$AlternativeToJson(Alternative instance) =>
-    <String, dynamic>{
-      if (instance.transcript case final value?) 'transcript': value,
-      if (instance.confidence case final value?) 'confidence': value,
-      if (instance.words?.map((e) => e.toJson()).toList() case final value?)
-        'words': value,
-      if (instance.paragraphs?.toJson() case final value?) 'paragraphs': value,
-    };
+Map<String, dynamic> _$AlternativeToJson(Alternative instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('transcript', instance.transcript);
+  writeNotNull('confidence', instance.confidence);
+  writeNotNull('words', instance.words?.map((e) => e.toJson()).toList());
+  writeNotNull('paragraphs', instance.paragraphs?.toJson());
+  return val;
+}
 
 Word _$WordFromJson(Map<String, dynamic> json) => Word(
       word: json['word'] as String?,
@@ -125,13 +181,22 @@ Word _$WordFromJson(Map<String, dynamic> json) => Word(
       punctuatedWord: json['punctuated_word'] as String?,
     );
 
-Map<String, dynamic> _$WordToJson(Word instance) => <String, dynamic>{
-      if (instance.word case final value?) 'word': value,
-      if (instance.start case final value?) 'start': value,
-      if (instance.end case final value?) 'end': value,
-      if (instance.confidence case final value?) 'confidence': value,
-      if (instance.punctuatedWord case final value?) 'punctuated_word': value,
-    };
+Map<String, dynamic> _$WordToJson(Word instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('word', instance.word);
+  writeNotNull('start', instance.start);
+  writeNotNull('end', instance.end);
+  writeNotNull('confidence', instance.confidence);
+  writeNotNull('punctuated_word', instance.punctuatedWord);
+  return val;
+}
 
 Paragraphs _$ParagraphsFromJson(Map<String, dynamic> json) => Paragraphs(
       transcript: json['transcript'] as String?,
@@ -140,13 +205,20 @@ Paragraphs _$ParagraphsFromJson(Map<String, dynamic> json) => Paragraphs(
           .toList(),
     );
 
-Map<String, dynamic> _$ParagraphsToJson(Paragraphs instance) =>
-    <String, dynamic>{
-      if (instance.transcript case final value?) 'transcript': value,
-      if (instance.paragraphs?.map((e) => e.toJson()).toList()
-          case final value?)
-        'paragraphs': value,
-    };
+Map<String, dynamic> _$ParagraphsToJson(Paragraphs instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('transcript', instance.transcript);
+  writeNotNull(
+      'paragraphs', instance.paragraphs?.map((e) => e.toJson()).toList());
+  return val;
+}
 
 Paragraph _$ParagraphFromJson(Map<String, dynamic> json) => Paragraph(
       sentences: (json['sentences'] as List<dynamic>?)
@@ -157,13 +229,22 @@ Paragraph _$ParagraphFromJson(Map<String, dynamic> json) => Paragraph(
       end: (json['end'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$ParagraphToJson(Paragraph instance) => <String, dynamic>{
-      if (instance.sentences?.map((e) => e.toJson()).toList() case final value?)
-        'sentences': value,
-      if (instance.numWords case final value?) 'num_words': value,
-      if (instance.start case final value?) 'start': value,
-      if (instance.end case final value?) 'end': value,
-    };
+Map<String, dynamic> _$ParagraphToJson(Paragraph instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'sentences', instance.sentences?.map((e) => e.toJson()).toList());
+  writeNotNull('num_words', instance.numWords);
+  writeNotNull('start', instance.start);
+  writeNotNull('end', instance.end);
+  return val;
+}
 
 Sentence _$SentenceFromJson(Map<String, dynamic> json) => Sentence(
       text: json['text'] as String?,
@@ -171,8 +252,17 @@ Sentence _$SentenceFromJson(Map<String, dynamic> json) => Sentence(
       end: (json['end'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$SentenceToJson(Sentence instance) => <String, dynamic>{
-      if (instance.text case final value?) 'text': value,
-      if (instance.start case final value?) 'start': value,
-      if (instance.end case final value?) 'end': value,
-    };
+Map<String, dynamic> _$SentenceToJson(Sentence instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('text', instance.text);
+  writeNotNull('start', instance.start);
+  writeNotNull('end', instance.end);
+  return val;
+}

@@ -63,13 +63,22 @@ DictationWord _$DictationWordFromJson(Map<String, dynamic> json) =>
       end: (json['end'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$DictationWordToJson(DictationWord instance) =>
-    <String, dynamic>{
-      'word': instance.word,
-      'characters': instance.characters.map((e) => e.toJson()).toList(),
-      if (instance.start case final value?) 'start': value,
-      if (instance.end case final value?) 'end': value,
-    };
+Map<String, dynamic> _$DictationWordToJson(DictationWord instance) {
+  final val = <String, dynamic>{
+    'word': instance.word,
+    'characters': instance.characters.map((e) => e.toJson()).toList(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('start', instance.start);
+  writeNotNull('end', instance.end);
+  return val;
+}
 
 DictationCharacter _$DictationCharacterFromJson(Map<String, dynamic> json) =>
     DictationCharacter(

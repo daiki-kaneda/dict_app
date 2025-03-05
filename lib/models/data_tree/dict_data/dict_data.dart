@@ -16,7 +16,6 @@ class DictData {
   final DictationParagraphs paragraphs;
   final TranscriptModel? transcriptModel;
 
-
   const DictData(
       {required this.title,
       required this.createdAt,
@@ -34,13 +33,13 @@ class DictData {
   Map<String, dynamic> toJson() => _$DictDataToJson(this);
 
   factory DictData.from(TranscriptModel transcript,
-      {required String audioPath,
-        required String title, String? description}) {
+      {required String audioPath, required String title, String? description}) {
     final alternative =
         transcript.results?.channels?.firstOrNull?.alternatives?.firstOrNull;
-     if (alternative == null) throw UnsupportedError('no result data');
-    final paragraphs =  alternative.paragraphs;
-    if(paragraphs?.paragraphs?.isEmpty != false)throw UnsupportedError('audio do not have english audio');
+    if (alternative == null) throw UnsupportedError('no result data');
+    final paragraphs = alternative.paragraphs;
+    if (paragraphs?.paragraphs?.isEmpty != false)
+      throw UnsupportedError('audio do not have english audio');
     return DictData(
         title: title,
         createdAt: DateTime.now(),
@@ -53,31 +52,26 @@ class DictData {
         transcriptModel: transcript);
   }
 
-  DictData copyWith({
-    String? title,
-    DateTime? createdAt,
-    String? audioPath,
-    String? description,
-    bool? isFavorite,
-    double? duration,
-    String? transcript,
-    List<Word>? words,
-    DictationParagraphs? paragraphs,
-    TranscriptModel? transcriptModel
-  }) {
+  DictData copyWith(
+      {String? title,
+      DateTime? createdAt,
+      String? audioPath,
+      String? description,
+      bool? isFavorite,
+      double? duration,
+      String? transcript,
+      List<Word>? words,
+      DictationParagraphs? paragraphs,
+      TranscriptModel? transcriptModel}) {
     return DictData(
-      title: title ?? this.title,
-      createdAt: createdAt ?? this.createdAt,
-      audioPath: audioPath ?? this.audioPath,
-      description: description ?? this.description,
-      isFavorite: isFavorite ?? this.isFavorite,
-      duration: duration ?? this.duration,
-      transcript: transcript ?? this.transcript,
-      paragraphs: paragraphs ?? this.paragraphs,
-      transcriptModel: transcriptModel ?? this.transcriptModel
-    );
+        title: title ?? this.title,
+        createdAt: createdAt ?? this.createdAt,
+        audioPath: audioPath ?? this.audioPath,
+        description: description ?? this.description,
+        isFavorite: isFavorite ?? this.isFavorite,
+        duration: duration ?? this.duration,
+        transcript: transcript ?? this.transcript,
+        paragraphs: paragraphs ?? this.paragraphs,
+        transcriptModel: transcriptModel ?? this.transcriptModel);
   }
-  
-
-  
 }

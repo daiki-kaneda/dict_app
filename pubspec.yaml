@@ -41,6 +41,8 @@ dependencies:
   tree_data_model: ^0.0.2
   # firebase_core: ^3.10.0
   # cloud_firestore: ^5.6.1
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
 
   characters: any
   flutter_platform_widgets: ^7.0.1
@@ -52,6 +54,7 @@ dev_dependencies:
   freezed: ^2.5.2
   json_serializable: ^6.8.0
   flutter_lints: ^5.0.0
+  isar_generator: ^3.1.0+1
 
 flutter:
   assets:
