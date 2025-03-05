@@ -80,8 +80,7 @@ ProviderRefを持つNavigatorObserverを提供する同期的なproviderを定�
 - DictViewへpushする際に、対応するオーディオをplayerにセット
 - showingDictViewなども同様に手動ではなくNavigatorObserverによって、更新したい
 
-#### メモ
-クリーンな構造のために
-- [ ] MaterialAppのbuilderをhomeに置き換える
-- [ ] currentIdProviderを同期的なプロバイダにして、NavigatorObserverによって、更新する
-- [ ] そのほか画面遷移に伴うplayerの操作などもNavigatorPbserverによって行う
+### 2025-3-05
+次の二つを導入して、クリーンかつ高速に実行するコードを書きたい
+- [ ] go_router(キーワード：ShellRoute,pathParameters)
+- [ ] Isar(キーワード: parentIdを持たせることによるフォルダ構造)
