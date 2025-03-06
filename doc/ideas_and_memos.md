@@ -82,5 +82,5 @@ ProviderRefを持つNavigatorObserverを提供する同期的なproviderを定�
 
 ### 2025-3-05
 次の二つを導入して、クリーンかつ高速に実行するコードを書きたい
-- [ ] go_router(キーワード：ShellRoute,pathParameters)
-- [ ] Isar(キーワード: parentIdを持たせることによるフォルダ構造)
+- [x] go_router(キーワード：ShellRoute,pathParameters)
+- [x] Isar(キーワード: parentIdを持たせることによるフォルダ構造)
