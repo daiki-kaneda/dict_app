@@ -1,5 +1,6 @@
 import 'package:characters/characters.dart';
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart'; // Assuming this path is correct
+import 'package:dict_app/utils/utils.dart';
 import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,7 +19,8 @@ class DictationParagraphs {
       paragraphs?.map((e) => e.isCompleted).where((e) => e == false).isEmpty ??
       true;
 
-  String get displayText => paragraphs?.map((e) => e.displayText).join(' ') ?? '';
+  String get displayText =>
+      paragraphs?.map((e) => e.displayText).join(' ') ?? '';
 
   static DictationParagraphs from({
     required Paragraphs paragraphs,
@@ -28,8 +30,8 @@ class DictationParagraphs {
       return DictationParagraphs(paragraphs: []);
     }
     final ps = paragraphs.paragraphs!
-        .map((paragraph) =>
-            DictationParagraph.from(paragraph: paragraph, alphabetOnly: alphabetOnly))
+        .map((paragraph) => DictationParagraph.from(
+            paragraph: paragraph, alphabetOnly: alphabetOnly))
         .toList();
     return DictationParagraphs(paragraphs: ps);
   }
@@ -87,7 +89,8 @@ class DictationParagraphs {
         sentenceIndex >= targetParagraph.sentences!.length) return this;
     final targetSentence = targetParagraph.sentences![sentenceIndex];
 
-    final newSentences = List<DictationSentence>.from(targetParagraph.sentences!);
+    final newSentences =
+        List<DictationSentence>.from(targetParagraph.sentences!);
     newSentences[sentenceIndex] = targetSentence.reset();
 
     final newList = List<DictationParagraph>.from(paragraphs!);
@@ -114,7 +117,8 @@ class DictationParagraphs {
     final newWords = List<DictationWord>.from(targetSentence.words!);
     newWords[wordIndex] = targetWord.updateIsSolved(false);
 
-    final newSentences = List<DictationSentence>.from(targetParagraph.sentences!);
+    final newSentences =
+        List<DictationSentence>.from(targetParagraph.sentences!);
     newSentences[sentenceIndex] = targetSentence.copyWith(words: newWords);
 
     final newList = List<DictationParagraph>.from(paragraphs!);
@@ -122,6 +126,9 @@ class DictationParagraphs {
 
     return copyWith(paragraphs: newList);
   }
+
+  List<DictationSentence>? get getAllSentences =>
+      paragraphs?.map((p) => p.sentences ?? []).toList().concat();
 
   factory DictationParagraphs.fromJson(Map<String, dynamic> json) =>
       _$DictationParagraphsFromJson(json);
@@ -146,7 +153,8 @@ class DictationParagraph {
       sentences?.map((e) => e.isCompleted).where((e) => e == false).isEmpty ??
       true;
 
-  String get displayText => sentences?.map((e) => e.displayText).join(' ') ?? '';
+  String get displayText =>
+      sentences?.map((e) => e.displayText).join(' ') ?? '';
 
   static DictationParagraph from({
     required Paragraph paragraph,
@@ -158,8 +166,8 @@ class DictationParagraph {
       return DictationParagraph(sentences: [], start: 0, end: 0);
     }
     final sentences = paragraph.sentences!
-        .map((sentence) =>
-            DictationSentence.from(sentence: sentence, alphabetOnly: alphabetOnly))
+        .map((sentence) => DictationSentence.from(
+            sentence: sentence, alphabetOnly: alphabetOnly))
         .toList();
     return DictationParagraph(
         sentences: sentences, start: paragraph.start!, end: paragraph.end!);
@@ -255,7 +263,9 @@ class DictationSentence {
   }
 
   DictationSentence tryCharacter(
-      {required String input, required int wordIndex, bool solveAnyway = false}) {
+      {required String input,
+      required int wordIndex,
+      bool solveAnyway = false}) {
     if (isCompleted) return this;
 
     if (words == null || wordIndex >= words!.length) return this;
@@ -269,8 +279,9 @@ class DictationSentence {
   }
 
   DictationSentence reset({bool alphabetOnly = true}) {
-    final newList =
-        words?.map((p) => p.updateIsSolved(false, alphabetOnly: alphabetOnly)).toList();
+    final newList = words
+        ?.map((p) => p.updateIsSolved(false, alphabetOnly: alphabetOnly))
+        .toList();
     return copyWith(words: newList);
   }
 
@@ -334,7 +345,8 @@ class DictationWord {
         end: end ?? this.end);
   }
 
-  DictationWord tryCharacter({required String input, bool solveAnyway = false}) {
+  DictationWord tryCharacter(
+      {required String input, bool solveAnyway = false}) {
     if (isCompleted) return this;
     if (characters == null || characters!.isEmpty) return this;
 
@@ -408,7 +420,7 @@ class DictationCharacter {
     return char.toLowerCase() != char.toUpperCase();
   }
 
-    factory DictationCharacter.fromJson(Map<String, dynamic> json) =>
+  factory DictationCharacter.fromJson(Map<String, dynamic> json) =>
       _$DictationCharacterFromJson(json);
   Map<String, dynamic> toJson() => _$DictationCharacterToJson(this);
 }
