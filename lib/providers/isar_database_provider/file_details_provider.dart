@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
@@ -6,6 +8,7 @@ import 'package:dict_app/providers/app_documents_directory_provider/app_document
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
+import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:dict_app/utils/dialog.dart';
 import 'package:dict_app/utils/utils.dart';
@@ -47,7 +50,6 @@ class CurrentSentenceIndex extends _$CurrentSentenceIndex {
       final (start, end) = (currentSentence?.start, currentSentence?.end);
       if (start != null && end != null) {
         print((start,end));
-        // ref.read(startEndProviderProvider.notifier).setNewValue(start, end);
       }
     });
     return 0;
@@ -56,15 +58,10 @@ class CurrentSentenceIndex extends _$CurrentSentenceIndex {
   Isar get isar => ref.read(isarProvider).requireValue;
 
   DictationSentence? getCurrentSentence(){
-  final isar = ref.read(isarProvider).requireValue;
   final fileId = PathParamerterKeys.fileId.getCurrentValue();
   if (fileId == null) return null;
 
-  final targetSentence = isar.files
-      .filter()
-      .idEqualTo(fileId)
-      .findAllSync()
-      .firstOrNull
+  final targetSentence = ref.read(fileProvider(fileId))
       ?.getAllSentences?[state];
   print(('currentText:${targetSentence?.displayText}'));
   return targetSentence;
@@ -74,5 +71,50 @@ class CurrentSentenceIndex extends _$CurrentSentenceIndex {
     state = index;
   }
 }
+
+// @riverpod
+// class TypedTextNotifier extends _$TypedTextNotifier {
+//   final controller = StreamController<String>();
+//   @override
+//   Stream<String> build() async* {
+//     ref.onDispose(() {
+//       controller.close();
+//     });
+
+//     ref.listenSelf((prev, next) {
+//       final currentId = ref.read(currentTreeIdNotifierProvider);
+//       final isDictShowing = ref.read(isDictShowingProvider);
+//       final currentParagraphIndex = ref.read(paragraphIndexNotifierProvider);
+//       final currentSentenceIndex = ref.read(sentenceIndexNotifierProvider);
+//       final currentWordIndex = ref.read(wordIndexNotifierProvider);
+//       if (isDictShowing.value != true || currentId.value == null ||currentWordIndex==-1) return;
+
+//       final prevText = prev?.value;
+//       final nextText = next.value;
+//       if (nextText == null) return;
+//       if (prevText!=null && prevText.length >= nextText.length) return;
+
+//       final targetCharacter = nextText.characters.last;
+//       // Space key move word selection
+//       if(targetCharacter==' '){
+//         ref.read(wordIndexNotifierProvider.notifier)
+//         .updateIndex(currentWordIndex+1);
+//         return;
+//       }
+//       ref.read(dataTreeNotifierProvider.notifier).tryCharacter(
+//         input: targetCharacter, 
+//         dictId: currentId.value!, 
+//         paragraphIndex: currentParagraphIndex, 
+//         sentenceIndex: currentSentenceIndex, 
+//         wordIndex: currentWordIndex);
+//       print('tryCharacter: ${nextText.characters.last}');
+//     });
+//     yield* controller.stream;
+//   }
+
+//   void emitText(String text) {
+//     controller.add(text);
+//   }
+// }
 
 

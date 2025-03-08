@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dict_app/isar_widgets/file_details_view/dictation_page/dictation_page_view.dart';
+import 'package:dict_app/isar_widgets/file_details_view/dictation_page_view/dictation_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_completion_provider.dart';

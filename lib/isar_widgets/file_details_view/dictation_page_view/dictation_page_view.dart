@@ -24,7 +24,7 @@ class DictationPageView extends ConsumerWidget {
       itemCount: sentences.length,
       itemBuilder: (context, index) {
         final dictationSentence = sentences[index];
-        return Center(child: Text(dictationSentence.displayText),);
+        return Center(child:Text( dictationSentence.displayText));
       },
     );
   }
