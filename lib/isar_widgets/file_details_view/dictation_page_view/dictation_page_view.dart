@@ -1,3 +1,4 @@
+import 'package:dict_app/isar_widgets/file_details_view/dictation_page_view/dictation_page/dictation_page.dart';
 import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
@@ -24,7 +25,7 @@ class DictationPageView extends ConsumerWidget {
       itemCount: sentences.length,
       itemBuilder: (context, index) {
         final dictationSentence = sentences[index];
-        return Center(child:Text( dictationSentence.displayText));
+        return DictationPage(dictationSentence);
       },
     );
   }

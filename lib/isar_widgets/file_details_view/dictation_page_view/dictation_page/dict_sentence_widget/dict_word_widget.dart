@@ -1,38 +1,36 @@
-import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
-import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
-import 'package:dict_app/widgets/folder_structure_widget/dict_view/dict_sentence_widget/dict_character_widget.dart';
+import 'package:dict_app/isar_widgets/file_details_view/dictation_page_view/dictation_page/dict_sentence_widget/dict_character_widget.dart';
+import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictWordWidget extends ConsumerWidget {
-  const DictWordWidget(this.index,this.focusNode,{super.key});
+  const DictWordWidget(this.index, {super.key});
 
   final int index;
 
-  final FocusNode focusNode;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final platform = MethodChannel('samples.flutter.dev/dictionary');
 
-    final playerPosition = ref.watch(
-      playerPositionProvider.select(
-        (positionAsync){
-          if(positionAsync.hasValue)return (positionAsync.value!.inMilliseconds)/1000;
-          return 0;
-        }
-      ));
+    // final playerPosition = ref.watch(
+    //   playerPositionProvider.select(
+    //     (positionAsync){
+    //       if(positionAsync.hasValue)return (positionAsync.value!.inMilliseconds)/1000;
+    //       return 0;
+    //     }
+    //   ));
     //final shouldFocus = word.start<=playerPosition && playerPosition<word.end;
 
-    final isSelected = ref.watch(wordIndexNotifierProvider.select(
-      (i)=>index==i
-    ));
+    final isSelected =
+        ref.watch(currentWordIndexProvider.select((i) => index == i));
 
-    final word = ref.watch(selectedSentenceProvider.select(
-      (sentence)=>sentence.value?.words.elementAtOrNull(index)
-    ));
-    if(word==null){
+    final word = ref
+        .watch(currentSentenceIndexProvider.notifier)
+        .getCurrentSentence()
+        ?.words?[index];
+    if (word == null) {
       return Center(
         child: PlatformCircularProgressIndicator(),
       );
@@ -43,8 +41,10 @@ class DictWordWidget extends ConsumerWidget {
       curve: Curves.easeOut,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: isSelected ? CupertinoColors.secondarySystemFill.resolveFrom(context):null,
-        // border: Border(bottom: 
+        color: isSelected
+            ? CupertinoColors.secondarySystemFill.resolveFrom(context)
+            : null,
+        // border: Border(bottom:
         // shouldFocus ? BorderSide(
         //   color: CupertinoColors.activeOrange,
         //   width: 2.5
@@ -56,13 +56,13 @@ class DictWordWidget extends ConsumerWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          if(word.isCompleted){
-            focusNode.unfocus();
-            platform.invokeMethod('searchDictionary',{'word':word.word});
-          }else{
+          if (word.isCompleted) {
+            // focusNode.unfocus();
+            platform.invokeMethod('searchDictionary', {'word': word.word});
+          } else {
             HapticFeedback.lightImpact();
-            ref.read(wordIndexNotifierProvider.notifier).updateIndex(index);
-            focusNode.requestFocus();
+            ref.read(currentWordIndexProvider.notifier).updateIndex(index);
+            // focusNode.requestFocus();
           }
         },
         onLongPress: () {
@@ -71,15 +71,15 @@ class DictWordWidget extends ConsumerWidget {
           // );
         },
         onDoubleTap: () {
-           //if(word.isCompleted)platform.invokeMethod('searchDictionary',{'word':word.word});
+          //if(word.isCompleted)platform.invokeMethod('searchDictionary',{'word':word.word});
         },
         child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for(final c in word.characters)
-          DictCharacterWidget(c)
-        ],
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (final c in word.characters ?? []) DictCharacterWidget(c)
+          ],
+        ),
       ),
-      ),);
+    );
   }
 }

@@ -46,12 +46,12 @@ class FileDetailsView extends ConsumerWidget {
             Column(
               children: [
                 Expanded(child: DictationPageView(id: id)),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: PlayerWidget(),
+                )
               ],
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: PlayerWidget(),
-            )
           ],
         ));
   }

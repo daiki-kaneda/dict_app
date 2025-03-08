@@ -1,4 +1,5 @@
-import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
+
+import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,7 +21,7 @@ class DictCharacterWidget extends ConsumerWidget {
           color: isSolved ? CupertinoTheme.of(context).textTheme.textStyle.color:CupertinoColors.systemGrey
         ), duration: const Duration(milliseconds: 5),
         child: Text(
-          isSolved ? character.character : '-',
+          isSolved ? character.character ?? '' : '-',
           ),),);
   }
 }
