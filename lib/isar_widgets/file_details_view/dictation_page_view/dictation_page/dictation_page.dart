@@ -10,9 +10,9 @@ class DictationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
-      child: Text(dictationSentence.toJson().toString()),
-    );
+    // return Center(
+    //   child: Text(dictationSentence.toJson().toString()),
+    // );
     return Column(
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,

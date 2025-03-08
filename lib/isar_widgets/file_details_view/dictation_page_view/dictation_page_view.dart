@@ -15,7 +15,7 @@ class DictationPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(currentSentenceIndexProvider);
+    ref.watch(currentSentenceIndexInAllSentencesProvider);
     final controller = ref.watch(sentencePageControllerProvider);
     final sentences = ref.watch(fileNotifierProvider(id))?.getAllSentences;
     if (sentences == null) return Container();
@@ -25,7 +25,8 @@ class DictationPageView extends ConsumerWidget {
       itemCount: sentences.length,
       itemBuilder: (context, index) {
         final dictationSentence = sentences[index];
-        return DictationPage(dictationSentence);
+        return DictationPage(
+          dictationSentence);
       },
     );
   }

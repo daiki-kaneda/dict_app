@@ -1,4 +1,5 @@
 import 'package:dict_app/isar_widgets/file_details_view/dictation_page_view/dictation_page/dict_sentence_widget/dict_character_widget.dart';
+import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -6,9 +7,12 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictWordWidget extends ConsumerWidget {
-  const DictWordWidget(this.index, {super.key});
+  const DictWordWidget( {super.key,
+  required this.index,
+  required this.word});
 
   final int index;
+  final DictationWord word;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,15 +30,15 @@ class DictWordWidget extends ConsumerWidget {
     final isSelected =
         ref.watch(currentWordIndexProvider.select((i) => index == i));
 
-    final word = ref
-        .watch(currentSentenceIndexProvider.notifier)
-        .getCurrentSentence()
-        ?.words?[index];
-    if (word == null) {
-      return Center(
-        child: PlatformCircularProgressIndicator(),
-      );
-    }
+    // final word = ref
+    //     .watch(currentSentenceIndexProvider.notifier)
+    //     .getCurrentSentence()
+    //     ?.words?[index];
+    // if (word == null) {
+    //   return Center(
+    //     child: PlatformCircularProgressIndicator(),
+    //   );
+    // }
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 100),

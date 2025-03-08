@@ -38,12 +38,12 @@ class SentencePageController extends _$SentencePageController {
     final page = state.page;
     if (page == null || page.toInt() != page) return;
     print('currentPage:$page');
-    ref.read(currentSentenceIndexProvider.notifier).updateIndex(page.toInt());
+    ref.read(currentSentenceIndexInAllSentencesProvider.notifier).updateIndex(page.toInt());
   }
 }
 
 @riverpod
-class CurrentSentenceIndex extends _$CurrentSentenceIndex {
+class CurrentSentenceIndexInAllSentences extends _$CurrentSentenceIndexInAllSentences {
   @override
   int build() {
     listenSelf((_, __) {
@@ -86,10 +86,24 @@ class CurrentWordIndex extends _$CurrentWordIndex {
 }
 
 @riverpod
+class CurrentSentenceIndex extends _$CurrentSentenceIndex {
+  @override
+  int build() {
+    final sentence = ref.watch(currentSentenceIndexInAllSentencesProvider.notifier).getCurrentSentence();
+    print('parentIndex:${sentence?.parentIndex}');
+    return sentence?.index ?? 0;
+  }
+
+  updateIndex(int index) {
+    state = index;
+  }
+}
+
+@riverpod
 class CurrentParagraphIndex extends _$CurrentParagraphIndex {
   @override
   int build() {
-    final sentence = ref.watch(currentSentenceIndexProvider.notifier).getCurrentSentence();
+    final sentence = ref.watch(currentSentenceIndexInAllSentencesProvider.notifier).getCurrentSentence();
     print('parentIndex:${sentence?.parentIndex}');
     return sentence?.parentIndex ?? 0;
   }
@@ -108,7 +122,7 @@ class TypedTextNotifier extends _$TypedTextNotifier {
       controller.close();
     });
 
-    ref.listenSelf((prev, next) {
+    listenSelf((prev, next) {
       final fileId = PathParamerterKeys.fileId.getCurrentValue();
       final currentParagraphIndex = ref.read(currentParagraphIndexProvider);
       final currentSentenceIndex = ref.read(currentSentenceIndexProvider);

@@ -7,7 +7,7 @@ part of 'file_details_provider.dart';
 // **************************************************************************
 
 String _$sentencePageControllerHash() =>
-    r'b3020deb3567d2b73442192aac816fb13fb2d7dd';
+    r'5933c50d147afd1bb86c1d54de93c2f39533b489';
 
 /// See also [SentencePageController].
 @ProviderFor(SentencePageController)
@@ -23,23 +23,23 @@ final sentencePageControllerProvider = AutoDisposeNotifierProvider<
 );
 
 typedef _$SentencePageController = AutoDisposeNotifier<PageController>;
-String _$currentSentenceIndexHash() =>
-    r'787a6ec663ab4eb3474af493ffd46f5f25cb8f99';
+String _$currentSentenceIndexInAllSentencesHash() =>
+    r'bb8c3b8390ee7e7c015012fc8e5ab536ffb28428';
 
-/// See also [CurrentSentenceIndex].
-@ProviderFor(CurrentSentenceIndex)
-final currentSentenceIndexProvider =
-    AutoDisposeNotifierProvider<CurrentSentenceIndex, int>.internal(
-  CurrentSentenceIndex.new,
-  name: r'currentSentenceIndexProvider',
+/// See also [CurrentSentenceIndexInAllSentences].
+@ProviderFor(CurrentSentenceIndexInAllSentences)
+final currentSentenceIndexInAllSentencesProvider = AutoDisposeNotifierProvider<
+    CurrentSentenceIndexInAllSentences, int>.internal(
+  CurrentSentenceIndexInAllSentences.new,
+  name: r'currentSentenceIndexInAllSentencesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$currentSentenceIndexHash,
+      : _$currentSentenceIndexInAllSentencesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$CurrentSentenceIndex = AutoDisposeNotifier<int>;
+typedef _$CurrentSentenceIndexInAllSentences = AutoDisposeNotifier<int>;
 String _$currentWordIndexHash() => r'd72f5aa80734e154bb864fa0432c645d584d5b43';
 
 /// See also [CurrentWordIndex].
@@ -56,8 +56,25 @@ final currentWordIndexProvider =
 );
 
 typedef _$CurrentWordIndex = AutoDisposeNotifier<int>;
+String _$currentSentenceIndexHash() =>
+    r'5c4a677c5af5e9c57b5f725bf2c8baf9d230d9ac';
+
+/// See also [CurrentSentenceIndex].
+@ProviderFor(CurrentSentenceIndex)
+final currentSentenceIndexProvider =
+    AutoDisposeNotifierProvider<CurrentSentenceIndex, int>.internal(
+  CurrentSentenceIndex.new,
+  name: r'currentSentenceIndexProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentSentenceIndexHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$CurrentSentenceIndex = AutoDisposeNotifier<int>;
 String _$currentParagraphIndexHash() =>
-    r'33d74821e9ba8d7a5acb96517487467d6a8f4f0f';
+    r'19ab4294aed26bc29034c58e11d186671af2a7ad';
 
 /// See also [CurrentParagraphIndex].
 @ProviderFor(CurrentParagraphIndex)
@@ -73,7 +90,7 @@ final currentParagraphIndexProvider =
 );
 
 typedef _$CurrentParagraphIndex = AutoDisposeNotifier<int>;
-String _$typedTextNotifierHash() => r'5160e2bd9708055c2015cf366a53bfbaa0393ba2';
+String _$typedTextNotifierHash() => r'aa76d3f2c7ee19cd1335804dfba10e7a98209082';
 
 /// See also [TypedTextNotifier].
 @ProviderFor(TypedTextNotifier)

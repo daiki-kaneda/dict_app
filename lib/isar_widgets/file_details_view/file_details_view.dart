@@ -27,7 +27,7 @@ class FileDetailsView extends ConsumerWidget {
     final file = ref.watch(fileNotifierProvider(id));
 
     // range of audio to play update when sentence index changed
-    ref.listen(currentSentenceIndexProvider, (_, i) {
+    ref.listen(currentSentenceIndexInAllSentencesProvider, (_, i) {
       final s = file?.getAllSentences?[i];
       ref
           .read(startEndProviderProvider.notifier)

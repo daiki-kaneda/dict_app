@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DictSentenceWidget extends ConsumerWidget {
+class DictSentenceWidget extends StatelessWidget {
   const DictSentenceWidget({super.key, required this.sentence});
 
   final DictationSentence sentence;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     if (sentence.words == null) {
       return Center(
         child: PlatformCircularProgressIndicator(),
@@ -24,7 +24,10 @@ class DictSentenceWidget extends ConsumerWidget {
             children: sentence.words!
                 .asMap()
                 .entries
-                .map((e) => DictWordWidget(e.key))
+                .map((e) => DictWordWidget(
+                      index: e.key,
+                      word: e.value,
+                    ))
                 .toList()));
   }
 }
