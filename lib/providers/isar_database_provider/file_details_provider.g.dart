@@ -57,7 +57,7 @@ final currentWordIndexProvider =
 
 typedef _$CurrentWordIndex = AutoDisposeNotifier<int>;
 String _$currentParagraphIndexHash() =>
-    r'f92360e108c548e4dfab88d9a33decaa87ceb375';
+    r'33d74821e9ba8d7a5acb96517487467d6a8f4f0f';
 
 /// See also [CurrentParagraphIndex].
 @ProviderFor(CurrentParagraphIndex)

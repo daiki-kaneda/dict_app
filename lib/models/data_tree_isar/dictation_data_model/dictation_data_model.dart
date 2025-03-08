@@ -11,9 +11,13 @@ part 'dictation_data_model.g.dart';
 class DictationSection {
   DictationSection({
     this.paragraphs,
+    this.index,
+    this.parentIndex,
   });
 
   List<DictationParagraph>? paragraphs;
+  int? index;
+  int? parentIndex;
 
   bool get isCompleted =>
       paragraphs?.map((e) => e.isCompleted).where((e) => e == false).isEmpty ??
@@ -24,22 +28,35 @@ class DictationSection {
 
   static DictationSection from({
     required Paragraphs paragraphs,
+    int? index,
+    int? parentIndex,
     bool alphabetOnly = true,
   }) {
     if (paragraphs.paragraphs == null) {
-      return DictationSection(paragraphs: []);
+      return DictationSection(paragraphs: [], index: index, parentIndex: parentIndex);
     }
     final ps = paragraphs.paragraphs!
-    .indexed
+        .indexed
         .map((t) => DictationParagraph.from(
-          parentIndex:t.$1,
-            paragraph: t.$2, alphabetOnly: alphabetOnly))
+          index: t.$1,
+          parentIndex: 0, // Section is top level, so parent index within paragraphs should be zero.
+          paragraph: t.$2,
+          alphabetOnly: alphabetOnly,
+    ))
         .toList();
-    return DictationSection(paragraphs: ps);
+    return DictationSection(paragraphs: ps, index: index, parentIndex: parentIndex);
   }
 
-  DictationSection copyWith({List<DictationParagraph>? paragraphs}) {
-    return DictationSection(paragraphs: paragraphs ?? this.paragraphs);
+  DictationSection copyWith({
+    List<DictationParagraph>? paragraphs,
+    int? index,
+    int? parentIndex,
+  }) {
+    return DictationSection(
+      paragraphs: paragraphs ?? this.paragraphs,
+      index: index ?? this.index,
+      parentIndex: parentIndex ?? this.parentIndex,
+    );
   }
 
   DictationSection tryCharacter({
@@ -142,12 +159,14 @@ class DictationSection {
 @embedded
 class DictationParagraph {
   DictationParagraph({
+    this.index,
     this.parentIndex,
     this.sentences,
     this.start,
     this.end,
   });
 
+  int? index;
   int? parentIndex;
   List<DictationSentence>? sentences;
   double? start;
@@ -161,6 +180,7 @@ class DictationParagraph {
       sentences?.map((e) => e.displayText).join(' ') ?? '';
 
   static DictationParagraph from({
+    required int index, 
     required int parentIndex,
     required Paragraph paragraph,
     bool alphabetOnly = true,
@@ -168,28 +188,39 @@ class DictationParagraph {
     if (paragraph.sentences == null ||
         paragraph.start == null ||
         paragraph.end == null) {
-      return DictationParagraph(sentences: [], start: 0, end: 0);
+      return DictationParagraph(sentences: [], start: 0, end: 0, index: index, parentIndex: parentIndex);
     }
     final sentences = paragraph.sentences!
-        .indexed.map((t) => DictationSentence.from(
-          parentIndex:t.$1,
-            sentence: t.$2, alphabetOnly: alphabetOnly))
+        .indexed
+        .map((t) => DictationSentence.from(
+          index: t.$1,
+          parentIndex: index,
+          sentence: t.$2,
+          alphabetOnly: alphabetOnly,
+    ))
         .toList();
     return DictationParagraph(
-      parentIndex: parentIndex,
-        sentences: sentences, start: paragraph.start!, end: paragraph.end!);
+        index: index,
+        parentIndex: parentIndex,
+        sentences: sentences,
+        start: paragraph.start!,
+        end: paragraph.end!);
   }
 
-  DictationParagraph copyWith(
-      {int? parentIndex,
-      List<DictationSentence>? sentences,
-      double? start,
-      double? end}) {
+  DictationParagraph copyWith({
+    int? index,
+    int? parentIndex,
+    List<DictationSentence>? sentences,
+    double? start,
+    double? end,
+  }) {
     return DictationParagraph(
-        parentIndex: parentIndex ?? this.parentIndex,
-        sentences: sentences ?? this.sentences,
-        start: start ?? this.start,
-        end: end ?? this.end);
+      index: index ?? this.index,
+      parentIndex: parentIndex ?? this.parentIndex,
+      sentences: sentences ?? this.sentences,
+      start: start ?? this.start,
+      end: end ?? this.end,
+    );
   }
 
   DictationParagraph tryCharacter(
@@ -224,6 +255,7 @@ class DictationParagraph {
 @embedded
 class DictationSentence {
   DictationSentence({
+    this.index,
     this.parentIndex,
     this.sentence,
     this.words,
@@ -231,6 +263,7 @@ class DictationSentence {
     this.end,
   });
 
+  int? index;
   int? parentIndex;
   String? sentence;
   List<DictationWord>? words;
@@ -243,6 +276,7 @@ class DictationSentence {
   String get displayText => words?.map((e) => e.displayText).join(' ') ?? '';
 
   static DictationSentence from({
+    required int index,
     required int parentIndex,
     required Sentence sentence,
     bool alphabetOnly = true,
@@ -251,35 +285,52 @@ class DictationSentence {
         sentence.start == null ||
         sentence.end == null) {
       return DictationSentence(
+        index: index,
         parentIndex: parentIndex,
-        sentence: '', words: [], start: 0, end: 0);
+        sentence: '',
+        words: [],
+        start: 0,
+        end: 0,
+      );
     }
     final words = sentence.text!
         .split(' ')
-        .indexed.map((t) => DictationWord.from(
-                    parentIndex:t.$1,
-            word: t.$2, alphabetOnly: alphabetOnly, start: 0, end: 0))
+        .indexed
+        .map((t) => DictationWord.from(
+              index: t.$1,
+              parentIndex: index,
+              word: t.$2,
+              alphabetOnly: alphabetOnly,
+              start: 0,
+              end: 0,
+          ))
         .toList();
     return DictationSentence(
+      index: index,
       parentIndex: parentIndex,
-        sentence: sentence.text!,
-        words: words,
-        start: sentence.start!,
-        end: sentence.end!);
+      sentence: sentence.text!,
+      words: words,
+      start: sentence.start!,
+      end: sentence.end!,
+    );
   }
 
-  DictationSentence copyWith(
-      {int? parentIndex,
-      String? sentence,
-      List<DictationWord>? words,
-      double? start,
-      double? end}) {
+  DictationSentence copyWith({
+    int? index,
+    int? parentIndex,
+    String? sentence,
+    List<DictationWord>? words,
+    double? start,
+    double? end,
+  }) {
     return DictationSentence(
-        parentIndex: parentIndex ?? this.parentIndex,
-        sentence: sentence ?? this.sentence,
-        words: words ?? this.words,
-        start: start ?? this.start,
-        end: end ?? this.end);
+      index: index ?? this.index,
+      parentIndex: parentIndex ?? this.parentIndex,
+      sentence: sentence ?? this.sentence,
+      words: words ?? this.words,
+      start: start ?? this.start,
+      end: end ?? this.end,
+    );
   }
 
   DictationSentence tryCharacter(
@@ -314,6 +365,7 @@ class DictationSentence {
 @embedded
 class DictationWord {
   DictationWord({
+    this.index,
     this.parentIndex,
     this.word,
     this.characters,
@@ -321,6 +373,7 @@ class DictationWord {
     this.end,
   });
 
+  int? index;
   int? parentIndex;
   String? word;
   List<DictationCharacter>? characters;
@@ -334,6 +387,7 @@ class DictationWord {
   String get displayText => characters?.map((e) => e.character).join() ?? '';
 
   static DictationWord from({
+    required int index,
     required int parentIndex,
     required String word,
     bool alphabetOnly = true,
@@ -341,36 +395,40 @@ class DictationWord {
     required double end,
   }) {
     return DictationWord(
+      index: index,
       parentIndex: parentIndex,
       word: word,
       characters: word.characters
           .toList()
           .indexed
-          .map(
-            (t) => DictationCharacter.from(
-              parentIndex:t.$1,
-              character: t.$2,
-              alphabetOnly: alphabetOnly,
-            ),
-          )
+          .map((t) => DictationCharacter.from(
+                index: t.$1,
+                parentIndex: index,
+                character: t.$2,
+                alphabetOnly: alphabetOnly,
+              ))
           .toList(),
       start: start,
       end: end,
     );
   }
 
-  DictationWord copyWith(
-      {int? parentIndex,
-      String? word,
-      List<DictationCharacter>? characters,
-      double? start,
-      double? end}) {
+  DictationWord copyWith({
+    int? index,
+    int? parentIndex,
+    String? word,
+    List<DictationCharacter>? characters,
+    double? start,
+    double? end,
+  }) {
     return DictationWord(
-        parentIndex: parentIndex ?? this.parentIndex,
-        word: word ?? this.word,
-        characters: characters ?? this.characters,
-        start: start ?? this.start,
-        end: end ?? this.end);
+      index: index ?? this.index,
+      parentIndex: parentIndex ?? this.parentIndex,
+      word: word ?? this.word,
+      characters: characters ?? this.characters,
+      start: start ?? this.start,
+      end: end ?? this.end,
+    );
   }
 
   DictationWord tryCharacter(
@@ -412,21 +470,25 @@ class DictationWord {
 @embedded
 class DictationCharacter {
   DictationCharacter({
+    this.index,
     this.parentIndex,
     this.character,
     this.isSolved = false,
   });
 
+  int? index;
   int? parentIndex;
   String? character;
   bool isSolved;
 
   static DictationCharacter from({
+    required int index,
     required int parentIndex,
     required String character,
     bool alphabetOnly = true,
   }) {
     return DictationCharacter(
+      index: index,
       parentIndex: parentIndex,
       character: character,
       isSolved: alphabetOnly ? !isAlphabet(character) : false,
@@ -434,11 +496,13 @@ class DictationCharacter {
   }
 
   DictationCharacter copyWith({
+    int? index,
     int? parentIndex,
     String? character,
     bool? isSolved,
   }) {
     return DictationCharacter(
+      index: index ?? this.index,
       parentIndex: parentIndex ?? this.parentIndex,
       character: character ?? this.character,
       isSolved: isSolved ?? this.isSolved,
