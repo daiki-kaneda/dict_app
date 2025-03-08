@@ -12,12 +12,13 @@ sealed class Item {}
 @JsonSerializable()
 class Folder extends Item {
   Folder({
+    this.id,
     required this.parentId,
     required this.title,
     required this.createdAt,
   });
 
-  Id id = Isar.autoIncrement;
+  Id? id;
 
   int? parentId;
   final String title;
@@ -28,11 +29,13 @@ class Folder extends Item {
   Map<String, dynamic> toJson() => _$FolderToJson(this);
 
   Folder copyWith({
+    int? id,
     int? parentId,
     String? title,
     DateTime? createdAt,
   }) {
     return Folder(
+      id: id ?? this.id,
       parentId: parentId ?? this.parentId,
       title: title ?? this.title,
       createdAt: createdAt ?? this.createdAt,
@@ -43,7 +46,7 @@ class Folder extends Item {
 @Collection()
 @JsonSerializable()
 class File extends Item {
-  Id id = Isar.autoIncrement;
+  Id? id;
   int? parentId;
   final String title;
   final DateTime createdAt;
@@ -59,6 +62,7 @@ class File extends Item {
       paragraphs.paragraphs?.map((p) => p.sentences ?? []).toList().concat();
 
   File({
+    this.id,
     required this.parentId,
     required this.title,
     required this.createdAt,
@@ -101,6 +105,7 @@ class File extends Item {
   }
 
   File copyWith({
+    int? id,
     int? parentId,
     String? title,
     DateTime? createdAt,
@@ -112,6 +117,7 @@ class File extends Item {
     DictationSection? paragraphs,
   }) {
     return File(
+      id: id ?? this.id,
       parentId: parentId ?? this.parentId,
       title: title ?? this.title,
       createdAt: createdAt ?? this.createdAt,

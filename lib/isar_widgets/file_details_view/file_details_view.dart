@@ -43,7 +43,7 @@ class FileDetailsView extends ConsumerWidget {
           fit: StackFit.expand,
           children: [
             InputTextField(FocusNode()..requestFocus()),
-            Column(
+            SafeArea(child: Column(
               children: [
                 Expanded(child: DictationPageView(id: id)),
                 Align(
@@ -51,7 +51,7 @@ class FileDetailsView extends ConsumerWidget {
                   child: PlayerWidget(),
                 )
               ],
-            ),
+            ),)
           ],
         ));
   }

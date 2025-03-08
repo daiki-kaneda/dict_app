@@ -76,10 +76,10 @@ Folder _folderDeserialize(
 ) {
   final object = Folder(
     createdAt: reader.readDateTime(offsets[0]),
+    id: id,
     parentId: reader.readLongOrNull(offsets[1]),
     title: reader.readString(offsets[2]),
   );
-  object.id = id;
   return object;
 }
 
@@ -102,7 +102,7 @@ P _folderDeserializeProp<P>(
 }
 
 Id _folderGetId(Folder object) {
-  return object.id;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _folderGetLinks(Folder object) {
@@ -242,7 +242,23 @@ extension FolderQueryFilter on QueryBuilder<Folder, Folder, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Folder, Folder, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -252,7 +268,7 @@ extension FolderQueryFilter on QueryBuilder<Folder, Folder, QFilterCondition> {
   }
 
   QueryBuilder<Folder, Folder, QAfterFilterCondition> idGreaterThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -265,7 +281,7 @@ extension FolderQueryFilter on QueryBuilder<Folder, Folder, QFilterCondition> {
   }
 
   QueryBuilder<Folder, Folder, QAfterFilterCondition> idLessThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -278,8 +294,8 @@ extension FolderQueryFilter on QueryBuilder<Folder, Folder, QFilterCondition> {
   }
 
   QueryBuilder<Folder, Folder, QAfterFilterCondition> idBetween(
-    Id lower,
-    Id upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -791,6 +807,7 @@ File _fileDeserialize(
     createdAt: reader.readDateTime(offsets[1]),
     description: reader.readStringOrNull(offsets[2]),
     duration: reader.readDouble(offsets[3]),
+    id: id,
     isFavorite: reader.readBool(offsets[5]),
     paragraphs: reader.readObjectOrNull<DictationSection>(
           offsets[6],
@@ -802,7 +819,6 @@ File _fileDeserialize(
     title: reader.readString(offsets[8]),
     transcript: reader.readString(offsets[9]),
   );
-  object.id = id;
   return object;
 }
 
@@ -849,7 +865,7 @@ P _fileDeserializeProp<P>(
 }
 
 Id _fileGetId(File object) {
-  return object.id;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _fileGetLinks(File object) {
@@ -1428,7 +1444,23 @@ extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
     });
   }
 
-  QueryBuilder<File, File, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<File, File, QAfterFilterCondition> idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -1438,7 +1470,7 @@ extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
   }
 
   QueryBuilder<File, File, QAfterFilterCondition> idGreaterThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1451,7 +1483,7 @@ extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
   }
 
   QueryBuilder<File, File, QAfterFilterCondition> idLessThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1464,8 +1496,8 @@ extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
   }
 
   QueryBuilder<File, File, QAfterFilterCondition> idBetween(
-    Id lower,
-    Id upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -2171,15 +2203,14 @@ extension FileQueryProperty on QueryBuilder<File, File, QQueryProperty> {
 // **************************************************************************
 
 Folder _$FolderFromJson(Map<String, dynamic> json) => Folder(
+      id: (json['id'] as num?)?.toInt(),
       parentId: (json['parentId'] as num?)?.toInt(),
       title: json['title'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-    )..id = (json['id'] as num).toInt();
+    );
 
 Map<String, dynamic> _$FolderToJson(Folder instance) {
-  final val = <String, dynamic>{
-    'id': instance.id,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -2187,6 +2218,7 @@ Map<String, dynamic> _$FolderToJson(Folder instance) {
     }
   }
 
+  writeNotNull('id', instance.id);
   writeNotNull('parentId', instance.parentId);
   val['title'] = instance.title;
   val['createdAt'] = instance.createdAt.toIso8601String();
@@ -2194,6 +2226,7 @@ Map<String, dynamic> _$FolderToJson(Folder instance) {
 }
 
 File _$FileFromJson(Map<String, dynamic> json) => File(
+      id: (json['id'] as num?)?.toInt(),
       parentId: (json['parentId'] as num?)?.toInt(),
       title: json['title'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
@@ -2204,12 +2237,10 @@ File _$FileFromJson(Map<String, dynamic> json) => File(
       transcript: json['transcript'] as String,
       paragraphs:
           DictationSection.fromJson(json['paragraphs'] as Map<String, dynamic>),
-    )..id = (json['id'] as num).toInt();
+    );
 
 Map<String, dynamic> _$FileToJson(File instance) {
-  final val = <String, dynamic>{
-    'id': instance.id,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -2217,6 +2248,7 @@ Map<String, dynamic> _$FileToJson(File instance) {
     }
   }
 
+  writeNotNull('id', instance.id);
   writeNotNull('parentId', instance.parentId);
   val['title'] = instance.title;
   val['createdAt'] = instance.createdAt.toIso8601String();

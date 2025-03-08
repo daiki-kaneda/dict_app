@@ -57,10 +57,10 @@ class SubItemsProvider extends _$SubItemsProvider {
 
       // delete all sub items
       await isar.files.deleteAll(
-        (await getSubFiles(id)).map((file) => file.id).toList(),
+        (await getSubFiles(id)).map((file) => file.id).whereType<int>().toList(),
       );
       await isar.folders.deleteAll(
-        (await getSubFolders(id)).map((folder) => folder.id).toList(),
+        (await getSubFolders(id)).map((folder) => folder.id).whereType<int>().toList(),
       );
     });
     ref.invalidateSelf();

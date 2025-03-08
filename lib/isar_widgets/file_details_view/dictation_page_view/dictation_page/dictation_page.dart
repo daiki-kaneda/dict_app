@@ -13,13 +13,13 @@ class DictationPage extends ConsumerWidget {
     return Center(
       child: Text(dictationSentence.toJson().toString()),
     );
-    // return Column(
-    //   mainAxisSize: MainAxisSize.max,
-    //   crossAxisAlignment: CrossAxisAlignment.stretch,
-    //   children: [
-    //     DictSentenceWidget(sentence: dictationSentence,),
-    //     Text('translation'),
-    //   ],
-    // );
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DictSentenceWidget(sentence: dictationSentence,),
+        Text('translation'),
+      ],
+    );
   }
 }

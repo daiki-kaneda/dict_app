@@ -57,7 +57,7 @@ final currentWordIndexProvider =
 
 typedef _$CurrentWordIndex = AutoDisposeNotifier<int>;
 String _$currentParagraphIndexHash() =>
-    r'b89e5ef488aa855a8869d576c867760c948987d4';
+    r'f92360e108c548e4dfab88d9a33decaa87ceb375';
 
 /// See also [CurrentParagraphIndex].
 @ProviderFor(CurrentParagraphIndex)
@@ -73,7 +73,7 @@ final currentParagraphIndexProvider =
 );
 
 typedef _$CurrentParagraphIndex = AutoDisposeNotifier<int>;
-String _$typedTextNotifierHash() => r'f1e9d5311861c81157ee6925af0cee51ecebea66';
+String _$typedTextNotifierHash() => r'5160e2bd9708055c2015cf366a53bfbaa0393ba2';
 
 /// See also [TypedTextNotifier].
 @ProviderFor(TypedTextNotifier)

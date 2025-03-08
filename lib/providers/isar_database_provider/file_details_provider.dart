@@ -90,6 +90,7 @@ class CurrentParagraphIndex extends _$CurrentParagraphIndex {
   @override
   int build() {
     final sentence = ref.watch(currentSentenceIndexProvider.notifier).getCurrentSentence();
+    print('parentIndex:${sentence?.parentIndex}');
     return sentence?.parentIndex ?? 0;
   }
 
@@ -131,7 +132,7 @@ class TypedTextNotifier extends _$TypedTextNotifier {
           paragraphIndex: currentParagraphIndex,
           sentenceIndex: currentSentenceIndex,
           wordIndex: currentWordIndex);
-      print('tryCharacter: ${nextText.characters.last}');
+      print('tryCharacter: ${nextText.characters.last},($currentParagraphIndex,$currentSentenceIndex,$currentWordIndex,)');
     });
     yield* controller.stream;
   }
