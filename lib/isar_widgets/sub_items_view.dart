@@ -111,7 +111,7 @@ class ItemTile extends StatelessWidget {
         {
           final file = (item as File);
           final parentId =
-              GoRouter.of(navigatorKey.currentContext!).state.currentParentId();
+               PathParamerterKeys.parentId.getCurrentValue();
           return PlatformListTile(
               leading: const Icon(CupertinoIcons.doc),
               title: Text(

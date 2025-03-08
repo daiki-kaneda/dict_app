@@ -1,5 +1,6 @@
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -39,7 +40,6 @@ class Folder extends Item {
   }
 }
 
-
 @Collection()
 @JsonSerializable()
 class File extends Item {
@@ -54,6 +54,9 @@ class File extends Item {
   final String transcript;
   final DictationParagraphs paragraphs;
   // final TranscriptModel? transcriptModel;
+
+  List<DictationSentence>? get getAllSentences =>
+      paragraphs.paragraphs?.map((p) => p.sentences ?? []).toList().concat();
 
   File({
     required this.parentId,

@@ -2,6 +2,7 @@ import 'package:dict_app/isar_widgets/bottom_navigation_bar.dart';
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
+import 'package:dict_app/isar_widgets/utils/sheet_page.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,17 @@ import 'package:path_provider/path_provider.dart';
 // }
 
 final navigatorKey = GlobalKey<NavigatorState>();
+
+enum PathParamerterKeys {
+  parentId,
+  fileId;
+
+  int? getCurrentValue() {
+    return GoRouter.of(navigatorKey.currentContext!)
+        .state
+        .currentParameterValue(name);
+  }
+}
 
 class IsarFolderStructureApp extends StatelessWidget {
   const IsarFolderStructureApp({super.key});
@@ -43,25 +55,28 @@ class IsarFolderStructureApp extends StatelessWidget {
                   const _EagerInitialization(child: Home()),
             ),
             GoRoute(
-              path: '/sub-items/:parentId',
+              path: '/sub-items/:${PathParamerterKeys.parentId.name}',
               builder: (context, state) {
-                final parentId = state.pathParameters['parentId'];
+                final parentId =
+                    state.pathParameters[PathParamerterKeys.parentId.name];
                 return SubItemsView(parentId: int.tryParse(parentId!));
               },
             ),
             GoRoute(
-              path: '/file-details/:id',
-              builder: (context, state) {
-                final id = int.tryParse(state.pathParameters['id']!);
-                if (id == null) {
-                  return const CupertinoPageScaffold(
-                      child: Center(
-                    child: CupertinoActivityIndicator(),
-                  ));
-                }
-                return FileDetailsView(id: id);
-              },
-            )
+                path: '/file-details/:${PathParamerterKeys.fileId.name}',
+                builder: (context, state) {
+                  final id = int.tryParse(
+                      state.pathParameters[PathParamerterKeys.fileId.name]!);
+                  if (id == null) {
+                    return const CupertinoPageScaffold(
+                        child: Center(
+                      child: CupertinoActivityIndicator(),
+                    ));
+                  }
+                  return FileDetailsView(id: id);
+                },
+                routes: [
+                ])
           ])
     ]);
     return CupertinoApp.router(
@@ -90,5 +105,12 @@ class _EagerInitialization extends ConsumerWidget {
         ),
       );
     }
+  }
+}
+
+extension GoRouterStateEx on GoRouterState {
+  int? currentParameterValue(String key) {
+    final value = pathParameters[key];
+    return value != null ? int.tryParse(value) : null;
   }
 }

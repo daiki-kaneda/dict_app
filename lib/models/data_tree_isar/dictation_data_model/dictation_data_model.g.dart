@@ -18,13 +18,19 @@ const DictationParagraphsSchema = Schema(
       name: r'displayText',
       type: IsarType.string,
     ),
-    r'isCompleted': PropertySchema(
+    r'getAllSentences': PropertySchema(
       id: 1,
+      name: r'getAllSentences',
+      type: IsarType.objectList,
+      target: r'DictationSentence',
+    ),
+    r'isCompleted': PropertySchema(
+      id: 2,
       name: r'isCompleted',
       type: IsarType.bool,
     ),
     r'paragraphs': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'paragraphs',
       type: IsarType.objectList,
       target: r'DictationParagraph',
@@ -43,6 +49,20 @@ int _dictationParagraphsEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.displayText.length * 3;
+  {
+    final list = object.getAllSentences;
+    if (list != null) {
+      bytesCount += 3 + list.length * 3;
+      {
+        final offsets = allOffsets[DictationSentence]!;
+        for (var i = 0; i < list.length; i++) {
+          final value = list[i];
+          bytesCount +=
+              DictationSentenceSchema.estimateSize(value, offsets, allOffsets);
+        }
+      }
+    }
+  }
   {
     final list = object.paragraphs;
     if (list != null) {
@@ -67,9 +87,15 @@ void _dictationParagraphsSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.displayText);
-  writer.writeBool(offsets[1], object.isCompleted);
+  writer.writeObjectList<DictationSentence>(
+    offsets[1],
+    allOffsets,
+    DictationSentenceSchema.serialize,
+    object.getAllSentences,
+  );
+  writer.writeBool(offsets[2], object.isCompleted);
   writer.writeObjectList<DictationParagraph>(
-    offsets[2],
+    offsets[3],
     allOffsets,
     DictationParagraphSchema.serialize,
     object.paragraphs,
@@ -84,7 +110,7 @@ DictationParagraphs _dictationParagraphsDeserialize(
 ) {
   final object = DictationParagraphs(
     paragraphs: reader.readObjectList<DictationParagraph>(
-      offsets[2],
+      offsets[3],
       DictationParagraphSchema.deserialize,
       allOffsets,
       DictationParagraph(),
@@ -103,8 +129,15 @@ P _dictationParagraphsDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readBool(offset)) as P;
+      return (reader.readObjectList<DictationSentence>(
+        offset,
+        DictationSentenceSchema.deserialize,
+        allOffsets,
+        DictationSentence(),
+      )) as P;
     case 2:
+      return (reader.readBool(offset)) as P;
+    case 3:
       return (reader.readObjectList<DictationParagraph>(
         offset,
         DictationParagraphSchema.deserialize,
@@ -255,6 +288,113 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
   }
 
   QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+      getAllSentencesIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'getAllSentences',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+      getAllSentencesIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'getAllSentences',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+      getAllSentencesLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+      getAllSentencesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+      getAllSentencesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+      getAllSentencesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+      getAllSentencesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+      getAllSentencesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
+  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
       isCompletedEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -374,6 +514,13 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
 
 extension DictationParagraphsQueryObject on QueryBuilder<DictationParagraphs,
     DictationParagraphs, QFilterCondition> {
+  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+      getAllSentencesElement(FilterQuery<DictationSentence> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'getAllSentences');
+    });
+  }
+
   QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
       paragraphsElement(FilterQuery<DictationParagraph> q) {
     return QueryBuilder.apply(this, (query) {

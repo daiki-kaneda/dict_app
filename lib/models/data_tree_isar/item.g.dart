@@ -664,29 +664,35 @@ const FileSchema = CollectionSchema(
       name: r'duration',
       type: IsarType.double,
     ),
-    r'isFavorite': PropertySchema(
+    r'getAllSentences': PropertySchema(
       id: 4,
+      name: r'getAllSentences',
+      type: IsarType.objectList,
+      target: r'DictationSentence',
+    ),
+    r'isFavorite': PropertySchema(
+      id: 5,
       name: r'isFavorite',
       type: IsarType.bool,
     ),
     r'paragraphs': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'paragraphs',
       type: IsarType.object,
       target: r'DictationParagraphs',
     ),
     r'parentId': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'parentId',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'title',
       type: IsarType.string,
     ),
     r'transcript': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'transcript',
       type: IsarType.string,
     )
@@ -724,6 +730,20 @@ int _fileEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  {
+    final list = object.getAllSentences;
+    if (list != null) {
+      bytesCount += 3 + list.length * 3;
+      {
+        final offsets = allOffsets[DictationSentence]!;
+        for (var i = 0; i < list.length; i++) {
+          final value = list[i];
+          bytesCount +=
+              DictationSentenceSchema.estimateSize(value, offsets, allOffsets);
+        }
+      }
+    }
+  }
   bytesCount += 3 +
       DictationParagraphsSchema.estimateSize(
           object.paragraphs, allOffsets[DictationParagraphs]!, allOffsets);
@@ -742,16 +762,22 @@ void _fileSerialize(
   writer.writeDateTime(offsets[1], object.createdAt);
   writer.writeString(offsets[2], object.description);
   writer.writeDouble(offsets[3], object.duration);
-  writer.writeBool(offsets[4], object.isFavorite);
+  writer.writeObjectList<DictationSentence>(
+    offsets[4],
+    allOffsets,
+    DictationSentenceSchema.serialize,
+    object.getAllSentences,
+  );
+  writer.writeBool(offsets[5], object.isFavorite);
   writer.writeObject<DictationParagraphs>(
-    offsets[5],
+    offsets[6],
     allOffsets,
     DictationParagraphsSchema.serialize,
     object.paragraphs,
   );
-  writer.writeLong(offsets[6], object.parentId);
-  writer.writeString(offsets[7], object.title);
-  writer.writeString(offsets[8], object.transcript);
+  writer.writeLong(offsets[7], object.parentId);
+  writer.writeString(offsets[8], object.title);
+  writer.writeString(offsets[9], object.transcript);
 }
 
 File _fileDeserialize(
@@ -765,16 +791,16 @@ File _fileDeserialize(
     createdAt: reader.readDateTime(offsets[1]),
     description: reader.readStringOrNull(offsets[2]),
     duration: reader.readDouble(offsets[3]),
-    isFavorite: reader.readBool(offsets[4]),
+    isFavorite: reader.readBool(offsets[5]),
     paragraphs: reader.readObjectOrNull<DictationParagraphs>(
-          offsets[5],
+          offsets[6],
           DictationParagraphsSchema.deserialize,
           allOffsets,
         ) ??
         DictationParagraphs(),
-    parentId: reader.readLongOrNull(offsets[6]),
-    title: reader.readString(offsets[7]),
-    transcript: reader.readString(offsets[8]),
+    parentId: reader.readLongOrNull(offsets[7]),
+    title: reader.readString(offsets[8]),
+    transcript: reader.readString(offsets[9]),
   );
   object.id = id;
   return object;
@@ -796,19 +822,26 @@ P _fileDeserializeProp<P>(
     case 3:
       return (reader.readDouble(offset)) as P;
     case 4:
-      return (reader.readBool(offset)) as P;
+      return (reader.readObjectList<DictationSentence>(
+        offset,
+        DictationSentenceSchema.deserialize,
+        allOffsets,
+        DictationSentence(),
+      )) as P;
     case 5:
+      return (reader.readBool(offset)) as P;
+    case 6:
       return (reader.readObjectOrNull<DictationParagraphs>(
             offset,
             DictationParagraphsSchema.deserialize,
             allOffsets,
           ) ??
           DictationParagraphs()) as P;
-    case 6:
-      return (reader.readLongOrNull(offset)) as P;
     case 7:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 8:
+      return (reader.readString(offset)) as P;
+    case 9:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1294,6 +1327,107 @@ extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
     });
   }
 
+  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'getAllSentences',
+      ));
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'getAllSentences',
+      ));
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition>
+      getAllSentencesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'getAllSentences',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
   QueryBuilder<File, File, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1684,6 +1818,13 @@ extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
 }
 
 extension FileQueryObject on QueryBuilder<File, File, QFilterCondition> {
+  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesElement(
+      FilterQuery<DictationSentence> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'getAllSentences');
+    });
+  }
+
   QueryBuilder<File, File, QAfterFilterCondition> paragraphs(
       FilterQuery<DictationParagraphs> q) {
     return QueryBuilder.apply(this, (query) {
@@ -1984,6 +2125,13 @@ extension FileQueryProperty on QueryBuilder<File, File, QQueryProperty> {
   QueryBuilder<File, double, QQueryOperations> durationProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'duration');
+    });
+  }
+
+  QueryBuilder<File, List<DictationSentence>?, QQueryOperations>
+      getAllSentencesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'getAllSentences');
     });
   }
 

@@ -39,7 +39,7 @@ class CreateFolderButton extends ConsumerWidget {
     return PlatformIconButton(
       onPressed: () {
         final parentId =
-            GoRouter.of(navigatorKey.currentContext!).state.currentParentId();
+             PathParamerterKeys.parentId.getCurrentValue();
         ref
             .read(subItemsProviderProvider(parentId).notifier)
             .createFolder(title: 'new folder');
@@ -57,7 +57,7 @@ class CreateFileButton extends ConsumerWidget {
     return PlatformIconButton(
       onPressed: () {
         final parentId =
-            GoRouter.of(navigatorKey.currentContext!).state.currentParentId();
+            PathParamerterKeys.parentId.getCurrentValue();
         ref
             .read(subItemsProviderProvider(parentId).notifier)
             .createFileFromLocalAudio(title: 'new file');
@@ -67,9 +67,4 @@ class CreateFileButton extends ConsumerWidget {
   }
 }
 
-extension GoRouterStateEx on GoRouterState {
-  int? currentParentId() {
-    final parentId = pathParameters['parentId'];
-    return parentId != null ? int.tryParse(parentId) : null;
-  }
-}
+
