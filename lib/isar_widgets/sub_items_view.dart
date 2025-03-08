@@ -2,6 +2,7 @@ import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/bottom_navigation_bar.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/folder_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
@@ -76,10 +77,14 @@ class SubItemsList extends ConsumerWidget {
                     return ItemTile(
                       item: item,
                       onFileTapped: () {
-                        final audioPath = (item as File).audioPath;
+                        final file = (item as File);
+                        final audioPath = file.audioPath;
                         ref
                             .read(audioPlayerNotifierProvider.notifier)
                             .setSource(audioPath);
+                        ref.read(startEndProviderProvider.notifier).setNewValue(
+                            file.getAllSentences!.first.start!,
+                            file.getAllSentences!.first.end!);
                         print('audioPath set :$audioPath');
                       },
                     );

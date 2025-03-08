@@ -3,6 +3,11 @@ import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
 import 'package:dict_app/isar_widgets/utils/sheet_page.dart';
+import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -93,6 +98,12 @@ class _EagerInitialization extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isar = ref.watch(isarProvider);
+    ref.watch(audioPlayerNotifierProvider);
+    ref.watch(playerStateProvider);
+    ref.watch(playerPositionProvider);
+    ref.watch(playerStateProvider);
+    ref.watch(playerDurationProvider);
+    ref.watch(startEndProviderProvider);
 
     if (isar.value != null) {
       return child;

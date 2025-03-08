@@ -11,7 +11,7 @@ class StartEndProvider extends _$StartEndProvider {
       ref.read(audioPlayerNotifierProvider.notifier)
       .seek(Duration(milliseconds: (next.start*1000).toInt()));
     },);
-    return (start: 0,end: 0);
+    return (start: 0,end: 1);
   }
 
   void setNewValue(double start,double end){
