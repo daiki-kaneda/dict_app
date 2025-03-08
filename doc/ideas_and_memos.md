@@ -90,3 +90,8 @@ ProviderRefを持つNavigatorObserverを提供する同期的なproviderを定�
 #### オーディオの設定のロジックまとめ
 1. fileを開くリストタイルのonTapで、fileのaudioPathの音声をset
 2. PageControllerのpageの変更をリッスンして、次のページのsentenceに対応するstart,endを設定する
+
+#### ディクテーション問題に関するロジックまとめ
+1. focusNode,Future.delayedなどを使って、DictationPageが表示されるときに、キーボードを表示
+2. ユーザがキーボードを打つ
+3. fileIdはpathから、sentenceIndexはcurrentSentenceIndexから、wordIndexはcurrentWordIndexから取得して、キーボードで打たれた文字が正解かどうかを確かめ、正解の場合は、その文字をtrueに変更,不正解の場合は、BackDropFilterなどを使って、不正解のエフェクトを表示
