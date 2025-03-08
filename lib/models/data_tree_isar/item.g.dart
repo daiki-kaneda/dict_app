@@ -679,7 +679,7 @@ const FileSchema = CollectionSchema(
       id: 6,
       name: r'paragraphs',
       type: IsarType.object,
-      target: r'DictationParagraphs',
+      target: r'DictationSection',
     ),
     r'parentId': PropertySchema(
       id: 7,
@@ -705,7 +705,7 @@ const FileSchema = CollectionSchema(
   indexes: {},
   links: {},
   embeddedSchemas: {
-    r'DictationParagraphs': DictationParagraphsSchema,
+    r'DictationSection': DictationSectionSchema,
     r'DictationParagraph': DictationParagraphSchema,
     r'DictationSentence': DictationSentenceSchema,
     r'DictationWord': DictationWordSchema,
@@ -745,8 +745,8 @@ int _fileEstimateSize(
     }
   }
   bytesCount += 3 +
-      DictationParagraphsSchema.estimateSize(
-          object.paragraphs, allOffsets[DictationParagraphs]!, allOffsets);
+      DictationSectionSchema.estimateSize(
+          object.paragraphs, allOffsets[DictationSection]!, allOffsets);
   bytesCount += 3 + object.title.length * 3;
   bytesCount += 3 + object.transcript.length * 3;
   return bytesCount;
@@ -769,10 +769,10 @@ void _fileSerialize(
     object.getAllSentences,
   );
   writer.writeBool(offsets[5], object.isFavorite);
-  writer.writeObject<DictationParagraphs>(
+  writer.writeObject<DictationSection>(
     offsets[6],
     allOffsets,
-    DictationParagraphsSchema.serialize,
+    DictationSectionSchema.serialize,
     object.paragraphs,
   );
   writer.writeLong(offsets[7], object.parentId);
@@ -792,12 +792,12 @@ File _fileDeserialize(
     description: reader.readStringOrNull(offsets[2]),
     duration: reader.readDouble(offsets[3]),
     isFavorite: reader.readBool(offsets[5]),
-    paragraphs: reader.readObjectOrNull<DictationParagraphs>(
+    paragraphs: reader.readObjectOrNull<DictationSection>(
           offsets[6],
-          DictationParagraphsSchema.deserialize,
+          DictationSectionSchema.deserialize,
           allOffsets,
         ) ??
-        DictationParagraphs(),
+        DictationSection(),
     parentId: reader.readLongOrNull(offsets[7]),
     title: reader.readString(offsets[8]),
     transcript: reader.readString(offsets[9]),
@@ -831,12 +831,12 @@ P _fileDeserializeProp<P>(
     case 5:
       return (reader.readBool(offset)) as P;
     case 6:
-      return (reader.readObjectOrNull<DictationParagraphs>(
+      return (reader.readObjectOrNull<DictationSection>(
             offset,
-            DictationParagraphsSchema.deserialize,
+            DictationSectionSchema.deserialize,
             allOffsets,
           ) ??
-          DictationParagraphs()) as P;
+          DictationSection()) as P;
     case 7:
       return (reader.readLongOrNull(offset)) as P;
     case 8:
@@ -1826,7 +1826,7 @@ extension FileQueryObject on QueryBuilder<File, File, QFilterCondition> {
   }
 
   QueryBuilder<File, File, QAfterFilterCondition> paragraphs(
-      FilterQuery<DictationParagraphs> q) {
+      FilterQuery<DictationSection> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'paragraphs');
     });
@@ -2141,8 +2141,7 @@ extension FileQueryProperty on QueryBuilder<File, File, QQueryProperty> {
     });
   }
 
-  QueryBuilder<File, DictationParagraphs, QQueryOperations>
-      paragraphsProperty() {
+  QueryBuilder<File, DictationSection, QQueryOperations> paragraphsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'paragraphs');
     });
@@ -2203,8 +2202,8 @@ File _$FileFromJson(Map<String, dynamic> json) => File(
       isFavorite: json['isFavorite'] as bool,
       duration: (json['duration'] as num).toDouble(),
       transcript: json['transcript'] as String,
-      paragraphs: DictationParagraphs.fromJson(
-          json['paragraphs'] as Map<String, dynamic>),
+      paragraphs:
+          DictationSection.fromJson(json['paragraphs'] as Map<String, dynamic>),
     )..id = (json['id'] as num).toInt();
 
 Map<String, dynamic> _$FileToJson(File instance) {

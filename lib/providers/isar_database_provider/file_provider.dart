@@ -24,7 +24,7 @@ class FileNotifier extends _$FileNotifier {
     bool? isFavorite,
     double? duration,
     String? transcript,
-    DictationParagraphs? paragraphs,}
+    DictationSection? paragraphs,}
   ) async {
     await isar.writeTxn(() async {
       final file = await isar.files.get(id);

@@ -9,9 +9,9 @@ part of 'dictation_data_model.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-const DictationParagraphsSchema = Schema(
-  name: r'DictationParagraphs',
-  id: -6983200758593886302,
+const DictationSectionSchema = Schema(
+  name: r'DictationSection',
+  id: -1549784492033707822,
   properties: {
     r'displayText': PropertySchema(
       id: 0,
@@ -36,14 +36,14 @@ const DictationParagraphsSchema = Schema(
       target: r'DictationParagraph',
     )
   },
-  estimateSize: _dictationParagraphsEstimateSize,
-  serialize: _dictationParagraphsSerialize,
-  deserialize: _dictationParagraphsDeserialize,
-  deserializeProp: _dictationParagraphsDeserializeProp,
+  estimateSize: _dictationSectionEstimateSize,
+  serialize: _dictationSectionSerialize,
+  deserialize: _dictationSectionDeserialize,
+  deserializeProp: _dictationSectionDeserializeProp,
 );
 
-int _dictationParagraphsEstimateSize(
-  DictationParagraphs object,
+int _dictationSectionEstimateSize(
+  DictationSection object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -80,8 +80,8 @@ int _dictationParagraphsEstimateSize(
   return bytesCount;
 }
 
-void _dictationParagraphsSerialize(
-  DictationParagraphs object,
+void _dictationSectionSerialize(
+  DictationSection object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -102,13 +102,13 @@ void _dictationParagraphsSerialize(
   );
 }
 
-DictationParagraphs _dictationParagraphsDeserialize(
+DictationSection _dictationSectionDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = DictationParagraphs(
+  final object = DictationSection(
     paragraphs: reader.readObjectList<DictationParagraph>(
       offsets[3],
       DictationParagraphSchema.deserialize,
@@ -119,7 +119,7 @@ DictationParagraphs _dictationParagraphsDeserialize(
   return object;
 }
 
-P _dictationParagraphsDeserializeProp<P>(
+P _dictationSectionDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -149,9 +149,9 @@ P _dictationParagraphsDeserializeProp<P>(
   }
 }
 
-extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
-    DictationParagraphs, QFilterCondition> {
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+extension DictationSectionQueryFilter
+    on QueryBuilder<DictationSection, DictationSection, QFilterCondition> {
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -165,7 +165,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextGreaterThan(
     String value, {
     bool include = false,
@@ -181,7 +181,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextLessThan(
     String value, {
     bool include = false,
@@ -197,7 +197,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextBetween(
     String lower,
     String upper, {
@@ -217,7 +217,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -231,7 +231,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -245,7 +245,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -256,7 +256,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -267,7 +267,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -277,7 +277,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -287,7 +287,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -296,7 +296,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -305,7 +305,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -318,7 +318,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -331,7 +331,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -344,7 +344,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesLengthLessThan(
     int length, {
     bool include = false,
@@ -360,7 +360,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesLengthGreaterThan(
     int length, {
     bool include = false,
@@ -376,7 +376,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesLengthBetween(
     int lower,
     int upper, {
@@ -394,7 +394,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       isCompletedEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -404,7 +404,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       paragraphsIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -413,7 +413,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       paragraphsIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -422,7 +422,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       paragraphsLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -435,7 +435,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       paragraphsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -448,7 +448,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       paragraphsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -461,7 +461,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       paragraphsLengthLessThan(
     int length, {
     bool include = false,
@@ -477,7 +477,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       paragraphsLengthGreaterThan(
     int length, {
     bool include = false,
@@ -493,7 +493,7 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       paragraphsLengthBetween(
     int lower,
     int upper, {
@@ -512,16 +512,16 @@ extension DictationParagraphsQueryFilter on QueryBuilder<DictationParagraphs,
   }
 }
 
-extension DictationParagraphsQueryObject on QueryBuilder<DictationParagraphs,
-    DictationParagraphs, QFilterCondition> {
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+extension DictationSectionQueryObject
+    on QueryBuilder<DictationSection, DictationSection, QFilterCondition> {
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesElement(FilterQuery<DictationSentence> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'getAllSentences');
     });
   }
 
-  QueryBuilder<DictationParagraphs, DictationParagraphs, QAfterFilterCondition>
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       paragraphsElement(FilterQuery<DictationParagraph> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'paragraphs');
@@ -551,14 +551,19 @@ const DictationParagraphSchema = Schema(
       name: r'isCompleted',
       type: IsarType.bool,
     ),
-    r'sentences': PropertySchema(
+    r'parentIndex': PropertySchema(
       id: 3,
+      name: r'parentIndex',
+      type: IsarType.long,
+    ),
+    r'sentences': PropertySchema(
+      id: 4,
       name: r'sentences',
       type: IsarType.objectList,
       target: r'DictationSentence',
     ),
     r'start': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'start',
       type: IsarType.double,
     )
@@ -602,13 +607,14 @@ void _dictationParagraphSerialize(
   writer.writeString(offsets[0], object.displayText);
   writer.writeDouble(offsets[1], object.end);
   writer.writeBool(offsets[2], object.isCompleted);
+  writer.writeLong(offsets[3], object.parentIndex);
   writer.writeObjectList<DictationSentence>(
-    offsets[3],
+    offsets[4],
     allOffsets,
     DictationSentenceSchema.serialize,
     object.sentences,
   );
-  writer.writeDouble(offsets[4], object.start);
+  writer.writeDouble(offsets[5], object.start);
 }
 
 DictationParagraph _dictationParagraphDeserialize(
@@ -619,13 +625,14 @@ DictationParagraph _dictationParagraphDeserialize(
 ) {
   final object = DictationParagraph(
     end: reader.readDoubleOrNull(offsets[1]),
+    parentIndex: reader.readLongOrNull(offsets[3]),
     sentences: reader.readObjectList<DictationSentence>(
-      offsets[3],
+      offsets[4],
       DictationSentenceSchema.deserialize,
       allOffsets,
       DictationSentence(),
     ),
-    start: reader.readDoubleOrNull(offsets[4]),
+    start: reader.readDoubleOrNull(offsets[5]),
   );
   return object;
 }
@@ -644,13 +651,15 @@ P _dictationParagraphDeserializeProp<P>(
     case 2:
       return (reader.readBool(offset)) as P;
     case 3:
+      return (reader.readLongOrNull(offset)) as P;
+    case 4:
       return (reader.readObjectList<DictationSentence>(
         offset,
         DictationSentenceSchema.deserialize,
         allOffsets,
         DictationSentence(),
       )) as P;
-    case 4:
+    case 5:
       return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -890,6 +899,80 @@ extension DictationParagraphQueryFilter
   }
 
   QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
+      parentIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'parentIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
+      parentIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'parentIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
+      parentIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
+      parentIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
+      parentIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
+      parentIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'parentIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
       sentencesIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1113,18 +1196,23 @@ const DictationSentenceSchema = Schema(
       name: r'isCompleted',
       type: IsarType.bool,
     ),
-    r'sentence': PropertySchema(
+    r'parentIndex': PropertySchema(
       id: 3,
+      name: r'parentIndex',
+      type: IsarType.long,
+    ),
+    r'sentence': PropertySchema(
+      id: 4,
       name: r'sentence',
       type: IsarType.string,
     ),
     r'start': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'start',
       type: IsarType.double,
     ),
     r'words': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'words',
       type: IsarType.objectList,
       target: r'DictationWord',
@@ -1175,10 +1263,11 @@ void _dictationSentenceSerialize(
   writer.writeString(offsets[0], object.displayText);
   writer.writeDouble(offsets[1], object.end);
   writer.writeBool(offsets[2], object.isCompleted);
-  writer.writeString(offsets[3], object.sentence);
-  writer.writeDouble(offsets[4], object.start);
+  writer.writeLong(offsets[3], object.parentIndex);
+  writer.writeString(offsets[4], object.sentence);
+  writer.writeDouble(offsets[5], object.start);
   writer.writeObjectList<DictationWord>(
-    offsets[5],
+    offsets[6],
     allOffsets,
     DictationWordSchema.serialize,
     object.words,
@@ -1193,10 +1282,11 @@ DictationSentence _dictationSentenceDeserialize(
 ) {
   final object = DictationSentence(
     end: reader.readDoubleOrNull(offsets[1]),
-    sentence: reader.readStringOrNull(offsets[3]),
-    start: reader.readDoubleOrNull(offsets[4]),
+    parentIndex: reader.readLongOrNull(offsets[3]),
+    sentence: reader.readStringOrNull(offsets[4]),
+    start: reader.readDoubleOrNull(offsets[5]),
     words: reader.readObjectList<DictationWord>(
-      offsets[5],
+      offsets[6],
       DictationWordSchema.deserialize,
       allOffsets,
       DictationWord(),
@@ -1219,10 +1309,12 @@ P _dictationSentenceDeserializeProp<P>(
     case 2:
       return (reader.readBool(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 4:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 6:
       return (reader.readObjectList<DictationWord>(
         offset,
         DictationWordSchema.deserialize,
@@ -1462,6 +1554,80 @@ extension DictationSentenceQueryFilter
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isCompleted',
         value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
+      parentIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'parentIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
+      parentIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'parentIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
+      parentIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
+      parentIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
+      parentIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
+      parentIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'parentIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -1850,13 +2016,18 @@ const DictationWordSchema = Schema(
       name: r'isCompleted',
       type: IsarType.bool,
     ),
-    r'start': PropertySchema(
+    r'parentIndex': PropertySchema(
       id: 4,
+      name: r'parentIndex',
+      type: IsarType.long,
+    ),
+    r'start': PropertySchema(
+      id: 5,
       name: r'start',
       type: IsarType.double,
     ),
     r'word': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'word',
       type: IsarType.string,
     )
@@ -1912,8 +2083,9 @@ void _dictationWordSerialize(
   writer.writeString(offsets[1], object.displayText);
   writer.writeDouble(offsets[2], object.end);
   writer.writeBool(offsets[3], object.isCompleted);
-  writer.writeDouble(offsets[4], object.start);
-  writer.writeString(offsets[5], object.word);
+  writer.writeLong(offsets[4], object.parentIndex);
+  writer.writeDouble(offsets[5], object.start);
+  writer.writeString(offsets[6], object.word);
 }
 
 DictationWord _dictationWordDeserialize(
@@ -1930,8 +2102,9 @@ DictationWord _dictationWordDeserialize(
       DictationCharacter(),
     ),
     end: reader.readDoubleOrNull(offsets[2]),
-    start: reader.readDoubleOrNull(offsets[4]),
-    word: reader.readStringOrNull(offsets[5]),
+    parentIndex: reader.readLongOrNull(offsets[4]),
+    start: reader.readDoubleOrNull(offsets[5]),
+    word: reader.readStringOrNull(offsets[6]),
   );
   return object;
 }
@@ -1957,8 +2130,10 @@ P _dictationWordDeserializeProp<P>(
     case 3:
       return (reader.readBool(offset)) as P;
     case 4:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 5:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 6:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -2302,6 +2477,80 @@ extension DictationWordQueryFilter
   }
 
   QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
+      parentIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'parentIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
+      parentIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'parentIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
+      parentIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
+      parentIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
+      parentIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
+      parentIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'parentIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
       startIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -2565,6 +2814,11 @@ const DictationCharacterSchema = Schema(
       id: 1,
       name: r'isSolved',
       type: IsarType.bool,
+    ),
+    r'parentIndex': PropertySchema(
+      id: 2,
+      name: r'parentIndex',
+      type: IsarType.long,
     )
   },
   estimateSize: _dictationCharacterEstimateSize,
@@ -2596,6 +2850,7 @@ void _dictationCharacterSerialize(
 ) {
   writer.writeString(offsets[0], object.character);
   writer.writeBool(offsets[1], object.isSolved);
+  writer.writeLong(offsets[2], object.parentIndex);
 }
 
 DictationCharacter _dictationCharacterDeserialize(
@@ -2607,6 +2862,7 @@ DictationCharacter _dictationCharacterDeserialize(
   final object = DictationCharacter(
     character: reader.readStringOrNull(offsets[0]),
     isSolved: reader.readBoolOrNull(offsets[1]) ?? false,
+    parentIndex: reader.readLongOrNull(offsets[2]),
   );
   return object;
 }
@@ -2622,6 +2878,8 @@ P _dictationCharacterDeserializeProp<P>(
       return (reader.readStringOrNull(offset)) as P;
     case 1:
       return (reader.readBoolOrNull(offset) ?? false) as P;
+    case 2:
+      return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -2792,6 +3050,80 @@ extension DictationCharacterQueryFilter
       ));
     });
   }
+
+  QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
+      parentIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'parentIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
+      parentIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'parentIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
+      parentIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
+      parentIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
+      parentIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'parentIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
+      parentIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'parentIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension DictationCharacterQueryObject
@@ -2801,14 +3133,14 @@ extension DictationCharacterQueryObject
 // JsonSerializableGenerator
 // **************************************************************************
 
-DictationParagraphs _$DictationParagraphsFromJson(Map<String, dynamic> json) =>
-    DictationParagraphs(
+DictationSection _$DictationSectionFromJson(Map<String, dynamic> json) =>
+    DictationSection(
       paragraphs: (json['paragraphs'] as List<dynamic>?)
           ?.map((e) => DictationParagraph.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$DictationParagraphsToJson(DictationParagraphs instance) {
+Map<String, dynamic> _$DictationSectionToJson(DictationSection instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -2824,6 +3156,7 @@ Map<String, dynamic> _$DictationParagraphsToJson(DictationParagraphs instance) {
 
 DictationParagraph _$DictationParagraphFromJson(Map<String, dynamic> json) =>
     DictationParagraph(
+      parentIndex: (json['parentIndex'] as num?)?.toInt(),
       sentences: (json['sentences'] as List<dynamic>?)
           ?.map((e) => DictationSentence.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -2840,6 +3173,7 @@ Map<String, dynamic> _$DictationParagraphToJson(DictationParagraph instance) {
     }
   }
 
+  writeNotNull('parentIndex', instance.parentIndex);
   writeNotNull(
       'sentences', instance.sentences?.map((e) => e.toJson()).toList());
   writeNotNull('start', instance.start);
@@ -2849,6 +3183,7 @@ Map<String, dynamic> _$DictationParagraphToJson(DictationParagraph instance) {
 
 DictationSentence _$DictationSentenceFromJson(Map<String, dynamic> json) =>
     DictationSentence(
+      parentIndex: (json['parentIndex'] as num?)?.toInt(),
       sentence: json['sentence'] as String?,
       words: (json['words'] as List<dynamic>?)
           ?.map((e) => DictationWord.fromJson(e as Map<String, dynamic>))
@@ -2866,6 +3201,7 @@ Map<String, dynamic> _$DictationSentenceToJson(DictationSentence instance) {
     }
   }
 
+  writeNotNull('parentIndex', instance.parentIndex);
   writeNotNull('sentence', instance.sentence);
   writeNotNull('words', instance.words?.map((e) => e.toJson()).toList());
   writeNotNull('start', instance.start);
@@ -2875,6 +3211,7 @@ Map<String, dynamic> _$DictationSentenceToJson(DictationSentence instance) {
 
 DictationWord _$DictationWordFromJson(Map<String, dynamic> json) =>
     DictationWord(
+      parentIndex: (json['parentIndex'] as num?)?.toInt(),
       word: json['word'] as String?,
       characters: (json['characters'] as List<dynamic>?)
           ?.map((e) => DictationCharacter.fromJson(e as Map<String, dynamic>))
@@ -2892,6 +3229,7 @@ Map<String, dynamic> _$DictationWordToJson(DictationWord instance) {
     }
   }
 
+  writeNotNull('parentIndex', instance.parentIndex);
   writeNotNull('word', instance.word);
   writeNotNull(
       'characters', instance.characters?.map((e) => e.toJson()).toList());
@@ -2902,6 +3240,7 @@ Map<String, dynamic> _$DictationWordToJson(DictationWord instance) {
 
 DictationCharacter _$DictationCharacterFromJson(Map<String, dynamic> json) =>
     DictationCharacter(
+      parentIndex: (json['parentIndex'] as num?)?.toInt(),
       character: json['character'] as String?,
       isSolved: json['isSolved'] as bool? ?? false,
     );
@@ -2915,6 +3254,7 @@ Map<String, dynamic> _$DictationCharacterToJson(DictationCharacter instance) {
     }
   }
 
+  writeNotNull('parentIndex', instance.parentIndex);
   writeNotNull('character', instance.character);
   val['isSolved'] = instance.isSolved;
   return val;

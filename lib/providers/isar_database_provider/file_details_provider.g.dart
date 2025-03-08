@@ -24,7 +24,7 @@ final sentencePageControllerProvider = AutoDisposeNotifierProvider<
 
 typedef _$SentencePageController = AutoDisposeNotifier<PageController>;
 String _$currentSentenceIndexHash() =>
-    r'73b1956536cf911ef4badf2fb15c45d1ab7ad6d4';
+    r'787a6ec663ab4eb3474af493ffd46f5f25cb8f99';
 
 /// See also [CurrentSentenceIndex].
 @ProviderFor(CurrentSentenceIndex)
@@ -57,7 +57,7 @@ final currentWordIndexProvider =
 
 typedef _$CurrentWordIndex = AutoDisposeNotifier<int>;
 String _$currentParagraphIndexHash() =>
-    r'0e4a888f7ddd95942dec6144265203dd9a64cb2a';
+    r'b89e5ef488aa855a8869d576c867760c948987d4';
 
 /// See also [CurrentParagraphIndex].
 @ProviderFor(CurrentParagraphIndex)

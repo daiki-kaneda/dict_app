@@ -52,7 +52,7 @@ class File extends Item {
   final bool isFavorite;
   final double duration;
   final String transcript;
-  final DictationParagraphs paragraphs;
+  final DictationSection paragraphs;
   // final TranscriptModel? transcriptModel;
 
   List<DictationSentence>? get getAllSentences =>
@@ -95,7 +95,7 @@ class File extends Item {
       isFavorite: false,
       duration: transcript.metadata?.duration ?? 0,
       transcript: alternative.transcript ?? '',
-      paragraphs: DictationParagraphs.from(paragraphs: paragraphs!),
+      paragraphs: DictationSection.from(paragraphs: paragraphs!),
       // transcriptModel: transcript
     );
   }
@@ -109,7 +109,7 @@ class File extends Item {
     bool? isFavorite,
     double? duration,
     String? transcript,
-    DictationParagraphs? paragraphs,
+    DictationSection? paragraphs,
   }) {
     return File(
       parentId: parentId ?? this.parentId,
