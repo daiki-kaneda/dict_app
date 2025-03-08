@@ -89,11 +89,8 @@ class CurrentWordIndex extends _$CurrentWordIndex {
 class CurrentParagraphIndex extends _$CurrentParagraphIndex {
   @override
   int build() {
-    final fileId = PathParamerterKeys.fileId.getCurrentValue();
-    if (fileId == null) return 0;
-    final sentenceIndex = ref.watch(sentenceIndexNotifierProvider);
-    final isar = ref.read(isarProvider).requireValue;
-    return 0;
+    final sentence = ref.watch(currentSentenceIndexProvider.notifier).getCurrentSentence();
+    return sentence?.parentIndex ?? 0;
   }
 
   updateIndex(int index) {
