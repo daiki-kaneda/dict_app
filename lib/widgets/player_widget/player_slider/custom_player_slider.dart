@@ -7,6 +7,7 @@ import 'package:dict_app/providers/audio_player_provider/player_state_provider.d
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CustomPlayerSlider extends ConsumerStatefulWidget {
@@ -37,7 +38,7 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
     final color = CupertinoColors.label.resolveFrom(context);
     final customDuration = endInMilliseconds-startInMilliseconds;
     if(duration.hasValue&&position.hasValue&&state.hasValue){
-      return Slider(
+      return PlatformSlider(
         min: startInMilliseconds.toDouble(),
         max: endInMilliseconds.toDouble(),
         value: position.value!.inMilliseconds.toDouble().clamp(startInMilliseconds.toDouble(), endInMilliseconds.toDouble()), 
@@ -64,7 +65,7 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
         },
         );
     }else{
-      return Slider(
+      return PlatformSlider(
         value:0, 
         activeColor: color,
         onChanged: (value){},

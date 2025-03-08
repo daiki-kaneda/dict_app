@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlayPauseButton extends ConsumerWidget {
@@ -18,49 +19,49 @@ class PlayPauseButton extends ConsumerWidget {
       switch (playerState) {
         case PlayerState.completed:
           {
-            return CupertinoButton(onPressed: () {
+            return PlatformIconButton(onPressed: () {
               ref.read(audioPlayerNotifierProvider.notifier)
               .resume();
-            }, child: Icon(
+            }, icon: Icon(
               CupertinoIcons.play_fill,
               color: color,));
           }
         case PlayerState.paused:
           {
-            return CupertinoButton(onPressed: () {
+            return PlatformIconButton(onPressed: () {
               ref.read(audioPlayerNotifierProvider.notifier)
               .resume();
-            }, child: Icon(CupertinoIcons.play_fill,
+            }, icon: Icon(CupertinoIcons.play_fill,
             color: color,
             ));
           }
         case PlayerState.stopped:
           {
-            return CupertinoButton(onPressed: () {
+            return PlatformIconButton(onPressed: () {
               ref.read(audioPlayerNotifierProvider.notifier)
               .resume();
-            }, child: Icon(CupertinoIcons.play_fill,
+            }, icon: Icon(CupertinoIcons.play_fill,
             color: color,));
           }
         case PlayerState.playing:
           {
-            return CupertinoButton(onPressed: () {
+            return PlatformIconButton(onPressed: () {
               ref.read(audioPlayerNotifierProvider.notifier)
               .pause();
-            }, child:Icon(CupertinoIcons.pause_fill,
+            }, icon:Icon(CupertinoIcons.pause_fill,
             color: color,));
           }
         case PlayerState.disposed:
           {
-            return CupertinoButton(
-                onPressed: null, child: Icon(
+            return PlatformIconButton(
+                onPressed: null, icon: Icon(
                   CupertinoIcons.play_fill,
                   color: color,));
           }
       }
     } else {
-      return CupertinoButton(
-        onPressed: null, child: Icon(
+      return PlatformIconButton(
+        onPressed: null, icon: Icon(
           CupertinoIcons.xmark_circle,
           color: color,));
     }

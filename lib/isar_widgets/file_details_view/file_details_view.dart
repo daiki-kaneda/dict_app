@@ -24,9 +24,9 @@ class FileDetailsView extends StatelessWidget {
         ),
         child:Column(
           children: [
-            // Expanded(
-            //   child: Text('Dictation Page')),
-            // PlayerWidget()
+            Expanded(
+              child: Text('Dictation Page')),
+            PlayerWidget()
           ],
         ));
   }

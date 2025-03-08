@@ -1,6 +1,7 @@
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -17,7 +18,7 @@ class _SpeedButtonState extends ConsumerState<SpeedButton> {
   @override
   Widget build(BuildContext context) {
     
-    return TextButton(
+    return PlatformTextButton(
       onPressed: () {
         setState(() {
           switch (status) {
