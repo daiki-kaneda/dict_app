@@ -58,5 +58,6 @@ class FileNotifier extends _$FileNotifier {
         sentenceIndex: sentenceIndex, 
         wordIndex: wordIndex)
     );
+    print('tried character:$input');
   }
 }

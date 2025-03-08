@@ -42,8 +42,6 @@ class SentencePageController extends _$SentencePageController {
   }
 }
 
-
-
 @riverpod
 class CurrentSentenceIndex extends _$CurrentSentenceIndex {
   @override
@@ -52,7 +50,7 @@ class CurrentSentenceIndex extends _$CurrentSentenceIndex {
       final currentSentence = getCurrentSentence();
       final (start, end) = (currentSentence?.start, currentSentence?.end);
       if (start != null && end != null) {
-        print((start,end));
+        print((start, end));
       }
     });
     return 0;
@@ -60,14 +58,14 @@ class CurrentSentenceIndex extends _$CurrentSentenceIndex {
 
   Isar get isar => ref.read(isarProvider).requireValue;
 
-  DictationSentence? getCurrentSentence(){
-  final fileId = PathParamerterKeys.fileId.getCurrentValue();
-  if (fileId == null) return null;
+  DictationSentence? getCurrentSentence() {
+    final fileId = PathParamerterKeys.fileId.getCurrentValue();
+    if (fileId == null) return null;
 
-  final targetSentence = ref.read(fileNotifierProvider(fileId))
-      ?.getAllSentences?[state];
-  print(('currentText:${targetSentence?.displayText}'));
-  return targetSentence;
+    final targetSentence =
+        ref.read(fileNotifierProvider(fileId))?.getAllSentences?[state];
+    print(('currentText:${targetSentence?.displayText}'));
+    return targetSentence;
   }
 
   updateIndex(int index) {
@@ -91,6 +89,8 @@ class CurrentWordIndex extends _$CurrentWordIndex {
 class CurrentParagraphIndex extends _$CurrentParagraphIndex {
   @override
   int build() {
+    final fileId = PathParamerterKeys.fileId.getCurrentValue();
+    if (fileId == null) return 0;
     final sentenceIndex = ref.watch(sentenceIndexNotifierProvider);
     final isar = ref.read(isarProvider).requireValue;
     return 0;
@@ -100,8 +100,6 @@ class CurrentParagraphIndex extends _$CurrentParagraphIndex {
     state = index;
   }
 }
-
-
 
 @riverpod
 class TypedTextNotifier extends _$TypedTextNotifier {
@@ -117,7 +115,7 @@ class TypedTextNotifier extends _$TypedTextNotifier {
       final currentParagraphIndex = ref.read(currentParagraphIndexProvider);
       final currentSentenceIndex = ref.read(currentSentenceIndexProvider);
       final currentWordIndex = ref.read(currentWordIndexProvider);
-  if (fileId==null) return;
+      if (fileId == null) return;
 
       final nextText = next.value;
       if (nextText == null || nextText.isEmpty) return;
@@ -125,16 +123,17 @@ class TypedTextNotifier extends _$TypedTextNotifier {
       final targetCharacter = nextText.characters.last;
       // Space key move word selection
 
-      if(targetCharacter==' '){
-        ref.read(currentWordIndexProvider.notifier)
-        .updateIndex(currentWordIndex+1);
+      if (targetCharacter == ' ') {
+        ref
+            .read(currentWordIndexProvider.notifier)
+            .updateIndex(currentWordIndex + 1);
         return;
       }
       ref.read(FileNotifierProvider(fileId).notifier).tryCharacter(
-        input: targetCharacter, 
-        paragraphIndex: currentParagraphIndex, 
-        sentenceIndex: currentSentenceIndex, 
-        wordIndex: currentWordIndex);
+          input: targetCharacter,
+          paragraphIndex: currentParagraphIndex,
+          sentenceIndex: currentSentenceIndex,
+          wordIndex: currentWordIndex);
       print('tryCharacter: ${nextText.characters.last}');
     });
     yield* controller.stream;
@@ -144,5 +143,3 @@ class TypedTextNotifier extends _$TypedTextNotifier {
     controller.add(text);
   }
 }
-
-
