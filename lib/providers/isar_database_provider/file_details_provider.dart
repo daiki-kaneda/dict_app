@@ -4,6 +4,7 @@ import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
 import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
+import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:dict_app/utils/dialog.dart';
@@ -31,7 +32,7 @@ class SentencePageController extends _$SentencePageController {
 
   void _onPageChanged() {
     final page = state.page;
-    if (page == null || page.toInt()!=page) return;
+    if (page == null || page.toInt() != page) return;
     print('currentPage:$page');
     ref.read(currentSentenceIndexProvider.notifier).updateIndex(page.toInt());
   }
@@ -41,57 +42,37 @@ class SentencePageController extends _$SentencePageController {
 class CurrentSentenceIndex extends _$CurrentSentenceIndex {
   @override
   int build() {
+    listenSelf((_, __) {
+      final currentSentence = getCurrentSentence();
+      final (start, end) = (currentSentence?.start, currentSentence?.end);
+      if (start != null && end != null) {
+        print((start,end));
+        // ref.read(startEndProviderProvider.notifier).setNewValue(start, end);
+      }
+    });
     return 0;
   }
 
   Isar get isar => ref.read(isarProvider).requireValue;
 
-  updateIndex(int index) {
-    state = index;
-  }
-}
-
-@riverpod
-DictationSentence? currentSentence(CurrentSentenceRef ref) {
+  DictationSentence? getCurrentSentence(){
   final isar = ref.read(isarProvider).requireValue;
   final fileId = PathParamerterKeys.fileId.getCurrentValue();
   if (fileId == null) return null;
-  final currentIndex = ref.watch(currentSentenceIndexProvider);
 
   final targetSentence = isar.files
       .filter()
       .idEqualTo(fileId)
       .findAllSync()
       .firstOrNull
-      ?.getAllSentences?[currentIndex];
+      ?.getAllSentences?[state];
   print(('currentText:${targetSentence?.displayText}'));
   return targetSentence;
-}
+  }
 
-@riverpod
-(double, double)? currentDuration(CurrentDurationRef ref) {
-  final currentSentence = ref.watch(currentSentenceProvider);
-
-  final (start, end) = (currentSentence?.start, currentSentence?.end);
-  print(('currentDuration:${(start,end)}'));
-  if (start != null && end != null) {
-    return (start, end);
-  } else {
-    return null;
+  updateIndex(int index) {
+    state = index;
   }
 }
 
-@riverpod
-String? currentAudioPath(CurrentAudioPathRef ref) {
-  final fileId = PathParamerterKeys.fileId.getCurrentValue();
-  final Isar isar = ref.read(isarProvider).requireValue;
-  if (fileId == null) return null;
 
-  final audioPath = isar.files
-      .filter()
-      .idEqualTo(fileId)
-      .findAllSync()
-      .firstOrNull
-      ?.audioPath;
-  return audioPath;
-}

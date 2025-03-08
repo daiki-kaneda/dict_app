@@ -1,6 +1,8 @@
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/bottom_navigation_bar.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
+import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
+import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/folder_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,7 +72,17 @@ class SubItemsList extends ConsumerWidget {
               if (items.isNotEmpty)
                 SliverList.builder(
                   itemBuilder: (context, index) {
-                    return ItemTile(item: items[index]);
+                    final item = items[index];
+                    return ItemTile(
+                      item: item,
+                      onFileTapped: () {
+                        final audioPath = (item as File).audioPath;
+                        ref
+                            .read(audioPlayerNotifierProvider.notifier)
+                            .setSource(audioPath);
+                        print('audioPath set :$audioPath');
+                      },
+                    );
                   },
                   itemCount: items.length,
                 ),
@@ -89,9 +101,12 @@ class SubItemsList extends ConsumerWidget {
 }
 
 class ItemTile extends StatelessWidget {
-  const ItemTile({super.key, required this.item});
+  const ItemTile(
+      {super.key, required this.item, this.onFolderTapped, this.onFileTapped});
 
   final Item item;
+  final void Function()? onFolderTapped;
+  final void Function()? onFileTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -105,13 +120,15 @@ class ItemTile extends StatelessWidget {
                 folder.title.toString(),
               ),
               subtitle: Text('id: ${folder.id}'),
-              onTap: () => context.push('/sub-items/${folder.id.toString()}'));
+              onTap: () {
+                context.push('/sub-items/${folder.id.toString()}');
+                if (onFolderTapped != null) onFolderTapped!();
+              });
         }
       case File():
         {
           final file = (item as File);
-          final parentId =
-               PathParamerterKeys.parentId.getCurrentValue();
+          final parentId = PathParamerterKeys.parentId.getCurrentValue();
           return PlatformListTile(
               leading: const Icon(CupertinoIcons.doc),
               title: Text(
@@ -121,6 +138,7 @@ class ItemTile extends StatelessWidget {
               onTap: () {
                 if (parentId == null) return;
                 context.push('/file-details/${file.id}');
+                if (onFileTapped != null) onFileTapped!();
               });
         }
     }

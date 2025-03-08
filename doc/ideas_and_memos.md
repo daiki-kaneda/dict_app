@@ -84,3 +84,9 @@ ProviderRefを持つNavigatorObserverを提供する同期的なproviderを定�
 次の二つを導入して、クリーンかつ高速に実行するコードを書きたい
 - [x] go_router(キーワード：ShellRoute,pathParameters)
 - [x] Isar(キーワード: parentIdを持たせることによるフォルダ構造)
+
+### 2025-3-08
+
+#### オーディオの設定のロジックまとめ
+1. fileを開くリストタイルのonTapで、fileのaudioPathの音声をset
+2. PageControllerのpageの変更をリッスンして、次のページのsentenceに対応するstart,endを設定する
