@@ -7,7 +7,7 @@ part 'start_end_provider.g.dart';
 class StartEndProvider extends _$StartEndProvider {
   @override
   ({double start,double end}) build() {
-    ref.listenSelf((previous, next) {
+    listenSelf((previous, next) {
       ref.read(audioPlayerNotifierProvider.notifier)
       .seek(Duration(milliseconds: (next.start*1000).toInt()));
     },);
