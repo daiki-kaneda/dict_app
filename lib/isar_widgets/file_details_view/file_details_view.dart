@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dict_app/isar_widgets/file_details_view/dictation_page_view/dictation_page_view.dart';
+import 'package:dict_app/isar_widgets/file_details_view/input_text_field.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_completion_provider.dart';
@@ -23,7 +24,7 @@ class FileDetailsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final file = ref.watch(fileProvider(id));
+    final file = ref.watch(fileNotifierProvider(id));
 
     // range of audio to play update when sentence index changed
     ref.listen(currentSentenceIndexProvider, (_, i) {
@@ -41,6 +42,7 @@ class FileDetailsView extends ConsumerWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
+            InputTextField(FocusNode()..requestFocus()),
             Column(
               children: [
                 Expanded(child: DictationPageView(id: id)),

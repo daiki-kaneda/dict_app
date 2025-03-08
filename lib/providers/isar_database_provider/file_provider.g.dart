@@ -6,7 +6,7 @@ part of 'file_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fileHash() => r'a055d321d9ee121ed8ae6b82c522311d6ff5732d';
+String _$fileNotifierHash() => r'3c18eba48a404df027109a2474228fd803d568a4';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,27 +29,35 @@ class _SystemHash {
   }
 }
 
-/// See also [file].
-@ProviderFor(file)
-const fileProvider = FileFamily();
+abstract class _$FileNotifier extends BuildlessAutoDisposeNotifier<File?> {
+  late final int id;
 
-/// See also [file].
-class FileFamily extends Family<File?> {
-  /// See also [file].
-  const FileFamily();
+  File? build(
+    int id,
+  );
+}
 
-  /// See also [file].
-  FileProvider call(
+/// See also [FileNotifier].
+@ProviderFor(FileNotifier)
+const fileNotifierProvider = FileNotifierFamily();
+
+/// See also [FileNotifier].
+class FileNotifierFamily extends Family<File?> {
+  /// See also [FileNotifier].
+  const FileNotifierFamily();
+
+  /// See also [FileNotifier].
+  FileNotifierProvider call(
     int id,
   ) {
-    return FileProvider(
+    return FileNotifierProvider(
       id,
     );
   }
 
   @override
-  FileProvider getProviderOverride(
-    covariant FileProvider provider,
+  FileNotifierProvider getProviderOverride(
+    covariant FileNotifierProvider provider,
   ) {
     return call(
       provider.id,
@@ -68,29 +76,30 @@ class FileFamily extends Family<File?> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'fileProvider';
+  String? get name => r'fileNotifierProvider';
 }
 
-/// See also [file].
-class FileProvider extends AutoDisposeProvider<File?> {
-  /// See also [file].
-  FileProvider(
+/// See also [FileNotifier].
+class FileNotifierProvider
+    extends AutoDisposeNotifierProviderImpl<FileNotifier, File?> {
+  /// See also [FileNotifier].
+  FileNotifierProvider(
     int id,
   ) : this._internal(
-          (ref) => file(
-            ref as FileRef,
-            id,
-          ),
-          from: fileProvider,
-          name: r'fileProvider',
+          () => FileNotifier()..id = id,
+          from: fileNotifierProvider,
+          name: r'fileNotifierProvider',
           debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product') ? null : _$fileHash,
-          dependencies: FileFamily._dependencies,
-          allTransitiveDependencies: FileFamily._allTransitiveDependencies,
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fileNotifierHash,
+          dependencies: FileNotifierFamily._dependencies,
+          allTransitiveDependencies:
+              FileNotifierFamily._allTransitiveDependencies,
           id: id,
         );
 
-  FileProvider._internal(
+  FileNotifierProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -103,13 +112,20 @@ class FileProvider extends AutoDisposeProvider<File?> {
   final int id;
 
   @override
-  Override overrideWith(
-    File? Function(FileRef provider) create,
+  File? runNotifierBuild(
+    covariant FileNotifier notifier,
   ) {
+    return notifier.build(
+      id,
+    );
+  }
+
+  @override
+  Override overrideWith(FileNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: FileProvider._internal(
-        (ref) => create(ref as FileRef),
+      override: FileNotifierProvider._internal(
+        () => create()..id = id,
         from: from,
         name: null,
         dependencies: null,
@@ -121,13 +137,13 @@ class FileProvider extends AutoDisposeProvider<File?> {
   }
 
   @override
-  AutoDisposeProviderElement<File?> createElement() {
-    return _FileProviderElement(this);
+  AutoDisposeNotifierProviderElement<FileNotifier, File?> createElement() {
+    return _FileNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is FileProvider && other.id == id;
+    return other is FileNotifierProvider && other.id == id;
   }
 
   @override
@@ -139,17 +155,18 @@ class FileProvider extends AutoDisposeProvider<File?> {
   }
 }
 
-mixin FileRef on AutoDisposeProviderRef<File?> {
+mixin FileNotifierRef on AutoDisposeNotifierProviderRef<File?> {
   /// The parameter `id` of this provider.
   int get id;
 }
 
-class _FileProviderElement extends AutoDisposeProviderElement<File?>
-    with FileRef {
-  _FileProviderElement(super.provider);
+class _FileNotifierProviderElement
+    extends AutoDisposeNotifierProviderElement<FileNotifier, File?>
+    with FileNotifierRef {
+  _FileNotifierProviderElement(super.provider);
 
   @override
-  int get id => (origin as FileProvider).id;
+  int get id => (origin as FileNotifierProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

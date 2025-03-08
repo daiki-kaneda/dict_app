@@ -16,7 +16,7 @@ class DictationPageView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(currentSentenceIndexProvider);
     final controller = ref.watch(sentencePageControllerProvider);
-    final sentences = ref.watch(fileProvider(id))?.getAllSentences;
+    final sentences = ref.watch(fileNotifierProvider(id))?.getAllSentences;
     if (sentences == null) return Container();
 
     return PageView.builder(

@@ -10,6 +10,7 @@ import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
+import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/utils/dialog.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/widgets.dart';
@@ -41,6 +42,8 @@ class SentencePageController extends _$SentencePageController {
   }
 }
 
+
+
 @riverpod
 class CurrentSentenceIndex extends _$CurrentSentenceIndex {
   @override
@@ -61,7 +64,7 @@ class CurrentSentenceIndex extends _$CurrentSentenceIndex {
   final fileId = PathParamerterKeys.fileId.getCurrentValue();
   if (fileId == null) return null;
 
-  final targetSentence = ref.read(fileProvider(fileId))
+  final targetSentence = ref.read(fileNotifierProvider(fileId))
       ?.getAllSentences?[state];
   print(('currentText:${targetSentence?.displayText}'));
   return targetSentence;
@@ -72,49 +75,74 @@ class CurrentSentenceIndex extends _$CurrentSentenceIndex {
   }
 }
 
-// @riverpod
-// class TypedTextNotifier extends _$TypedTextNotifier {
-//   final controller = StreamController<String>();
-//   @override
-//   Stream<String> build() async* {
-//     ref.onDispose(() {
-//       controller.close();
-//     });
+@riverpod
+class CurrentWordIndex extends _$CurrentWordIndex {
+  @override
+  int build() {
+    return 0;
+  }
 
-//     ref.listenSelf((prev, next) {
-//       final currentId = ref.read(currentTreeIdNotifierProvider);
-//       final isDictShowing = ref.read(isDictShowingProvider);
-//       final currentParagraphIndex = ref.read(paragraphIndexNotifierProvider);
-//       final currentSentenceIndex = ref.read(sentenceIndexNotifierProvider);
-//       final currentWordIndex = ref.read(wordIndexNotifierProvider);
-//       if (isDictShowing.value != true || currentId.value == null ||currentWordIndex==-1) return;
+  updateIndex(int index) {
+    state = index;
+  }
+}
 
-//       final prevText = prev?.value;
-//       final nextText = next.value;
-//       if (nextText == null) return;
-//       if (prevText!=null && prevText.length >= nextText.length) return;
+@riverpod
+class CurrentParagraphIndex extends _$CurrentParagraphIndex {
+  @override
+  int build() {
+    final sentenceIndex = ref.watch(sentenceIndexNotifierProvider);
+    final isar = ref.read(isarProvider).requireValue;
+    return 0;
+  }
 
-//       final targetCharacter = nextText.characters.last;
-//       // Space key move word selection
-//       if(targetCharacter==' '){
-//         ref.read(wordIndexNotifierProvider.notifier)
-//         .updateIndex(currentWordIndex+1);
-//         return;
-//       }
-//       ref.read(dataTreeNotifierProvider.notifier).tryCharacter(
-//         input: targetCharacter, 
-//         dictId: currentId.value!, 
-//         paragraphIndex: currentParagraphIndex, 
-//         sentenceIndex: currentSentenceIndex, 
-//         wordIndex: currentWordIndex);
-//       print('tryCharacter: ${nextText.characters.last}');
-//     });
-//     yield* controller.stream;
-//   }
+  updateIndex(int index) {
+    state = index;
+  }
+}
 
-//   void emitText(String text) {
-//     controller.add(text);
-//   }
-// }
+
+
+@riverpod
+class TypedTextNotifier extends _$TypedTextNotifier {
+  final controller = StreamController<String>();
+  @override
+  Stream<String> build() async* {
+    ref.onDispose(() {
+      controller.close();
+    });
+
+    ref.listenSelf((prev, next) {
+      final fileId = PathParamerterKeys.fileId.getCurrentValue();
+      final currentParagraphIndex = ref.read(currentParagraphIndexProvider);
+      final currentSentenceIndex = ref.read(currentSentenceIndexProvider);
+      final currentWordIndex = ref.read(currentWordIndexProvider);
+  if (fileId==null) return;
+
+      final nextText = next.value;
+      if (nextText == null || nextText.isEmpty) return;
+
+      final targetCharacter = nextText.characters.last;
+      // Space key move word selection
+
+      if(targetCharacter==' '){
+        ref.read(currentWordIndexProvider.notifier)
+        .updateIndex(currentWordIndex+1);
+        return;
+      }
+      ref.read(FileNotifierProvider(fileId).notifier).tryCharacter(
+        input: targetCharacter, 
+        paragraphIndex: currentParagraphIndex, 
+        sentenceIndex: currentSentenceIndex, 
+        wordIndex: currentWordIndex);
+      print('tryCharacter: ${nextText.characters.last}');
+    });
+    yield* controller.stream;
+  }
+
+  void emitText(String text) {
+    controller.add(text);
+  }
+}
 
 

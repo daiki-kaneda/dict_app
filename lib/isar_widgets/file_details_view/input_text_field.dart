@@ -1,8 +1,9 @@
+import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InputTextField extends ConsumerStatefulWidget {
-  const InputTextField(this.focusNode,{super.key});
+  const InputTextField(this.focusNode, {super.key});
 
   final FocusNode focusNode;
 
@@ -11,7 +12,6 @@ class InputTextField extends ConsumerStatefulWidget {
 }
 
 class _InputTextFieldState extends ConsumerState<InputTextField> {
-
   @override
   Widget build(BuildContext context) {
     return Opacity(
@@ -24,9 +24,10 @@ class _InputTextFieldState extends ConsumerState<InputTextField> {
           focusNode: widget.focusNode,
           onChanged: (value) {
             if (value.isEmpty) return;
-            // ref
-            //     .read(typedTextNotifierProvider.notifier)
-            //     .emitText(value);
+            print(value.characters.lastOrNull ?? '');
+            ref
+                .read(typedTextNotifierProvider.notifier)
+                .emitText(value);
           },
         ),
       ),
