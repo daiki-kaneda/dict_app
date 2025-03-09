@@ -1,4 +1,5 @@
 import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,12 +38,20 @@ class CreateFolderButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return PlatformIconButton(
-      onPressed: () {
-        final parentId =
-             PathParamerterKeys.parentId.getCurrentValue();
+      onPressed: () async {
+        final parentId = PathParamerterKeys.parentId.getCurrentValue();
+        final String? title = await showPlatformDialog(
+          context: context,
+          builder: (context) {
+            return PlatformTextFieldDialog(
+              title: 'Folder name',
+            );
+          },
+        );
+        if (title == null) return;
         ref
             .read(subItemsProviderProvider(parentId).notifier)
-            .createFolder(title: 'new folder');
+            .createFolder(title: title);
       },
       icon: const Icon(CupertinoIcons.folder_badge_plus),
     );
@@ -55,16 +64,22 @@ class CreateFileButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return PlatformIconButton(
-      onPressed: () {
-        final parentId =
-            PathParamerterKeys.parentId.getCurrentValue();
+      onPressed: () async {
+        final parentId = PathParamerterKeys.parentId.getCurrentValue();
+        final String? title = await showPlatformDialog(
+          context: context,
+          builder: (context) {
+            return PlatformTextFieldDialog(
+              title: 'File name',
+            );
+          },
+        );
+        if (title == null) return;
         ref
             .read(subItemsProviderProvider(parentId).notifier)
-            .createFileFromLocalAudio(title: 'new file');
+            .createFileFromLocalAudio(title: title);
       },
       icon: const Icon(CupertinoIcons.plus),
     );
   }
 }
-
-
