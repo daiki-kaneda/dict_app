@@ -52,7 +52,7 @@ class ApiRepository {
     const  url = 'https://api.deepgram.com/v1/listen';
 
     final queryParameters = {
-      'model': 'nova-3',
+      'model': 'nova-2',
       'language': 'en',
       'paragraphs': 'true',
       'punctuate': 'true',

@@ -22,12 +22,13 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
   bool wasPlaying = false;
   @override
   Widget build(BuildContext context) {
+    const double padInMilliseconds = 50;
     final duration = ref.watch(playerDurationProvider);
     final position = ref.watch(playerPositionProvider);
     final state = ref.watch(playerStateProvider);
     final (startInMilliseconds, endInMilliseconds) = ref.watch(
         startEndProviderProvider
-            .select((p) => ((p.start * 1000), (p.end * 1000))));
+            .select((p) => ((p.start * 1000)-padInMilliseconds, (p.end * 1000)+padInMilliseconds)));
     assert(startInMilliseconds < endInMilliseconds);
 
     // if reached end, reset first position
