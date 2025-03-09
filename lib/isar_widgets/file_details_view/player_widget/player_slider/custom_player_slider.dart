@@ -27,7 +27,7 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
     final state = ref.watch(playerStateProvider);
     final (startInMilliseconds, endInMilliseconds) = ref.watch(
         startEndProviderProvider
-            .select((p) => ((p.start * 1000).toInt(), (p.end * 1000).toInt())));
+            .select((p) => ((p.start * 1000), (p.end * 1000))));
     assert(startInMilliseconds < endInMilliseconds);
 
     // if reached end, reset first position
@@ -35,12 +35,12 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
       if (next.hasValue && next.value!.inMilliseconds >= endInMilliseconds) {
         ref
             .read(audioPlayerNotifierProvider.notifier)
-            .seek(Duration(milliseconds: startInMilliseconds));
+            .seek(Duration(milliseconds: startInMilliseconds.toInt()));
       }
     });
     final color = CupertinoColors.label.resolveFrom(context);
     final customDuration =
-        endInMilliseconds.toDouble() - startInMilliseconds.toDouble();
+        endInMilliseconds - startInMilliseconds;
     if (duration.hasValue && position.hasValue && state.hasValue) {
       final positionInMilliseconds = position.value!.inMilliseconds.toDouble();
       final value =
