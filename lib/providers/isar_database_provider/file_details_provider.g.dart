@@ -90,7 +90,7 @@ final currentParagraphIndexProvider =
 );
 
 typedef _$CurrentParagraphIndex = AutoDisposeNotifier<int>;
-String _$typedTextNotifierHash() => r'aa76d3f2c7ee19cd1335804dfba10e7a98209082';
+String _$typedTextNotifierHash() => r'58364bd65cfba4f8b6e3226b9f9ffb7b055942ce';
 
 /// See also [TypedTextNotifier].
 @ProviderFor(TypedTextNotifier)

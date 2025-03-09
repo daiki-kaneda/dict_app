@@ -1,5 +1,8 @@
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/bottom_navigation_bar.dart';
+import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
+import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
+import 'package:dict_app/isar_widgets/utils/select_folder_list.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
@@ -120,32 +123,117 @@ class ItemTile extends StatelessWidget {
         {
           final folder = (item as Folder);
           return PlatformListTile(
-              leading: const Icon(CupertinoIcons.folder),
-              title: Text(
-                folder.title.toString(),
-              ),
-              subtitle: Text('id: ${folder.id}'),
-              onTap: () {
-                context.push('/sub-items/${folder.id.toString()}');
-                if (onFolderTapped != null) onFolderTapped!();
-              });
+            leading: const Icon(CupertinoIcons.folder),
+            title: Text(
+              folder.title.toString(),
+            ),
+            subtitle: Text('id: ${folder.id}'),
+            onTap: () {
+              context.push('/sub-items/${folder.id.toString()}');
+              if (onFolderTapped != null) onFolderTapped!();
+            },
+            trailing: ActionButton(item),
+          );
         }
       case File():
         {
           final file = (item as File);
           final parentId = PathParamerterKeys.parentId.getCurrentValue();
           return PlatformListTile(
-              leading: const Icon(CupertinoIcons.doc),
-              title: Text(
-                file.title.toString(),
-              ),
-              subtitle: Text('id: ${file.id}'),
-              onTap: () {
-                if (parentId == null) return;
-                context.push('/file-details/${file.id}');
-                if (onFileTapped != null) onFileTapped!();
-              });
+            leading: const Icon(CupertinoIcons.doc),
+            title: Text(
+              file.title.toString(),
+            ),
+            subtitle: Text('id: ${file.id}'),
+            onTap: () {
+              if (parentId == null) return;
+              context.push('/file-details/${file.id}');
+              if (onFileTapped != null) onFileTapped!();
+            },
+            trailing: ActionButton(item),
+          );
         }
     }
+  }
+}
+
+class ActionButton extends ConsumerWidget {
+  const ActionButton(this.item, {super.key});
+
+  final Item item;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return PlatformIconButton(
+      icon: Icon(Icons.adaptive.more_rounded),
+      onPressed: () {
+        final parentId = PathParamerterKeys.parentId.getCurrentValue();
+        if (parentId == null) return;
+        final notifier = ref.read(subItemsProviderProvider(parentId).notifier);
+        switch (item) {
+          case Folder():
+            {
+              final folder = item as Folder;
+              final id = folder.id;
+              if (id == null) return;
+              showCustomActionSheet(
+                  title: folder.title,
+                  isCupertino: true,
+                  context: context,
+                  actions: [
+                    ActionSheetAction('名称変更', onTap: () async {
+                      final String? newTitle = await showPlatformDialog(
+                        context: context,
+                        builder: (context) {
+                          return PlatformTextFieldDialog(
+                            title: 'New folder name',
+                          );
+                        },
+                      );
+                      if (newTitle == null) return;
+                      notifier.updateFolder(id, newTitle);
+                    }),
+                    ActionSheetAction('移動', onTap: () async {
+                      final int? newParentId =
+                          await getNewFolderId(context, id);
+                      if (newParentId == null) return;
+                      notifier.moveFolder(id, newParentId);
+                    })
+                  ]);
+            }
+          case File():
+            {
+              final file = item as File;
+              final id = file.id;
+              if (id == null) return;
+              showCustomActionSheet(
+                  title: file.title,
+                  isCupertino: true,
+                  context: context,
+                  actions: [
+                    ActionSheetAction('名称変更', onTap: () async {
+                      final String? newTitle = await showPlatformDialog(
+                        context: context,
+                        builder: (context) {
+                          return PlatformTextFieldDialog(
+                            title: 'New file name',
+                          );
+                        },
+                      );
+
+                      if (newTitle == null) return;
+                      notifier.updateFile(id, newTitle);
+                    }),
+                    ActionSheetAction('移動', onTap: () async {
+                      final int? newParentId =
+                          await getNewFolderId(context, id);
+                      if (newParentId == null) return;
+                      notifier.moveFile(id, newParentId);
+                    })
+                  ]);
+            }
+        }
+      },
+    );
   }
 }
