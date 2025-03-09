@@ -80,7 +80,12 @@ class SubItemsProvider extends _$SubItemsProvider {
       if (result != null) {
         print('got result!');
         final (path, bytes, size) = result;
-        if (!validateAudioSize(size, maxSizeMbs)) {
+        // if (!validateAudioSize(size, maxSizeMbs)) {
+        //   showCustomDialog(DialogStatus.maxFileSizeLimitExceededError);
+        //   return;
+        // }
+        final isValidate = await validateAudioLength(path);
+        if (!isValidate) {
           showCustomDialog(DialogStatus.maxFileSizeLimitExceededError);
           return;
         }
@@ -111,9 +116,6 @@ class SubItemsProvider extends _$SubItemsProvider {
     } catch (e) {
       showCustomDialog(DialogStatus.unExpectedError);
       print(e.toString());
-      ref
-          .read(appDocumentsDirectoryNotifierProvider.notifier)
-          .deleteAllWasteFile();
     }
   }
 

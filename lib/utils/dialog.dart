@@ -1,16 +1,18 @@
 import 'package:dict_app/constants/inner_navigator_key.dart';
+import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 
 enum DialogStatus {
-  unExpectedError,maxFileSizeLimitExceededError
+  unExpectedError,maxFileSizeLimitExceededError,exceedMaxAudioLengthError;
+
 }
 
 Future<void> showCustomDialog(DialogStatus status) async {
   if (status == DialogStatus.unExpectedError) {
     showCupertinoDialog(
       useRootNavigator: true,
-      context: innerNavigatorKey.currentContext!,
+      context: navigatorKey.currentContext!,
       builder: (context) {
         return CupertinoAlertDialog(
           title: Text('エラー'),
@@ -30,7 +32,7 @@ Future<void> showCustomDialog(DialogStatus status) async {
   }else{
     showCupertinoDialog(
       useRootNavigator: true,
-      context: innerNavigatorKey.currentContext!,
+      context: navigatorKey.currentContext!,
       builder: (context) {
         return CupertinoAlertDialog(
           title: Text('エラー'),

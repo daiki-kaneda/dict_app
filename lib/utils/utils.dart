@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dict_app/constants/scaffold_key.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -38,9 +41,19 @@ String formatDateTime(DateTime dateTime) {
 }
 
 final int maxSizeMbs = 999999999999999;
+final int maxAudioLengthInSeconds = 120;
 
 bool validateAudioSize(int size, int maxMbs) {
   return maxMbs > (size / (1024 * 1024));
+}
+
+Future<bool> validateAudioLength(String url)async{
+  final tempPlayer = AudioPlayer();
+  await tempPlayer.setSourceDeviceFile(url);
+  final audioLength = (await tempPlayer.getDuration())?.inSeconds;
+  print('audio length :$audioLength seconds');
+  tempPlayer.dispose();
+  return (audioLength ?? 9999) <= maxAudioLengthInSeconds;
 }
 
 extension ListEx<T> on List<List<T>> {
