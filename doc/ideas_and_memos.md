@@ -95,3 +95,13 @@ ProviderRefを持つNavigatorObserverを提供する同期的なproviderを定�
 1. focusNode,Future.delayedなどを使って、DictationPageが表示されるときに、キーボードを表示
 2. ユーザがキーボードを打つ
 3. fileIdはpathから、sentenceIndexはcurrentSentenceIndexから、wordIndexはcurrentWordIndexから取得して、キーボードで打たれた文字が正解かどうかを確かめ、正解の場合は、その文字をtrueに変更,不正解の場合は、BackDropFilterなどを使って、不正解のエフェクトを表示
+
+#### アプリの運用について
+まずは、アプリの質を向上させていきたい。それがなければ、収益化など考える資格もないだろう。
+しかし、基本的なアイデアとしては、アプリの運用のために、消耗型の課金システムを導入したい。
+理由は、次の三つの理由でアプリのユーザ体験を向上させると思うからだ
+- 必要な分だけを購入できる
+- 30分:50円でも利益が出るので、安価で提供できる
+- 広告がない
+
+
