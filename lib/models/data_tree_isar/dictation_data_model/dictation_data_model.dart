@@ -33,18 +33,20 @@ class DictationSection {
     bool alphabetOnly = true,
   }) {
     if (paragraphs.paragraphs == null) {
-      return DictationSection(paragraphs: [], index: index, parentIndex: parentIndex);
+      return DictationSection(
+          paragraphs: [], index: index, parentIndex: parentIndex);
     }
-    final ps = paragraphs.paragraphs!
-        .indexed
+    final ps = paragraphs.paragraphs!.indexed
         .map((t) => DictationParagraph.from(
-          index: t.$1,
-          parentIndex: 0, // Section is top level, so parent index within paragraphs should be zero.
-          paragraph: t.$2,
-          alphabetOnly: alphabetOnly,
-    ))
+              index: t.$1,
+              parentIndex:
+                  0, // Section is top level, so parent index within paragraphs should be zero.
+              paragraph: t.$2,
+              alphabetOnly: alphabetOnly,
+            ))
         .toList();
-    return DictationSection(paragraphs: ps, index: index, parentIndex: parentIndex);
+    return DictationSection(
+        paragraphs: ps, index: index, parentIndex: parentIndex);
   }
 
   DictationSection copyWith({
@@ -149,6 +151,13 @@ class DictationSection {
   List<DictationSentence>? get getAllSentences =>
       paragraphs?.map((p) => p.sentences ?? []).toList().concat();
 
+  int newestUnsolvedIndex() {
+    if (paragraphs == null) return 0;
+    final index = paragraphs!.indexWhere((p) => !(p.isCompleted));
+    if (index == -1) return paragraphs!.length - 1;
+    return index;
+  }
+
   factory DictationSection.fromJson(Map<String, dynamic> json) =>
       _$DictationSectionFromJson(json);
 
@@ -180,7 +189,7 @@ class DictationParagraph {
       sentences?.map((e) => e.displayText).join(' ') ?? '';
 
   static DictationParagraph from({
-    required int index, 
+    required int index,
     required int parentIndex,
     required Paragraph paragraph,
     bool alphabetOnly = true,
@@ -188,16 +197,20 @@ class DictationParagraph {
     if (paragraph.sentences == null ||
         paragraph.start == null ||
         paragraph.end == null) {
-      return DictationParagraph(sentences: [], start: 0, end: 0, index: index, parentIndex: parentIndex);
+      return DictationParagraph(
+          sentences: [],
+          start: 0,
+          end: 0,
+          index: index,
+          parentIndex: parentIndex);
     }
-    final sentences = paragraph.sentences!
-        .indexed
+    final sentences = paragraph.sentences!.indexed
         .map((t) => DictationSentence.from(
-          index: t.$1,
-          parentIndex: index,
-          sentence: t.$2,
-          alphabetOnly: alphabetOnly,
-    ))
+              index: t.$1,
+              parentIndex: index,
+              sentence: t.$2,
+              alphabetOnly: alphabetOnly,
+            ))
         .toList();
     return DictationParagraph(
         index: index,
@@ -221,6 +234,13 @@ class DictationParagraph {
       start: start ?? this.start,
       end: end ?? this.end,
     );
+  }
+
+  int newestUnsolvedIndex() {
+    if (sentences == null) return 0;
+    final index = sentences!.indexWhere((p) => !(p.isCompleted));
+    if (index == -1) return sentences!.length - 1;
+    return index;
   }
 
   DictationParagraph tryCharacter(
@@ -303,7 +323,7 @@ class DictationSentence {
               alphabetOnly: alphabetOnly,
               start: 0,
               end: 0,
-          ))
+            ))
         .toList();
     return DictationSentence(
       index: index,
@@ -331,6 +351,13 @@ class DictationSentence {
       start: start ?? this.start,
       end: end ?? this.end,
     );
+  }
+
+  int newestUnsolvedIndex() {
+    if (words == null) return 0;
+    final index = words!.indexWhere((p) => !(p.isCompleted));
+    if (index == -1) return words!.length - 1;
+    return index;
   }
 
   DictationSentence tryCharacter(
@@ -429,6 +456,13 @@ class DictationWord {
       start: start ?? this.start,
       end: end ?? this.end,
     );
+  }
+
+  int newestUnsolvedIndex() {
+    if (characters == null) return 0;
+    final index = characters!.indexWhere((p) => !(p.isSolved));
+    if (index == -1) return characters!.length - 1;
+    return index;
   }
 
   DictationWord tryCharacter(
