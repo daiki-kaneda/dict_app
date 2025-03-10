@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/app_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/app_directory_provider/app_support_directory_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'audio_player_provider.g.dart';
@@ -14,7 +15,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
   
   Future<void> setSource(String filePath)async{
     // 新しい音声のソースをセットする
-    final source = await ref.read(appDocumentsDirectoryNotifierProvider.notifier)
+    final source = await ref.read(appSupportDirectoryNotifierProvider.notifier)
     .fullPath(filePath);
     state.setSource(DeviceFileSource(source));
   }
@@ -55,7 +56,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       // set playBackRate to 1.0 because of SpeedButton logic
     setPlayBackrate(SpeedStatus.normal);
       // 新しい音声のソースをセットする
-    final source = await ref.read(appDocumentsDirectoryNotifierProvider.notifier)
+    final source = await ref.read(appSupportDirectoryNotifierProvider.notifier)
     .fullPath(filePath);
     state.setSource(DeviceFileSource(source));
   }

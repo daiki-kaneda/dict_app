@@ -5,7 +5,8 @@ import 'package:dict_app/models/data_tree/dict_data/dict_data.dart';
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
-import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/app_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/app_directory_provider/app_support_directory_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_data_status.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
@@ -68,7 +69,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
     state = AsyncData(previousFolder.deleteLeafById(leafId: leafId));
     // delete audio data
     ref
-        .read(appDocumentsDirectoryNotifierProvider.notifier)
+        .read(appSupportDirectoryNotifierProvider.notifier)
         .deleteAllWasteFile();
   }
 
@@ -93,7 +94,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
     state = AsyncData(previousFolder.deleteNodeById(nodeId: nodeId)!);
     // delete audio data
     ref
-        .read(appDocumentsDirectoryNotifierProvider.notifier)
+        .read(appSupportDirectoryNotifierProvider.notifier)
         .deleteAllWasteFile();
   }
 
@@ -175,7 +176,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
   }) async {
     try {
       print(await ref
-          .read(appDocumentsDirectoryNotifierProvider.notifier)
+          .read(appSupportDirectoryNotifierProvider.notifier)
           .fileNames());
       final result =
           await ref.read(filerPickerNotifierProvider.notifier).getAudioData();
@@ -190,7 +191,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
         print('got path:$path');
         if (ext == null) throw Exception('could not get file extension!');
         final filePath = await ref
-            .read(appDocumentsDirectoryNotifierProvider.notifier)
+            .read(appSupportDirectoryNotifierProvider.notifier)
             .saveFile(ext: ext, bytes: bytes);
         print('savedTo:$filePath ');
         final transcript = await ref
@@ -207,7 +208,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
       showCustomDialog(DialogStatus.unExpectedError);
       print(e.toString());
       ref
-          .read(appDocumentsDirectoryNotifierProvider.notifier)
+          .read(appSupportDirectoryNotifierProvider.notifier)
           .deleteAllWasteFile();
     }
   }

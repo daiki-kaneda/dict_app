@@ -7,11 +7,11 @@ part of 'app_documents_directory_provider.dart';
 // **************************************************************************
 
 String _$appDocumentsDirectoryNotifierHash() =>
-    r'cfbbdf556a4c76141a96dcb9e533eeac34c42009';
+    r'c8abb50042d9968ae3a01f3345d7cfe3dbab3322';
 
 /// See also [AppDocumentsDirectoryNotifier].
 @ProviderFor(AppDocumentsDirectoryNotifier)
-final appDocumentsDirectoryNotifierProvider = AutoDisposeAsyncNotifierProvider<
+final appDocumentsDirectoryNotifierProvider = AsyncNotifierProvider<
     AppDocumentsDirectoryNotifier, AppDocumentsHelper>.internal(
   AppDocumentsDirectoryNotifier.new,
   name: r'appDocumentsDirectoryNotifierProvider',
@@ -22,7 +22,6 @@ final appDocumentsDirectoryNotifierProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$AppDocumentsDirectoryNotifier
-    = AutoDisposeAsyncNotifier<AppDocumentsHelper>;
+typedef _$AppDocumentsDirectoryNotifier = AsyncNotifier<AppDocumentsHelper>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -1,6 +1,7 @@
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
-import 'package:dict_app/providers/app_documents_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/app_directory_provider/app_documents_directory_provider.dart';
+import 'package:dict_app/providers/app_directory_provider/app_support_directory_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:dict_app/utils/dialog.dart';
@@ -73,7 +74,7 @@ class SubItemsProvider extends _$SubItemsProvider {
   }) async {
     try {
       print(await ref
-          .read(appDocumentsDirectoryNotifierProvider.notifier)
+          .read(appSupportDirectoryNotifierProvider.notifier)
           .fileNames());
       final result =
           await ref.read(filerPickerNotifierProvider.notifier).getAudioData();
@@ -93,7 +94,7 @@ class SubItemsProvider extends _$SubItemsProvider {
         print('got path:$path');
         if (ext == null) throw Exception('could not get file extension!');
         final filePath = await ref
-            .read(appDocumentsDirectoryNotifierProvider.notifier)
+            .read(appSupportDirectoryNotifierProvider.notifier)
             .saveFile(ext: ext, bytes: bytes);
         print('savedTo:$filePath ');
         final transcript = await ref

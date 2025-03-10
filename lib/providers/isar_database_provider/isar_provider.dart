@@ -8,7 +8,7 @@ part 'isar_provider.g.dart';
 
 @riverpod
 Future<Isar> isar(IsarRef ref)async{
-  final dir = await getApplicationDocumentsDirectory();
+  final dir = await getApplicationSupportDirectory();
   final isar =Isar.open([FolderSchema,FileSchema], directory: dir.path);
   return isar;
 }
