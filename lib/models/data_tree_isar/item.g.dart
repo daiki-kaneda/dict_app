@@ -711,6 +711,12 @@ const FileSchema = CollectionSchema(
       id: 9,
       name: r'transcript',
       type: IsarType.string,
+    ),
+    r'words': PropertySchema(
+      id: 10,
+      name: r'words',
+      type: IsarType.objectList,
+      target: r'WordData',
     )
   },
   estimateSize: _fileEstimateSize,
@@ -725,7 +731,8 @@ const FileSchema = CollectionSchema(
     r'DictationParagraph': DictationParagraphSchema,
     r'DictationSentence': DictationSentenceSchema,
     r'DictationWord': DictationWordSchema,
-    r'DictationCharacter': DictationCharacterSchema
+    r'DictationCharacter': DictationCharacterSchema,
+    r'WordData': WordDataSchema
   },
   getId: _fileGetId,
   getLinks: _fileGetLinks,
@@ -765,6 +772,14 @@ int _fileEstimateSize(
           object.paragraphs, allOffsets[DictationSection]!, allOffsets);
   bytesCount += 3 + object.title.length * 3;
   bytesCount += 3 + object.transcript.length * 3;
+  bytesCount += 3 + object.words.length * 3;
+  {
+    final offsets = allOffsets[WordData]!;
+    for (var i = 0; i < object.words.length; i++) {
+      final value = object.words[i];
+      bytesCount += WordDataSchema.estimateSize(value, offsets, allOffsets);
+    }
+  }
   return bytesCount;
 }
 
@@ -794,6 +809,12 @@ void _fileSerialize(
   writer.writeLong(offsets[7], object.parentId);
   writer.writeString(offsets[8], object.title);
   writer.writeString(offsets[9], object.transcript);
+  writer.writeObjectList<WordData>(
+    offsets[10],
+    allOffsets,
+    WordDataSchema.serialize,
+    object.words,
+  );
 }
 
 File _fileDeserialize(
@@ -818,6 +839,13 @@ File _fileDeserialize(
     parentId: reader.readLongOrNull(offsets[7]),
     title: reader.readString(offsets[8]),
     transcript: reader.readString(offsets[9]),
+    words: reader.readObjectList<WordData>(
+          offsets[10],
+          WordDataSchema.deserialize,
+          allOffsets,
+          WordData(),
+        ) ??
+        [],
   );
   return object;
 }
@@ -859,6 +887,14 @@ P _fileDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 9:
       return (reader.readString(offset)) as P;
+    case 10:
+      return (reader.readObjectList<WordData>(
+            offset,
+            WordDataSchema.deserialize,
+            allOffsets,
+            WordData(),
+          ) ??
+          []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -1847,6 +1883,90 @@ extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
       ));
     });
   }
+
+  QueryBuilder<File, File, QAfterFilterCondition> wordsLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> wordsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> wordsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> wordsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> wordsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> wordsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'words',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
 }
 
 extension FileQueryObject on QueryBuilder<File, File, QFilterCondition> {
@@ -1861,6 +1981,13 @@ extension FileQueryObject on QueryBuilder<File, File, QFilterCondition> {
       FilterQuery<DictationSection> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'paragraphs');
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> wordsElement(
+      FilterQuery<WordData> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'words');
     });
   }
 }
@@ -2196,6 +2323,12 @@ extension FileQueryProperty on QueryBuilder<File, File, QQueryProperty> {
       return query.addPropertyName(r'transcript');
     });
   }
+
+  QueryBuilder<File, List<WordData>, QQueryOperations> wordsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'words');
+    });
+  }
 }
 
 // **************************************************************************
@@ -2237,6 +2370,9 @@ File _$FileFromJson(Map<String, dynamic> json) => File(
       transcript: json['transcript'] as String,
       paragraphs:
           DictationSection.fromJson(json['paragraphs'] as Map<String, dynamic>),
+      words: (json['words'] as List<dynamic>)
+          .map((e) => WordData.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$FileToJson(File instance) {
@@ -2258,5 +2394,6 @@ Map<String, dynamic> _$FileToJson(File instance) {
   val['duration'] = instance.duration;
   val['transcript'] = instance.transcript;
   val['paragraphs'] = instance.paragraphs.toJson();
+  val['words'] = instance.words.map((e) => e.toJson()).toList();
   return val;
 }
