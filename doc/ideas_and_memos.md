@@ -132,3 +132,8 @@ path_providerで取得できる主なディレクトリ
 
 #### DRY原則によるfileIdの一元化
 pathPrametersでfileIdを扱うという点で,さらに現在開いているFileのidをproviderなどでトラックすることは、DRY原則に反するので、それはしない。
+FileDetailsViewが受け取るidはGoRouterのpathParamerからのものなので、完全に現在参照しているファイルIdと一致する。したがって、そのidを
+- currentSentenceIndexInAllSentencesProvider
+- sentencePageControllerProvider
+- currentWordIndexProvider
+が引数として受け取って使うことは、これらの内部で、pathParameterを参照することと同じことなので、そのようにすることはDRY原則に反しない。
