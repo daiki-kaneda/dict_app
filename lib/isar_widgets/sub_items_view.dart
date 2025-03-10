@@ -1,5 +1,4 @@
 import 'package:dict_app/isar_widgets/app.dart';
-import 'package:dict_app/isar_widgets/bottom_navigation_bar.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
@@ -7,7 +6,6 @@ import 'package:dict_app/isar_widgets/utils/select_folder_list.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
-import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/folder_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,6 +41,17 @@ class SubItemsList extends ConsumerWidget {
 
     if (!subItems.hasValue) return Container();
     final items = subItems.value!;
+
+    Future<void> prepareFileToOpen(File file) async {
+      //Before move to page for details of file
+      // - set audio path to AudioPlayer
+      final audioPath = file.audioPath;
+      ref.read(audioPlayerNotifierProvider.notifier).setSource(audioPath);
+      // - set initial start and end
+      ref.read(startEndProviderProvider.notifier).setNewValue(
+          file.getAllSentences!.first.start!, file.getAllSentences!.first.end!);
+      print('audioPath set :$audioPath');
+    }
 
     return SafeArea(child: Builder(
       builder: (context) {
@@ -82,14 +91,7 @@ class SubItemsList extends ConsumerWidget {
                       item: item,
                       onFileTapped: () {
                         final file = (item as File);
-                        final audioPath = file.audioPath;
-                        ref
-                            .read(audioPlayerNotifierProvider.notifier)
-                            .setSource(audioPath);
-                        ref.read(startEndProviderProvider.notifier).setNewValue(
-                            file.getAllSentences!.first.start!,
-                            file.getAllSentences!.first.end!);
-                        print('audioPath set :$audioPath');
+                        prepareFileToOpen(file);
                       },
                     );
                   },
@@ -233,7 +235,7 @@ class ActionButton extends ConsumerWidget {
                     }),
                     ActionSheetAction('移動', onTap: () async {
                       final int? newParentId =
-                          await getNewFolderId(context, id,isFile:true);
+                          await getNewFolderId(context, id, isFile: true);
                       if (newParentId == null) return;
                       notifier.moveFile(id, newParentId);
                     }),
