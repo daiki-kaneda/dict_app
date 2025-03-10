@@ -139,3 +139,8 @@ FileDetailsViewが受け取るidはGoRouterのpathParamerからのものなの�
 が引数として受け取って使うことは、これらの内部で、pathParameterを参照することと同じことなので、そのようにすることはDRY原則に反しない。
 
 上のような,特定のページ内でのみ存在が許されるproviderに,そのページのid(pathparameterから取得される)を引数として渡すという構造は、providerの処理にidが必要な場合に非常に便利だ。(もちろん、providerはauto-disposeにする)
+
+- [ ] 以下のproviderにFileDetailsViewから引き継いだidを渡して、内部で使用する
+- currentSentenceIndexInAllSentencesProvider
+- sentencePageControllerProvider
+- currentWordIndexProvider
