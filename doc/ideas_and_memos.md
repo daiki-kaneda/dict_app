@@ -110,3 +110,23 @@ path_providerで取得できる主なディレクトリ
 - Application Support:ユーザが直接アクセスできないデータを格納するディレクトリ
 - Application Documents:ユーザが直接アクセスできるデータを格納するディレクトリ
 音声やIsarのデータをSupportではなく、Documentsに保存してしまっていたので、修正したい。ユーザがアクセスできるDocumentsには、音声解析のデータ(pdfなど)を自動的に格納できるようにしたい。
+
+### 2025-3-10
+#### providerの生存範囲
+ディクテーション関連のproviderで生存範囲を整理したい。
+
+**アプリ全体で生きるprovider**
+- isarProvider
+- audioPlayerNotifierProvider
+- playerStateProvider
+- playerPositionProvider
+- playerStateProvider
+- playerDurationProvider
+- startEndProviderProvider
+
+**FileDetailsView内で初期化され、FileDetailsView内のみ生きるprovider**
+- fileProvider(id)
+- currentSentenceIndexInAllSentencesProvider
+- sentencePageControllerProvider
+- currentWordIndexProvider (特にDictWordWidget内でしか生きない)
+
