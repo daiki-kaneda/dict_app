@@ -26,3 +26,26 @@ Future<bool?> showConfirmDialog(BuildContext context,
     },
   );
 }
+
+Future<void> showNotifyDialog(BuildContext context,
+    {required String title,
+    required String description,
+    String okLabel = 'OK'}) async {
+  return showAdaptiveDialog<void>(
+    context: context,
+    builder: (context) {
+      return AlertDialog.adaptive(
+        title: Text(title),
+        content: Text(description),
+        actions: [
+          PlatformTextButton(
+            child: Text(okLabel),
+            onPressed: () {
+              if (Navigator.canPop(context)) Navigator.of(context).pop();
+            },
+          )
+        ],
+      );
+    },
+  );
+}

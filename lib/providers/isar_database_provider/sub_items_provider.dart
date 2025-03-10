@@ -1,3 +1,5 @@
+import 'package:dict_app/constants/inner_navigator_key.dart';
+import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
 import 'package:dict_app/providers/app_directory_provider/app_documents_directory_provider.dart';
@@ -81,13 +83,9 @@ class SubItemsProvider extends _$SubItemsProvider {
       if (result != null) {
         print('got result!');
         final (path, bytes, size) = result;
-        // if (!validateAudioSize(size, maxSizeMbs)) {
-        //   showCustomDialog(DialogStatus.maxFileSizeLimitExceededError);
-        //   return;
-        // }
         final isValidate = await validateAudioLength(path);
         if (!isValidate) {
-          showCustomDialog(DialogStatus.maxFileSizeLimitExceededError);
+          DialogStatus.exceedMaxAudioLengthError.showCustomDialog(navigatorKey.currentContext!);
           return;
         }
         final ext = path.split('.').lastOrNull;
@@ -115,7 +113,7 @@ class SubItemsProvider extends _$SubItemsProvider {
         ref.invalidateSelf();
       }
     } catch (e) {
-      showCustomDialog(DialogStatus.unExpectedError);
+      DialogStatus.unExpectedError.showCustomDialog(innerNavigatorKey.currentContext!);
       print(e.toString());
     }
   }

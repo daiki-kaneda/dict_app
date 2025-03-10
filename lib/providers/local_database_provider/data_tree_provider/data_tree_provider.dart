@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dict_app/constants/inner_navigator_key.dart';
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/models/data_tree/dict_data/dict_data.dart';
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
@@ -184,7 +185,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
         print('got result!');
         final (path, bytes, size) = result;
         if (!validateAudioSize(size, maxSizeMbs)) {
-          showCustomDialog(DialogStatus.maxFileSizeLimitExceededError);
+          DialogStatus.exceedMaxAudioLengthError.showCustomDialog(innerNavigatorKey.currentContext!);
           return;
         }
         final ext = path.split('.').lastOrNull;
@@ -205,7 +206,7 @@ class DataTreeNotifier extends _$DataTreeNotifier {
         createDict(nodeId, Leaf(value: dictData));
       }
     } catch (e) {
-      showCustomDialog(DialogStatus.unExpectedError);
+                DialogStatus.unExpectedError.showCustomDialog(innerNavigatorKey.currentContext!);
       print(e.toString());
       ref
           .read(appSupportDirectoryNotifierProvider.notifier)

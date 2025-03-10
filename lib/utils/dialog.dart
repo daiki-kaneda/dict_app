@@ -1,53 +1,34 @@
 import 'package:dict_app/constants/inner_navigator_key.dart';
 import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 
 enum DialogStatus {
-  unExpectedError,maxFileSizeLimitExceededError,exceedMaxAudioLengthError;
+  unExpectedError,
+  offlineError,
+  exceedMaxAudioLengthError;
 
-}
-
-Future<void> showCustomDialog(DialogStatus status) async {
-  if (status == DialogStatus.unExpectedError) {
-    showCupertinoDialog(
-      useRootNavigator: true,
-      context: navigatorKey.currentContext!,
-      builder: (context) {
-        return CupertinoAlertDialog(
-          title: Text('エラー'),
-          content: Text('予期せぬエラーが発生しました'),
-          actions: [
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }else{
-    showCupertinoDialog(
-      useRootNavigator: true,
-      context: navigatorKey.currentContext!,
-      builder: (context) {
-        return CupertinoAlertDialog(
-          title: Text('エラー'),
-          content: Text('音声ファイルは${maxSizeMbs}MB以内にしてください'),
-          actions: [
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+  Future<void> showCustomDialog(BuildContext context) async {
+    String title;
+    String description;
+    switch (this) {
+      case unExpectedError:
+        {
+          title = 'エラー';
+          description = '予期せぬエラーが発生しました🥵';
+        }
+      case offlineError:
+        {
+          title = 'エラー';
+          description = 'デバイスがオフラインです😓';
+        }
+      case exceedMaxAudioLengthError:
+        {
+          title = 'エラー';
+          description = 'ディクテーション用の英語の音声は$maxAudioLengthInSeconds秒以内にしてください🥺';
+        }
+    }
+    showNotifyDialog(context, title: title, description: description);
   }
 }
