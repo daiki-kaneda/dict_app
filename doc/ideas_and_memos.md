@@ -104,4 +104,9 @@ ProviderRefを持つNavigatorObserverを提供する同期的なproviderを定�
 - 30分:50円でも利益が出るので、安価で提供できる
 - 広告がない
 
-
+#### path_providerで取得できるディレクトリ
+path_providerで取得できる主なディレクトリ
+- Temporary:一時的なデータを格納するディレクトリ
+- Application Support:ユーザが直接アクセスできないデータを格納するディレクトリ
+- Application Documents:ユーザが直接アクセスできるデータを格納するディレクトリ
+音声やIsarのデータをSupportではなく、Documentsに保存してしまっていたので、修正したい。ユーザがアクセスできるDocumentsには、音声解析のデータ(pdfなど)を自動的に格納できるようにしたい。
