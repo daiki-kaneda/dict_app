@@ -47,10 +47,12 @@ class SubItemsList extends ConsumerWidget {
       // - set audio path to AudioPlayer
       final audioPath = file.audioPath;
       ref.read(audioPlayerNotifierProvider.notifier).setSource(audioPath);
-      // - set initial start and end
+      print('audioPath set :$audioPath');
+      // - TODO: - set latest start,end
       ref.read(startEndProviderProvider.notifier).setNewValue(
           file.getAllSentences!.first.start!, file.getAllSentences!.first.end!);
-      print('audioPath set :$audioPath');
+      // TODO: - set latest sentence index
+      // TODO: - set proper word index
     }
 
     return SafeArea(child: Builder(
