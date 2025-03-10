@@ -128,5 +128,5 @@ path_providerで取得できる主なディレクトリ
 - fileProvider(id)
 - currentSentenceIndexInAllSentencesProvider
 - sentencePageControllerProvider
-- currentWordIndexProvider (特にDictWordWidget内でしか生きない)
+- currentWordIndexProvider
 

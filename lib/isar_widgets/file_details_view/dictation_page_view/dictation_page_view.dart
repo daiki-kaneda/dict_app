@@ -16,8 +16,23 @@ class DictationPageView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(currentSentenceIndexInAllSentencesProvider);
+    ref.watch(currentWordIndexProvider);
+    final file = ref.watch(fileNotifierProvider(id));
     final controller = ref.watch(sentencePageControllerProvider);
-    final sentences = ref.watch(fileNotifierProvider(id))?.getAllSentences;
+    final sentences = file?.getAllSentences;
+    // when sentence index changed
+    ref.listen(currentSentenceIndexInAllSentencesProvider, (_, i) {
+      final s = file?.getAllSentences?[i];
+      // update range of audio to play
+      ref
+          .read(startEndProviderProvider.notifier)
+          .setNewValue(s?.start ?? 0, s?.end ?? 0);
+      print((s?.start,s?.end).toString());
+      // update wordIndex to newest unSolvedIndex
+      ref.read(currentWordIndexProvider.notifier)
+      .updateIndex(s?.newestUnsolvedIndex() ?? 0);
+      print('newestUnsolvedWordIndex: ${s?.newestUnsolvedIndex()}');
+    });
     if (sentences == null) return Container();
 
     return PageView.builder(

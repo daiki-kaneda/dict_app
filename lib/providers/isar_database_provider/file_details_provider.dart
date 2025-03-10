@@ -46,13 +46,6 @@ class SentencePageController extends _$SentencePageController {
 class CurrentSentenceIndexInAllSentences extends _$CurrentSentenceIndexInAllSentences {
   @override
   int build() {
-    listenSelf((_, __) {
-      final currentSentence = getCurrentSentence();
-      final (start, end) = (currentSentence?.start, currentSentence?.end);
-      if (start != null && end != null) {
-        print((start, end));
-      }
-    });
     return 0;
   }
 
@@ -81,7 +74,12 @@ class CurrentWordIndex extends _$CurrentWordIndex {
   }
 
   updateIndex(int index) {
-    state = index;
+    final currentSentence = ref.read(
+      currentSentenceIndexInAllSentencesProvider.notifier
+      ).getCurrentSentence();
+    if(index>=0 && (currentSentence?.words?.length ?? 0)>index){
+      state = index;
+    }
   }
 }
 
