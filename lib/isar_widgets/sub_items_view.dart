@@ -1,6 +1,7 @@
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/bottom_navigation_bar.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
+import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
 import 'package:dict_app/isar_widgets/utils/select_folder_list.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
@@ -168,7 +169,6 @@ class ActionButton extends ConsumerWidget {
       icon: Icon(Icons.adaptive.more_rounded),
       onPressed: () {
         final parentId = PathParamerterKeys.parentId.getCurrentValue();
-        if (parentId == null) return;
         final notifier = ref.read(subItemsProviderProvider(parentId).notifier);
         switch (item) {
           case Folder():
@@ -198,6 +198,13 @@ class ActionButton extends ConsumerWidget {
                           await getNewFolderId(context, id);
                       if (newParentId == null) return;
                       notifier.moveFolder(id, newParentId);
+                    }),
+                    ActionSheetAction('削除', onTap: () async {
+                      final confirm = await showConfirmDialog(context,
+                          title: 'フォルダを削除',
+                          description:
+                              '${folder.title}を削除してもよろしいですか？一度削除すると復元はできません。');
+                      if (confirm == true) notifier.deleteFolder(id);
                     })
                   ]);
             }
@@ -226,9 +233,16 @@ class ActionButton extends ConsumerWidget {
                     }),
                     ActionSheetAction('移動', onTap: () async {
                       final int? newParentId =
-                          await getNewFolderId(context, id);
+                          await getNewFolderId(context, id,isFile:true);
                       if (newParentId == null) return;
                       notifier.moveFile(id, newParentId);
+                    }),
+                    ActionSheetAction('削除', onTap: () async {
+                      final confirm = await showConfirmDialog(context,
+                          title: 'ファイルを削除',
+                          description:
+                              '${file.title}を削除してもよろしいですか？一度削除すると復元はできません。');
+                      if (confirm == true) notifier.deleteFile(id);
                     })
                   ]);
             }

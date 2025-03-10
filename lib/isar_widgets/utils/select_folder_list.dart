@@ -13,9 +13,11 @@ class SelectFolderList extends ConsumerWidget {
   const SelectFolderList({
     super.key,
     required this.sourceId,
+    this.isFile=false
   });
 
   final int sourceId;
+  final bool isFile;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +34,7 @@ class SelectFolderList extends ConsumerWidget {
         children: [
           // SelectTargetFolderListTile(root,sourceId)
           for (final subF in root.whereType<Folder>())
-            SelectTargetFolderListTile(subF, sourceId)
+            SelectTargetFolderListTile(subF, sourceId,isFile:isFile)
         ],
       );
     } else {
@@ -44,11 +46,11 @@ class SelectFolderList extends ConsumerWidget {
 }
 
 class SelectTargetFolderListTile extends ConsumerWidget {
-  const SelectTargetFolderListTile(this.folder, this.sourceId, {super.key});
+  const SelectTargetFolderListTile(this.folder, this.sourceId, {super.key,this.isFile=false});
 
   final Folder folder;
-
   final int sourceId;
+  final bool isFile;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -63,8 +65,8 @@ class SelectTargetFolderListTile extends ConsumerWidget {
           error: (_, __) => null,
           loading: () => null);
     }));
-
-    final enabled = sourceId != folder.id;
+    // folder must not be moved to itself or descendant folder
+    final enabled = sourceId != folder.id || isFile;
 
     void onTapTile() {
       Navigator.of(context).pop(folder.id);
@@ -76,10 +78,7 @@ class SelectTargetFolderListTile extends ConsumerWidget {
 
     if (subFolders.isEmpty == true) {
       return PlatformListTile(
-        leading: Icon(
-          PlatformIcons(context).folder,
-          color: CupertinoTheme.of(context).textTheme.textStyle.color,
-        ),
+        leading: Icon(icon),
         title: Text(folder.title),
         onTap: enabled ? onTapTile : null,
       );
@@ -101,7 +100,7 @@ class SelectTargetFolderListTile extends ConsumerWidget {
               icon: Icon(Platform.isIOS
                   ? CupertinoIcons.chevron_down
                   : Icons.expand_more)),
-          onTap: onTapTile,
+          onTap: enabled ? onTapTile : null,
           child: Column(
             // if souceId match folder.id,not show descendants
             children: enabled
@@ -117,20 +116,21 @@ class SelectTargetFolderListTile extends ConsumerWidget {
   }
 }
 
-Future<int?> getNewFolderId(BuildContext context, int sourceId) async {
+Future<int?> getNewFolderId(BuildContext context, int sourceId,{bool isFile=false}) async {
   return showPlatformModalSheet<int?>(
     context: context,
     builder: (context) {
       return PlatformScaffold(
         appBar: PlatformAppBar(
-          leading: PlatformTextButton(
+          leading: PlatformIconButton(
             onPressed:()=>Navigator.of(context).pop(),
-            child: Text('キャンセル'),
+            icon: Icon(PlatformIcons(context).clear),
           ),
           title: Text('フォルダ選択'),
         ),
         body: SelectFolderList(
         sourceId: sourceId,
+        isFile: isFile,
       ),
       );
     },
