@@ -130,3 +130,5 @@ path_providerで取得できる主なディレクトリ
 - sentencePageControllerProvider
 - currentWordIndexProvider
 
+#### DRY原則によるfileIdの一元化
+pathPrametersでfileIdを扱うという点で,さらに現在開いているFileのidをproviderなどでトラックすることは、DRY原則に反するので、それはしない。
