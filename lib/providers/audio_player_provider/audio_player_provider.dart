@@ -71,15 +71,15 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 }
 
 enum SpeedStatus{
-  verySlow,slow,normal,veryFast,fast;
+  slow2,slow1,normal,fast1,fast2;
 
   double get rate{
     switch(this){
-      case verySlow:return 0.5;
-      case slow:return 0.75;
+      case slow2:return 0.5;
+      case slow1:return 0.75;
       case normal:return 1.0;
-      case fast:return 1.5;
-      case veryFast:return 2.0;
+      case fast2:return 1.5;
+      case fast1:return 2.0;
     }
   }
 }

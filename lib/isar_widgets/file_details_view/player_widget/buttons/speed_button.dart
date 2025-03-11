@@ -22,30 +22,33 @@ class _SpeedButtonState extends ConsumerState<SpeedButton> {
       onPressed: () {
         setState(() {
           switch (status) {
-            case SpeedStatus.verySlow:
-              status = SpeedStatus.slow;
+            case SpeedStatus.slow2:
+              status = SpeedStatus.slow1;
               break;
-            case SpeedStatus.slow:
+            case SpeedStatus.slow1:
               status = SpeedStatus.normal;
               break;
             case SpeedStatus.normal:
-              status = SpeedStatus.fast;
+              status = SpeedStatus.fast2;
               break;
-            case SpeedStatus.fast:
-              status = SpeedStatus.veryFast;
+            case SpeedStatus.fast2:
+              status = SpeedStatus.fast1;
               break;
-            case SpeedStatus.veryFast:
-              status = SpeedStatus.verySlow;
+            case SpeedStatus.fast1:
+              status = SpeedStatus.slow2;
               break;
           }
         });
         ref.read(audioPlayerNotifierProvider.notifier).setPlayBackrate(status);
       },
-      child: Text(
-        '×${status.rate}',
-        style: const TextStyle(
-          color: CupertinoColors.activeBlue,
-        ),),
+      child: Stack(
+        children: [
+          //placeholder
+          for(final s in SpeedStatus.values)
+          Visibility.maintain(visible: false ,child: Text('×${s.rate}')),
+          Text('×${status.rate}',)
+        ],
+      ),
     );
 }
 }

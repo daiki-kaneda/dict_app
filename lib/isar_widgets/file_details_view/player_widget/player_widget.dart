@@ -27,21 +27,22 @@ class PlayerWidget extends ConsumerWidget {
               )
             ],
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: DurationWidget(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Expanded(child: 
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const HintFillButton(),
-                const PlayPauseButton(),
-                const SpeedButton(),
+                HintFillButton(),
+                PlayPauseButton(),
+                SpeedButton(),
               ],
-            ),
+            ),)
           )
         ],
       ),
