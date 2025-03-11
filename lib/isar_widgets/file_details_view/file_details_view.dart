@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/dictation_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/input_text_field.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_view.dart';
@@ -28,12 +29,23 @@ class FileDetailsView extends ConsumerWidget {
           middle: FileNavTitle(),
           trailing: FileNavTrailing(),
         ),
-        child:[
-          DictationView(id),
-          ListeningView(id),
-          SettingView(id),
-        ][index]
-        );
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: [
+                DictationView(id),
+                ListeningView(id),
+                SettingView(id),
+              ][index],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: BottomShellWidgetPlaceHolder(),
+            )
+          ],
+        ));
   }
 }
 

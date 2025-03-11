@@ -1,4 +1,5 @@
 import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
@@ -46,7 +47,9 @@ class SubItemsList extends ConsumerWidget {
       print('file title:${file.title}');
     }
 
-    return SafeArea(child: Builder(
+    return SafeArea(child: Column(
+      children: [
+        Expanded(child: Builder(
       builder: (context) {
         if (parentId == null) {
           return CustomScrollView(
@@ -100,6 +103,9 @@ class SubItemsList extends ConsumerWidget {
           );
         }
       },
+    )),
+    BottomShellWidgetPlaceHolder()
+      ],
     ));
   }
 }

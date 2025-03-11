@@ -104,3 +104,16 @@ class BottomNavigationWidget extends ConsumerWidget {
       ]);
   }
 }
+
+class BottomShellWidgetPlaceHolder extends StatelessWidget {
+  const BottomShellWidgetPlaceHolder({super.key,});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = GoRouter.of(navigatorKey.currentContext!).state;
+    return Visibility.maintain(
+      visible: false,
+      child: BottomShellWidget(state: state),
+    );
+  }
+}
