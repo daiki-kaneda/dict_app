@@ -1,5 +1,7 @@
 import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/isar_widgets/utils/platform_bottom_navigation_bar.dart';
 import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
+import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,7 @@ class BottomShellWidget extends StatelessWidget {
         trailing: CreateFileButton(),
       );
     } else {
-      return Container();
+      return BottomNavigationWidget();
     }
   }
 }
@@ -89,6 +91,14 @@ class BottomNavigationWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container();
+    final currentIndex = ref.watch(currentTabIndexProvider);
+    return PlatformBottomNavigationBar(
+      currentIndex: currentIndex, 
+      onTap: (newIndex)=>ref.read(currentTabIndexProvider.notifier).updateIndex(newIndex), 
+      items: [
+          BottomNavigationBarItem(icon: Icon(PlatformIcons(context).pen), label: 'Dictation'),
+          BottomNavigationBarItem(icon: Icon(PlatformIcons(context).volumeUp), label: 'Listening'),
+          BottomNavigationBarItem(icon: Icon(PlatformIcons(context).settings), label: 'Settings'),
+      ]);
   }
 }
