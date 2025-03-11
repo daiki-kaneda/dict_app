@@ -7,6 +7,7 @@ import 'package:dict_app/providers/audio_player_provider/player_duration_provide
 import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
+import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,12 +20,28 @@ class DictationView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(audioPlayerNotifierProvider);
+    ref.watch(playerStateProvider);
+    ref.watch(playerPositionProvider);
+    ref.watch(playerStateProvider);
+    ref.watch(playerDurationProvider);
+    ref.watch(startEndProviderProvider);
+
+    void initDict() {
+      final file = ref.read(fileNotifierProvider(fileId));
+      if (file == null) return;
+      // - set audio path to AudioPlayer
+      final audioPath = file.audioPath;
+      ref.read(audioPlayerNotifierProvider.notifier).setSource(audioPath);
+      print('audioPath set :$audioPath');
+      // // - set latest start,end
+      ref.read(startEndProviderProvider.notifier).setNewValue(
+          file.getAllSentences!.first.start!, file.getAllSentences!.first.end!);
+    }
 
     return Center(
       child: PlatformTextButton(
         onPressed: () {
-          // initialize dictation
-          
+          initDict();
           showPlatformFullScreenDialog(context,
               child: DictationProblemView(fileId));
         },

@@ -13,7 +13,7 @@ class PlayPauseButton extends ConsumerWidget {
     final state = ref.watch(playerStateProvider);
 
     final color = CupertinoColors.label.resolveFrom(context);
-
+    
     if (state.hasValue) {
       final playerState = state.value!;
       switch (playerState) {
