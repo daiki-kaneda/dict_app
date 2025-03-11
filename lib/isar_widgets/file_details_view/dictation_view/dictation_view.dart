@@ -1,6 +1,7 @@
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/dictation_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/input_text_field.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
+import 'package:dict_app/isar_widgets/utils/platform_full_screen_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
@@ -14,14 +15,12 @@ class DictationView extends StatelessWidget {
     return Center(
       child: PlatformTextButton(
         onPressed: () {
-          showCupertinoSheet(
-            context: context,
-            pageBuilder: (context) {
-              return CupertinoPageScaffold(
-                  navigationBar:
-                      CupertinoNavigationBar(middle: Text('Dictation')),
-                  child: 
-                  Stack(
+          showPlatformFullScreenDialog(context,
+              child: CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    middle: Text('Dictation'),
+                  ),
+                  child: Stack(
                     fit: StackFit.expand,
                     children: [
                       InputTextField(FocusNode()..requestFocus()),
@@ -37,9 +36,7 @@ class DictationView extends StatelessWidget {
                         ),
                       )
                     ],
-                  ));
-            },
-          );
+                  )));
         },
         child: Text('start dictation'),
       ),
