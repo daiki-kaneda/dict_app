@@ -38,12 +38,17 @@ class DictationView extends ConsumerWidget {
           file.getAllSentences!.first.start!, file.getAllSentences!.first.end!);
     }
 
+    void onPop(){
+      ref.read(audioPlayerNotifierProvider.notifier)
+      .pause();
+    }
+
     return Center(
       child: PlatformTextButton(
         onPressed: () {
           initDict();
           showPlatformFullScreenDialog(context,
-              child: DictationProblemView(fileId));
+              child: DictationProblemView(fileId,onPop: onPop,));
         },
         child: Text('start dictation'),
       ),
@@ -52,14 +57,23 @@ class DictationView extends ConsumerWidget {
 }
 
 class DictationProblemView extends StatelessWidget {
-  const DictationProblemView(this.fileId, {super.key});
+  const DictationProblemView(this.fileId, {super.key,required this.onPop});
 
   final int fileId;
+  final VoidCallback onPop;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
+          leading: PlatformTextButton(
+                    padding: EdgeInsets.zero,
+        onPressed: () {
+          Navigator.of(context).maybePop();
+          onPop();
+        },
+        child: const Text('Close'),
+          ),
           middle: Text('Dictation'),
         ),
         child: Stack(
