@@ -230,7 +230,7 @@ class ActionButton extends ConsumerWidget {
                     }),
                     ActionSheetAction('移動', onTap: () async {
                       final int? newParentId =
-                          await getNewFolderId(context, id, isFile: true);
+                          await getNewFolderId(context, id, isFileMoving: true);
                       if (newParentId == null) return;
                       notifier.moveFile(id, newParentId);
                       // rebuild SubItemsView(newParentId)

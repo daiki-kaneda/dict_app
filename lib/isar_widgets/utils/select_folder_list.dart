@@ -13,11 +13,11 @@ class SelectFolderList extends ConsumerWidget {
   const SelectFolderList({
     super.key,
     required this.sourceId,
-    this.isFile=false
+    this.isFileMoving=false
   });
 
   final int sourceId;
-  final bool isFile;
+  final bool isFileMoving;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,7 +34,7 @@ class SelectFolderList extends ConsumerWidget {
         children: [
           // SelectTargetFolderListTile(root,sourceId)
           for (final subF in root.whereType<Folder>())
-            SelectTargetFolderListTile(subF, sourceId,isFile:isFile)
+            SelectTargetFolderListTile(subF, sourceId,isFileMoving:isFileMoving)
         ],
       );
     } else {
@@ -46,11 +46,11 @@ class SelectFolderList extends ConsumerWidget {
 }
 
 class SelectTargetFolderListTile extends ConsumerWidget {
-  const SelectTargetFolderListTile(this.folder, this.sourceId, {super.key,this.isFile=false});
+  const SelectTargetFolderListTile(this.folder, this.sourceId, {super.key,this.isFileMoving=false});
 
   final Folder folder;
   final int sourceId;
-  final bool isFile;
+  final bool isFileMoving;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -66,7 +66,7 @@ class SelectTargetFolderListTile extends ConsumerWidget {
           loading: () => null);
     }));
     // folder must not be moved to itself or descendant folder
-    final enabled = sourceId != folder.id || isFile;
+    final enabled = sourceId != folder.id || isFileMoving;
 
     void onTapTile() {
       Navigator.of(context).pop(folder.id);
@@ -107,7 +107,7 @@ class SelectTargetFolderListTile extends ConsumerWidget {
                 ? subFolders
                     .map((f) => Padding(
                           padding: EdgeInsets.only(left: 10),
-                          child: SelectTargetFolderListTile(f, sourceId),
+                          child: SelectTargetFolderListTile(f, sourceId,isFileMoving: isFileMoving,),
                         ))
                     .toList()
                 : [],
@@ -116,7 +116,7 @@ class SelectTargetFolderListTile extends ConsumerWidget {
   }
 }
 
-Future<int?> getNewFolderId(BuildContext context, int sourceId,{bool isFile=false}) async {
+Future<int?> getNewFolderId(BuildContext context, int sourceId,{bool isFileMoving=false}) async {
   return showPlatformModalSheet<int?>(
     context: context,
     builder: (context) {
@@ -130,7 +130,7 @@ Future<int?> getNewFolderId(BuildContext context, int sourceId,{bool isFile=fals
         ),
         body: SelectFolderList(
         sourceId: sourceId,
-        isFile: isFile,
+        isFileMoving: isFileMoving,
       ),
       );
     },
