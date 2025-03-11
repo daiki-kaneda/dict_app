@@ -13,6 +13,7 @@
             - ListeningView(fileId)
             <!-- - WordsView(fileId)
             - SettingView(fileId) -->
+（FileDetailsView内では、厳密には宣言的に子供のルートを定義せずに、enumなどの状態を使ってページを切り変える）
 
 ## provider構造
 **Home以下で生きるprovider**
