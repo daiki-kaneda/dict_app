@@ -43,14 +43,7 @@ class SubItemsList extends ConsumerWidget {
     final items = subItems.value!;
 
     Future<void> prepareFileToOpen(File file) async {
-      //Before move to page for details of file
-      // - set audio path to AudioPlayer
-      final audioPath = file.audioPath;
-      ref.read(audioPlayerNotifierProvider.notifier).setSource(audioPath);
-      print('audioPath set :$audioPath');
-      // - set latest start,end
-      ref.read(startEndProviderProvider.notifier).setNewValue(
-          file.getAllSentences!.first.start!, file.getAllSentences!.first.end!);
+      print('file title:${file.title}');
     }
 
     return SafeArea(child: Builder(

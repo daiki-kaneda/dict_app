@@ -98,12 +98,6 @@ class _EagerInitialization extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isar = ref.watch(isarProvider);
-    ref.watch(audioPlayerNotifierProvider);
-    ref.watch(playerStateProvider);
-    ref.watch(playerPositionProvider);
-    ref.watch(playerStateProvider);
-    ref.watch(playerDurationProvider);
-    ref.watch(startEndProviderProvider);
 
     if (isar.value != null) {
       return child;
