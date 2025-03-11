@@ -102,18 +102,17 @@ class ExpansionAnimatedWidget extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      heightFactor: controller.value,
-      child: ClipRect(
+    return ClipRect(
         clipper: MyClipper(controller.value),
-        child: Opacity(
-          opacity: controller.status == AnimationStatus.reverse
-              ? 0.0
-              : controller.value,
-          child: child,
-        ),
-      ),
-    );
+        child: Align(
+          heightFactor: controller.value,
+          child: Opacity(
+            opacity: controller.status == AnimationStatus.reverse
+                ? 0.0
+                : controller.value,
+            child: child,
+          ),
+        ));
   }
 }
 
