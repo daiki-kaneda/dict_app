@@ -19,11 +19,13 @@ class BottomShellWidget extends StatelessWidget {
     final fullPath = state.fullPath;
     if (fullPath == '/') {
       return const CupertinoNavigationBar(
+        border: Border(),
         backgroundColor: CupertinoColors.transparent,
         leading: CreateFolderButton(),
       );
     } else if (fullPath == '/sub-items/:parentId') {
       return const CupertinoNavigationBar(
+        border: Border(),
         backgroundColor: CupertinoColors.transparent,
         leading: CreateFolderButton(),
         trailing: CreateFileButton(),
