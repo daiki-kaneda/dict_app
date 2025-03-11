@@ -1,4 +1,4 @@
-import 'package:dict_app/isar_widgets/bottom_navigation_bar.dart';
+import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
@@ -49,7 +49,7 @@ class IsarFolderStructureApp extends StatelessWidget {
                 Align(
                     alignment: Alignment.bottomCenter,
                     child:
-                        SafeArea(child: ShareBottomNavigationBar(state: state)))
+                        SafeArea(child: BottomShellWidget(state: state)))
               ],
             );
           },

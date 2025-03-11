@@ -7,8 +7,8 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ShareBottomNavigationBar extends StatelessWidget {
-  const ShareBottomNavigationBar({super.key, required this.state});
+class BottomShellWidget extends StatelessWidget {
+  const BottomShellWidget({super.key, required this.state});
 
   final GoRouterState state;
 
@@ -81,5 +81,14 @@ class CreateFileButton extends ConsumerWidget {
       },
       icon: const Icon(CupertinoIcons.plus),
     );
+  }
+}
+
+class BottomNavigationWidget extends ConsumerWidget {
+  const BottomNavigationWidget({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container();
   }
 }

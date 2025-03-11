@@ -153,3 +153,15 @@ class TypedTextNotifier extends _$TypedTextNotifier {
     controller.add(text);
   }
 }
+
+@riverpod
+class CurrentTabIndex extends _$CurrentTabIndex {
+  @override
+  int build() {
+    return 0;
+  }
+
+  updateIndex(int newIndex){
+    state=newIndex;
+  }
+}
