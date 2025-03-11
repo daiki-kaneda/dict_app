@@ -7,8 +7,8 @@ class ListeningView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        return ListView(
-          children: List.generate(100, (i)=>Text('You listen!')),
+        return Center(
+          child: Text('listening'),
         );
   }
 }
