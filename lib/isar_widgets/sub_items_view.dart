@@ -193,6 +193,8 @@ class ActionButton extends ConsumerWidget {
                           await getNewFolderId(context, id);
                       if (newParentId == null) return;
                       notifier.moveFolder(id, newParentId);
+                      // rebuild SubItemsView(newParentId)
+                      ref.invalidate(subItemsProviderProvider(newParentId));
                     }),
                     ActionSheetAction('削除', onTap: () async {
                       final confirm = await showConfirmDialog(context,
@@ -231,6 +233,8 @@ class ActionButton extends ConsumerWidget {
                           await getNewFolderId(context, id, isFile: true);
                       if (newParentId == null) return;
                       notifier.moveFile(id, newParentId);
+                      // rebuild SubItemsView(newParentId)
+                      ref.invalidate(subItemsProviderProvider(newParentId));
                     }),
                     ActionSheetAction('削除', onTap: () async {
                       final confirm = await showConfirmDialog(context,
