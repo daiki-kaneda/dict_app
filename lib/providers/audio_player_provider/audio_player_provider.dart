@@ -9,8 +9,12 @@ part 'audio_player_provider.g.dart';
 class AudioPlayerNotifier extends _$AudioPlayerNotifier {
   @override
   AudioPlayer build() {
+    final player = AudioPlayer();
     // audio player can have only one source.
-    return AudioPlayer();
+    ref.onDispose((){
+      player.dispose();
+    });
+    return player;
   }
   
   Future<void> setSource(String filePath)async{
