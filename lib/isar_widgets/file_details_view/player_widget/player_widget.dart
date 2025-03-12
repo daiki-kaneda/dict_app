@@ -33,7 +33,7 @@ class PlayerWidget extends ConsumerWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Expanded(child: 
+            child:  
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -42,7 +42,7 @@ class PlayerWidget extends ConsumerWidget {
                 PlayPauseButton(),
                 SpeedButton(),
               ],
-            ),)
+            ),
           )
         ],
       ),
