@@ -18,6 +18,7 @@
 ## provider構造
 **Home以下で生きるprovider**
 - isar_provider
+- translation_helper_provider
 **SubItemsView(parentId)以下で生きるprovider**
 - subItemsProvider(parentId)
 **FileDetailsView以下で生きるprovider**
