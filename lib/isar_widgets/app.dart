@@ -9,6 +9,7 @@ import 'package:dict_app/providers/audio_player_provider/player_position_provide
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
+import 'package:dict_app/providers/translation_helper_provider/translation_helper_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -98,8 +99,9 @@ class _EagerInitialization extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isar = ref.watch(isarProvider);
+    final translator = ref.watch(translationHelperProvider);
 
-    if (isar.value != null) {
+    if (![isar.value,translator.value].contains(null)) {
       return child;
     } else {
       return PlatformScaffold(
