@@ -5,14 +5,19 @@ import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
+import 'package:dict_app/isar_widgets/file_details_view/print_view/dictation.dart';
 import 'package:dict_app/isar_widgets/file_details_view/print_view/print_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/setting_view/setting_view.dart';
+import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 
 class FileDetailsView extends ConsumerWidget {
   const FileDetailsView({super.key, required this.id});
@@ -27,15 +32,14 @@ class FileDetailsView extends ConsumerWidget {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           middle: FileNavTitle(),
-          trailing: FileNavTrailing(),
+          trailing: FileNavTrailing(id),
         ),
-        child:[
+        child: [
           DictationView(id),
           ListeningView(id),
           PrintView(id),
           SettingView(id),
-        ][index]
-        );
+        ][index]);
   }
 }
 
@@ -49,10 +53,37 @@ class FileNavTitle extends ConsumerWidget {
 }
 
 class FileNavTrailing extends ConsumerWidget {
-  const FileNavTrailing({super.key});
+  const FileNavTrailing(this.fileId, {super.key});
+
+  final int fileId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentIndex = ref.watch(currentTabIndexProvider);
+    final file = ref.watch(fileNotifierProvider(fileId));
+    if (file == null) return Container();
+    if (currentIndex == 2) {
+      return PlatformIconButton(
+          onPressed: () {
+            showCustomActionSheet(
+                isCupertino: true,
+                context: context,
+                actions: [
+                  ActionSheetAction('プリント', isDefaultAction: true, onTap: () {
+                    Printing.layoutPdf(
+                        onLayout: (format) => generateDictationDocument(
+                            format, DictationDocumentData(file: file)));
+                  }),
+                  ActionSheetAction('シェア', isDefaultAction: true,
+                      onTap: () async {
+                    Printing.sharePdf(
+                        bytes: await generateDictationDocument(
+                            PdfPageFormat.a4, DictationDocumentData(file: file)));
+                  }),
+                ]);
+          },
+          icon: Icon(PlatformIcons(context).share));
+    }
     return Container();
   }
 }
