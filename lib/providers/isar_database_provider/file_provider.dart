@@ -10,7 +10,7 @@ part 'file_provider.g.dart';
 class FileNotifier extends _$FileNotifier {
   @override
   File? build(Id id) {
-    return isar.files.filter().idEqualTo(id).findFirstSync();
+    return isar.files.getSync(id);
   }
 
   Isar get isar => ref.read(isarProvider).requireValue;
@@ -49,7 +49,7 @@ class FileNotifier extends _$FileNotifier {
       required int sentenceIndex,
       required int wordIndex,
       bool solveAnyway = false}) async {
-    final file = isar.files.getSync(id);
+    final file = await isar.files.get(id);
     if (file == null) return;
     await updateFile(
       paragraphs: file.paragraphs.tryCharacter(
