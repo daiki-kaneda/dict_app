@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/utils/platform_bottom_navigation_bar.dart';
 import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
@@ -100,6 +102,7 @@ class BottomNavigationWidget extends ConsumerWidget {
       items: [
           BottomNavigationBarItem(icon: Icon(PlatformIcons(context).pen), label: 'Dictation'),
           BottomNavigationBarItem(icon: Icon(PlatformIcons(context).volumeUp), label: 'Listening'),
+          BottomNavigationBarItem(icon: Icon(Platform.isIOS ? CupertinoIcons.printer:Icons.print), label: 'Print'),
           BottomNavigationBarItem(icon: Icon(PlatformIcons(context).settings), label: 'Settings'),
       ]);
   }
