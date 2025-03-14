@@ -33,6 +33,7 @@
   - playerPositionProvider
   - playerDurationProvider
   - startEndProviderProvider
+- typedTextNotifier
 **ListeningView以下で生きるprovider**
 - currentSentenceIndexInAllSentencesProvider(fileId),
 - sentencePageControllerProvider(fileId),
