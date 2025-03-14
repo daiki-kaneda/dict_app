@@ -117,12 +117,6 @@ path_providerで取得できる主なディレクトリ
 
 **アプリ全体で生きるprovider**
 - isarProvider
-- audioPlayerNotifierProvider
-- playerStateProvider
-- playerPositionProvider
-- playerStateProvider
-- playerDurationProvider
-- startEndProviderProvider
 
 **FileDetailsView内で初期化され、FileDetailsView内のみ生きるprovider**
 - fileProvider(id)
