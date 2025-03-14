@@ -79,7 +79,7 @@ class DictationProblemView extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            InputTextField(FocusNode()..requestFocus()),
+            InputTextField(FocusNode()..requestFocus(),fileId),
             SafeArea(
               child: Column(
                 children: [

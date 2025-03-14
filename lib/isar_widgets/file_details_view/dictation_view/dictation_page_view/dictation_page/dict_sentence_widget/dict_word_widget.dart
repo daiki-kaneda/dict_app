@@ -7,10 +7,11 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictWordWidget extends ConsumerWidget {
-  const DictWordWidget( {super.key,
+  const DictWordWidget( this.fileId,{super.key,
   required this.index,
   required this.word});
 
+  final int fileId;
   final int index;
   final DictationWord word;
 
@@ -28,7 +29,7 @@ class DictWordWidget extends ConsumerWidget {
     //final shouldFocus = word.start<=playerPosition && playerPosition<word.end;
 
     final isSelected =
-        ref.watch(currentWordIndexProvider.select((i) => index == i));
+        ref.watch(currentWordIndexProvider(fileId).select((i) => index == i));
 
     // final word = ref
     //     .watch(currentSentenceIndexProvider.notifier)
@@ -65,7 +66,7 @@ class DictWordWidget extends ConsumerWidget {
             platform.invokeMethod('searchDictionary', {'word': word.word});
           } else {
             HapticFeedback.lightImpact();
-            ref.read(currentWordIndexProvider.notifier).updateIndex(index);
+            ref.read(currentWordIndexProvider(fileId).notifier).updateIndex(index);
             // focusNode.requestFocus();
           }
         },

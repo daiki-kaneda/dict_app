@@ -23,7 +23,7 @@ part 'file_details_provider.g.dart';
 @riverpod
 class SentencePageController extends _$SentencePageController {
   @override
-  PageController build() {
+  PageController build(int fileId) {
     final controller = PageController();
     controller.addListener(_onPageChanged);
     ref.onDispose(() {
@@ -38,23 +38,20 @@ class SentencePageController extends _$SentencePageController {
     final page = state.page;
     if (page == null || page.toInt() != page) return;
     print('currentPage:$page');
-    ref.read(currentSentenceIndexInAllSentencesProvider.notifier).updateIndex(page.toInt());
+    ref.read(currentSentenceIndexInAllSentencesProvider(fileId).notifier).updateIndex(page.toInt());
   }
 }
 
 @riverpod
 class CurrentSentenceIndexInAllSentences extends _$CurrentSentenceIndexInAllSentences {
   @override
-  int build() {
+  int build(int fileId) {
     return 0;
   }
 
   Isar get isar => ref.read(isarProvider).requireValue;
 
   DictationSentence? getCurrentSentence() {
-    final fileId = PathParamerterKeys.fileId.getCurrentValue();
-    if (fileId == null) return null;
-
     final targetSentence =
         ref.read(fileNotifierProvider(fileId))?.getAllSentences?[state];
     print(('currentText:${targetSentence?.displayText}'));
@@ -69,13 +66,13 @@ class CurrentSentenceIndexInAllSentences extends _$CurrentSentenceIndexInAllSent
 @riverpod
 class CurrentWordIndex extends _$CurrentWordIndex {
   @override
-  int build() {
+  int build(int fileId) {
     return 0;
   }
 
   updateIndex(int index) {
     final currentSentence = ref.read(
-      currentSentenceIndexInAllSentencesProvider.notifier
+      currentSentenceIndexInAllSentencesProvider(fileId).notifier
       ).getCurrentSentence();
     if(index>=0 && (currentSentence?.words?.length ?? 0)>index){
       state = index;
@@ -86,8 +83,8 @@ class CurrentWordIndex extends _$CurrentWordIndex {
 @riverpod
 class CurrentSentenceIndex extends _$CurrentSentenceIndex {
   @override
-  int build() {
-    final sentence = ref.watch(currentSentenceIndexInAllSentencesProvider.notifier).getCurrentSentence();
+  int build(int fileId) {
+    final sentence = ref.watch(currentSentenceIndexInAllSentencesProvider(fileId).notifier).getCurrentSentence();
     print('parentIndex:${sentence?.parentIndex}');
     return sentence?.index ?? 0;
   }
@@ -100,8 +97,8 @@ class CurrentSentenceIndex extends _$CurrentSentenceIndex {
 @riverpod
 class CurrentParagraphIndex extends _$CurrentParagraphIndex {
   @override
-  int build() {
-    final sentence = ref.watch(currentSentenceIndexInAllSentencesProvider.notifier).getCurrentSentence();
+  int build(int fileId) {
+    final sentence = ref.watch(currentSentenceIndexInAllSentencesProvider(fileId).notifier).getCurrentSentence();
     print('parentIndex:${sentence?.parentIndex}');
     return sentence?.parentIndex ?? 0;
   }
@@ -115,17 +112,15 @@ class CurrentParagraphIndex extends _$CurrentParagraphIndex {
 class TypedTextNotifier extends _$TypedTextNotifier {
   final controller = StreamController<String>();
   @override
-  Stream<String> build() async* {
+  Stream<String> build(int fileId) async* {
     ref.onDispose(() {
       controller.close();
     });
 
     listenSelf((prev, next) {
-      final fileId = PathParamerterKeys.fileId.getCurrentValue();
-      final currentParagraphIndex = ref.read(currentParagraphIndexProvider);
-      final currentSentenceIndex = ref.read(currentSentenceIndexProvider);
-      final currentWordIndex = ref.read(currentWordIndexProvider);
-      if (fileId == null) return;
+      final currentParagraphIndex = ref.read(currentParagraphIndexProvider(fileId));
+      final currentSentenceIndex = ref.read(currentSentenceIndexProvider(fileId));
+      final currentWordIndex = ref.read(currentWordIndexProvider(fileId));
 
       final nextText = next.value;
       if (nextText == null || nextText.isEmpty) return;
@@ -135,7 +130,7 @@ class TypedTextNotifier extends _$TypedTextNotifier {
 
       if (targetCharacter == ' ') {
         ref
-            .read(currentWordIndexProvider.notifier)
+            .read(currentWordIndexProvider(fileId).notifier)
             .updateIndex(currentWordIndex + 1);
         return;
       }

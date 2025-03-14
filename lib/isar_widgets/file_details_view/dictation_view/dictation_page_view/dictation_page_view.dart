@@ -15,13 +15,13 @@ class DictationPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(currentSentenceIndexInAllSentencesProvider);
-    ref.watch(currentWordIndexProvider);
+    ref.watch(currentSentenceIndexInAllSentencesProvider(id));
+    ref.watch(currentWordIndexProvider(id));
     final file = ref.watch(fileNotifierProvider(id));
-    final controller = ref.watch(sentencePageControllerProvider);
+    final controller = ref.watch(sentencePageControllerProvider(id));
     final sentences = file?.getAllSentences;
     // when sentence index changed
-    ref.listen(currentSentenceIndexInAllSentencesProvider, (_, i) {
+    ref.listen(currentSentenceIndexInAllSentencesProvider(id), (_, i) {
       final s = file?.getAllSentences?[i];
       // update range of audio to play
       ref
@@ -29,7 +29,7 @@ class DictationPageView extends ConsumerWidget {
           .setNewValue(s?.start ?? 0, s?.end ?? 0);
       print((s?.start,s?.end).toString());
       // update wordIndex to newest unSolvedIndex
-      ref.read(currentWordIndexProvider.notifier)
+      ref.read(currentWordIndexProvider(id).notifier)
       .updateIndex(s?.newestUnsolvedIndex() ?? 0);
       print('newestUnsolvedWordIndex: ${s?.newestUnsolvedIndex()}');
     });
@@ -41,7 +41,8 @@ class DictationPageView extends ConsumerWidget {
       itemBuilder: (context, index) {
         final dictationSentence = sentences[index];
         return DictationPage(
-          dictationSentence);
+          id,
+          dictationSentence: dictationSentence);
       },
     );
   }

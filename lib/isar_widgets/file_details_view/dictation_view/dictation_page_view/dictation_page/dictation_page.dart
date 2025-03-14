@@ -6,8 +6,9 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictationPage extends ConsumerWidget {
-  const DictationPage(this.dictationSentence, {super.key});
+  const DictationPage(this.fileId, {super.key,required this.dictationSentence});
 
+  final int fileId;
   final DictationSentence dictationSentence;
 
   @override
@@ -20,6 +21,7 @@ class DictationPage extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         DictSentenceWidget(
+          fileId,
           sentence: dictationSentence,
         ),
         TranslatedText(dictationSentence.displayText),

@@ -6,8 +6,9 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictSentenceWidget extends StatelessWidget {
-  const DictSentenceWidget({super.key, required this.sentence});
+  const DictSentenceWidget(this.fileId, {super.key, required this.sentence});
 
+  final int fileId;
   final DictationSentence sentence;
 
   @override
@@ -25,6 +26,7 @@ class DictSentenceWidget extends StatelessWidget {
                 .asMap()
                 .entries
                 .map((e) => DictWordWidget(
+                      fileId,
                       index: e.key,
                       word: e.value,
                     ))
