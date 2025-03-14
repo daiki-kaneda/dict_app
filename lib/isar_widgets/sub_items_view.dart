@@ -1,4 +1,5 @@
 import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
@@ -46,60 +47,66 @@ class SubItemsList extends ConsumerWidget {
       print('file title:${file.title}');
     }
 
-    return SafeArea(child: Builder(
-      builder: (context) {
-        if (parentId == null) {
-          return CustomScrollView(
-            slivers: [
-              // const CupertinoSliverNavigationBar(
-              //   largeTitle: Text('フォルダ'),
-              // ),
-              if (items.isNotEmpty)
-                SliverList.builder(
-                  itemBuilder: (context, index) {
-                    return ItemTile(item: items[index]);
-                  },
-                  itemCount: items.length,
-                ),
-              if (items.isEmpty)
-                const SliverFillRemaining(
-                  child: Center(
-                    child: Text("Let's make first folder or file!"),
-                  ),
-                )
-            ],
-          );
-        } else {
-          // final parentFolder = ref.watch(folderProvider(parentId!));
-          return CustomScrollView(
-            slivers: [
-              // CupertinoSliverNavigationBar(
-              //   largeTitle: Text(parentFolder?.folderName ?? ''),
-              // ),
-              if (items.isNotEmpty)
-                SliverList.builder(
-                  itemBuilder: (context, index) {
-                    final item = items[index];
-                    return ItemTile(
-                      item: item,
-                      onFileTapped: () {
-                        final file = (item as File);
-                        prepareFileToOpen(file);
+    return SafeArea(
+        child: Column(
+      children: [
+        Expanded(child: Builder(
+          builder: (context) {
+            if (parentId == null) {
+              return CustomScrollView(
+                slivers: [
+                  // const CupertinoSliverNavigationBar(
+                  //   largeTitle: Text('フォルダ'),
+                  // ),
+                  if (items.isNotEmpty)
+                    SliverList.builder(
+                      itemBuilder: (context, index) {
+                        return ItemTile(item: items[index]);
                       },
-                    );
-                  },
-                  itemCount: items.length,
-                ),
-              if (items.isEmpty)
-                SliverFillRemaining(
-                  child: Center(
-                    child: Text('No items in this folder(id:$parentId)'),
-                  ),
-                )
-            ],
-          );
-        }
-      },
+                      itemCount: items.length,
+                    ),
+                  if (items.isEmpty)
+                    const SliverFillRemaining(
+                      child: Center(
+                        child: Text("Let's make first folder or file!"),
+                      ),
+                    )
+                ],
+              );
+            } else {
+              // final parentFolder = ref.watch(folderProvider(parentId!));
+              return CustomScrollView(
+                slivers: [
+                  // CupertinoSliverNavigationBar(
+                  //   largeTitle: Text(parentFolder?.folderName ?? ''),
+                  // ),
+                  if (items.isNotEmpty)
+                    SliverList.builder(
+                      itemBuilder: (context, index) {
+                        final item = items[index];
+                        return ItemTile(
+                          item: item,
+                          onFileTapped: () {
+                            final file = (item as File);
+                            prepareFileToOpen(file);
+                          },
+                        );
+                      },
+                      itemCount: items.length,
+                    ),
+                  if (items.isEmpty)
+                    SliverFillRemaining(
+                      child: Center(
+                        child: Text('No items in this folder(id:$parentId)'),
+                      ),
+                    )
+                ],
+              );
+            }
+          },
+        )),
+        BottomShellWidgetPlaceHolder()
+      ],
     ));
   }
 }

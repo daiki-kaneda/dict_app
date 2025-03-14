@@ -97,13 +97,30 @@ class BottomNavigationWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(currentTabIndexProvider);
     return PlatformBottomNavigationBar(
-      currentIndex: currentIndex, 
-      onTap: (newIndex)=>ref.read(currentTabIndexProvider.notifier).updateIndex(newIndex), 
-      items: [
-          BottomNavigationBarItem(icon: Icon(PlatformIcons(context).pen), label: 'Dictation'),
-          BottomNavigationBarItem(icon: Icon(PlatformIcons(context).volumeUp), label: 'Listening'),
-          BottomNavigationBarItem(icon: Icon(Platform.isIOS ? CupertinoIcons.printer:Icons.print), label: 'Print'),
-          BottomNavigationBarItem(icon: Icon(PlatformIcons(context).settings), label: 'Settings'),
-      ]);
+        currentIndex: currentIndex,
+        onTap: (newIndex) =>
+            ref.read(currentTabIndexProvider.notifier).updateIndex(newIndex),
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(PlatformIcons(context).pen), label: 'Dictation'),
+          BottomNavigationBarItem(
+              icon: Icon(PlatformIcons(context).volumeUp), label: 'Listening'),
+          BottomNavigationBarItem(
+              icon: Icon(Platform.isIOS ? CupertinoIcons.printer : Icons.print),
+              label: 'Print'),
+          BottomNavigationBarItem(
+              icon: Icon(PlatformIcons(context).settings), label: 'Settings'),
+        ]);
+  }
+}
+
+class BottomShellWidgetPlaceHolder extends StatelessWidget {
+  const BottomShellWidgetPlaceHolder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+        opacity: 0,
+        child: BottomShellWidget(state: GoRouter.of(context).state));
   }
 }

@@ -35,12 +35,18 @@ class ListeningView extends ConsumerWidget {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Expanded(child: PageView(
-          children: List.generate(10, (i)=>ColoredBox(color: Colors.red,
-          child: Center(child: Text(i.toString()),),)),
+        Expanded(
+            child: PageView(
+          children: List.generate(
+              10,
+              (i) => ColoredBox(
+                    color: Colors.red,
+                    child: Center(
+                      child: Text(i.toString()),
+                    ),
+                  )),
         )),
-        Opacity(opacity: 0,
-        child: BottomNavigationWidget(),)
+        BottomShellWidgetPlaceHolder()
       ],
     ));
   }
