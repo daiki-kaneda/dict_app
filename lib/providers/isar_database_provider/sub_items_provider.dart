@@ -2,7 +2,6 @@ import 'package:dict_app/constants/inner_navigator_key.dart';
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
-import 'package:dict_app/providers/app_directory_provider/app_documents_directory_provider.dart';
 import 'package:dict_app/providers/app_directory_provider/app_support_directory_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';

@@ -38,8 +38,9 @@ class DictData {
         transcript.results?.channels?.firstOrNull?.alternatives?.firstOrNull;
     if (alternative == null) throw UnsupportedError('no result data');
     final paragraphs = alternative.paragraphs;
-    if (paragraphs?.paragraphs?.isEmpty != false)
+    if (paragraphs?.paragraphs?.isEmpty != false) {
       throw UnsupportedError('audio do not have english audio');
+    }
     return DictData(
         title: title,
         createdAt: DateTime.now(),

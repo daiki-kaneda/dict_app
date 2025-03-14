@@ -1,19 +1,13 @@
-import 'dart:io';
 
-import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
-import 'package:dict_app/isar_widgets/utils/platform_bottom_navigation_bar.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class ListeningView extends ConsumerWidget {
   const ListeningView(this.fileId, {super.key});

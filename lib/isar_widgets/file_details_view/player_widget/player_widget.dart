@@ -3,7 +3,6 @@ import 'package:dict_app/isar_widgets/file_details_view/player_widget/buttons/pl
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/buttons/speed_button.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_slider/custom_player_slider.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_slider/duration_widget.dart';
-import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -3,7 +3,6 @@ import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_da
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictWordWidget extends ConsumerWidget {

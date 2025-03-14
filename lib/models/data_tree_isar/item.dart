@@ -93,8 +93,9 @@ class File extends Item {
     if (alternative == null) throw UnsupportedError('no result data');
     final paragraphs = alternative.paragraphs;
     final words = alternative.words;
-    if (paragraphs?.paragraphs?.isEmpty != false || words?.isEmpty != false)
+    if (paragraphs?.paragraphs?.isEmpty != false || words?.isEmpty != false) {
       throw UnsupportedError('audio do not have english audio');
+    }
     return File(
         parentId: parentId,
         title: title,

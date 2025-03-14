@@ -2,21 +2,12 @@ import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
-import 'package:dict_app/isar_widgets/utils/sheet_page.dart';
-import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:dict_app/providers/translation_helper_provider/translation_helper_provider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 
 // Future<void> main() async {
 //   runApp(const ProviderScope(child: IsarFolderStructureApp()));
@@ -40,7 +31,7 @@ class IsarFolderStructureApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _router =
+    final router =
         GoRouter(navigatorKey: navigatorKey, initialLocation: '/', routes: [
       ShellRoute(
           builder: (context, state, child) {
@@ -86,13 +77,13 @@ class IsarFolderStructureApp extends StatelessWidget {
           ])
     ]);
     return CupertinoApp.router(
-      routerConfig: _router,
+      routerConfig: router,
     );
   }
 }
 
 class _EagerInitialization extends ConsumerWidget {
-  const _EagerInitialization({super.key, required this.child});
+  const _EagerInitialization({required this.child});
 
   final Widget child;
 

@@ -107,7 +107,9 @@ class DictationSection {
     final targetParagraph = paragraphs![paragraphIndex];
 
     if (targetParagraph.sentences == null ||
-        sentenceIndex >= targetParagraph.sentences!.length) return this;
+        sentenceIndex >= targetParagraph.sentences!.length) {
+      return this;
+    }
     final targetSentence = targetParagraph.sentences![sentenceIndex];
 
     final newSentences =
@@ -128,11 +130,15 @@ class DictationSection {
     final targetParagraph = paragraphs![paragraphIndex];
 
     if (targetParagraph.sentences == null ||
-        sentenceIndex >= targetParagraph.sentences!.length) return this;
+        sentenceIndex >= targetParagraph.sentences!.length) {
+      return this;
+    }
     final targetSentence = targetParagraph.sentences![sentenceIndex];
 
     if (targetSentence.words == null ||
-        wordIndex >= targetSentence.words!.length) return this;
+        wordIndex >= targetSentence.words!.length) {
+      return this;
+    }
     final targetWord = targetSentence.words![wordIndex];
 
     final newWords = List<DictationWord>.from(targetSentence.words!);

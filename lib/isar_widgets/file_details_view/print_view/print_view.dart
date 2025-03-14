@@ -6,10 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:printing/printing.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'dart:typed_data';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:pdf/pdf.dart';
 
 class PrintView extends ConsumerWidget {
   const PrintView(this.fileId, {super.key});

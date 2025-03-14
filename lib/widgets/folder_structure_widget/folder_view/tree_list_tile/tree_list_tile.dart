@@ -7,7 +7,6 @@ import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_t
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/trailing_button/trailing_button.dart';
 import 'package:dict_app/widgets/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,5 +1,4 @@
 
-import 'dart:io';
 
 import 'package:dict_app/constants/inner_navigator_key.dart';
 import 'package:dict_app/constants/scaffold_key.dart';

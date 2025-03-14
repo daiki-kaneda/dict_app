@@ -1,10 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dict_app/providers/app_directory_provider/app_documents_directory_provider.dart';
 import 'package:dict_app/providers/app_directory_provider/app_support_directory_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'audio_player_provider.g.dart';

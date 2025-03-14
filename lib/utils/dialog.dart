@@ -1,5 +1,3 @@
-import 'package:dict_app/constants/inner_navigator_key.dart';
-import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';

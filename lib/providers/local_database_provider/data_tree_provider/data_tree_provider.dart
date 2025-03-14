@@ -6,7 +6,6 @@ import 'package:dict_app/models/data_tree/dict_data/dict_data.dart';
 import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
-import 'package:dict_app/providers/app_directory_provider/app_documents_directory_provider.dart';
 import 'package:dict_app/providers/app_directory_provider/app_support_directory_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_data_status.dart';

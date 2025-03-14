@@ -2,8 +2,6 @@ import 'dart:typed_data';
 
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/utils/utils.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';

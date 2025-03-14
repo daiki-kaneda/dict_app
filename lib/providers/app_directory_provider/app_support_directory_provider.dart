@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:dict_app/providers/app_directory_provider/app_documents_directory_helper.dart';
 import 'package:dict_app/providers/app_directory_provider/app_support_directory_helper.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

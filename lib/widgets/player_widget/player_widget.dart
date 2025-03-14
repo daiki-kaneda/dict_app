@@ -4,7 +4,6 @@ import 'package:dict_app/widgets/player_widget/buttons/speed_button.dart';
 import 'package:dict_app/widgets/player_widget/player_slider/custom_player_slider.dart';
 import 'package:dict_app/widgets/player_widget/player_slider/duration_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlayerWidget extends StatelessWidget {
   const PlayerWidget({

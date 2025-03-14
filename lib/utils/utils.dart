@@ -1,9 +1,7 @@
-import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dict_app/constants/scaffold_key.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 bool isAlphabet(String character) {
