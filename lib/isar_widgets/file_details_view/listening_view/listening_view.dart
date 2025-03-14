@@ -1,5 +1,6 @@
-
 import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
+import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_page_view/listening_page_view.dart';
+import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
@@ -22,23 +23,17 @@ class ListeningView extends ConsumerWidget {
     ref.watch(playerStateProvider);
     ref.watch(playerDurationProvider);
     ref.watch(startEndProviderProvider);
-    ref.watch(currentSentenceIndexInAllSentencesProvider(fileId));
-    ref.watch(sentencePageControllerProvider(fileId));
+    
     return SafeArea(
         child: Column(
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Expanded(
-            child: PageView(
-          children: List.generate(
-              10,
-              (i) => ColoredBox(
-                    color: Colors.red,
-                    child: Center(
-                      child: Text(i.toString()),
-                    ),
-                  )),
+        Expanded(child: Column(
+          children: [
+            Expanded(child: ListeningPageView(id: fileId)),
+            PlayerWidget()
+          ],
         )),
         BottomShellWidgetPlaceHolder()
       ],
