@@ -31,6 +31,8 @@ class IsarFolderStructureApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final parentIdKey = PathParamerterKeys.parentId.name;
+    final fileIdKey = PathParamerterKeys.fileId.name;
     final router =
         GoRouter(navigatorKey: navigatorKey, initialLocation: '/', routes: [
       ShellRoute(
@@ -40,8 +42,7 @@ class IsarFolderStructureApp extends StatelessWidget {
                 child,
                 Align(
                     alignment: Alignment.bottomCenter,
-                    child:
-                        SafeArea(child: BottomShellWidget(state: state)))
+                    child: SafeArea(child: BottomShellWidget(state: state)))
               ],
             );
           },
@@ -52,18 +53,16 @@ class IsarFolderStructureApp extends StatelessWidget {
                   const _EagerInitialization(child: Home()),
             ),
             GoRoute(
-              path: '/sub-items/:${PathParamerterKeys.parentId.name}',
+              path: '/sub-items/:$parentIdKey',
               builder: (context, state) {
-                final parentId =
-                    state.pathParameters[PathParamerterKeys.parentId.name];
-                return SubItemsView(parentId: int.tryParse(parentId!));
+                final parentId = state.currentParameterValue(parentIdKey);
+                return SubItemsView(parentId: parentId!);
               },
             ),
             GoRoute(
-                path: '/file-details/:${PathParamerterKeys.fileId.name}',
+                path: '/file-details/:$fileIdKey',
                 builder: (context, state) {
-                  final id = int.tryParse(
-                      state.pathParameters[PathParamerterKeys.fileId.name]!);
+                  final id = state.currentParameterValue(fileIdKey);
                   if (id == null) {
                     return const CupertinoPageScaffold(
                         child: Center(
@@ -92,7 +91,7 @@ class _EagerInitialization extends ConsumerWidget {
     final isar = ref.watch(isarProvider);
     final translator = ref.watch(translationHelperProvider);
 
-    if (![isar.value,translator.value].contains(null)) {
+    if (![isar.value, translator.value].contains(null)) {
       return child;
     } else {
       return PlatformScaffold(
