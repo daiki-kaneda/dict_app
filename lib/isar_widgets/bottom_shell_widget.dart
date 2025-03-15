@@ -25,15 +25,21 @@ class BottomShellWidget extends StatelessWidget {
         backgroundColor: CupertinoColors.transparent,
         leading: CreateFolderButton(),
       );
-    } else if (fullPath == '/sub-items/:parentId') {
+    } else if (fullPath == '/sub-items/:${PathParamerterKeys.parentId.name}') {
       return const CupertinoNavigationBar(
         border: Border(),
         backgroundColor: CupertinoColors.transparent,
         leading: CreateFolderButton(),
         trailing: CreateFileButton(),
       );
-    } else {
-      return BottomNavigationWidget();
+    } else if (fullPath == '/file-details/:${PathParamerterKeys.fileId.name}'){
+      final fileId = int.tryParse(
+        state.pathParameters[PathParamerterKeys.fileId.name] ?? ''
+        );
+      if(fileId==null)throw Exception('No fileId:int in pathparameters');
+      return BottomNavigationWidget(fileId);
+    }else{
+      return Container();
     }
   }
 }
@@ -91,15 +97,16 @@ class CreateFileButton extends ConsumerWidget {
 }
 
 class BottomNavigationWidget extends ConsumerWidget {
-  const BottomNavigationWidget({super.key});
+  const BottomNavigationWidget(this.fileId,{super.key});
 
+  final int fileId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = ref.watch(currentTabIndexProvider);
+    final currentIndex = ref.watch(currentTabIndexProvider(fileId));
     return PlatformBottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (newIndex) =>
-            ref.read(currentTabIndexProvider.notifier).updateIndex(newIndex),
+            ref.read(currentTabIndexProvider(fileId).notifier).updateIndex(newIndex),
         items: [
           BottomNavigationBarItem(
               icon: Icon(PlatformIcons(context).pen), label: 'Dictation'),

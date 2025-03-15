@@ -5,6 +5,7 @@ import 'package:dict_app/isar_widgets/file_details_view/print_view/dictation.dar
 import 'package:dict_app/isar_widgets/file_details_view/print_view/print_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/setting_view/setting_view.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
+import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,9 +21,13 @@ class FileDetailsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(fileNotifierProvider(id));
+    final file = ref.watch(fileNotifierProvider(id));
+    if(file==null)return Center(child: PlatformCircularProgressIndicator(),);
 
-    final index = ref.watch(currentTabIndexProvider);
+    final index = ref.watch(currentTabIndexProvider(id));
+    ref.listen(currentTabIndexProvider(id),(prev,next){
+      print('previous tabIndex:$prev,next tabIndex:$next');
+    });
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           middle: FileNavTitle(),
@@ -53,7 +58,7 @@ class FileNavTrailing extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = ref.watch(currentTabIndexProvider);
+    final currentIndex = ref.watch(currentTabIndexProvider(fileId));
     final file = ref.watch(fileNotifierProvider(fileId));
     if (file == null) return Container();
     if (currentIndex == 2) {

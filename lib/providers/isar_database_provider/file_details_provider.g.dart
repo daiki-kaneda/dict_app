@@ -174,7 +174,7 @@ class _SentencePageControllerProviderElement
 }
 
 String _$currentSentenceIndexInAllSentencesHash() =>
-    r'bc1732b33dbe6266fba2a4cfd2e0d77c117918b9';
+    r'69151520301418fcb33f6f84dfeaf833670b0ace';
 
 abstract class _$CurrentSentenceIndexInAllSentences
     extends BuildlessAutoDisposeNotifier<int> {
@@ -324,7 +324,7 @@ class _CurrentSentenceIndexInAllSentencesProviderElement
       (origin as CurrentSentenceIndexInAllSentencesProvider).fileId;
 }
 
-String _$currentWordIndexHash() => r'39bfd2e4b3e230693c168c82fd70f021121471fe';
+String _$currentWordIndexHash() => r'f42605452ed42ba779a294989084ad6955f0f727';
 
 abstract class _$CurrentWordIndex extends BuildlessAutoDisposeNotifier<int> {
   late final int fileId;
@@ -467,7 +467,7 @@ class _CurrentWordIndexProviderElement
 }
 
 String _$currentSentenceIndexHash() =>
-    r'e81d6504ce4fc2c99fb2a562538ce388b850061d';
+    r'cd94145d6f043fe4a3d59b5db09c81a0de76f9a3';
 
 abstract class _$CurrentSentenceIndex
     extends BuildlessAutoDisposeNotifier<int> {
@@ -612,7 +612,7 @@ class _CurrentSentenceIndexProviderElement
 }
 
 String _$currentParagraphIndexHash() =>
-    r'a71b003f8bca769a307f34d40b3d97047b9dde6b';
+    r'a302b0f80b1178a52ba4d462cf2df4a7942cc34f';
 
 abstract class _$CurrentParagraphIndex
     extends BuildlessAutoDisposeNotifier<int> {
@@ -756,7 +756,7 @@ class _CurrentParagraphIndexProviderElement
   int get fileId => (origin as CurrentParagraphIndexProvider).fileId;
 }
 
-String _$typedTextNotifierHash() => r'9966afc86933025bb3659fc5b74cc87f165de3e0';
+String _$typedTextNotifierHash() => r'8107fbad62124a1d1526c3c2b33d84fdbccea452';
 
 abstract class _$TypedTextNotifier
     extends BuildlessAutoDisposeStreamNotifier<String> {
@@ -900,21 +900,146 @@ class _TypedTextNotifierProviderElement
   int get fileId => (origin as TypedTextNotifierProvider).fileId;
 }
 
-String _$currentTabIndexHash() => r'273ad7f6e402e1baa8246dc8449a3f48eb8f95a3';
+String _$currentTabIndexHash() => r'bf6ca23d839391198a0a7573f0dd01d2821ad32e';
+
+abstract class _$CurrentTabIndex extends BuildlessAutoDisposeNotifier<int> {
+  late final int fileId;
+
+  int build(
+    int fileId,
+  );
+}
 
 /// See also [CurrentTabIndex].
 @ProviderFor(CurrentTabIndex)
-final currentTabIndexProvider =
-    AutoDisposeNotifierProvider<CurrentTabIndex, int>.internal(
-  CurrentTabIndex.new,
-  name: r'currentTabIndexProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$currentTabIndexHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const currentTabIndexProvider = CurrentTabIndexFamily();
 
-typedef _$CurrentTabIndex = AutoDisposeNotifier<int>;
+/// See also [CurrentTabIndex].
+class CurrentTabIndexFamily extends Family<int> {
+  /// See also [CurrentTabIndex].
+  const CurrentTabIndexFamily();
+
+  /// See also [CurrentTabIndex].
+  CurrentTabIndexProvider call(
+    int fileId,
+  ) {
+    return CurrentTabIndexProvider(
+      fileId,
+    );
+  }
+
+  @override
+  CurrentTabIndexProvider getProviderOverride(
+    covariant CurrentTabIndexProvider provider,
+  ) {
+    return call(
+      provider.fileId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'currentTabIndexProvider';
+}
+
+/// See also [CurrentTabIndex].
+class CurrentTabIndexProvider
+    extends AutoDisposeNotifierProviderImpl<CurrentTabIndex, int> {
+  /// See also [CurrentTabIndex].
+  CurrentTabIndexProvider(
+    int fileId,
+  ) : this._internal(
+          () => CurrentTabIndex()..fileId = fileId,
+          from: currentTabIndexProvider,
+          name: r'currentTabIndexProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$currentTabIndexHash,
+          dependencies: CurrentTabIndexFamily._dependencies,
+          allTransitiveDependencies:
+              CurrentTabIndexFamily._allTransitiveDependencies,
+          fileId: fileId,
+        );
+
+  CurrentTabIndexProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.fileId,
+  }) : super.internal();
+
+  final int fileId;
+
+  @override
+  int runNotifierBuild(
+    covariant CurrentTabIndex notifier,
+  ) {
+    return notifier.build(
+      fileId,
+    );
+  }
+
+  @override
+  Override overrideWith(CurrentTabIndex Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: CurrentTabIndexProvider._internal(
+        () => create()..fileId = fileId,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        fileId: fileId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<CurrentTabIndex, int> createElement() {
+    return _CurrentTabIndexProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CurrentTabIndexProvider && other.fileId == fileId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, fileId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin CurrentTabIndexRef on AutoDisposeNotifierProviderRef<int> {
+  /// The parameter `fileId` of this provider.
+  int get fileId;
+}
+
+class _CurrentTabIndexProviderElement
+    extends AutoDisposeNotifierProviderElement<CurrentTabIndex, int>
+    with CurrentTabIndexRef {
+  _CurrentTabIndexProviderElement(super.provider);
+
+  @override
+  int get fileId => (origin as CurrentTabIndexProvider).fileId;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

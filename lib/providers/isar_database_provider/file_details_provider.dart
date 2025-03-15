@@ -142,7 +142,7 @@ class TypedTextNotifier extends _$TypedTextNotifier {
 @riverpod
 class CurrentTabIndex extends _$CurrentTabIndex {
   @override
-  int build() {
+  int build(int fileId) {
     return 0;
   }
 
