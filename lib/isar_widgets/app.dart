@@ -75,22 +75,24 @@ class IsarFolderStructureApp extends StatelessWidget {
                 },
                 routes: [
                   GoRoute(
-                    name: 'dict',
+                    name: 'dictation',
                     path: 'dictation',
                     pageBuilder: (context, state) {
                       final fileId = state.currentParameterValue(fileIdKey)!;
                       return platformPage(
                           context: context,
-                          child: DictationProblemView(fileId, onPop: () {}));
+                          fullscreenDialog: true,
+                          child: DictationProblemView(fileId));
                     },
                   ),
                   GoRoute(
-                    name: 'listen',
+                    name: 'listening',
                     path: 'listening',
                     pageBuilder: (context, state) {
                       final fileId = state.currentParameterValue(fileIdKey)!;
                       return platformPage(
                           context: context,
+                          fullscreenDialog: true,
                           child: ListeningContentView(fileId));
                     },
                   ),

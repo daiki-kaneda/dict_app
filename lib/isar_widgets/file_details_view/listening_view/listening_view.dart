@@ -12,6 +12,7 @@ import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ListeningView extends ConsumerWidget {
   const ListeningView(this.fileId, {super.key});
@@ -42,8 +43,8 @@ class ListeningView extends ConsumerWidget {
     return Center(
       child: PlatformElevatedButton(
         onPressed: () {
-          showPlatformFullScreenDialog(context,
-              child: ListeningContentView(fileId));
+          context.pushNamed('listening',
+              pathParameters: {'fileId': fileId.toString()});
         },
         child: Text('Start'),
       ),
@@ -59,20 +60,21 @@ class ListeningContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-      appBar: PlatformAppBar(),
-      body: SafeArea(child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-              child: Column(
+        appBar: PlatformAppBar(),
+        body: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(child: ListeningPageView(id: fileId)),
-              PlayerWidget()
+              Expanded(
+                  child: Column(
+                children: [
+                  Expanded(child: ListeningPageView(id: fileId)),
+                  PlayerWidget()
+                ],
+              )),
             ],
-          )),
-        ],
-      ),)
-    );
+          ),
+        ));
   }
 }

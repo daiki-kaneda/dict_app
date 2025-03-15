@@ -11,6 +11,7 @@ import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class DictationView extends ConsumerWidget {
   const DictationView(this.fileId, {super.key});
@@ -38,17 +39,12 @@ class DictationView extends ConsumerWidget {
           file.getAllSentences!.first.start!, file.getAllSentences!.first.end!);
     }
 
-    void onPop(){
-      ref.read(audioPlayerNotifierProvider.notifier)
-      .pause();
-    }
-
     return Center(
       child: PlatformElevatedButton(
         onPressed: () {
           initDict();
-          showPlatformFullScreenDialog(context,
-              child: DictationProblemView(fileId,onPop: onPop,));
+          context.pushNamed('dictation',
+              pathParameters: {'fileId': fileId.toString()});
         },
         child: Text('Start'),
       ),
@@ -56,30 +52,33 @@ class DictationView extends ConsumerWidget {
   }
 }
 
-class DictationProblemView extends StatelessWidget {
-  const DictationProblemView(this.fileId, {super.key,required this.onPop});
+class DictationProblemView extends ConsumerWidget {
+  const DictationProblemView(this.fileId, {super.key});
 
   final int fileId;
-  final VoidCallback onPop;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    void onPop() {
+      ref.read(audioPlayerNotifierProvider.notifier).pause();
+    }
+
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           leading: PlatformTextButton(
-                    padding: EdgeInsets.zero,
-        onPressed: () {
-          Navigator.of(context).maybePop();
-          onPop();
-        },
-        child: const Text('Close'),
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              Navigator.of(context).maybePop();
+              onPop();
+            },
+            child: const Text('Close'),
           ),
           middle: Text('Dictation'),
         ),
         child: Stack(
           fit: StackFit.expand,
           children: [
-            InputTextField(FocusNode()..requestFocus(),fileId),
+            InputTextField(FocusNode()..requestFocus(), fileId),
             SafeArea(
               child: Column(
                 children: [
