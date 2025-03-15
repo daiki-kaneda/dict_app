@@ -43,6 +43,7 @@ class ListeningView extends ConsumerWidget {
     return Center(
       child: PlatformElevatedButton(
         onPressed: () {
+          initListening();
           context.pushNamed('listening',
               pathParameters: {'fileId': fileId.toString()});
         },
