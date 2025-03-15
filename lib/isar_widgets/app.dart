@@ -1,5 +1,7 @@
 import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
+import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
+import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
@@ -72,6 +74,26 @@ class IsarFolderStructureApp extends StatelessWidget {
                   return FileDetailsView(id: id);
                 },
                 routes: [
+                  GoRoute(
+                    name: 'dict',
+                    path: 'dictation',
+                    pageBuilder: (context, state) {
+                      final fileId = state.currentParameterValue(fileIdKey)!;
+                      return platformPage(
+                          context: context,
+                          child: DictationProblemView(fileId, onPop: () {}));
+                    },
+                  ),
+                  GoRoute(
+                    name: 'listen',
+                    path: 'listening',
+                    pageBuilder: (context, state) {
+                      final fileId = state.currentParameterValue(fileIdKey)!;
+                      return platformPage(
+                          context: context,
+                          child: ListeningContentView(fileId));
+                    },
+                  ),
                 ])
           ])
     ]);
