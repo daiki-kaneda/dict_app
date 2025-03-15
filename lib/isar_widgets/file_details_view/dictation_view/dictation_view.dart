@@ -44,13 +44,13 @@ class DictationView extends ConsumerWidget {
     }
 
     return Center(
-      child: PlatformTextButton(
+      child: PlatformElevatedButton(
         onPressed: () {
           initDict();
           showPlatformFullScreenDialog(context,
               child: DictationProblemView(fileId,onPop: onPop,));
         },
-        child: Text('start dictation'),
+        child: Text('Start'),
       ),
     );
   }
