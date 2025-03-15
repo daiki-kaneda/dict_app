@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-class CloseButton extends StatelessWidget {
-  const CloseButton({super.key, required this.onPop});
+class PlatformCloseButton extends StatelessWidget {
+  const PlatformCloseButton({super.key, required this.onPop});
 
   final VoidCallback onPop;
 

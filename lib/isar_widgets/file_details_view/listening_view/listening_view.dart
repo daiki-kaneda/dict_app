@@ -1,6 +1,7 @@
 import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_page_view/listening_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
+import 'package:dict_app/isar_widgets/utils/close_button.dart';
 import 'package:dict_app/isar_widgets/utils/platform_full_screen_dialog.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
@@ -53,15 +54,21 @@ class ListeningView extends ConsumerWidget {
   }
 }
 
-class ListeningContentView extends StatelessWidget {
+class ListeningContentView extends ConsumerWidget {
   const ListeningContentView(this.fileId, {super.key});
 
   final int fileId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    void onPop() {
+      ref.read(audioPlayerNotifierProvider.notifier).pause();
+    }
+
     return PlatformScaffold(
-        appBar: PlatformAppBar(),
+        appBar: PlatformAppBar(
+          leading: PlatformCloseButton(onPop: onPop),
+        ),
         body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
