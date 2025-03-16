@@ -2,6 +2,7 @@ import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
+import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -72,22 +73,23 @@ class FileNotifier extends _$FileNotifier {
   Future<void> _updateUIByResult(AnswerResult result)async{
     switch(result.status){
       case SolveStatus.unSolved:{
-        
       }
       case SolveStatus.sectionSolved:{
-
+        showNotifyDialog(
+          navigatorKey.currentContext!, 
+          title: '完了メッセージ', 
+          description: 'この音声のすべての文章を解きました');
       }
       case SolveStatus.paragraphSolved:{
-
+        return;
       }
       case SolveStatus.sentenceSolved:{
-
+        // ref.read(SentencePageControllerProvider(id).notifier);
       }
       case SolveStatus.wordSolved:{
-
+        // ref.read(currentWordIndexProvider(id).notifier)
       }
       case SolveStatus.characterSolved:{
-
       }
     }
   }
