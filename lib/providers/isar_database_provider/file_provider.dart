@@ -24,8 +24,8 @@ class FileNotifier extends _$FileNotifier {
     bool? isFavorite,
     double? duration,
     String? transcript,
-    DictationSection? paragraphs,}
-  ) async {
+    DictationSection? paragraphs,
+  }) async {
     await isar.writeTxn(() async {
       final file = await isar.files.get(id);
       if (file != null) {
@@ -51,13 +51,13 @@ class FileNotifier extends _$FileNotifier {
       bool solveAnyway = false}) async {
     final file = await isar.files.get(id);
     if (file == null) return;
-    await updateFile(
-      paragraphs: file.paragraphs.tryCharacter(
-        input: input, 
-        paragraphIndex: paragraphIndex, 
-        sentenceIndex: sentenceIndex, 
-        wordIndex: wordIndex)
-    );
+    final (section, result) = file.paragraphs.tryCharacter(
+        input: input,
+        paragraphIndex: paragraphIndex,
+        sentenceIndex: sentenceIndex,
+        wordIndex: wordIndex);
+    await updateFile(paragraphs: section);
     print('tried character:$input');
+    print('result:${result.toString()}');
   }
 }

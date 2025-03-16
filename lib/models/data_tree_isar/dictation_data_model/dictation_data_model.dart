@@ -61,18 +61,18 @@ class DictationSection {
     );
   }
 
-  DictationSection tryCharacter({
+  (DictationSection, AnswerResult) tryCharacter({
     required String input,
     required int paragraphIndex,
     required int sentenceIndex,
     required int wordIndex,
     bool solveAnyway = false,
   }) {
-    if (isCompleted) return this;
+    if (isCompleted) return (this, AnswerResult());
 
-    if (paragraphs == null || paragraphIndex >= paragraphs!.length) return this;
+    if (paragraphs == null || paragraphIndex >= paragraphs!.length)return (this, AnswerResult());
 
-    final updateParagraph = paragraphs![paragraphIndex].tryCharacter(
+    final (updateParagraph, result) = paragraphs![paragraphIndex].tryCharacter(
         input: input,
         sentenceIndex: sentenceIndex,
         wordIndex: wordIndex,
@@ -81,7 +81,12 @@ class DictationSection {
     final newList = List<DictationParagraph>.from(paragraphs!);
     newList[paragraphIndex] = updateParagraph;
 
-    return copyWith(paragraphs: newList);
+    final newSection = copyWith(paragraphs: newList);
+    final newResult = result.copyWith(
+        solveAnyway: solveAnyway,
+        status:
+            newSection.isCompleted ? SolveStatus.sectionSolved : result.status);
+    return (newSection, newResult);
   }
 
   DictationSection reset({bool alphabetOnly = true}) {
@@ -249,21 +254,28 @@ class DictationParagraph {
     return index;
   }
 
-  DictationParagraph tryCharacter(
+  (DictationParagraph, AnswerResult) tryCharacter(
       {required String input,
       required int sentenceIndex,
       required int wordIndex,
       bool solveAnyway = false}) {
-    if (isCompleted) return this;
-    if (sentences == null || sentenceIndex >= sentences!.length) return this;
+    if (isCompleted) return (this, AnswerResult());
+    if (sentences == null || sentenceIndex >= sentences!.length)return (this, AnswerResult());
 
-    final updatedSentence = sentences![sentenceIndex].tryCharacter(
+    final (updatedSentence, result) = sentences![sentenceIndex].tryCharacter(
         input: input, wordIndex: wordIndex, solveAnyway: solveAnyway);
 
     final newList = List<DictationSentence>.from(sentences!);
     newList[sentenceIndex] = updatedSentence;
 
-    return copyWith(sentences: newList);
+    final newParagraph = copyWith(sentences: newList);
+    final newResult = result.copyWith(
+        solveAnyway: solveAnyway,
+        status: newParagraph.isCompleted
+            ? SolveStatus.paragraphSolved
+            : result.status);
+
+    return (newParagraph, newResult);
   }
 
   DictationParagraph reset({bool alphabetOnly = true}) {
@@ -366,20 +378,26 @@ class DictationSentence {
     return index;
   }
 
-  DictationSentence tryCharacter(
+  (DictationSentence, AnswerResult) tryCharacter(
       {required String input,
       required int wordIndex,
       bool solveAnyway = false}) {
-    if (isCompleted) return this;
+    if (isCompleted) return (this, AnswerResult());
 
-    if (words == null || wordIndex >= words!.length) return this;
+    if (words == null || wordIndex >= words!.length)return (this, AnswerResult());
 
-    final updatedWord =
+    final (updatedWord, result) =
         words![wordIndex].tryCharacter(input: input, solveAnyway: solveAnyway);
     final newList = List<DictationWord>.from(words!);
     newList[wordIndex] = updatedWord;
+    final newSentence = copyWith(words: newList);
+    final newResult = result.copyWith(
+        status: newSentence.isCompleted
+            ? SolveStatus.sentenceSolved
+            : result.status,
+        solveAnyway: solveAnyway);
 
-    return copyWith(words: newList);
+    return (newSentence, newResult);
   }
 
   DictationSentence reset({bool alphabetOnly = true}) {
@@ -471,13 +489,14 @@ class DictationWord {
     return index;
   }
 
-  DictationWord tryCharacter(
+  (DictationWord, AnswerResult) tryCharacter(
       {required String input, bool solveAnyway = false}) {
-    if (isCompleted) return this;
-    if (characters == null || characters!.isEmpty) return this;
+    final result = AnswerResult();
+    if (isCompleted) return (this, result);
+    if (characters == null || characters!.isEmpty) return (this, result);
 
     final firstUnsolvedIndex = characters!.indexWhere((e) => !e.isSolved);
-    if (firstUnsolvedIndex == -1) return this; // Already completed
+    if (firstUnsolvedIndex == -1) return (this, result); // Already completed
 
     final firstUnsolvedCharacter = characters![firstUnsolvedIndex];
 
@@ -488,9 +507,15 @@ class DictationWord {
             input.toLowerCase()) {
       newList[firstUnsolvedIndex] =
           firstUnsolvedCharacter.copyWith(isSolved: true);
-      return copyWith(characters: newList);
+      final newWord = copyWith(characters: newList);
+      final newResult = result.copyWith(
+          status: newWord.isCompleted
+              ? SolveStatus.wordSolved
+              : SolveStatus.characterSolved,
+          solveAnyway: solveAnyway);
+      return (newWord, newResult);
     } else {
-      return this;
+      return (this, result);
     }
   }
 
@@ -561,4 +586,38 @@ class DictationCharacter {
   factory DictationCharacter.fromJson(Map<String, dynamic> json) =>
       _$DictationCharacterFromJson(json);
   Map<String, dynamic> toJson() => _$DictationCharacterToJson(this);
+}
+
+enum SolveStatus {
+  unSolved,
+  characterSolved,
+  wordSolved,
+  sentenceSolved,
+  paragraphSolved,
+  sectionSolved,
+}
+
+class AnswerResult {
+  const AnswerResult({
+    this.status = SolveStatus.unSolved,
+    this.solveAnyway = false,
+  });
+
+  final SolveStatus status;
+  final bool solveAnyway;
+
+  AnswerResult copyWith({
+    SolveStatus? status,
+    bool? solveAnyway,
+  }) {
+    return AnswerResult(
+      status: status ?? this.status,
+      solveAnyway: solveAnyway ?? this.solveAnyway,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'Response(status: ${status.name}, solveAnyway: $solveAnyway)';
+  }
 }
