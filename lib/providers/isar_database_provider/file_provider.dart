@@ -67,6 +67,7 @@ class FileNotifier extends _$FileNotifier {
 
   Future<void> _handleResult(AnswerResult result)async{
     _recordResult(result);
+    _updateUIByResult(result);
   }
   
   Future<void> _recordResult(AnswerResult result)async{}
@@ -84,10 +85,12 @@ class FileNotifier extends _$FileNotifier {
         return;
       }
       case SolveStatus.sentenceSolved:{
-        // ref.read(SentencePageControllerProvider(id).notifier);
+        ref.read(SentencePageControllerProvider(id).notifier)
+        .moveToFirstUnsolvedIndex();
       }
       case SolveStatus.wordSolved:{
-        // ref.read(currentWordIndexProvider(id).notifier)
+        ref.read(currentWordIndexProvider(id).notifier)
+        .moveToFirstUnsolvedIndex();
       }
       case SolveStatus.characterSolved:{
       }

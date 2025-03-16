@@ -28,12 +28,26 @@ class SentencePageController extends _$SentencePageController {
     final page = state.page;
     if (page == null || page.toInt() != page) return;
     print('currentPage:$page');
-    ref.read(currentSentenceIndexInAllSentencesProvider(fileId).notifier).updateIndex(page.toInt());
+    ref
+        .read(currentSentenceIndexInAllSentencesProvider(fileId).notifier)
+        .updateIndex(page.toInt());
+  }
+
+  moveToFirstUnsolvedIndex() {
+    final firstUnsolvedIndex = ref.read(FileNotifierProvider(fileId))
+    ?.getAllSentences?.indexWhere((s)=>!s.isCompleted) ?? -1;
+    if (firstUnsolvedIndex != -1 && state.hasClients) {
+      state.animateToPage(
+        firstUnsolvedIndex,
+        duration: Duration(milliseconds: 250),
+        curve: Curves.easeInOut);
+    }
   }
 }
 
 @riverpod
-class CurrentSentenceIndexInAllSentences extends _$CurrentSentenceIndexInAllSentences {
+class CurrentSentenceIndexInAllSentences
+    extends _$CurrentSentenceIndexInAllSentences {
   @override
   int build(int fileId) {
     return 0;
@@ -61,11 +75,21 @@ class CurrentWordIndex extends _$CurrentWordIndex {
   }
 
   updateIndex(int index) {
-    final currentSentence = ref.read(
-      currentSentenceIndexInAllSentencesProvider(fileId).notifier
-      ).getCurrentSentence();
-    if(index>=0 && (currentSentence?.words?.length ?? 0)>index){
+    final currentSentence = ref
+        .read(currentSentenceIndexInAllSentencesProvider(fileId).notifier)
+        .getCurrentSentence();
+    if (index >= 0 && (currentSentence?.words?.length ?? 0) > index) {
       state = index;
+    }
+  }
+
+  moveToFirstUnsolvedIndex() {
+    final firstUnsolvedIndex = ref
+        .read(currentSentenceIndexInAllSentencesProvider(fileId).notifier)
+        .getCurrentSentence()
+        ?.firstUnsolvedIndex;
+    if (firstUnsolvedIndex != null && firstUnsolvedIndex != -1) {
+      updateIndex(firstUnsolvedIndex);
     }
   }
 }
@@ -74,7 +98,9 @@ class CurrentWordIndex extends _$CurrentWordIndex {
 class CurrentSentenceIndex extends _$CurrentSentenceIndex {
   @override
   int build(int fileId) {
-    final sentence = ref.watch(currentSentenceIndexInAllSentencesProvider(fileId).notifier).getCurrentSentence();
+    final sentence = ref
+        .watch(currentSentenceIndexInAllSentencesProvider(fileId).notifier)
+        .getCurrentSentence();
     print('parentIndex:${sentence?.parentIndex}');
     return sentence?.index ?? 0;
   }
@@ -88,7 +114,9 @@ class CurrentSentenceIndex extends _$CurrentSentenceIndex {
 class CurrentParagraphIndex extends _$CurrentParagraphIndex {
   @override
   int build(int fileId) {
-    final sentence = ref.watch(currentSentenceIndexInAllSentencesProvider(fileId).notifier).getCurrentSentence();
+    final sentence = ref
+        .watch(currentSentenceIndexInAllSentencesProvider(fileId).notifier)
+        .getCurrentSentence();
     print('parentIndex:${sentence?.parentIndex}');
     return sentence?.parentIndex ?? 0;
   }
@@ -108,8 +136,10 @@ class TypedTextNotifier extends _$TypedTextNotifier {
     });
 
     listenSelf((prev, next) {
-      final currentParagraphIndex = ref.read(currentParagraphIndexProvider(fileId));
-      final currentSentenceIndex = ref.read(currentSentenceIndexProvider(fileId));
+      final currentParagraphIndex =
+          ref.read(currentParagraphIndexProvider(fileId));
+      final currentSentenceIndex =
+          ref.read(currentSentenceIndexProvider(fileId));
       final currentWordIndex = ref.read(currentWordIndexProvider(fileId));
 
       final nextText = next.value;
@@ -129,7 +159,8 @@ class TypedTextNotifier extends _$TypedTextNotifier {
           paragraphIndex: currentParagraphIndex,
           sentenceIndex: currentSentenceIndex,
           wordIndex: currentWordIndex);
-      print('tryCharacter: ${nextText.characters.last},($currentParagraphIndex,$currentSentenceIndex,$currentWordIndex,)');
+      print(
+          'tryCharacter: ${nextText.characters.last},($currentParagraphIndex,$currentSentenceIndex,$currentWordIndex,)');
     });
     yield* controller.stream;
   }
@@ -146,7 +177,7 @@ class CurrentTabIndex extends _$CurrentTabIndex {
     return 0;
   }
 
-  updateIndex(int newIndex){
-    state=newIndex;
+  updateIndex(int newIndex) {
+    state = newIndex;
   }
 }
