@@ -96,7 +96,7 @@ class CreateFileButton extends ConsumerWidget {
             title: 'チケット不足', 
             description: 'チケットが足りません。ストアを開きますか？',
             );
-          if(openStore==true)print('ストアを開く処理');
+          if(openStore==true)navigatorKey.currentContext?.pushNamed('store');
           return;
         }
         ref

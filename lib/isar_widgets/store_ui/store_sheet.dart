@@ -1,25 +1,24 @@
 import 'dart:io';
 
-import 'package:dict_app/isar_widgets/app.dart';
-import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
-import 'package:dict_app/isar_widgets/utils/platform_full_screen_dialog.dart';
 import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/iap_provider/localized_price_provider.dart';
+import 'package:dict_app/providers/iap_provider/packages_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:badges/badges.dart' as badges;
 
-class StoreSheet extends StatelessWidget {
-  const StoreSheet({super.key, required this.packages});
-
-  final List<Package> packages;
+class StoreSheet extends ConsumerWidget {
+  const StoreSheet({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final packages = ref.watch(packagesProvider('tickets')).value ?? [];
+
     return PlatformScaffold(
         backgroundColor:
             Platform.isIOS ? CupertinoColors.systemGroupedBackground : null,
@@ -29,7 +28,11 @@ class StoreSheet extends StatelessWidget {
                   CupertinoColors.systemGroupedBackground.resolveFrom(context)),
         ),
         body: ListView(
-          children: [CurrentTicketsSection(), PurchaseTicketsSection(packages)],
+          children: [
+            CurrentTicketsSection(), 
+            if(packages.isNotEmpty)
+            PurchaseTicketsSection(packages)
+            ],
         ));
   }
 }
@@ -51,15 +54,16 @@ class CurrentTicketsTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final int? numTicketsRemaining = ref.watch(settingNotifierProvider.select(
-      (a)=>a.when(
-        data: (s)=>s.remainingTickets, 
-        error: (_,__)=>null, 
-        loading: ()=>null)
-    ));
+        (a) => a.when(
+            data: (s) => s.remainingTickets,
+            error: (_, __) => null,
+            loading: () => null)));
     return CupertinoListTile.notched(
       leading: TicketIcon(),
       title: Text('残りのチケット枚数:'),
-      trailing:numTicketsRemaining!=null ? Text(numTicketsRemaining.toString()):PlatformCircularProgressIndicator(),
+      trailing: numTicketsRemaining != null
+          ? Text(numTicketsRemaining.toString())
+          : PlatformCircularProgressIndicator(),
     );
   }
 }
@@ -134,14 +138,7 @@ class ShowStoreSheetButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return PlatformIconButton(
       onPressed: () async {
-        final packages =
-            await ref.read(iapNotifierProvider.notifier).getPackages('tickets');
-        if (packages.isEmpty) {
-          showNotifyDialog(navigatorKey.currentContext!,
-              title: 'エラー', description: 'ストアの読み込みに失敗しました🫤');
-        }
-        showPlatformFullScreenDialog(navigatorKey.currentContext!,
-            child: StoreSheet(packages: packages));
+        context.pushNamed('store');
       },
       icon: TicketIconWithRemainings(),
     );
@@ -154,23 +151,27 @@ class TicketIconWithRemainings extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final int? numTicketsRemaining = ref.watch(settingNotifierProvider.select(
-      (a)=>a.when(
-        data: (s)=>s.remainingTickets, 
-        error: (_,__)=>null, 
-        loading: ()=>null)
-    ));
+        (a) => a.when(
+            data: (s) => s.remainingTickets,
+            error: (_, __) => null,
+            loading: () => null)));
 
     return badges.Badge(
       badgeStyle: badges.BadgeStyle(
-        padding: EdgeInsets.all(5),
-        elevation: 0,
-        badgeColor: Platform.isIOS ? CupertinoColors.systemBlue.resolveFrom(context):Colors.blue
-      ),
-      badgeContent:numTicketsRemaining!=null ? Text(
-        numTicketsRemaining.toString(),
-        style: TextStyle(color: Platform.isIOS ? CupertinoColors.white:Colors.white),
-        ):Container(),
-      child: TicketIcon(),);
+          padding: EdgeInsets.all(5),
+          elevation: 0,
+          badgeColor: Platform.isIOS
+              ? CupertinoColors.systemBlue.resolveFrom(context)
+              : Colors.blue),
+      badgeContent: numTicketsRemaining != null
+          ? Text(
+              numTicketsRemaining.toString(),
+              style: TextStyle(
+                  color: Platform.isIOS ? CupertinoColors.white : Colors.white),
+            )
+          : Container(),
+      child: TicketIcon(),
+    );
   }
 }
 

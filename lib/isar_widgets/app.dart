@@ -73,7 +73,7 @@ class IsarFolderStructureApp extends StatelessWidget {
                 return platformPage(
                           context: context,
                           fullscreenDialog: true,
-                          child: StoreSheet(packages: []));
+                          child: StoreSheet());
               },
             ),
             GoRoute(
