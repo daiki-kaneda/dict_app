@@ -4,6 +4,7 @@ import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/iap_provider/localized_price_provider.dart';
 import 'package:dict_app/providers/iap_provider/packages_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
+import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/trailing_button/select_folder_list.dart/expansion_tile/custom_expansion_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -29,10 +30,10 @@ class StoreSheet extends ConsumerWidget {
         ),
         body: ListView(
           children: [
-            CurrentTicketsSection(), 
-            if(packages.isNotEmpty)
-            PurchaseTicketsSection(packages)
-            ],
+            CurrentTicketsSection(),
+            if (packages.isNotEmpty) PurchaseTicketsSection(packages),
+            QAndASection()
+          ],
         ));
   }
 }
@@ -157,7 +158,8 @@ class TicketIconWithRemainings extends ConsumerWidget {
             loading: () => null)));
 
     return badges.Badge(
-      badgeAnimation: badges.BadgeAnimation.fade(animationDuration: Duration.zero),
+      badgeAnimation:
+          badges.BadgeAnimation.fade(animationDuration: Duration.zero),
       badgeStyle: badges.BadgeStyle(
           padding: EdgeInsets.all(5),
           elevation: 0,
@@ -182,5 +184,49 @@ class TicketIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Icon(Platform.isIOS ? CupertinoIcons.ticket : Icons.local_activity);
+  }
+}
+
+const List<(String, String)> qa = [
+  ('一回に消費されるチケットの枚数は？', '一枚のみです。'),
+  ('解析するオーディオの長さの上限はある？', 'はい。オーディオの上限は一回120秒までです。'),
+  (
+    '解析データやチケットのバックアップはとる？',
+    'いいえ。アプリを削除したり、機種変更などをすると、解析データおよびチケットなどのすべてのデータは削除され、復元できません。'
+  ),
+  ('一度消費したチケットを元に戻せる？', 'いいえ。一度使用したチケットは復元することはできません。'),
+  ('解析データは商用利用可能？', 'はい。解析データはラインセンスの記載なしに商用利用を含めて自由に使用可能です。'),
+];
+
+class QAndASection extends StatelessWidget {
+  const QAndASection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoListSection.insetGrouped(
+        header: Text('Q&A'),
+        children: qa.indexed.map((t) {
+          final id = t.$1.toString();
+          final question = t.$2.$1;
+          final answer = t.$2.$2;
+          return QAndATile(id, question: question, answer: answer);
+        }).toList());
+  }
+}
+
+class QAndATile extends StatelessWidget {
+  const QAndATile(this.id,
+      {super.key, required this.question, required this.answer});
+
+  final String id;
+  final String question;
+  final String answer;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedCustomExpansionTile(
+        id: id, 
+        title: Text(question), 
+        child: Text(answer));
   }
 }

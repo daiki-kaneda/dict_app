@@ -15,6 +15,7 @@ class AnimatedCustomExpansionTile extends ConsumerStatefulWidget {
       this.selectedColor,
       this.onTap,
       this.enabled = true,
+      this.initialExpand=true,
       required this.child,
       Duration? duration})
       : animationDuration = duration ?? const Duration(milliseconds: 200);
@@ -27,6 +28,7 @@ class AnimatedCustomExpansionTile extends ConsumerStatefulWidget {
   final Color? tileColor;
   final Color? selectedColor;
   final bool enabled;
+  final bool initialExpand;
   final void Function()? onTap;
 
   final Widget child;
@@ -45,7 +47,7 @@ class _AnimatedCustomExpansionTileState
   @override
   void initState() {
     _controller = AnimationController(
-        vsync: this, value: 1.0, duration: widget.animationDuration);
+        vsync: this, value:widget.initialExpand ? 1.0 : 0.0, duration: widget.animationDuration);
     super.initState();
   }
 
