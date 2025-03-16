@@ -157,7 +157,7 @@ class TicketIconWithRemainings extends ConsumerWidget {
             loading: () => null)));
 
     return badges.Badge(
-      badgeAnimation: badges.BadgeAnimation.fade(),
+      badgeAnimation: badges.BadgeAnimation.fade(animationDuration: Duration.zero),
       badgeStyle: badges.BadgeStyle(
           padding: EdgeInsets.all(5),
           elevation: 0,
