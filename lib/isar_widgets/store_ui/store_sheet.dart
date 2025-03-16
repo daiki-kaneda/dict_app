@@ -226,19 +226,22 @@ class QAndATile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    void toggle(){
+      print('toggle');
+      ref.read(expansionNotifierProvider(id).notifier).toggle();
+    }
     return AnimatedCustomExpansionTile(
         id: id,
         initialExpand: false,
         leading: Icon(PlatformIcons(context).help),
         title: Text(
           question,
-          overflow: TextOverflow.visible,
+          maxLines: 20,
           softWrap: true,
         ),
-        onTap: () => ref.read(expansionNotifierProvider(id).notifier).toggle(),
+        onTap: toggle,
         trailing: PlatformIconButton(
-          onPressed: () =>
-              ref.read(expansionNotifierProvider(id).notifier).toggle(),
+          onPressed: toggle,
           icon: Icon(
               Platform.isIOS ? CupertinoIcons.chevron_down : Icons.expand_more),
         ),

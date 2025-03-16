@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +65,7 @@ class _AnimatedCustomExpansionTileState
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(ExpansionNotifierProvider(widget.id));
+    final expand = ref.watch(ExpansionNotifierProvider(widget.id));
     ref.listen(expansionNotifierProvider(widget.id).select((value) => value),
         (prev, next) {
       if (next == true) {
@@ -82,7 +85,12 @@ class _AnimatedCustomExpansionTileState
           title: widget.title,
           leading: widget.leading,
           subtitle: widget.subtitle,
-          trailing: widget.trailing,
+          trailing: widget.trailing ?? PlatformIconButton(
+            onPressed: () {
+              _controller.toggle();
+            },
+            icon: PlatformExpandIcon(expand),
+          ),
           onTap: widget.enabled ? widget.onTap : null,
           material: (context, platform) => MaterialListTileData(
             tileColor: widget.tileColor,
@@ -135,6 +143,23 @@ class MyClipper extends CustomClipper<Rect> {
   @override
   bool shouldReclip(covariant CustomClipper<Rect> oldClipper) {
     return true;
+  }
+}
+
+class PlatformExpandIcon extends StatelessWidget {
+  const PlatformExpandIcon(this.expand);
+
+  final bool expand;
+
+  @override
+  Widget build(BuildContext context) {
+    return expand
+        ? Icon(
+            key: UniqueKey(),
+            Platform.isIOS ? CupertinoIcons.chevron_down : Icons.expand_more)
+        : Icon(
+            key: UniqueKey(),
+            Platform.isIOS ? CupertinoIcons.chevron_up : Icons.expand_less);
   }
 }
 
