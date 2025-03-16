@@ -10,6 +10,8 @@
 //   }
 // }
 
+import 'package:collection/collection.dart';
+
 enum ProductStatus{
   tickets5,tickets10,tickets30;
 
@@ -19,6 +21,12 @@ enum ProductStatus{
       case tickets10:return 'ticket_10';
       case tickets30:return 'ticket_30';
     }
+  }
+
+  static ProductStatus? fromId(String id){
+    return ProductStatus.values.firstWhereOrNull(
+      (p)=>p.id==id
+    );
   }
 
   // String get productId{

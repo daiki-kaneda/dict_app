@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:dict_app/providers/iap_provider/iap_status.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -47,8 +49,29 @@ class IapNotifier extends _$IapNotifier {
     try {
       final CustomerInfo info = await Purchases.purchasePackage(package);
       print(info.toJson());
+      _purchased(package.storeProduct.identifier);
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> _purchased(String productId)async{
+    final status = ProductStatus.fromId(productId);
+    if(status==null){
+      print('User purchased something we did not prepare');
+      return;
+    }
+    final settingNotifier = ref.read(settingNotifierProvider.notifier);
+    switch(status){
+      case ProductStatus.tickets5:{
+        settingNotifier.addTickets(amount: 5);
+      }
+      case ProductStatus.tickets10:{
+        settingNotifier.addTickets(amount: 10);
+      }
+      case ProductStatus.tickets30:{
+        settingNotifier.addTickets(amount: 30);
+      }
     }
   }
 
