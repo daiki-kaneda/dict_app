@@ -1,3 +1,5 @@
+import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
@@ -57,7 +59,17 @@ class FileNotifier extends _$FileNotifier {
         sentenceIndex: sentenceIndex,
         wordIndex: wordIndex);
     await updateFile(paragraphs: section);
+    _handleResult(result);
     print('tried character:$input');
     print('result:${result.toString()}');
+  }
+
+  Future<void> _handleResult(AnswerResult result)async{
+    // test
+    // if(result.status==SolveStatus.unSolved)return;
+    // showNotifyDialog(
+    //   navigatorKey.currentContext!, 
+    //   title: '解決！', 
+    //   description: result.status.name);
   }
 }
