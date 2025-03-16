@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/utils/platform_bottom_navigation_bar.dart';
+import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -77,6 +79,7 @@ class CreateFileButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return PlatformIconButton(
       onPressed: () async {
+        try{
         final parentId = PathParamerterKeys.parentId.getCurrentValue();
         final String? title = await showPlatformDialog(
           context: context,
@@ -87,9 +90,21 @@ class CreateFileButton extends ConsumerWidget {
           },
         );
         if (title == null) return;
+        if(!(await ref.read(settingNotifierProvider.notifier).hasTickets())){
+          final openStore = await showConfirmDialog(
+            navigatorKey.currentContext!, 
+            title: 'チケット不足', 
+            description: 'チケットが足りません。ストアを開きますか？',
+            );
+          if(openStore==true)print('ストアを開く処理');
+          return;
+        }
         ref
             .read(subItemsProviderProvider(parentId).notifier)
             .createFileFromLocalAudio(title: title);
+      }catch(e){
+        print(e);
+      }
       },
       icon: const Icon(CupertinoIcons.plus),
     );

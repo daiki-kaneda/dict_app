@@ -53,4 +53,9 @@ class SettingNotifier extends _$SettingNotifier {
     final previousState = await future;
     state = AsyncData(previousState.addTickets(amount));
   }
+
+  Future<bool> hasTickets()async{
+    final previousState = await future;
+    return previousState.remainingTickets>0;
+  }
 }

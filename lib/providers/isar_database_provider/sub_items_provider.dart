@@ -5,6 +5,7 @@ import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart'
 import 'package:dict_app/providers/app_directory_provider/app_support_directory_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/utils/dialog.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:isar/isar.dart';
@@ -74,9 +75,6 @@ class SubItemsProvider extends _$SubItemsProvider {
     String? title,
   }) async {
     try {
-      print(await ref
-          .read(appSupportDirectoryNotifierProvider.notifier)
-          .fileNames());
       final result =
           await ref.read(filerPickerNotifierProvider.notifier).getAudioData();
       if (result != null) {
@@ -110,6 +108,8 @@ class SubItemsProvider extends _$SubItemsProvider {
           isar.files.put(newFile);
         });
         ref.invalidateSelf();
+        // consume 1 ticket
+        ref.read(settingNotifierProvider.notifier).consumeTickets();
       }
     } catch (e) {
       DialogStatus.unExpectedError.showCustomDialog(innerNavigatorKey.currentContext!);

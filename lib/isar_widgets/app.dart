@@ -120,6 +120,8 @@ class _EagerInitialization extends ConsumerWidget {
     final iap = ref.watch(iapNotifierProvider);
     final localDatabase = ref.watch(localDatabaseProvider);
 
+    ref.watch(settingNotifierProvider);
+
     if (![isar.value,translator.value,iap.value,localDatabase.value].contains(null)) {
       return child;
     } else {
