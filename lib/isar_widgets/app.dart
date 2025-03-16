@@ -116,6 +116,7 @@ class IsarFolderStructureApp extends StatelessWidget {
     ]);
     return CupertinoApp.router(
       routerConfig: router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
