@@ -65,11 +65,30 @@ class FileNotifier extends _$FileNotifier {
   }
 
   Future<void> _handleResult(AnswerResult result)async{
-    // test
-    // if(result.status==SolveStatus.unSolved)return;
-    // showNotifyDialog(
-    //   navigatorKey.currentContext!, 
-    //   title: '解決！', 
-    //   description: result.status.name);
+    _recordResult(result);
+  }
+  
+  Future<void> _recordResult(AnswerResult result)async{}
+  Future<void> _updateUIByResult(AnswerResult result)async{
+    switch(result.status){
+      case SolveStatus.unSolved:{
+        
+      }
+      case SolveStatus.sectionSolved:{
+
+      }
+      case SolveStatus.paragraphSolved:{
+
+      }
+      case SolveStatus.sentenceSolved:{
+
+      }
+      case SolveStatus.wordSolved:{
+
+      }
+      case SolveStatus.characterSolved:{
+
+      }
+    }
   }
 }
