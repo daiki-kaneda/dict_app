@@ -240,11 +240,6 @@ class QAndATile extends ConsumerWidget {
           softWrap: true,
         ),
         onTap: toggle,
-        trailing: PlatformIconButton(
-          onPressed: toggle,
-          icon: Icon(
-              Platform.isIOS ? CupertinoIcons.chevron_down : Icons.expand_more),
-        ),
         child: Text(
           answer,
           style: TextStyle(fontWeight: FontWeight.w600),

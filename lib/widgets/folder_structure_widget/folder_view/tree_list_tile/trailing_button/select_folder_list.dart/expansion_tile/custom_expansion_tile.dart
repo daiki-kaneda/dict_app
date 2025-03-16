@@ -65,18 +65,23 @@ class _AnimatedCustomExpansionTileState
 
   @override
   Widget build(BuildContext context) {
-    final expand = ref.watch(ExpansionNotifierProvider(widget.id));
-    ref.listen(expansionNotifierProvider(widget.id).select((value) => value),
+    final provider = ExpansionNotifierProvider(widget.id).select(
+      (value)=>widget.initialExpand ? value: !value
+    );
+    final bool expand = ref.watch(provider);
+    ref.listen(provider,
         (prev, next) {
       if (next == true) {
-        if(!widget.initialExpand)_controller.reverse();
         _controller.forward();
       }
       if (next == false) {
-        if(!widget.initialExpand)_controller.forward();
         _controller.reverse();
       }
     });
+
+    void toggle(){
+      ref.read(expansionNotifierProvider(widget.id).notifier).toggle();
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -86,9 +91,7 @@ class _AnimatedCustomExpansionTileState
           leading: widget.leading,
           subtitle: widget.subtitle,
           trailing: widget.trailing ?? PlatformIconButton(
-            onPressed: () {
-              _controller.toggle();
-            },
+            onPressed: toggle,
             icon: PlatformExpandIcon(expand),
           ),
           onTap: widget.enabled ? widget.onTap : null,
@@ -147,7 +150,7 @@ class MyClipper extends CustomClipper<Rect> {
 }
 
 class PlatformExpandIcon extends StatelessWidget {
-  const PlatformExpandIcon(this.expand);
+  const PlatformExpandIcon(this.expand,{super.key});
 
   final bool expand;
 
@@ -156,10 +159,10 @@ class PlatformExpandIcon extends StatelessWidget {
     return expand
         ? Icon(
             key: UniqueKey(),
-            Platform.isIOS ? CupertinoIcons.chevron_down : Icons.expand_more)
+            Platform.isIOS ? CupertinoIcons.chevron_up : Icons.expand_less)
         : Icon(
             key: UniqueKey(),
-            Platform.isIOS ? CupertinoIcons.chevron_up : Icons.expand_less);
+            Platform.isIOS ? CupertinoIcons.chevron_down : Icons.expand_more);
   }
 }
 
