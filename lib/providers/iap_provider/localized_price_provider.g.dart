@@ -6,7 +6,7 @@ part of 'localized_price_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$localizedPriceHash() => r'492990f7c2eabc21807f4c94b2080c21286c96b9';
+String _$localizedPriceHash() => r'2f0fe226087140dc68f28b61e3c379d88818c7ee';
 
 /// Copied from Dart SDK
 class _SystemHash {
