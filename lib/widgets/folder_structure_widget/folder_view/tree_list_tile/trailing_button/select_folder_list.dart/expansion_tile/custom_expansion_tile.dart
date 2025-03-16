@@ -63,9 +63,11 @@ class _AnimatedCustomExpansionTileState
     ref.listen(expansionNotifierProvider(widget.id).select((value) => value),
         (prev, next) {
       if (next == true) {
+        if(widget.initialExpand)_controller.reverse();
         _controller.forward();
       }
       if (next == false) {
+        if(widget.initialExpand)_controller.forward();
         _controller.reverse();
       }
     });

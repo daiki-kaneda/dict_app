@@ -4,6 +4,7 @@ import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/iap_provider/localized_price_provider.dart';
 import 'package:dict_app/providers/iap_provider/packages_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
+import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/trailing_button/select_folder_list.dart/expansion_tile/custom_expansion_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -205,6 +206,7 @@ class QAndASection extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoListSection.insetGrouped(
         header: Text('Q&A'),
+        dividerMargin: 0,
         children: qa.indexed.map((t) {
           final id = t.$1.toString();
           final question = t.$2.$1;
@@ -214,7 +216,7 @@ class QAndASection extends StatelessWidget {
   }
 }
 
-class QAndATile extends StatelessWidget {
+class QAndATile extends ConsumerWidget {
   const QAndATile(this.id,
       {super.key, required this.question, required this.answer});
 
@@ -223,10 +225,26 @@ class QAndATile extends StatelessWidget {
   final String answer;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AnimatedCustomExpansionTile(
-        id: id, 
-        title: Text(question), 
-        child: Text(answer));
+        id: id,
+        initialExpand: false,
+        leading: Icon(PlatformIcons(context).help),
+        title: Text(
+          question,
+          overflow: TextOverflow.visible,
+          softWrap: true,
+        ),
+        onTap: () => ref.read(expansionNotifierProvider(id).notifier).toggle(),
+        trailing: PlatformIconButton(
+          onPressed: () =>
+              ref.read(expansionNotifierProvider(id).notifier).toggle(),
+          icon: Icon(
+              Platform.isIOS ? CupertinoIcons.chevron_down : Icons.expand_more),
+        ),
+        child: Text(
+          answer,
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ));
   }
 }
