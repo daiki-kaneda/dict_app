@@ -6,8 +6,8 @@ part 'localized_price_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 FutureOr<String?> localizedPrice(
-    LocalizedPriceRef ref, ProductStatus status) async {
-  final products = await Purchases.getProducts([status.id]);
+    LocalizedPriceRef ref, String productId) async {
+  final products = await Purchases.getProducts([productId]);
   print('products:' + products.firstOrNull.toString());
   return products.firstOrNull?.priceString;
 }

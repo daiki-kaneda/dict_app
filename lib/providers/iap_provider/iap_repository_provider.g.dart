@@ -6,7 +6,7 @@ part of 'iap_repository_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$iapNotifierHash() => r'6f57162c264c9f85a17d14537669bf1a2290a948';
+String _$iapNotifierHash() => r'd7d035e91980d47d6315d7957161bcc0b25b40bd';
 
 /// See also [IapNotifier].
 @ProviderFor(IapNotifier)

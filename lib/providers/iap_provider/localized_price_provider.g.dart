@@ -6,7 +6,7 @@ part of 'localized_price_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$localizedPriceHash() => r'7d8f82db9199d716cf700acb793a399993fd7352';
+String _$localizedPriceHash() => r'492990f7c2eabc21807f4c94b2080c21286c96b9';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -40,10 +40,10 @@ class LocalizedPriceFamily extends Family<AsyncValue<String?>> {
 
   /// See also [localizedPrice].
   LocalizedPriceProvider call(
-    ProductStatus status,
+    String productId,
   ) {
     return LocalizedPriceProvider(
-      status,
+      productId,
     );
   }
 
@@ -52,7 +52,7 @@ class LocalizedPriceFamily extends Family<AsyncValue<String?>> {
     covariant LocalizedPriceProvider provider,
   ) {
     return call(
-      provider.status,
+      provider.productId,
     );
   }
 
@@ -75,11 +75,11 @@ class LocalizedPriceFamily extends Family<AsyncValue<String?>> {
 class LocalizedPriceProvider extends FutureProvider<String?> {
   /// See also [localizedPrice].
   LocalizedPriceProvider(
-    ProductStatus status,
+    String productId,
   ) : this._internal(
           (ref) => localizedPrice(
             ref as LocalizedPriceRef,
-            status,
+            productId,
           ),
           from: localizedPriceProvider,
           name: r'localizedPriceProvider',
@@ -90,7 +90,7 @@ class LocalizedPriceProvider extends FutureProvider<String?> {
           dependencies: LocalizedPriceFamily._dependencies,
           allTransitiveDependencies:
               LocalizedPriceFamily._allTransitiveDependencies,
-          status: status,
+          productId: productId,
         );
 
   LocalizedPriceProvider._internal(
@@ -100,10 +100,10 @@ class LocalizedPriceProvider extends FutureProvider<String?> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.status,
+    required this.productId,
   }) : super.internal();
 
-  final ProductStatus status;
+  final String productId;
 
   @override
   Override overrideWith(
@@ -118,7 +118,7 @@ class LocalizedPriceProvider extends FutureProvider<String?> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        status: status,
+        productId: productId,
       ),
     );
   }
@@ -130,21 +130,21 @@ class LocalizedPriceProvider extends FutureProvider<String?> {
 
   @override
   bool operator ==(Object other) {
-    return other is LocalizedPriceProvider && other.status == status;
+    return other is LocalizedPriceProvider && other.productId == productId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, status.hashCode);
+    hash = _SystemHash.combine(hash, productId.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
 mixin LocalizedPriceRef on FutureProviderRef<String?> {
-  /// The parameter `status` of this provider.
-  ProductStatus get status;
+  /// The parameter `productId` of this provider.
+  String get productId;
 }
 
 class _LocalizedPriceProviderElement extends FutureProviderElement<String?>
@@ -152,7 +152,7 @@ class _LocalizedPriceProviderElement extends FutureProviderElement<String?>
   _LocalizedPriceProviderElement(super.provider);
 
   @override
-  ProductStatus get status => (origin as LocalizedPriceProvider).status;
+  String get productId => (origin as LocalizedPriceProvider).productId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

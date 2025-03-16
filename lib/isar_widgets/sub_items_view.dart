@@ -1,10 +1,13 @@
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
+import 'package:dict_app/isar_widgets/store_ui/store_sheet.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
+import 'package:dict_app/isar_widgets/utils/platform_full_screen_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
 import 'package:dict_app/isar_widgets/utils/select_folder_list.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
+import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/folder_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +27,7 @@ class SubItemsView extends ConsumerWidget {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           middle: Text(parentFolder?.title ?? ''),
+          trailing: ShowStoreSheetButton(),
         ),
         child: SubItemsList(parentId: parentId));
   }

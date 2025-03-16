@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-enum EntitlementStatus{
-  premium;
+// enum EntitlementStatus{
+//   premium;
 
-  String get id{
-    switch(this){
-      case premium:return 'premium';
-    }
-  }
-}
+//   String get id{
+//     switch(this){
+//       case premium:return 'premium';
+//     }
+//   }
+// }
 
 enum ProductStatus{
   tickets5,tickets10,tickets30;

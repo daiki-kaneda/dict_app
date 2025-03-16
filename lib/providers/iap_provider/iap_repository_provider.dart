@@ -25,7 +25,7 @@ class IapNotifier extends _$IapNotifier {
           PurchasesConfiguration('goog_ZydHVZxktKaefTnZjfHDrEfPbbZ');
     } else {
       configuration =
-          PurchasesConfiguration('appl_voxQTZaQmxHeydzbPJGmPaTicAz');
+          PurchasesConfiguration('appl_QbexHZgxwGjVYhVeIqMXqjIMNco');
     }
     await Purchases.configure(configuration);
   }

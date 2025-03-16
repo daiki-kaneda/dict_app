@@ -4,6 +4,7 @@ import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
+import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:dict_app/providers/translation_helper_provider/translation_helper_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -114,8 +115,9 @@ class _EagerInitialization extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isar = ref.watch(isarProvider);
     final translator = ref.watch(translationHelperProvider);
+    final iap = ref.watch(iapNotifierProvider);
 
-    if (![isar.value, translator.value].contains(null)) {
+    if (![isar.value,translator.value,iap.value].contains(null)) {
       return child;
     } else {
       return PlatformScaffold(
