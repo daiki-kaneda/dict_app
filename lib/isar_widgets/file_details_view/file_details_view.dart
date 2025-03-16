@@ -5,7 +5,6 @@ import 'package:dict_app/isar_widgets/file_details_view/print_view/dictation.dar
 import 'package:dict_app/isar_widgets/file_details_view/print_view/print_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/setting_view/setting_view.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
-import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/cupertino.dart';

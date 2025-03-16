@@ -2,7 +2,6 @@ import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/input_text_field.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
 import 'package:dict_app/isar_widgets/utils/close_button.dart';
-import 'package:dict_app/isar_widgets/utils/platform_full_screen_dialog.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
