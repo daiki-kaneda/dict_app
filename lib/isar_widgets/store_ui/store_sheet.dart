@@ -143,13 +143,13 @@ class ShowStoreSheetButton extends ConsumerWidget {
         showPlatformFullScreenDialog(navigatorKey.currentContext!,
             child: StoreSheet(packages: packages));
       },
-      icon: TicketIconWithBadge(),
+      icon: TicketIconWithRemainings(),
     );
   }
 }
 
-class TicketIconWithBadge extends ConsumerWidget {
-  const TicketIconWithBadge({super.key});
+class TicketIconWithRemainings extends ConsumerWidget {
+  const TicketIconWithRemainings({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
