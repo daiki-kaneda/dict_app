@@ -2,6 +2,9 @@ import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'custom_expansion_tile.g.dart';
 
 class AnimatedCustomExpansionTile extends ConsumerStatefulWidget {
   const AnimatedCustomExpansionTile(
@@ -132,5 +135,25 @@ class MyClipper extends CustomClipper<Rect> {
   @override
   bool shouldReclip(covariant CustomClipper<Rect> oldClipper) {
     return true;
+  }
+}
+
+@riverpod
+class ExpansionNotifier extends _$ExpansionNotifier {
+  @override
+  bool build(String id) {
+    return true;
+  }
+
+  void expand(){
+    state=true;
+  }
+
+  void collapse(){
+    state=false;
+  }
+
+  void toggle(){
+    state = !state;
   }
 }

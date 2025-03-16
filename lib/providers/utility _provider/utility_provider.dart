@@ -114,25 +114,6 @@ class IsSheetShowing extends _$IsSheetShowing{
   }
 }
 
-@riverpod
-class ExpansionNotifier extends _$ExpansionNotifier {
-  @override
-  bool build(String id) {
-    return true;
-  }
-
-  void expand(){
-    state=true;
-  }
-
-  void collapse(){
-    state=false;
-  }
-
-  void toggle(){
-    state = !state;
-  }
-}
 
 @riverpod
 class ParagraphIndexNotifier extends _$ParagraphIndexNotifier {
