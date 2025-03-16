@@ -6,12 +6,12 @@ part of 'setting_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$settingNotifierHash() => r'5c6298f40bdbaaf1c41621f3dd1052ca6649c60d';
+String _$settingNotifierHash() => r'b7e972cfbe0762d96df7212a795772e33796392b';
 
 /// See also [SettingNotifier].
 @ProviderFor(SettingNotifier)
 final settingNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<SettingNotifier, Setting>.internal(
+    AsyncNotifierProvider<SettingNotifier, Setting>.internal(
   SettingNotifier.new,
   name: r'settingNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final settingNotifierProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$SettingNotifier = AutoDisposeAsyncNotifier<Setting>;
+typedef _$SettingNotifier = AsyncNotifier<Setting>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

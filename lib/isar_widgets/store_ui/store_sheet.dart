@@ -5,6 +5,7 @@ import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_full_screen_dialog.dart';
 import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/iap_provider/localized_price_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -49,10 +50,16 @@ class CurrentTicketsTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final int? numTicketsRemaining = ref.watch(settingNotifierProvider.select(
+      (a)=>a.when(
+        data: (s)=>s.remainingTickets, 
+        error: (_,__)=>null, 
+        loading: ()=>null)
+    ));
     return CupertinoListTile.notched(
       leading: TicketIcon(),
       title: Text('残りのチケット枚数:'),
-      trailing: Text('5'),
+      trailing:numTicketsRemaining!=null ? Text(numTicketsRemaining.toString()):PlatformCircularProgressIndicator(),
     );
   }
 }
@@ -144,20 +151,25 @@ class ShowStoreSheetButton extends ConsumerWidget {
 class TicketIconWithBadge extends ConsumerWidget {
   const TicketIconWithBadge({super.key});
 
-  final int numTicketsRemaining = 5;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final int? numTicketsRemaining = ref.watch(settingNotifierProvider.select(
+      (a)=>a.when(
+        data: (s)=>s.remainingTickets, 
+        error: (_,__)=>null, 
+        loading: ()=>null)
+    ));
+
     return badges.Badge(
       badgeStyle: badges.BadgeStyle(
         padding: EdgeInsets.all(5),
         elevation: 0,
         badgeColor: Platform.isIOS ? CupertinoColors.systemBlue.resolveFrom(context):Colors.blue
       ),
-      badgeContent: Text(
+      badgeContent:numTicketsRemaining!=null ? Text(
         numTicketsRemaining.toString(),
         style: TextStyle(color: Platform.isIOS ? CupertinoColors.white:Colors.white),
-        ),
+        ):Container(),
       child: TicketIcon(),);
   }
 }
