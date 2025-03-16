@@ -3,6 +3,7 @@ import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
+import 'package:dict_app/isar_widgets/store_ui/store_sheet.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
 import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:purchases_flutter/object_wrappers.dart';
 
 // Future<void> main() async {
 //   runApp(const ProviderScope(child: IsarFolderStructureApp()));
@@ -62,6 +64,16 @@ class IsarFolderStructureApp extends StatelessWidget {
               builder: (context, state) {
                 final parentId = state.currentParameterValue(parentIdKey);
                 return SubItemsView(parentId: parentId!);
+              },
+            ),
+            GoRoute(
+              name: 'store',
+              path: '/store',
+              pageBuilder: (context, state) {
+                return platformPage(
+                          context: context,
+                          fullscreenDialog: true,
+                          child: StoreSheet(packages: []));
               },
             ),
             GoRoute(
