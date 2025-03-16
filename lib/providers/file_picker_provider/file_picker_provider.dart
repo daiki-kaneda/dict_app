@@ -12,21 +12,32 @@ class FilerPickerNotifier extends _$FilerPickerNotifier {
     return FilePicker.platform;
   }
 
-  Future<(String path,Uint8List bytes,int size)?> getAudioData()async{
+  Future<(String path, Uint8List bytes, int size)?> getAudioData() async {
     final result = await state.pickFiles(
-      type: FileType.custom,
-      allowMultiple: false,
+        type: FileType.custom,
+        allowMultiple: false,
         allowedExtensions: [
           'mp3',
-          'aac'
+          'mp4',
+          'mp2',
+          'aac',
           'wav',
           'flac',
+          'pcm',
+          'm4a',
           'ogg',
-        ]
-    );
+          'opus',
+          'webm'
+        ]);
 
-    if(result!=null&&result.paths.whereType<String>().isNotEmpty&&result.xFiles.isNotEmpty){
-      return (result.paths.first!,await result.xFiles.first.readAsBytes(),result.files.first.size);
+    if (result != null &&
+        result.paths.whereType<String>().isNotEmpty &&
+        result.xFiles.isNotEmpty) {
+      return (
+        result.paths.first!,
+        await result.xFiles.first.readAsBytes(),
+        result.files.first.size
+      );
     }
     return null;
   }
