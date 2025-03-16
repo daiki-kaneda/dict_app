@@ -70,7 +70,8 @@ class DictationSection {
   }) {
     if (isCompleted) return (this, AnswerResult());
 
-    if (paragraphs == null || paragraphIndex >= paragraphs!.length)return (this, AnswerResult());
+    if (paragraphs == null || paragraphIndex >= paragraphs!.length)
+      return (this, AnswerResult());
 
     final (updateParagraph, result) = paragraphs![paragraphIndex].tryCharacter(
         input: input,
@@ -168,6 +169,8 @@ class DictationSection {
     if (index == -1) return paragraphs!.length - 1;
     return index;
   }
+
+  int get firstUnsolvedIndex =>paragraphs?.indexWhere((e) => !e.isCompleted) ?? -1;
 
   factory DictationSection.fromJson(Map<String, dynamic> json) =>
       _$DictationSectionFromJson(json);
@@ -283,6 +286,9 @@ class DictationParagraph {
         sentences?.map((p) => p.reset(alphabetOnly: alphabetOnly)).toList();
     return copyWith(sentences: newList);
   }
+
+  int get firstUnsolvedIndex =>
+      sentences?.indexWhere((e) => !e.isCompleted) ?? -1;
 
   factory DictationParagraph.fromJson(Map<String, dynamic> json) =>
       _$DictationParagraphFromJson(json);
@@ -407,6 +413,8 @@ class DictationSentence {
     return copyWith(words: newList);
   }
 
+  int get firstUnsolvedIndex => words?.indexWhere((e) => !e.isCompleted) ?? -1;
+
   factory DictationSentence.fromJson(Map<String, dynamic> json) =>
       _$DictationSentenceFromJson(json);
   Map<String, dynamic> toJson() => _$DictationSentenceToJson(this);
@@ -495,8 +503,7 @@ class DictationWord {
     if (isCompleted) return (this, result);
     if (characters == null || characters!.isEmpty) return (this, result);
 
-    final firstUnsolvedIndex = characters!.indexWhere((e) => !e.isSolved);
-    if (firstUnsolvedIndex == -1) return (this, result); // Already completed
+    if (firstUnsolvedIndex == -1) return (this, result);
 
     final firstUnsolvedCharacter = characters![firstUnsolvedIndex];
 
@@ -525,6 +532,9 @@ class DictationWord {
         .toList();
     return copyWith(characters: newList);
   }
+
+  int get firstUnsolvedIndex =>
+      characters?.indexWhere((e) => !e.isSolved) ?? -1;
 
   factory DictationWord.fromJson(Map<String, dynamic> json) =>
       _$DictationWordFromJson(json);
