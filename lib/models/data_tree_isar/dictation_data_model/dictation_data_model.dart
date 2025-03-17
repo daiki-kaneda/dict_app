@@ -174,8 +174,19 @@ class DictationSection {
   int get firstUnsolvedIndex =>
       paragraphs?.indexWhere((e) => !e.isCompleted) ?? -1;
 
-  double accuracy() => allCharacters().isNotEmpty ?  allCharacters().map((c)=>c.accuracy).whereType<double>().mean:0;
-  List<DictationCharacter> allCharacters() => paragraphs?.expand<DictationCharacter>((p)=>p.allCharacters()).toList() ?? [];
+  double? accuracy() {
+    final attempts = allCharacters().fold(0, (sum, c) => sum + c.attempts);
+    final solvedWithoutHintCount = allCharacters()
+        .fold(0, (sum, c) => sum + (c.solvedCount - c.solveWithHintCount));
+    if (attempts == 0) return null;
+    return (solvedWithoutHintCount / attempts).clamp(0.0, 1.0);
+  }
+
+  List<DictationCharacter> allCharacters() =>
+      paragraphs
+          ?.expand<DictationCharacter>((p) => p.allCharacters())
+          .toList() ??
+      [];
 
   factory DictationSection.fromJson(Map<String, dynamic> json) =>
       _$DictationSectionFromJson(json);
@@ -296,9 +307,20 @@ class DictationParagraph {
 
   int get firstUnsolvedIndex =>
       sentences?.indexWhere((e) => !e.isCompleted) ?? -1;
-  
-  double accuracy() => allCharacters().isNotEmpty ?  allCharacters().map((c)=>c.accuracy).whereType<double>().mean:0;
-  List<DictationCharacter> allCharacters() => sentences?.expand<DictationCharacter>((s)=>s.allCharacters()).toList() ?? [];
+
+  double? accuracy() {
+    final attempts = allCharacters().fold(0, (sum, c) => sum + c.attempts);
+    final solvedWithoutHintCount = allCharacters()
+        .fold(0, (sum, c) => sum + (c.solvedCount - c.solveWithHintCount));
+    if (attempts == 0) return null;
+    return (solvedWithoutHintCount / attempts).clamp(0.0, 1.0);
+  }
+
+  List<DictationCharacter> allCharacters() =>
+      sentences
+          ?.expand<DictationCharacter>((s) => s.allCharacters())
+          .toList() ??
+      [];
 
   factory DictationParagraph.fromJson(Map<String, dynamic> json) =>
       _$DictationParagraphFromJson(json);
@@ -427,8 +449,17 @@ class DictationSentence {
 
   int get firstUnsolvedIndex => words?.indexWhere((e) => !e.isCompleted) ?? -1;
 
-  double accuracy() => allCharacters().isNotEmpty ?  allCharacters().map((c)=>c.accuracy).whereType<double>().mean:0;
-  List<DictationCharacter> allCharacters() => words?.expand<DictationCharacter>((w)=>w.characters ?? []).toList() ?? [];
+  double? accuracy() {
+    final attempts = allCharacters().fold(0, (sum, c) => sum + c.attempts);
+    final solvedWithoutHintCount = allCharacters()
+        .fold(0, (sum, c) => sum + (c.solvedCount - c.solveWithHintCount));
+    if (attempts == 0) return null;
+    return (solvedWithoutHintCount / attempts).clamp(0.0, 1.0);
+  }
+
+  List<DictationCharacter> allCharacters() =>
+      words?.expand<DictationCharacter>((w) => w.characters ?? []).toList() ??
+      [];
 
   factory DictationSentence.fromJson(Map<String, dynamic> json) =>
       _$DictationSentenceFromJson(json);
@@ -553,9 +584,13 @@ class DictationWord {
   int get firstUnsolvedIndex =>
       characters?.indexWhere((e) => !e.isSolved) ?? -1;
 
-  double accuracy() => characters?.isNotEmpty == true
-      ? (characters!.map((c) => c.accuracy)).whereType<double>().mean
-      : 0;
+  double? accuracy() {
+    final attempts = characters!.fold(0, (sum, c) => sum + c.attempts);
+    final solvedWithoutHintCount = characters!
+        .fold(0, (sum, c) => sum + (c.solvedCount - c.solveWithHintCount));
+    if (attempts == 0) return null;
+    return (solvedWithoutHintCount / attempts).clamp(0.0, 1.0);
+  }
 
   factory DictationWord.fromJson(Map<String, dynamic> json) =>
       _$DictationWordFromJson(json);
@@ -624,12 +659,13 @@ class DictationCharacter {
     return char.toLowerCase() != char.toUpperCase();
   }
 
-  double? get accuracy => attempts!=0 ?
-      ((solvedCount - solveWithHintCount) / attempts).clamp(0, 1):null;
+  double? get accuracy => attempts != 0
+      ? ((solvedCount - solveWithHintCount) / attempts).clamp(0, 1)
+      : null;
 
   DictationCharacter attempted({bool solved = false, bool usedHint = false}) =>
       copyWith(
-          attempts: attempts+1,
+          attempts: attempts + 1,
           isSolved: solved,
           solvedCount: solved ? solvedCount + 1 : solvedCount,
           solveWithHintCount:
