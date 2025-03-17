@@ -632,6 +632,7 @@ class DictationCharacter {
 
   DictationCharacter attempted({bool solved = false, bool usedHint = false}) =>
       copyWith(
+          attempts: attempts+1,
           isSolved: solved,
           solvedCount: solved ? solvedCount + 1 : solvedCount,
           solveWithHintCount:
