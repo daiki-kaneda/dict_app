@@ -30,8 +30,7 @@ class DictationPageView extends ConsumerWidget {
       print((s?.start,s?.end).toString());
       // update wordIndex to newest unSolvedIndex
       ref.read(currentWordIndexProvider(id).notifier)
-      .updateIndex(s?.newestUnsolvedIndex() ?? 0);
-      print('newestUnsolvedWordIndex: ${s?.newestUnsolvedIndex()}');
+      .moveToFirstUnsolvedIndex();
     });
     if (sentences == null) return Container();
 

@@ -26,7 +26,6 @@ class ListeningPageView extends ConsumerWidget {
           .read(startEndProviderProvider.notifier)
           .setNewValue(s?.start ?? 0, s?.end ?? 0);
       print((s?.start,s?.end).toString());
-      print('newestUnsolvedWordIndex: ${s?.newestUnsolvedIndex()}');
     });
     if (sentences == null) return Container();
 
