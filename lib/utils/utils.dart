@@ -60,6 +60,6 @@ extension ListEx<T> on List<List<T>> {
   }
 }
 
-extension NumListEx on Iterable<num>{
-  double get mean => isEmpty ? double.nan : reduce((a, b) => a + b) / length;
+extension NumListEx on Iterable<double>{
+  double get mean => isEmpty ? double.nan : (reduce((a, b) => (a + b)) / length).toDouble();
 }
