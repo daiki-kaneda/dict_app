@@ -5,7 +5,7 @@ import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DictationPageView extends ConsumerWidget {
+class DictationPageView extends ConsumerStatefulWidget {
   const DictationPageView({
     super.key,
     required this.id,
@@ -13,15 +13,31 @@ class DictationPageView extends ConsumerWidget {
   final int id;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(currentSentenceIndexInAllSentencesProvider(id));
-    ref.watch(currentWordIndexProvider(id));
-    ref.watch(showErrorEffectProvider(id));
-    final file = ref.watch(fileNotifierProvider(id));
-    final controller = ref.watch(sentencePageControllerProvider(id));
+  ConsumerState<DictationPageView> createState() => _DictationPageViewState();
+}
+
+class _DictationPageViewState extends ConsumerState<DictationPageView> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      ref.read(currentWordIndexProvider(widget.id).notifier)
+      .moveToFirstUnsolvedIndex();
+      ref.read(sentencePageControllerProvider(widget.id).notifier)
+      .moveToFirstUnsolvedIndex();
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    ref.watch(currentSentenceIndexInAllSentencesProvider(widget.id));
+    ref.watch(currentWordIndexProvider(widget.id));
+    ref.watch(showErrorEffectProvider(widget.id));
+    final file = ref.watch(fileNotifierProvider(widget.id));
+    final controller = ref.watch(sentencePageControllerProvider(widget.id));
     final sentences = file?.getAllSentences;
     // when sentence index changed
-    ref.listen(currentSentenceIndexInAllSentencesProvider(id), (_, i) {
+    ref.listen(currentSentenceIndexInAllSentencesProvider(widget.id), (_, i) {
       final s = file?.getAllSentences?[i];
       // update range of audio to play
       ref
@@ -29,7 +45,7 @@ class DictationPageView extends ConsumerWidget {
           .setNewValue(s?.start ?? 0, s?.end ?? 0);
       print((s?.start,s?.end).toString());
       // update wordIndex to newest unSolvedIndex
-      ref.read(currentWordIndexProvider(id).notifier)
+      ref.read(currentWordIndexProvider(widget.id).notifier)
       .moveToFirstUnsolvedIndex();
     });
     if (sentences == null) return Container();
@@ -40,7 +56,7 @@ class DictationPageView extends ConsumerWidget {
       itemBuilder: (context, index) {
         final dictationSentence = sentences[index];
         return DictationPage(
-          id,
+          widget.id,
           dictationSentence: dictationSentence);
       },
     );

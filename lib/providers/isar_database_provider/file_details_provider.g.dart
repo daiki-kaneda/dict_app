@@ -7,7 +7,7 @@ part of 'file_details_provider.dart';
 // **************************************************************************
 
 String _$sentencePageControllerHash() =>
-    r'94b1ab9111bb3524b67f50e9fa72eba3326392b0';
+    r'8bfde66cf25c179bdf24adfde25f61e300ceaafc';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -324,7 +324,7 @@ class _CurrentSentenceIndexInAllSentencesProviderElement
       (origin as CurrentSentenceIndexInAllSentencesProvider).fileId;
 }
 
-String _$currentWordIndexHash() => r'fea8819b077ab79913fbc96d7e37e9dd1a47a277';
+String _$currentWordIndexHash() => r'8b36983add5867ed1828dc4c0304504c51c952f9';
 
 abstract class _$CurrentWordIndex extends BuildlessAutoDisposeNotifier<int> {
   late final int fileId;
@@ -756,7 +756,7 @@ class _CurrentParagraphIndexProviderElement
   int get fileId => (origin as CurrentParagraphIndexProvider).fileId;
 }
 
-String _$typedTextNotifierHash() => r'8107fbad62124a1d1526c3c2b33d84fdbccea452';
+String _$typedTextNotifierHash() => r'bb4b36441d652c8494c7a83740eb278ca67a98ae';
 
 abstract class _$TypedTextNotifier
     extends BuildlessAutoDisposeStreamNotifier<String> {
@@ -1042,7 +1042,7 @@ class _CurrentTabIndexProviderElement
   int get fileId => (origin as CurrentTabIndexProvider).fileId;
 }
 
-String _$showErrorEffectHash() => r'907ae87b4c43475e5cdf6e25e72066f4fc2bf173';
+String _$showErrorEffectHash() => r'd81c078b35986486a4dac893b7f583f0aeb5efb4';
 
 abstract class _$ShowErrorEffect extends BuildlessAutoDisposeNotifier<bool> {
   late final int fileId;

@@ -41,7 +41,7 @@ class SentencePageController extends _$SentencePageController {
         -1;
     if (firstUnsolvedIndex != -1 && state.hasClients) {
       state.animateToPage(firstUnsolvedIndex,
-          duration: Duration(milliseconds: 250), curve: Curves.easeInOut);
+          duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
     }
   }
 }
