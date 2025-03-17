@@ -174,9 +174,8 @@ class DictationSection {
   int get firstUnsolvedIndex =>
       paragraphs?.indexWhere((e) => !e.isCompleted) ?? -1;
 
-  double get accuracy => paragraphs?.isNotEmpty == true
-      ? (paragraphs!.map((c) => c.accuracy)).mean
-      : 0;
+  double get accuracy => allCharacters.isNotEmpty ?  allCharacters.map((c)=>c.accuracy).mean:0;
+  List<DictationCharacter> get allCharacters => paragraphs?.expand<DictationCharacter>((p)=>p.allCharacters).toList() ?? [];
 
   factory DictationSection.fromJson(Map<String, dynamic> json) =>
       _$DictationSectionFromJson(json);
@@ -297,10 +296,9 @@ class DictationParagraph {
 
   int get firstUnsolvedIndex =>
       sentences?.indexWhere((e) => !e.isCompleted) ?? -1;
-
-  double get accuracy => sentences?.isNotEmpty == true
-      ? (sentences!.map((c) => c.accuracy)).mean
-      : 0;
+  
+  double get accuracy => allCharacters.isNotEmpty ?  allCharacters.map((c)=>c.accuracy).mean:0;
+  List<DictationCharacter> get allCharacters => sentences?.expand<DictationCharacter>((s)=>s.allCharacters).toList() ?? [];
 
   factory DictationParagraph.fromJson(Map<String, dynamic> json) =>
       _$DictationParagraphFromJson(json);
@@ -405,7 +403,6 @@ class DictationSentence {
     if (words == null || wordIndex >= words!.length) {
       return (this, AnswerResult());
     }
-    ;
 
     final (updatedWord, result) =
         words![wordIndex].tryCharacter(input: input, solveAnyway: solveAnyway);
@@ -430,8 +427,8 @@ class DictationSentence {
 
   int get firstUnsolvedIndex => words?.indexWhere((e) => !e.isCompleted) ?? -1;
 
-  double get accuracy =>
-      words?.isNotEmpty == true ? (words!.map((c) => c.accuracy)).mean : 0;
+  double get accuracy => allCharacters.isNotEmpty ?  allCharacters.map((c)=>c.accuracy).mean:0;
+  List<DictationCharacter> get allCharacters => words?.expand<DictationCharacter>((w)=>w.characters ?? []).toList() ?? [];
 
   factory DictationSentence.fromJson(Map<String, dynamic> json) =>
       _$DictationSentenceFromJson(json);
