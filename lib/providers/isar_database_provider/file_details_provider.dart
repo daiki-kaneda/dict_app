@@ -34,13 +34,14 @@ class SentencePageController extends _$SentencePageController {
   }
 
   moveToFirstUnsolvedIndex() {
-    final firstUnsolvedIndex = ref.read(FileNotifierProvider(fileId))
-    ?.getAllSentences?.indexWhere((s)=>!s.isCompleted) ?? -1;
+    final firstUnsolvedIndex = ref
+            .read(FileNotifierProvider(fileId))
+            ?.getAllSentences
+            ?.indexWhere((s) => !s.isCompleted) ??
+        -1;
     if (firstUnsolvedIndex != -1 && state.hasClients) {
-      state.animateToPage(
-        firstUnsolvedIndex,
-        duration: Duration(milliseconds: 250),
-        curve: Curves.easeInOut);
+      state.animateToPage(firstUnsolvedIndex,
+          duration: Duration(milliseconds: 250), curve: Curves.easeInOut);
     }
   }
 }
@@ -84,13 +85,22 @@ class CurrentWordIndex extends _$CurrentWordIndex {
   }
 
   moveToFirstUnsolvedIndex() {
-    final firstUnsolvedIndex = ref
-        .read(currentSentenceIndexInAllSentencesProvider(fileId).notifier)
-        .getCurrentSentence()
-        ?.firstUnsolvedIndex;
+    final firstUnsolvedIndex = currentFirstUnsolvedIndex();
     if (firstUnsolvedIndex != null && firstUnsolvedIndex != -1) {
       updateIndex(firstUnsolvedIndex);
     }
+  }
+
+  int? currentFirstUnsolvedIndex() {
+    return ref
+        .read(currentSentenceIndexInAllSentencesProvider(fileId).notifier)
+        .getCurrentSentence()
+        ?.firstUnsolvedIndex;
+  }
+
+  bool currentWordIsCompleted(){
+    final index = currentFirstUnsolvedIndex();
+    return index==null || index<0;
   }
 }
 
@@ -136,11 +146,14 @@ class TypedTextNotifier extends _$TypedTextNotifier {
     });
 
     listenSelf((prev, next) {
+      final currentWordIndexNotifier =currentWordIndexProvider(fileId);
+      if(ref.read(currentWordIndexNotifier.notifier).currentWordIsCompleted())return;
+
       final currentParagraphIndex =
           ref.read(currentParagraphIndexProvider(fileId));
       final currentSentenceIndex =
           ref.read(currentSentenceIndexProvider(fileId));
-      final currentWordIndex = ref.read(currentWordIndexProvider(fileId));
+      final currentWordIndex = ref.read(currentWordIndexNotifier);
 
       final nextText = next.value;
       if (nextText == null || nextText.isEmpty) return;
@@ -179,5 +192,30 @@ class CurrentTabIndex extends _$CurrentTabIndex {
 
   updateIndex(int newIndex) {
     state = newIndex;
+  }
+}
+
+@riverpod
+class ShowErrorEffect extends _$ShowErrorEffect {
+  @override
+  bool build(int fileId) {
+    return false;
+  }
+
+  void showEffect({Duration duration = const Duration(milliseconds: 250)}) {
+    if (!state) {
+      state = true;
+      Future.delayed(duration, () {
+        if (state) hideEffect();
+      });
+    }
+  }
+
+  void hideEffect() {
+    if (state) state = false;
+  }
+
+  void toggle() {
+    state = !state;
   }
 }

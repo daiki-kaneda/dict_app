@@ -75,7 +75,8 @@ class FileNotifier extends _$FileNotifier {
   Future<void> _updateUIByResult(AnswerResult result)async{
     switch(result.status){
       case SolveStatus.unSolved:{
-        print('このファイルにおける正答率:${(state)?.paragraphs.accuracy()}');
+        ref.read(showErrorEffectProvider(id).notifier)
+        .showEffect();
       }
       case SolveStatus.sectionSolved:{
         showNotifyDialog(

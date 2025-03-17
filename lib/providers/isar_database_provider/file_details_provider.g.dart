@@ -1041,5 +1041,147 @@ class _CurrentTabIndexProviderElement
   @override
   int get fileId => (origin as CurrentTabIndexProvider).fileId;
 }
+
+String _$showErrorEffectHash() => r'907ae87b4c43475e5cdf6e25e72066f4fc2bf173';
+
+abstract class _$ShowErrorEffect extends BuildlessAutoDisposeNotifier<bool> {
+  late final int fileId;
+
+  bool build(
+    int fileId,
+  );
+}
+
+/// See also [ShowErrorEffect].
+@ProviderFor(ShowErrorEffect)
+const showErrorEffectProvider = ShowErrorEffectFamily();
+
+/// See also [ShowErrorEffect].
+class ShowErrorEffectFamily extends Family<bool> {
+  /// See also [ShowErrorEffect].
+  const ShowErrorEffectFamily();
+
+  /// See also [ShowErrorEffect].
+  ShowErrorEffectProvider call(
+    int fileId,
+  ) {
+    return ShowErrorEffectProvider(
+      fileId,
+    );
+  }
+
+  @override
+  ShowErrorEffectProvider getProviderOverride(
+    covariant ShowErrorEffectProvider provider,
+  ) {
+    return call(
+      provider.fileId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'showErrorEffectProvider';
+}
+
+/// See also [ShowErrorEffect].
+class ShowErrorEffectProvider
+    extends AutoDisposeNotifierProviderImpl<ShowErrorEffect, bool> {
+  /// See also [ShowErrorEffect].
+  ShowErrorEffectProvider(
+    int fileId,
+  ) : this._internal(
+          () => ShowErrorEffect()..fileId = fileId,
+          from: showErrorEffectProvider,
+          name: r'showErrorEffectProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$showErrorEffectHash,
+          dependencies: ShowErrorEffectFamily._dependencies,
+          allTransitiveDependencies:
+              ShowErrorEffectFamily._allTransitiveDependencies,
+          fileId: fileId,
+        );
+
+  ShowErrorEffectProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.fileId,
+  }) : super.internal();
+
+  final int fileId;
+
+  @override
+  bool runNotifierBuild(
+    covariant ShowErrorEffect notifier,
+  ) {
+    return notifier.build(
+      fileId,
+    );
+  }
+
+  @override
+  Override overrideWith(ShowErrorEffect Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: ShowErrorEffectProvider._internal(
+        () => create()..fileId = fileId,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        fileId: fileId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<ShowErrorEffect, bool> createElement() {
+    return _ShowErrorEffectProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ShowErrorEffectProvider && other.fileId == fileId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, fileId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin ShowErrorEffectRef on AutoDisposeNotifierProviderRef<bool> {
+  /// The parameter `fileId` of this provider.
+  int get fileId;
+}
+
+class _ShowErrorEffectProviderElement
+    extends AutoDisposeNotifierProviderElement<ShowErrorEffect, bool>
+    with ShowErrorEffectRef {
+  _ShowErrorEffectProviderElement(super.provider);
+
+  @override
+  int get fileId => (origin as ShowErrorEffectProvider).fileId;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

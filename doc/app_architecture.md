@@ -27,6 +27,7 @@
 - currentSentenceIndexInAllSentencesProvider(fileId),
 - sentencePageControllerProvider(fileId),
 - currentWordIndexProvider(fileId)
+- showErrorEffectProvider(fileId)
 - audioPlayer関連のprovider
   - audioPlayerNotifierProvider
   - playerStateProvider
