@@ -174,7 +174,7 @@ class DictationSection {
   int get firstUnsolvedIndex =>
       paragraphs?.indexWhere((e) => !e.isCompleted) ?? -1;
 
-  double accuracy() => allCharacters().isNotEmpty ?  allCharacters().map((c)=>c.accuracy).mean:0;
+  double accuracy() => allCharacters().isNotEmpty ?  allCharacters().map((c)=>c.accuracy).whereType<double>().mean:0;
   List<DictationCharacter> allCharacters() => paragraphs?.expand<DictationCharacter>((p)=>p.allCharacters()).toList() ?? [];
 
   factory DictationSection.fromJson(Map<String, dynamic> json) =>
@@ -297,7 +297,7 @@ class DictationParagraph {
   int get firstUnsolvedIndex =>
       sentences?.indexWhere((e) => !e.isCompleted) ?? -1;
   
-  double accuracy() => allCharacters().isNotEmpty ?  allCharacters().map((c)=>c.accuracy).mean:0;
+  double accuracy() => allCharacters().isNotEmpty ?  allCharacters().map((c)=>c.accuracy).whereType<double>().mean:0;
   List<DictationCharacter> allCharacters() => sentences?.expand<DictationCharacter>((s)=>s.allCharacters()).toList() ?? [];
 
   factory DictationParagraph.fromJson(Map<String, dynamic> json) =>
@@ -427,7 +427,7 @@ class DictationSentence {
 
   int get firstUnsolvedIndex => words?.indexWhere((e) => !e.isCompleted) ?? -1;
 
-  double accuracy() => allCharacters().isNotEmpty ?  allCharacters().map((c)=>c.accuracy).mean:0;
+  double accuracy() => allCharacters().isNotEmpty ?  allCharacters().map((c)=>c.accuracy).whereType<double>().mean:0;
   List<DictationCharacter> allCharacters() => words?.expand<DictationCharacter>((w)=>w.characters ?? []).toList() ?? [];
 
   factory DictationSentence.fromJson(Map<String, dynamic> json) =>
@@ -554,7 +554,7 @@ class DictationWord {
       characters?.indexWhere((e) => !e.isSolved) ?? -1;
 
   double accuracy() => characters?.isNotEmpty == true
-      ? (characters!.map((c) => c.accuracy)).mean
+      ? (characters!.map((c) => c.accuracy)).whereType<double>().mean
       : 0;
 
   factory DictationWord.fromJson(Map<String, dynamic> json) =>
@@ -624,8 +624,8 @@ class DictationCharacter {
     return char.toLowerCase() != char.toUpperCase();
   }
 
-  double get accuracy =>
-      ((solvedCount - solveWithHintCount) / attempts).clamp(0, 1);
+  double? get accuracy => attempts!=0 ?
+      ((solvedCount - solveWithHintCount) / attempts).clamp(0, 1):null;
 
   DictationCharacter attempted({bool solved = false, bool usedHint = false}) =>
       copyWith(

@@ -3580,7 +3580,7 @@ P _dictationCharacterDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 1:
       return (reader.readLongOrNull(offset) ?? 0) as P;
     case 2:
@@ -3603,8 +3603,26 @@ P _dictationCharacterDeserializeProp<P>(
 extension DictationCharacterQueryFilter
     on QueryBuilder<DictationCharacter, DictationCharacter, QFilterCondition> {
   QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
+      accuracyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'accuracy',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
+      accuracyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'accuracy',
+      ));
+    });
+  }
+
+  QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
       accuracyEqualTo(
-    double value, {
+    double? value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -3618,7 +3636,7 @@ extension DictationCharacterQueryFilter
 
   QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
       accuracyGreaterThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -3634,7 +3652,7 @@ extension DictationCharacterQueryFilter
 
   QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
       accuracyLessThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -3650,8 +3668,8 @@ extension DictationCharacterQueryFilter
 
   QueryBuilder<DictationCharacter, DictationCharacter, QAfterFilterCondition>
       accuracyBetween(
-    double lower,
-    double upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     double epsilon = Query.epsilon,

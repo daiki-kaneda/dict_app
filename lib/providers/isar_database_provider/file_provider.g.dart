@@ -6,7 +6,7 @@ part of 'file_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fileNotifierHash() => r'654326d4538e862acb0a64d6e59d71bb01993c41';
+String _$fileNotifierHash() => r'15ba7b357af1d23ca4f49023dcd94c9a5860ed85';
 
 /// Copied from Dart SDK
 class _SystemHash {
