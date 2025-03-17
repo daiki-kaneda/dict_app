@@ -7,7 +7,7 @@ part of 'file_details_provider.dart';
 // **************************************************************************
 
 String _$sentencePageControllerHash() =>
-    r'53bc6df170074d6a8a1b07c7516a69761a1f29c0';
+    r'94b1ab9111bb3524b67f50e9fa72eba3326392b0';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -324,7 +324,7 @@ class _CurrentSentenceIndexInAllSentencesProviderElement
       (origin as CurrentSentenceIndexInAllSentencesProvider).fileId;
 }
 
-String _$currentWordIndexHash() => r'f42605452ed42ba779a294989084ad6955f0f727';
+String _$currentWordIndexHash() => r'fea8819b077ab79913fbc96d7e37e9dd1a47a277';
 
 abstract class _$CurrentWordIndex extends BuildlessAutoDisposeNotifier<int> {
   late final int fileId;
