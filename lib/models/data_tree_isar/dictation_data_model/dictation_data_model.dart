@@ -70,7 +70,9 @@ class DictationSection {
   }) {
     if (isCompleted) return (this, AnswerResult());
 
-    if (paragraphs == null || paragraphIndex >= paragraphs!.length)return (this, AnswerResult());
+    if (paragraphs == null || paragraphIndex >= paragraphs!.length) {
+      return (this, AnswerResult());
+    }
 
     final (updateParagraph, result) = paragraphs![paragraphIndex].tryCharacter(
         input: input,
@@ -169,9 +171,12 @@ class DictationSection {
     return index;
   }
 
-  int get firstUnsolvedIndex =>paragraphs?.indexWhere((e) => !e.isCompleted) ?? -1;
+  int get firstUnsolvedIndex =>
+      paragraphs?.indexWhere((e) => !e.isCompleted) ?? -1;
 
-  double get accuracy => paragraphs?.isNotEmpty == true ? (paragraphs!.map((c)=>c.accuracy)).mean:0;
+  double get accuracy => paragraphs?.isNotEmpty == true
+      ? (paragraphs!.map((c) => c.accuracy)).mean
+      : 0;
 
   factory DictationSection.fromJson(Map<String, dynamic> json) =>
       _$DictationSectionFromJson(json);
@@ -264,7 +269,9 @@ class DictationParagraph {
       required int wordIndex,
       bool solveAnyway = false}) {
     if (isCompleted) return (this, AnswerResult());
-    if (sentences == null || sentenceIndex >= sentences!.length)return (this, AnswerResult());
+    if (sentences == null || sentenceIndex >= sentences!.length) {
+      return (this, AnswerResult());
+    }
 
     final (updatedSentence, result) = sentences![sentenceIndex].tryCharacter(
         input: input, wordIndex: wordIndex, solveAnyway: solveAnyway);
@@ -291,7 +298,9 @@ class DictationParagraph {
   int get firstUnsolvedIndex =>
       sentences?.indexWhere((e) => !e.isCompleted) ?? -1;
 
-  double get accuracy => sentences?.isNotEmpty == true ? (sentences!.map((c)=>c.accuracy)).mean:0;
+  double get accuracy => sentences?.isNotEmpty == true
+      ? (sentences!.map((c) => c.accuracy)).mean
+      : 0;
 
   factory DictationParagraph.fromJson(Map<String, dynamic> json) =>
       _$DictationParagraphFromJson(json);
@@ -393,7 +402,10 @@ class DictationSentence {
       bool solveAnyway = false}) {
     if (isCompleted) return (this, AnswerResult());
 
-    if (words == null || wordIndex >= words!.length)return (this, AnswerResult());
+    if (words == null || wordIndex >= words!.length) {
+      return (this, AnswerResult());
+    }
+    ;
 
     final (updatedWord, result) =
         words![wordIndex].tryCharacter(input: input, solveAnyway: solveAnyway);
@@ -418,7 +430,8 @@ class DictationSentence {
 
   int get firstUnsolvedIndex => words?.indexWhere((e) => !e.isCompleted) ?? -1;
 
-  double get accuracy => words?.isNotEmpty == true ? (words!.map((c)=>c.accuracy)).mean:0;
+  double get accuracy =>
+      words?.isNotEmpty == true ? (words!.map((c) => c.accuracy)).mean : 0;
 
   factory DictationSentence.fromJson(Map<String, dynamic> json) =>
       _$DictationSentenceFromJson(json);
@@ -518,7 +531,7 @@ class DictationWord {
         firstUnsolvedCharacter.character!.toLowerCase() ==
             input.toLowerCase()) {
       newList[firstUnsolvedIndex] =
-          firstUnsolvedCharacter.copyWith(isSolved: true);
+          firstUnsolvedCharacter.attempted(solved: true, usedHint: solveAnyway);
       final newWord = copyWith(characters: newList);
       final newResult = result.copyWith(
           status: newWord.isCompleted
@@ -527,7 +540,9 @@ class DictationWord {
           solveAnyway: solveAnyway);
       return (newWord, newResult);
     } else {
-      return (this, result);
+      newList[firstUnsolvedIndex] = firstUnsolvedCharacter.attempted();
+      final newWord = copyWith(characters: newList);
+      return (newWord, result);
     }
   }
 
@@ -541,7 +556,9 @@ class DictationWord {
   int get firstUnsolvedIndex =>
       characters?.indexWhere((e) => !e.isSolved) ?? -1;
 
-  double get accuracy => characters?.isNotEmpty == true ? (characters!.map((c)=>c.accuracy)).mean:0;
+  double get accuracy => characters?.isNotEmpty == true
+      ? (characters!.map((c) => c.accuracy)).mean
+      : 0;
 
   factory DictationWord.fromJson(Map<String, dynamic> json) =>
       _$DictationWordFromJson(json);
@@ -556,9 +573,9 @@ class DictationCharacter {
     this.parentIndex,
     this.character,
     this.isSolved = false,
-    this.attempts=0,
-    this.solvedCount=0,
-    this.solveWithHintCount=0,
+    this.attempts = 0,
+    this.solvedCount = 0,
+    this.solveWithHintCount = 0,
   });
 
   int? index;
@@ -583,18 +600,22 @@ class DictationCharacter {
     );
   }
 
-  DictationCharacter copyWith({
-    int? index,
-    int? parentIndex,
-    String? character,
-    bool? isSolved,
-  }) {
+  DictationCharacter copyWith(
+      {int? index,
+      int? parentIndex,
+      String? character,
+      bool? isSolved,
+      int? attempts,
+      int? solvedCount,
+      int? solveWithHintCount}) {
     return DictationCharacter(
-      index: index ?? this.index,
-      parentIndex: parentIndex ?? this.parentIndex,
-      character: character ?? this.character,
-      isSolved: isSolved ?? this.isSolved,
-    );
+        index: index ?? this.index,
+        parentIndex: parentIndex ?? this.parentIndex,
+        character: character ?? this.character,
+        isSolved: isSolved ?? this.isSolved,
+        attempts: attempts ?? this.attempts,
+        solvedCount: solvedCount ?? this.solvedCount,
+        solveWithHintCount: solveWithHintCount ?? this.solveWithHintCount);
   }
 
   DictationCharacter updateIsSolved(bool target, {bool alphabetOnly = true}) {
@@ -606,7 +627,15 @@ class DictationCharacter {
     return char.toLowerCase() != char.toUpperCase();
   }
 
-  double get accuracy => ((solvedCount-solveWithHintCount)/attempts).clamp(0, 1);
+  double get accuracy =>
+      ((solvedCount - solveWithHintCount) / attempts).clamp(0, 1);
+
+  DictationCharacter attempted({bool solved = false, bool usedHint = false}) =>
+      copyWith(
+          isSolved: solved,
+          solvedCount: solved ? solvedCount + 1 : solvedCount,
+          solveWithHintCount:
+              solved && usedHint ? solveWithHintCount + 1 : solveWithHintCount);
 
   factory DictationCharacter.fromJson(Map<String, dynamic> json) =>
       _$DictationCharacterFromJson(json);
