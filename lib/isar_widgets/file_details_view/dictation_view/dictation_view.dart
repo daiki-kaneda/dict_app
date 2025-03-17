@@ -78,7 +78,7 @@ class DictationProblemView extends ConsumerWidget {
                   Expanded(child: DictationPageView(id: fileId)),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: PlayerWidget(),
+                    child: PlayerWidget(fileId),
                   )
                 ],
               ),

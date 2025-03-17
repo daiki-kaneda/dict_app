@@ -58,7 +58,8 @@ class FileNotifier extends _$FileNotifier {
         input: input,
         paragraphIndex: paragraphIndex,
         sentenceIndex: sentenceIndex,
-        wordIndex: wordIndex);
+        wordIndex: wordIndex,
+        solveAnyway: solveAnyway);
     await updateFile(paragraphs: section);
     _handleResult(result);
     print('tried character:$input');

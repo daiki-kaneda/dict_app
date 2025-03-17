@@ -7,13 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlayerWidget extends ConsumerWidget {
-  const PlayerWidget({
+  const PlayerWidget(this.fileId,{
     super.key,
   });
 
+  final int fileId;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -37,7 +39,7 @@ class PlayerWidget extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                HintFillButton(),
+                HintFillButton(fileId),
                 PlayPauseButton(),
                 SpeedButton(),
               ],
