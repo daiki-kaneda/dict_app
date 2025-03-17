@@ -47,28 +47,31 @@ void main() {
     expect(char.solveWithHintCount, solveWithHintCount);
   }
 
+  void verifyAccuracy(DictationSection dictation,double? accuracy){
+    expect(dictation.accuracy(), accuracy);
+  }
+
   void updateDictation(String input, int index) {
     final (newDictation, result) = dictation.tryCharacter(
       input: input,
       paragraphIndex: 0,
       sentenceIndex: 0,
       wordIndex: 1,
-      solveAnyway: true,
     );
     dictation = newDictation;
     expect(result.status, index == targetCharacters.length - 1 ? SolveStatus.wordSolved : SolveStatus.characterSolved);
+    verifyAccuracy(dictation, 1);
   }
 
   group('tryCharacter test start', () {
     test('correct input test', () {
-
+      verifyAccuracy(dictation,null);
       for (final entry in targetCharacters.asMap().entries) {
         final index = entry.key;
         final char = entry.value;
-
         verifyCharacterState(index, solved: false, attempts: 0, solvedCount: 0, solveWithHintCount: 0);
         updateDictation(char, index);
-        verifyCharacterState(index, solved: true, attempts: 1, solvedCount: 1, solveWithHintCount: 1);
+        verifyCharacterState(index, solved: true, attempts: 1, solvedCount: 1, solveWithHintCount: 0);
       }
     });
   });
