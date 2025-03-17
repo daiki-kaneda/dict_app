@@ -46,6 +46,13 @@ class FileNotifier extends _$FileNotifier {
     ref.invalidateSelf();
   }
 
+  Future<void> resetSection({bool alphabetOnly=true})async{
+    final file = await isar.files.get(id);
+    if (file == null) return;
+    final newSection = file.paragraphs.reset(alphabetOnly: alphabetOnly);
+    updateFile(paragraphs: newSection);
+  }
+
   Future<void> tryCharacter(
       {required String input,
       required int paragraphIndex,
