@@ -16,9 +16,7 @@ class DictSentenceWidget extends StatelessWidget {
         child: PlatformCircularProgressIndicator(),
       );
     }
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        child: Wrap(
+    return Wrap(
             spacing: 10,
             children: sentence.words!
                 .asMap()
@@ -28,6 +26,6 @@ class DictSentenceWidget extends StatelessWidget {
                       index: e.key,
                       word: e.value,
                     ))
-                .toList()));
+                .toList());
   }
 }
