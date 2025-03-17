@@ -13,51 +13,40 @@ const DictationSectionSchema = Schema(
   name: r'DictationSection',
   id: -1549784492033707822,
   properties: {
-    r'accuracy': PropertySchema(
-      id: 0,
-      name: r'accuracy',
-      type: IsarType.double,
-    ),
-    r'allCharacters': PropertySchema(
-      id: 1,
-      name: r'allCharacters',
-      type: IsarType.objectList,
-      target: r'DictationCharacter',
-    ),
     r'displayText': PropertySchema(
-      id: 2,
+      id: 0,
       name: r'displayText',
       type: IsarType.string,
     ),
     r'firstUnsolvedIndex': PropertySchema(
-      id: 3,
+      id: 1,
       name: r'firstUnsolvedIndex',
       type: IsarType.long,
     ),
     r'getAllSentences': PropertySchema(
-      id: 4,
+      id: 2,
       name: r'getAllSentences',
       type: IsarType.objectList,
       target: r'DictationSentence',
     ),
     r'index': PropertySchema(
-      id: 5,
+      id: 3,
       name: r'index',
       type: IsarType.long,
     ),
     r'isCompleted': PropertySchema(
-      id: 6,
+      id: 4,
       name: r'isCompleted',
       type: IsarType.bool,
     ),
     r'paragraphs': PropertySchema(
-      id: 7,
+      id: 5,
       name: r'paragraphs',
       type: IsarType.objectList,
       target: r'DictationParagraph',
     ),
     r'parentIndex': PropertySchema(
-      id: 8,
+      id: 6,
       name: r'parentIndex',
       type: IsarType.long,
     )
@@ -74,15 +63,6 @@ int _dictationSectionEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.allCharacters.length * 3;
-  {
-    final offsets = allOffsets[DictationCharacter]!;
-    for (var i = 0; i < object.allCharacters.length; i++) {
-      final value = object.allCharacters[i];
-      bytesCount +=
-          DictationCharacterSchema.estimateSize(value, offsets, allOffsets);
-    }
-  }
   bytesCount += 3 + object.displayText.length * 3;
   {
     final list = object.getAllSentences;
@@ -121,30 +101,23 @@ void _dictationSectionSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDouble(offsets[0], object.accuracy);
-  writer.writeObjectList<DictationCharacter>(
-    offsets[1],
-    allOffsets,
-    DictationCharacterSchema.serialize,
-    object.allCharacters,
-  );
-  writer.writeString(offsets[2], object.displayText);
-  writer.writeLong(offsets[3], object.firstUnsolvedIndex);
+  writer.writeString(offsets[0], object.displayText);
+  writer.writeLong(offsets[1], object.firstUnsolvedIndex);
   writer.writeObjectList<DictationSentence>(
-    offsets[4],
+    offsets[2],
     allOffsets,
     DictationSentenceSchema.serialize,
     object.getAllSentences,
   );
-  writer.writeLong(offsets[5], object.index);
-  writer.writeBool(offsets[6], object.isCompleted);
+  writer.writeLong(offsets[3], object.index);
+  writer.writeBool(offsets[4], object.isCompleted);
   writer.writeObjectList<DictationParagraph>(
-    offsets[7],
+    offsets[5],
     allOffsets,
     DictationParagraphSchema.serialize,
     object.paragraphs,
   );
-  writer.writeLong(offsets[8], object.parentIndex);
+  writer.writeLong(offsets[6], object.parentIndex);
 }
 
 DictationSection _dictationSectionDeserialize(
@@ -154,14 +127,14 @@ DictationSection _dictationSectionDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = DictationSection(
-    index: reader.readLongOrNull(offsets[5]),
+    index: reader.readLongOrNull(offsets[3]),
     paragraphs: reader.readObjectList<DictationParagraph>(
-      offsets[7],
+      offsets[5],
       DictationParagraphSchema.deserialize,
       allOffsets,
       DictationParagraph(),
     ),
-    parentIndex: reader.readLongOrNull(offsets[8]),
+    parentIndex: reader.readLongOrNull(offsets[6]),
   );
   return object;
 }
@@ -174,38 +147,28 @@ P _dictationSectionDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDouble(offset)) as P;
-    case 1:
-      return (reader.readObjectList<DictationCharacter>(
-            offset,
-            DictationCharacterSchema.deserialize,
-            allOffsets,
-            DictationCharacter(),
-          ) ??
-          []) as P;
-    case 2:
       return (reader.readString(offset)) as P;
-    case 3:
+    case 1:
       return (reader.readLong(offset)) as P;
-    case 4:
+    case 2:
       return (reader.readObjectList<DictationSentence>(
         offset,
         DictationSentenceSchema.deserialize,
         allOffsets,
         DictationSentence(),
       )) as P;
-    case 5:
+    case 3:
       return (reader.readLongOrNull(offset)) as P;
-    case 6:
+    case 4:
       return (reader.readBool(offset)) as P;
-    case 7:
+    case 5:
       return (reader.readObjectList<DictationParagraph>(
         offset,
         DictationParagraphSchema.deserialize,
         allOffsets,
         DictationParagraph(),
       )) as P;
-    case 8:
+    case 6:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -214,161 +177,6 @@ P _dictationSectionDeserializeProp<P>(
 
 extension DictationSectionQueryFilter
     on QueryBuilder<DictationSection, DictationSection, QFilterCondition> {
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      accuracyEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      accuracyGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      accuracyLessThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      accuracyBetween(
-    double lower,
-    double upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'accuracy',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      allCharactersLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      allCharactersIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      allCharactersIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      allCharactersLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      allCharactersLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      allCharactersLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
-    });
-  }
-
   QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextEqualTo(
     String value, {
@@ -937,13 +745,6 @@ extension DictationSectionQueryFilter
 extension DictationSectionQueryObject
     on QueryBuilder<DictationSection, DictationSection, QFilterCondition> {
   QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      allCharactersElement(FilterQuery<DictationCharacter> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'allCharacters');
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       getAllSentencesElement(FilterQuery<DictationSentence> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'getAllSentences');
@@ -965,55 +766,44 @@ const DictationParagraphSchema = Schema(
   name: r'DictationParagraph',
   id: -1052782010084208865,
   properties: {
-    r'accuracy': PropertySchema(
-      id: 0,
-      name: r'accuracy',
-      type: IsarType.double,
-    ),
-    r'allCharacters': PropertySchema(
-      id: 1,
-      name: r'allCharacters',
-      type: IsarType.objectList,
-      target: r'DictationCharacter',
-    ),
     r'displayText': PropertySchema(
-      id: 2,
+      id: 0,
       name: r'displayText',
       type: IsarType.string,
     ),
     r'end': PropertySchema(
-      id: 3,
+      id: 1,
       name: r'end',
       type: IsarType.double,
     ),
     r'firstUnsolvedIndex': PropertySchema(
-      id: 4,
+      id: 2,
       name: r'firstUnsolvedIndex',
       type: IsarType.long,
     ),
     r'index': PropertySchema(
-      id: 5,
+      id: 3,
       name: r'index',
       type: IsarType.long,
     ),
     r'isCompleted': PropertySchema(
-      id: 6,
+      id: 4,
       name: r'isCompleted',
       type: IsarType.bool,
     ),
     r'parentIndex': PropertySchema(
-      id: 7,
+      id: 5,
       name: r'parentIndex',
       type: IsarType.long,
     ),
     r'sentences': PropertySchema(
-      id: 8,
+      id: 6,
       name: r'sentences',
       type: IsarType.objectList,
       target: r'DictationSentence',
     ),
     r'start': PropertySchema(
-      id: 9,
+      id: 7,
       name: r'start',
       type: IsarType.double,
     )
@@ -1030,15 +820,6 @@ int _dictationParagraphEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.allCharacters.length * 3;
-  {
-    final offsets = allOffsets[DictationCharacter]!;
-    for (var i = 0; i < object.allCharacters.length; i++) {
-      final value = object.allCharacters[i];
-      bytesCount +=
-          DictationCharacterSchema.estimateSize(value, offsets, allOffsets);
-    }
-  }
   bytesCount += 3 + object.displayText.length * 3;
   {
     final list = object.sentences;
@@ -1063,26 +844,19 @@ void _dictationParagraphSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDouble(offsets[0], object.accuracy);
-  writer.writeObjectList<DictationCharacter>(
-    offsets[1],
-    allOffsets,
-    DictationCharacterSchema.serialize,
-    object.allCharacters,
-  );
-  writer.writeString(offsets[2], object.displayText);
-  writer.writeDouble(offsets[3], object.end);
-  writer.writeLong(offsets[4], object.firstUnsolvedIndex);
-  writer.writeLong(offsets[5], object.index);
-  writer.writeBool(offsets[6], object.isCompleted);
-  writer.writeLong(offsets[7], object.parentIndex);
+  writer.writeString(offsets[0], object.displayText);
+  writer.writeDouble(offsets[1], object.end);
+  writer.writeLong(offsets[2], object.firstUnsolvedIndex);
+  writer.writeLong(offsets[3], object.index);
+  writer.writeBool(offsets[4], object.isCompleted);
+  writer.writeLong(offsets[5], object.parentIndex);
   writer.writeObjectList<DictationSentence>(
-    offsets[8],
+    offsets[6],
     allOffsets,
     DictationSentenceSchema.serialize,
     object.sentences,
   );
-  writer.writeDouble(offsets[9], object.start);
+  writer.writeDouble(offsets[7], object.start);
 }
 
 DictationParagraph _dictationParagraphDeserialize(
@@ -1092,16 +866,16 @@ DictationParagraph _dictationParagraphDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = DictationParagraph(
-    end: reader.readDoubleOrNull(offsets[3]),
-    index: reader.readLongOrNull(offsets[5]),
-    parentIndex: reader.readLongOrNull(offsets[7]),
+    end: reader.readDoubleOrNull(offsets[1]),
+    index: reader.readLongOrNull(offsets[3]),
+    parentIndex: reader.readLongOrNull(offsets[5]),
     sentences: reader.readObjectList<DictationSentence>(
-      offsets[8],
+      offsets[6],
       DictationSentenceSchema.deserialize,
       allOffsets,
       DictationSentence(),
     ),
-    start: reader.readDoubleOrNull(offsets[9]),
+    start: reader.readDoubleOrNull(offsets[7]),
   );
   return object;
 }
@@ -1114,35 +888,25 @@ P _dictationParagraphDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDouble(offset)) as P;
-    case 1:
-      return (reader.readObjectList<DictationCharacter>(
-            offset,
-            DictationCharacterSchema.deserialize,
-            allOffsets,
-            DictationCharacter(),
-          ) ??
-          []) as P;
-    case 2:
       return (reader.readString(offset)) as P;
-    case 3:
+    case 1:
       return (reader.readDoubleOrNull(offset)) as P;
-    case 4:
+    case 2:
       return (reader.readLong(offset)) as P;
+    case 3:
+      return (reader.readLongOrNull(offset)) as P;
+    case 4:
+      return (reader.readBool(offset)) as P;
     case 5:
       return (reader.readLongOrNull(offset)) as P;
     case 6:
-      return (reader.readBool(offset)) as P;
-    case 7:
-      return (reader.readLongOrNull(offset)) as P;
-    case 8:
       return (reader.readObjectList<DictationSentence>(
         offset,
         DictationSentenceSchema.deserialize,
         allOffsets,
         DictationSentence(),
       )) as P;
-    case 9:
+    case 7:
       return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1151,161 +915,6 @@ P _dictationParagraphDeserializeProp<P>(
 
 extension DictationParagraphQueryFilter
     on QueryBuilder<DictationParagraph, DictationParagraph, QFilterCondition> {
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      accuracyEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      accuracyGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      accuracyLessThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      accuracyBetween(
-    double lower,
-    double upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'accuracy',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      allCharactersLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      allCharactersIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      allCharactersIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      allCharactersLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      allCharactersLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      allCharactersLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
-    });
-  }
-
   QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
       displayTextEqualTo(
     String value, {
@@ -1935,13 +1544,6 @@ extension DictationParagraphQueryFilter
 extension DictationParagraphQueryObject
     on QueryBuilder<DictationParagraph, DictationParagraph, QFilterCondition> {
   QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
-      allCharactersElement(FilterQuery<DictationCharacter> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'allCharacters');
-    });
-  }
-
-  QueryBuilder<DictationParagraph, DictationParagraph, QAfterFilterCondition>
       sentencesElement(FilterQuery<DictationSentence> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'sentences');
@@ -1956,59 +1558,48 @@ const DictationSentenceSchema = Schema(
   name: r'DictationSentence',
   id: 1830829723399133458,
   properties: {
-    r'accuracy': PropertySchema(
-      id: 0,
-      name: r'accuracy',
-      type: IsarType.double,
-    ),
-    r'allCharacters': PropertySchema(
-      id: 1,
-      name: r'allCharacters',
-      type: IsarType.objectList,
-      target: r'DictationCharacter',
-    ),
     r'displayText': PropertySchema(
-      id: 2,
+      id: 0,
       name: r'displayText',
       type: IsarType.string,
     ),
     r'end': PropertySchema(
-      id: 3,
+      id: 1,
       name: r'end',
       type: IsarType.double,
     ),
     r'firstUnsolvedIndex': PropertySchema(
-      id: 4,
+      id: 2,
       name: r'firstUnsolvedIndex',
       type: IsarType.long,
     ),
     r'index': PropertySchema(
-      id: 5,
+      id: 3,
       name: r'index',
       type: IsarType.long,
     ),
     r'isCompleted': PropertySchema(
-      id: 6,
+      id: 4,
       name: r'isCompleted',
       type: IsarType.bool,
     ),
     r'parentIndex': PropertySchema(
-      id: 7,
+      id: 5,
       name: r'parentIndex',
       type: IsarType.long,
     ),
     r'sentence': PropertySchema(
-      id: 8,
+      id: 6,
       name: r'sentence',
       type: IsarType.string,
     ),
     r'start': PropertySchema(
-      id: 9,
+      id: 7,
       name: r'start',
       type: IsarType.double,
     ),
     r'words': PropertySchema(
-      id: 10,
+      id: 8,
       name: r'words',
       type: IsarType.objectList,
       target: r'DictationWord',
@@ -2026,15 +1617,6 @@ int _dictationSentenceEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.allCharacters.length * 3;
-  {
-    final offsets = allOffsets[DictationCharacter]!;
-    for (var i = 0; i < object.allCharacters.length; i++) {
-      final value = object.allCharacters[i];
-      bytesCount +=
-          DictationCharacterSchema.estimateSize(value, offsets, allOffsets);
-    }
-  }
   bytesCount += 3 + object.displayText.length * 3;
   {
     final value = object.sentence;
@@ -2065,23 +1647,16 @@ void _dictationSentenceSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDouble(offsets[0], object.accuracy);
-  writer.writeObjectList<DictationCharacter>(
-    offsets[1],
-    allOffsets,
-    DictationCharacterSchema.serialize,
-    object.allCharacters,
-  );
-  writer.writeString(offsets[2], object.displayText);
-  writer.writeDouble(offsets[3], object.end);
-  writer.writeLong(offsets[4], object.firstUnsolvedIndex);
-  writer.writeLong(offsets[5], object.index);
-  writer.writeBool(offsets[6], object.isCompleted);
-  writer.writeLong(offsets[7], object.parentIndex);
-  writer.writeString(offsets[8], object.sentence);
-  writer.writeDouble(offsets[9], object.start);
+  writer.writeString(offsets[0], object.displayText);
+  writer.writeDouble(offsets[1], object.end);
+  writer.writeLong(offsets[2], object.firstUnsolvedIndex);
+  writer.writeLong(offsets[3], object.index);
+  writer.writeBool(offsets[4], object.isCompleted);
+  writer.writeLong(offsets[5], object.parentIndex);
+  writer.writeString(offsets[6], object.sentence);
+  writer.writeDouble(offsets[7], object.start);
   writer.writeObjectList<DictationWord>(
-    offsets[10],
+    offsets[8],
     allOffsets,
     DictationWordSchema.serialize,
     object.words,
@@ -2095,13 +1670,13 @@ DictationSentence _dictationSentenceDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = DictationSentence(
-    end: reader.readDoubleOrNull(offsets[3]),
-    index: reader.readLongOrNull(offsets[5]),
-    parentIndex: reader.readLongOrNull(offsets[7]),
-    sentence: reader.readStringOrNull(offsets[8]),
-    start: reader.readDoubleOrNull(offsets[9]),
+    end: reader.readDoubleOrNull(offsets[1]),
+    index: reader.readLongOrNull(offsets[3]),
+    parentIndex: reader.readLongOrNull(offsets[5]),
+    sentence: reader.readStringOrNull(offsets[6]),
+    start: reader.readDoubleOrNull(offsets[7]),
     words: reader.readObjectList<DictationWord>(
-      offsets[10],
+      offsets[8],
       DictationWordSchema.deserialize,
       allOffsets,
       DictationWord(),
@@ -2118,32 +1693,22 @@ P _dictationSentenceDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDouble(offset)) as P;
-    case 1:
-      return (reader.readObjectList<DictationCharacter>(
-            offset,
-            DictationCharacterSchema.deserialize,
-            allOffsets,
-            DictationCharacter(),
-          ) ??
-          []) as P;
-    case 2:
       return (reader.readString(offset)) as P;
-    case 3:
+    case 1:
       return (reader.readDoubleOrNull(offset)) as P;
-    case 4:
+    case 2:
       return (reader.readLong(offset)) as P;
+    case 3:
+      return (reader.readLongOrNull(offset)) as P;
+    case 4:
+      return (reader.readBool(offset)) as P;
     case 5:
       return (reader.readLongOrNull(offset)) as P;
     case 6:
-      return (reader.readBool(offset)) as P;
-    case 7:
-      return (reader.readLongOrNull(offset)) as P;
-    case 8:
       return (reader.readStringOrNull(offset)) as P;
-    case 9:
+    case 7:
       return (reader.readDoubleOrNull(offset)) as P;
-    case 10:
+    case 8:
       return (reader.readObjectList<DictationWord>(
         offset,
         DictationWordSchema.deserialize,
@@ -2157,161 +1722,6 @@ P _dictationSentenceDeserializeProp<P>(
 
 extension DictationSentenceQueryFilter
     on QueryBuilder<DictationSentence, DictationSentence, QFilterCondition> {
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      accuracyEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      accuracyGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      accuracyLessThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      accuracyBetween(
-    double lower,
-    double upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'accuracy',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      allCharactersLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      allCharactersIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      allCharactersIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      allCharactersLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      allCharactersLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      allCharactersLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'allCharacters',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
-    });
-  }
-
   QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
       displayTextEqualTo(
     String value, {
@@ -3095,13 +2505,6 @@ extension DictationSentenceQueryFilter
 extension DictationSentenceQueryObject
     on QueryBuilder<DictationSentence, DictationSentence, QFilterCondition> {
   QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
-      allCharactersElement(FilterQuery<DictationCharacter> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'allCharacters');
-    });
-  }
-
-  QueryBuilder<DictationSentence, DictationSentence, QAfterFilterCondition>
       wordsElement(FilterQuery<DictationWord> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'words');
@@ -3116,54 +2519,49 @@ const DictationWordSchema = Schema(
   name: r'DictationWord',
   id: -712638523791849784,
   properties: {
-    r'accuracy': PropertySchema(
-      id: 0,
-      name: r'accuracy',
-      type: IsarType.double,
-    ),
     r'characters': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'characters',
       type: IsarType.objectList,
       target: r'DictationCharacter',
     ),
     r'displayText': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'displayText',
       type: IsarType.string,
     ),
     r'end': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'end',
       type: IsarType.double,
     ),
     r'firstUnsolvedIndex': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'firstUnsolvedIndex',
       type: IsarType.long,
     ),
     r'index': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'index',
       type: IsarType.long,
     ),
     r'isCompleted': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'isCompleted',
       type: IsarType.bool,
     ),
     r'parentIndex': PropertySchema(
-      id: 7,
+      id: 6,
       name: r'parentIndex',
       type: IsarType.long,
     ),
     r'start': PropertySchema(
-      id: 8,
+      id: 7,
       name: r'start',
       type: IsarType.double,
     ),
     r'word': PropertySchema(
-      id: 9,
+      id: 8,
       name: r'word',
       type: IsarType.string,
     )
@@ -3210,21 +2608,20 @@ void _dictationWordSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDouble(offsets[0], object.accuracy);
   writer.writeObjectList<DictationCharacter>(
-    offsets[1],
+    offsets[0],
     allOffsets,
     DictationCharacterSchema.serialize,
     object.characters,
   );
-  writer.writeString(offsets[2], object.displayText);
-  writer.writeDouble(offsets[3], object.end);
-  writer.writeLong(offsets[4], object.firstUnsolvedIndex);
-  writer.writeLong(offsets[5], object.index);
-  writer.writeBool(offsets[6], object.isCompleted);
-  writer.writeLong(offsets[7], object.parentIndex);
-  writer.writeDouble(offsets[8], object.start);
-  writer.writeString(offsets[9], object.word);
+  writer.writeString(offsets[1], object.displayText);
+  writer.writeDouble(offsets[2], object.end);
+  writer.writeLong(offsets[3], object.firstUnsolvedIndex);
+  writer.writeLong(offsets[4], object.index);
+  writer.writeBool(offsets[5], object.isCompleted);
+  writer.writeLong(offsets[6], object.parentIndex);
+  writer.writeDouble(offsets[7], object.start);
+  writer.writeString(offsets[8], object.word);
 }
 
 DictationWord _dictationWordDeserialize(
@@ -3235,16 +2632,16 @@ DictationWord _dictationWordDeserialize(
 ) {
   final object = DictationWord(
     characters: reader.readObjectList<DictationCharacter>(
-      offsets[1],
+      offsets[0],
       DictationCharacterSchema.deserialize,
       allOffsets,
       DictationCharacter(),
     ),
-    end: reader.readDoubleOrNull(offsets[3]),
-    index: reader.readLongOrNull(offsets[5]),
-    parentIndex: reader.readLongOrNull(offsets[7]),
-    start: reader.readDoubleOrNull(offsets[8]),
-    word: reader.readStringOrNull(offsets[9]),
+    end: reader.readDoubleOrNull(offsets[2]),
+    index: reader.readLongOrNull(offsets[4]),
+    parentIndex: reader.readLongOrNull(offsets[6]),
+    start: reader.readDoubleOrNull(offsets[7]),
+    word: reader.readStringOrNull(offsets[8]),
   );
   return object;
 }
@@ -3257,29 +2654,27 @@ P _dictationWordDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDouble(offset)) as P;
-    case 1:
       return (reader.readObjectList<DictationCharacter>(
         offset,
         DictationCharacterSchema.deserialize,
         allOffsets,
         DictationCharacter(),
       )) as P;
-    case 2:
+    case 1:
       return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readDoubleOrNull(offset)) as P;
     case 3:
-      return (reader.readDoubleOrNull(offset)) as P;
-    case 4:
       return (reader.readLong(offset)) as P;
+    case 4:
+      return (reader.readLongOrNull(offset)) as P;
     case 5:
-      return (reader.readLongOrNull(offset)) as P;
-    case 6:
       return (reader.readBool(offset)) as P;
-    case 7:
+    case 6:
       return (reader.readLongOrNull(offset)) as P;
-    case 8:
+    case 7:
       return (reader.readDoubleOrNull(offset)) as P;
-    case 9:
+    case 8:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -3288,72 +2683,6 @@ P _dictationWordDeserializeProp<P>(
 
 extension DictationWordQueryFilter
     on QueryBuilder<DictationWord, DictationWord, QFilterCondition> {
-  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
-      accuracyEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
-      accuracyGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
-      accuracyLessThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'accuracy',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
-      accuracyBetween(
-    double lower,
-    double upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'accuracy',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
   QueryBuilder<DictationWord, DictationWord, QAfterFilterCondition>
       charactersIsNull() {
     return QueryBuilder.apply(this, (query) {
