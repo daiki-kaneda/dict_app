@@ -26,6 +26,8 @@ class _DictationPageViewState extends ConsumerState<DictationPageView> {
       .moveToFirstUnsolvedIndex();
       ref.read(sentencePageControllerProvider(widget.id).notifier)
       .moveToFirstUnsolvedIndex();
+      ref.read(inputTextFieldFocusNodeProvider.notifier)
+      .requestFocus();
     });
   }
   @override

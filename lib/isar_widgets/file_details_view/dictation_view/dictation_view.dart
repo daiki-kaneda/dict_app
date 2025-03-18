@@ -91,7 +91,7 @@ class DictationProblemView extends ConsumerWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            InputTextField(FocusNode()..requestFocus(), fileId),
+            InputTextField(fileId),
             SafeArea(
               child: Column(
                 children: [

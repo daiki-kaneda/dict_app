@@ -3,9 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InputTextField extends ConsumerStatefulWidget {
-  const InputTextField(this.focusNode,this.fileId,{super.key});
-
-  final FocusNode focusNode;
+  const InputTextField(this.fileId,{super.key});
   final int fileId;
 
   @override
@@ -16,6 +14,7 @@ class _InputTextFieldState extends ConsumerState<InputTextField> {
   @override
   Widget build(BuildContext context) {
     ref.watch(typedTextNotifierProvider(widget.fileId));
+    final focusNode = ref.watch(inputTextFieldFocusNodeProvider);
     return Opacity(
       opacity: 0,
       child: IgnorePointer(
@@ -23,7 +22,7 @@ class _InputTextFieldState extends ConsumerState<InputTextField> {
           maxLines: null,
           maxLength: null,
           autocorrect: false,
-          focusNode: widget.focusNode,
+          focusNode: focusNode,
           onChanged: (value) {
             if (value.isEmpty) return;
             print(value.characters.lastOrNull ?? '');

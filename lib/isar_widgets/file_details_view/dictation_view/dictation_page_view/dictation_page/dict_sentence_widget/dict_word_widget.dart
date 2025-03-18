@@ -61,12 +61,12 @@ class DictWordWidget extends ConsumerWidget {
       child: GestureDetector(
         onTap: () {
           if (word.isCompleted) {
-            // focusNode.unfocus();
+            ref.read(inputTextFieldFocusNodeProvider.notifier).unfocus();
             platform.invokeMethod('searchDictionary', {'word': word.word});
           } else {
             HapticFeedback.lightImpact();
             ref.read(currentWordIndexProvider(fileId).notifier).updateIndex(index);
-            // focusNode.requestFocus();
+            ref.read(inputTextFieldFocusNodeProvider.notifier).requestFocus();
           }
         },
         onLongPress: () {
