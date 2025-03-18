@@ -3,6 +3,7 @@ import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictationPageView extends ConsumerStatefulWidget {
@@ -17,19 +18,20 @@ class DictationPageView extends ConsumerStatefulWidget {
 }
 
 class _DictationPageViewState extends ConsumerState<DictationPageView> {
-
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      ref.read(currentWordIndexProvider(widget.id).notifier)
-      .moveToFirstUnsolvedIndex();
-      ref.read(sentencePageControllerProvider(widget.id).notifier)
-      .moveToFirstUnsolvedIndex();
-      ref.read(inputTextFieldFocusNodeProvider.notifier)
-      .requestFocus();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(currentWordIndexProvider(widget.id).notifier)
+          .moveToFirstUnsolvedIndex();
+      ref
+          .read(sentencePageControllerProvider(widget.id).notifier)
+          .moveToFirstUnsolvedIndex();
+      ref.read(inputTextFieldFocusNodeProvider.notifier).requestFocus();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     ref.watch(currentSentenceIndexInAllSentencesProvider(widget.id));
@@ -45,22 +47,25 @@ class _DictationPageViewState extends ConsumerState<DictationPageView> {
       ref
           .read(startEndProviderProvider.notifier)
           .setNewValue(s?.start ?? 0, s?.end ?? 0);
-      print((s?.start,s?.end).toString());
+      print((s?.start, s?.end).toString());
       // update wordIndex to newest unSolvedIndex
-      ref.read(currentWordIndexProvider(widget.id).notifier)
-      .moveToFirstUnsolvedIndex();
+      ref
+          .read(currentWordIndexProvider(widget.id).notifier)
+          .moveToFirstUnsolvedIndex();
     });
     if (sentences == null) return Container();
 
-    return PageView.builder(
-      controller: controller,
-      itemCount: sentences.length,
-      itemBuilder: (context, index) {
-        final dictationSentence = sentences[index];
-        return DictationPage(
-          widget.id,
-          dictationSentence: dictationSentence);
-      },
-    );
+    return PlatformScrollbar(
+        scrollbarOrientation: ScrollbarOrientation.bottom,
+        controller: controller,
+        child: PageView.builder(
+          controller: controller,
+          itemCount: sentences.length,
+          itemBuilder: (context, index) {
+            final dictationSentence = sentences[index];
+            return DictationPage(widget.id,
+                dictationSentence: dictationSentence);
+          },
+        ));
   }
 }

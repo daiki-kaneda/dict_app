@@ -91,7 +91,6 @@ class DictationProblemView extends ConsumerWidget {
         navigationBar: CupertinoNavigationBar(
           leading: PlatformCloseButton(onPop: onPop,),
           middle: Text('Dictation'),
-          bottom: PreferredSize(preferredSize: Size.fromHeight(5), child: PageProgressIndicator(fileId))
         ),
         child: Stack(
           fit: StackFit.expand,
@@ -101,6 +100,7 @@ class DictationProblemView extends ConsumerWidget {
               child: Column(
                 children: [
                   Expanded(child: DictationPageView(id: fileId)),
+                  SizedBox(height: 15,),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: PlayerWidget(fileId),

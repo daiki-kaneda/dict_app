@@ -75,6 +75,9 @@ class ListeningContentView extends ConsumerWidget {
                   child: Column(
                 children: [
                   Expanded(child: ListeningPageView(id: fileId)),
+                  SizedBox(
+                    height: 15,
+                  ),
                   PlayerWidget(fileId)
                 ],
               )),

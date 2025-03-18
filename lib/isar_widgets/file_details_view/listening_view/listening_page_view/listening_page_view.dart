@@ -3,6 +3,7 @@ import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ListeningPageView extends ConsumerWidget {
@@ -25,17 +26,20 @@ class ListeningPageView extends ConsumerWidget {
       ref
           .read(startEndProviderProvider.notifier)
           .setNewValue(s?.start ?? 0, s?.end ?? 0);
-      print((s?.start,s?.end).toString());
+      print((s?.start, s?.end).toString());
     });
     if (sentences == null) return Container();
 
-    return PageView.builder(
-      controller: controller,
-      itemCount: sentences.length,
-      itemBuilder: (context, index) {
-        final dictationSentence = sentences[index];
-        return ListeningPage(id, dictationSentence: dictationSentence);
-      },
-    );
+    return PlatformScrollbar(
+        scrollbarOrientation: ScrollbarOrientation.bottom,
+        controller: controller,
+        child: PageView.builder(
+          controller: controller,
+          itemCount: sentences.length,
+          itemBuilder: (context, index) {
+            final dictationSentence = sentences[index];
+            return ListeningPage(id, dictationSentence: dictationSentence);
+          },
+        ));
   }
 }
