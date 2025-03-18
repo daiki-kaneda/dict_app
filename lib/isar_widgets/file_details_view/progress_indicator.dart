@@ -36,20 +36,29 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
         ref.watch(completionRateProvider(fileId, alphabetOnly: alphabetOnly));
     final showWordSuccessEffect =
         ref.watch(showWordSuccessEffectProvider(fileId));
+    final showSentenceSuccessEffect =
+        ref.watch(showSentenceSuccessEffectProvider(fileId));
     final showSectionSuccessEffect =
         ref.watch(showSectionSuccessEffectProvider(fileId));
 
     final wordSuccessColor =
         isIOS ? CupertinoColors.systemGreen : Colors.greenAccent;
+    final sentenceSuccessColor =
+        isIOS ? CupertinoColors.systemIndigo : Colors.indigoAccent;
     final sectionSuccessColor =
         isIOS ? CupertinoColors.systemPurple : Colors.purpleAccent;
-    final normalColor =
-        isIOS ? CupertinoColors.systemBlue.resolveFrom(context) : Colors.blue;
+    final normalColor = isIOS
+        ? CupertinoColors.systemBlue.resolveFrom(context)
+        : Colors.blueAccent;
 
     return AnimatedPlatformLinearIndicator(
         progress: completionRate,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeIn,
         activeColor: showSectionSuccessEffect
             ? sectionSuccessColor
-            : (showWordSuccessEffect ? wordSuccessColor : normalColor));
+            : (showSentenceSuccessEffect
+                ? sentenceSuccessColor
+                : (showWordSuccessEffect ? wordSuccessColor : normalColor)));
   }
 }

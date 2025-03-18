@@ -86,6 +86,8 @@ class FileNotifier extends _$FileNotifier {
         .showEffect();
       }
       case SolveStatus.sectionSolved:{
+        ref.read(showSectionSuccessEffectProvider(id).notifier)
+        .showEffect();
         showNotifyDialog(
           navigatorKey.currentContext!, 
           title: '完了メッセージ', 
@@ -95,10 +97,14 @@ class FileNotifier extends _$FileNotifier {
         return;
       }
       case SolveStatus.sentenceSolved:{
+        ref.read(showSentenceSuccessEffectProvider(id).notifier)
+        .showEffect();
         ref.read(SentencePageControllerProvider(id).notifier)
         .moveToFirstUnsolvedIndex();
       }
       case SolveStatus.wordSolved:{
+        ref.read(showWordSuccessEffectProvider(id).notifier)
+        .showEffect();
         ref.read(currentWordIndexProvider(id).notifier)
         .moveToFirstUnsolvedIndex();
       }
