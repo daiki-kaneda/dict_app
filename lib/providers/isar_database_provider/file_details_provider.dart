@@ -254,3 +254,28 @@ class ShowErrorEffect extends _$ShowErrorEffect {
     state = !state;
   }
 }
+
+@riverpod
+class ShowWordSuccessEffect extends _$ShowWordSuccessEffect {
+  @override
+  bool build(int fileId) {
+    return false;
+  }
+
+  void showEffect({Duration duration = const Duration(milliseconds: 250)}) {
+    if (!state) {
+      state = true;
+      Future.delayed(duration, () {
+        if (state) hideEffect();
+      });
+    }
+  }
+
+  void hideEffect() {
+    if (state) state = false;
+  }
+
+  void toggle() {
+    state = !state;
+  }
+}

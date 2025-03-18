@@ -64,7 +64,7 @@ class DictWordWidget extends ConsumerWidget {
             ref.read(inputTextFieldFocusNodeProvider.notifier).unfocus();
             platform.invokeMethod('searchDictionary', {'word': word.word});
           } else {
-            HapticFeedback.lightImpact();
+            HapticFeedback.selectionClick();
             ref.read(currentWordIndexProvider(fileId).notifier).updateIndex(index);
             ref.read(inputTextFieldFocusNodeProvider.notifier).requestFocus();
           }

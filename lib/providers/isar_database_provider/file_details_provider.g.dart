@@ -901,7 +901,7 @@ class _TypedTextNotifierProviderElement
 }
 
 String _$inputTextFieldFocusNodeHash() =>
-    r'1f96be962cf7050455a05496b8d4160d61ad7ec7';
+    r'dbad2485a6e9ae970747aed8f3c59465f3db13a3';
 
 /// See also [InputTextFieldFocusNode].
 @ProviderFor(InputTextFieldFocusNode)
@@ -1199,6 +1199,151 @@ class _ShowErrorEffectProviderElement
 
   @override
   int get fileId => (origin as ShowErrorEffectProvider).fileId;
+}
+
+String _$showWordSuccessEffectHash() =>
+    r'f67f57b6bec96e74b37cae00180bbb0ee66a7f87';
+
+abstract class _$ShowWordSuccessEffect
+    extends BuildlessAutoDisposeNotifier<bool> {
+  late final int fileId;
+
+  bool build(
+    int fileId,
+  );
+}
+
+/// See also [ShowWordSuccessEffect].
+@ProviderFor(ShowWordSuccessEffect)
+const showWordSuccessEffectProvider = ShowWordSuccessEffectFamily();
+
+/// See also [ShowWordSuccessEffect].
+class ShowWordSuccessEffectFamily extends Family<bool> {
+  /// See also [ShowWordSuccessEffect].
+  const ShowWordSuccessEffectFamily();
+
+  /// See also [ShowWordSuccessEffect].
+  ShowWordSuccessEffectProvider call(
+    int fileId,
+  ) {
+    return ShowWordSuccessEffectProvider(
+      fileId,
+    );
+  }
+
+  @override
+  ShowWordSuccessEffectProvider getProviderOverride(
+    covariant ShowWordSuccessEffectProvider provider,
+  ) {
+    return call(
+      provider.fileId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'showWordSuccessEffectProvider';
+}
+
+/// See also [ShowWordSuccessEffect].
+class ShowWordSuccessEffectProvider
+    extends AutoDisposeNotifierProviderImpl<ShowWordSuccessEffect, bool> {
+  /// See also [ShowWordSuccessEffect].
+  ShowWordSuccessEffectProvider(
+    int fileId,
+  ) : this._internal(
+          () => ShowWordSuccessEffect()..fileId = fileId,
+          from: showWordSuccessEffectProvider,
+          name: r'showWordSuccessEffectProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$showWordSuccessEffectHash,
+          dependencies: ShowWordSuccessEffectFamily._dependencies,
+          allTransitiveDependencies:
+              ShowWordSuccessEffectFamily._allTransitiveDependencies,
+          fileId: fileId,
+        );
+
+  ShowWordSuccessEffectProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.fileId,
+  }) : super.internal();
+
+  final int fileId;
+
+  @override
+  bool runNotifierBuild(
+    covariant ShowWordSuccessEffect notifier,
+  ) {
+    return notifier.build(
+      fileId,
+    );
+  }
+
+  @override
+  Override overrideWith(ShowWordSuccessEffect Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: ShowWordSuccessEffectProvider._internal(
+        () => create()..fileId = fileId,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        fileId: fileId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<ShowWordSuccessEffect, bool>
+      createElement() {
+    return _ShowWordSuccessEffectProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ShowWordSuccessEffectProvider && other.fileId == fileId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, fileId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin ShowWordSuccessEffectRef on AutoDisposeNotifierProviderRef<bool> {
+  /// The parameter `fileId` of this provider.
+  int get fileId;
+}
+
+class _ShowWordSuccessEffectProviderElement
+    extends AutoDisposeNotifierProviderElement<ShowWordSuccessEffect, bool>
+    with ShowWordSuccessEffectRef {
+  _ShowWordSuccessEffectProviderElement(super.provider);
+
+  @override
+  int get fileId => (origin as ShowWordSuccessEffectProvider).fileId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
