@@ -42,11 +42,11 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
         ref.watch(showSectionSuccessEffectProvider(fileId));
 
     final wordSuccessColor =
-        isIOS ? CupertinoColors.systemGreen : Colors.greenAccent;
+        isIOS ? CupertinoColors.systemIndigo.resolveFrom(context) : Colors.indigoAccent;
     final sentenceSuccessColor =
-        isIOS ? CupertinoColors.systemIndigo : Colors.indigoAccent;
+        isIOS ? CupertinoColors.systemGreen.resolveFrom(context) : Colors.greenAccent;
     final sectionSuccessColor =
-        isIOS ? CupertinoColors.systemPurple : Colors.purpleAccent;
+        isIOS ? CupertinoColors.systemPurple.resolveFrom(context) : Colors.purpleAccent;
     final normalColor = isIOS
         ? CupertinoColors.systemBlue.resolveFrom(context)
         : Colors.blueAccent;

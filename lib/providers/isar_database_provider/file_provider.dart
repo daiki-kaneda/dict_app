@@ -46,7 +46,7 @@ class FileNotifier extends _$FileNotifier {
     ref.invalidateSelf();
   }
 
-  Future<void> resetSection({bool alphabetOnly=true})async{
+  Future<void> resetSection({bool alphabetOnly = true}) async {
     final file = await isar.files.get(id);
     if (file == null) return;
     final newSection = file.paragraphs.reset(alphabetOnly: alphabetOnly);
@@ -73,43 +73,55 @@ class FileNotifier extends _$FileNotifier {
     print('result:${result.toString()}');
   }
 
-  Future<void> _handleResult(AnswerResult result)async{
+  Future<void> _handleResult(AnswerResult result) async {
     _recordResult(result);
     _updateUIByResult(result);
   }
-  
-  Future<void> _recordResult(AnswerResult result)async{}
-  Future<void> _updateUIByResult(AnswerResult result)async{
-    switch(result.status){
-      case SolveStatus.unSolved:{
-        ref.read(showErrorEffectProvider(id).notifier)
-        .showEffect();
-      }
-      case SolveStatus.sectionSolved:{
-        ref.read(showSectionSuccessEffectProvider(id).notifier)
-        .showEffect();
-        showNotifyDialog(
-          navigatorKey.currentContext!, 
-          title: '完了メッセージ', 
-          description: 'この音声のすべての文章を解きました');
-      }
-      case SolveStatus.paragraphSolved:{
-        return;
-      }
-      case SolveStatus.sentenceSolved:{
-        ref.read(showSentenceSuccessEffectProvider(id).notifier)
-        .showEffect();
-        ref.read(SentencePageControllerProvider(id).notifier)
-        .moveToFirstUnsolvedIndex();
-      }
-      case SolveStatus.wordSolved:{
-        ref.read(showWordSuccessEffectProvider(id).notifier)
-        .showEffect();
-        ref.read(currentWordIndexProvider(id).notifier)
-        .moveToFirstUnsolvedIndex();
-      }
-      case SolveStatus.characterSolved:{
-      }
+
+  Future<void> _recordResult(AnswerResult result) async {}
+  Future<void> _updateUIByResult(AnswerResult result) async {
+    final withoutHint = !result.solveAnyway;
+    switch (result.status) {
+      case SolveStatus.unSolved:
+        {
+          ref.read(showErrorEffectProvider(id).notifier).showEffect();
+        }
+      case SolveStatus.sectionSolved:
+        {
+          if (withoutHint) {
+            ref
+                .read(showSectionSuccessEffectProvider(id).notifier)
+                .showEffect();
+          }
+          showNotifyDialog(navigatorKey.currentContext!,
+              title: '完了メッセージ', description: 'この音声のすべての文章を解きました');
+        }
+      case SolveStatus.paragraphSolved:
+        {
+          return;
+        }
+      case SolveStatus.sentenceSolved:
+        {
+          if (withoutHint) {
+            ref
+                .read(showSentenceSuccessEffectProvider(id).notifier)
+                .showEffect();
+          }
+          ref
+              .read(SentencePageControllerProvider(id).notifier)
+              .moveToFirstUnsolvedIndex();
+        }
+      case SolveStatus.wordSolved:
+        {
+          if (withoutHint) {
+            ref.read(showWordSuccessEffectProvider(id).notifier).showEffect();
+          }
+          ref
+              .read(currentWordIndexProvider(id).notifier)
+              .moveToFirstUnsolvedIndex();
+        }
+      case SolveStatus.characterSolved:
+        {}
     }
   }
 }
