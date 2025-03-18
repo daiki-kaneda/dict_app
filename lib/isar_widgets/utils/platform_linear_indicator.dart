@@ -13,9 +13,10 @@ class PlatformLinearIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final isIOS = Platform.isIOS;
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 4),
       height: 4,
       decoration: BoxDecoration(
-        color:isIOS ? CupertinoColors.systemFill.resolveFrom(context):Colors.grey,
+        color:isIOS ? CupertinoColors.systemGrey5.resolveFrom(context).resolveFrom(context):Colors.grey[300],
         borderRadius: BorderRadius.circular(2),
       ),
       child: Align(
@@ -25,7 +26,7 @@ class PlatformLinearIndicator extends StatelessWidget {
           child: Container(
             height: 4,
             decoration: BoxDecoration(
-              color:isIOS ? CupertinoColors.activeBlue:Colors.blue, 
+              color:isIOS ? CupertinoColors.label:Colors.grey[600], 
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -43,7 +44,9 @@ class AnimatedPlatformPageViewLinearIndicator extends AnimatedWidget{
 
   @override
   Widget build(BuildContext context) {
-    if(controller.page==null)return Center(child: PlatformCircularProgressIndicator(),);
-    return PlatformLinearIndicator(progress: controller.page!/pageLength);
+    final page = controller.page;
+    if(page==null)return Center(child: PlatformCircularProgressIndicator(),);
+    return PlatformLinearIndicator(
+      progress:pageLength!=1 ? controller.page!/(pageLength-1):page);
   }
 }

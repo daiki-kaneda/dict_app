@@ -13,8 +13,8 @@ class PageProgressIndicator extends ConsumerWidget {
     final pageLength = ref.read(fileNotifierProvider(fileId).select(
       (f)=>f?.getAllSentences?.length ?? 1
     ));
-    final controller = ref.read(sentencePageControllerProvider(fileId));
-    
+    final controller = ref.watch(sentencePageControllerProvider(fileId));
+
     return AnimatedPlatformPageViewLinearIndicator(controller, pageLength: pageLength);
   }
 }

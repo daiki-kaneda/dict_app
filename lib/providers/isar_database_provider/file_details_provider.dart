@@ -15,7 +15,9 @@ part 'file_details_provider.g.dart';
 class SentencePageController extends _$SentencePageController {
   @override
   PageController build(int fileId) {
-    final controller = PageController();
+    final controller = PageController(
+      initialPage: 0
+    );
     controller.addListener(_onPageChanged);
     ref.onDispose(() {
       controller.removeListener(_onPageChanged);
