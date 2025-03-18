@@ -2,6 +2,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dict_app/constants/scaffold_key.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 bool isAlphabet(String character) {
@@ -62,4 +63,8 @@ extension ListEx<T> on List<List<T>> {
 
 extension NumListEx on Iterable<double>{
   double get mean => isEmpty ? double.nan : (reduce((a, b) => (a + b)) / length).toDouble();
+}
+
+void hideKeyboard(){
+  SystemChannels.textInput.invokeMethod('TextInput.hide');
 }
