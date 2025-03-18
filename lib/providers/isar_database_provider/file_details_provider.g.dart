@@ -1345,5 +1345,295 @@ class _ShowWordSuccessEffectProviderElement
   @override
   int get fileId => (origin as ShowWordSuccessEffectProvider).fileId;
 }
+
+String _$showSentenceSuccessEffectHash() =>
+    r'06a50d5ed204df1e7661b32967f988850e0d6f54';
+
+abstract class _$ShowSentenceSuccessEffect
+    extends BuildlessAutoDisposeNotifier<bool> {
+  late final int fileId;
+
+  bool build(
+    int fileId,
+  );
+}
+
+/// See also [ShowSentenceSuccessEffect].
+@ProviderFor(ShowSentenceSuccessEffect)
+const showSentenceSuccessEffectProvider = ShowSentenceSuccessEffectFamily();
+
+/// See also [ShowSentenceSuccessEffect].
+class ShowSentenceSuccessEffectFamily extends Family<bool> {
+  /// See also [ShowSentenceSuccessEffect].
+  const ShowSentenceSuccessEffectFamily();
+
+  /// See also [ShowSentenceSuccessEffect].
+  ShowSentenceSuccessEffectProvider call(
+    int fileId,
+  ) {
+    return ShowSentenceSuccessEffectProvider(
+      fileId,
+    );
+  }
+
+  @override
+  ShowSentenceSuccessEffectProvider getProviderOverride(
+    covariant ShowSentenceSuccessEffectProvider provider,
+  ) {
+    return call(
+      provider.fileId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'showSentenceSuccessEffectProvider';
+}
+
+/// See also [ShowSentenceSuccessEffect].
+class ShowSentenceSuccessEffectProvider
+    extends AutoDisposeNotifierProviderImpl<ShowSentenceSuccessEffect, bool> {
+  /// See also [ShowSentenceSuccessEffect].
+  ShowSentenceSuccessEffectProvider(
+    int fileId,
+  ) : this._internal(
+          () => ShowSentenceSuccessEffect()..fileId = fileId,
+          from: showSentenceSuccessEffectProvider,
+          name: r'showSentenceSuccessEffectProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$showSentenceSuccessEffectHash,
+          dependencies: ShowSentenceSuccessEffectFamily._dependencies,
+          allTransitiveDependencies:
+              ShowSentenceSuccessEffectFamily._allTransitiveDependencies,
+          fileId: fileId,
+        );
+
+  ShowSentenceSuccessEffectProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.fileId,
+  }) : super.internal();
+
+  final int fileId;
+
+  @override
+  bool runNotifierBuild(
+    covariant ShowSentenceSuccessEffect notifier,
+  ) {
+    return notifier.build(
+      fileId,
+    );
+  }
+
+  @override
+  Override overrideWith(ShowSentenceSuccessEffect Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: ShowSentenceSuccessEffectProvider._internal(
+        () => create()..fileId = fileId,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        fileId: fileId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<ShowSentenceSuccessEffect, bool>
+      createElement() {
+    return _ShowSentenceSuccessEffectProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ShowSentenceSuccessEffectProvider && other.fileId == fileId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, fileId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin ShowSentenceSuccessEffectRef on AutoDisposeNotifierProviderRef<bool> {
+  /// The parameter `fileId` of this provider.
+  int get fileId;
+}
+
+class _ShowSentenceSuccessEffectProviderElement
+    extends AutoDisposeNotifierProviderElement<ShowSentenceSuccessEffect, bool>
+    with ShowSentenceSuccessEffectRef {
+  _ShowSentenceSuccessEffectProviderElement(super.provider);
+
+  @override
+  int get fileId => (origin as ShowSentenceSuccessEffectProvider).fileId;
+}
+
+String _$showSectionSuccessEffectHash() =>
+    r'b4aed93ad7337c757ca4208e927204826eb9c40b';
+
+abstract class _$ShowSectionSuccessEffect
+    extends BuildlessAutoDisposeNotifier<bool> {
+  late final int fileId;
+
+  bool build(
+    int fileId,
+  );
+}
+
+/// See also [ShowSectionSuccessEffect].
+@ProviderFor(ShowSectionSuccessEffect)
+const showSectionSuccessEffectProvider = ShowSectionSuccessEffectFamily();
+
+/// See also [ShowSectionSuccessEffect].
+class ShowSectionSuccessEffectFamily extends Family<bool> {
+  /// See also [ShowSectionSuccessEffect].
+  const ShowSectionSuccessEffectFamily();
+
+  /// See also [ShowSectionSuccessEffect].
+  ShowSectionSuccessEffectProvider call(
+    int fileId,
+  ) {
+    return ShowSectionSuccessEffectProvider(
+      fileId,
+    );
+  }
+
+  @override
+  ShowSectionSuccessEffectProvider getProviderOverride(
+    covariant ShowSectionSuccessEffectProvider provider,
+  ) {
+    return call(
+      provider.fileId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'showSectionSuccessEffectProvider';
+}
+
+/// See also [ShowSectionSuccessEffect].
+class ShowSectionSuccessEffectProvider
+    extends AutoDisposeNotifierProviderImpl<ShowSectionSuccessEffect, bool> {
+  /// See also [ShowSectionSuccessEffect].
+  ShowSectionSuccessEffectProvider(
+    int fileId,
+  ) : this._internal(
+          () => ShowSectionSuccessEffect()..fileId = fileId,
+          from: showSectionSuccessEffectProvider,
+          name: r'showSectionSuccessEffectProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$showSectionSuccessEffectHash,
+          dependencies: ShowSectionSuccessEffectFamily._dependencies,
+          allTransitiveDependencies:
+              ShowSectionSuccessEffectFamily._allTransitiveDependencies,
+          fileId: fileId,
+        );
+
+  ShowSectionSuccessEffectProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.fileId,
+  }) : super.internal();
+
+  final int fileId;
+
+  @override
+  bool runNotifierBuild(
+    covariant ShowSectionSuccessEffect notifier,
+  ) {
+    return notifier.build(
+      fileId,
+    );
+  }
+
+  @override
+  Override overrideWith(ShowSectionSuccessEffect Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: ShowSectionSuccessEffectProvider._internal(
+        () => create()..fileId = fileId,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        fileId: fileId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<ShowSectionSuccessEffect, bool>
+      createElement() {
+    return _ShowSectionSuccessEffectProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ShowSectionSuccessEffectProvider && other.fileId == fileId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, fileId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin ShowSectionSuccessEffectRef on AutoDisposeNotifierProviderRef<bool> {
+  /// The parameter `fileId` of this provider.
+  int get fileId;
+}
+
+class _ShowSectionSuccessEffectProviderElement
+    extends AutoDisposeNotifierProviderElement<ShowSectionSuccessEffect, bool>
+    with ShowSectionSuccessEffectRef {
+  _ShowSectionSuccessEffectProviderElement(super.provider);
+
+  @override
+  int get fileId => (origin as ShowSectionSuccessEffectProvider).fileId;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

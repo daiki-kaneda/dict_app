@@ -279,3 +279,53 @@ class ShowWordSuccessEffect extends _$ShowWordSuccessEffect {
     state = !state;
   }
 }
+
+@riverpod
+class ShowSentenceSuccessEffect extends _$ShowSentenceSuccessEffect {
+  @override
+  bool build(int fileId) {
+    return false;
+  }
+
+  void showEffect({Duration duration = const Duration(milliseconds: 250)}) {
+    if (!state) {
+      state = true;
+      Future.delayed(duration, () {
+        if (state) hideEffect();
+      });
+    }
+  }
+
+  void hideEffect() {
+    if (state) state = false;
+  }
+
+  void toggle() {
+    state = !state;
+  }
+}
+
+@riverpod
+class ShowSectionSuccessEffect extends _$ShowSectionSuccessEffect {
+  @override
+  bool build(int fileId) {
+    return false;
+  }
+
+  void showEffect({Duration duration = const Duration(milliseconds: 250)}) {
+    if (!state) {
+      state = true;
+      Future.delayed(duration, () {
+        if (state) hideEffect();
+      });
+    }
+  }
+
+  void hideEffect() {
+    if (state) state = false;
+  }
+
+  void toggle() {
+    state = !state;
+  }
+}
