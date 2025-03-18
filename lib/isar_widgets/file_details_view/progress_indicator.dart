@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:dict_app/isar_widgets/utils/platform_linear_indicator.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PageProgressIndicator extends ConsumerWidget {
@@ -19,11 +22,18 @@ class PageProgressIndicator extends ConsumerWidget {
   }
 }
 
-class DictationProgressIndicator extends ConsumerWidget {
-  const DictationProgressIndicator({super.key});
+class DictationCompletionRateIndicator extends ConsumerWidget {
+  const DictationCompletionRateIndicator(this.fileId,{super.key,this.alphabetOnly=true});
+
+  final int fileId;
+  final bool alphabetOnly;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container();
+    final completionRate = ref.watch(completionRateProvider(fileId,alphabetOnly: alphabetOnly));
+    return PlatformLinearIndicator(
+      progress:completionRate,
+      activeColor: Platform.isIOS ? CupertinoColors.systemBlue.resolveFrom(context):Colors.blue,
+      );
   }
 }
