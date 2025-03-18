@@ -1,6 +1,7 @@
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/dictation_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/input_text_field.dart';
+import 'package:dict_app/isar_widgets/utils/platform_linear_indicator.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
 import 'package:dict_app/isar_widgets/utils/close_button.dart';
 import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
@@ -89,6 +90,7 @@ class DictationProblemView extends ConsumerWidget {
         navigationBar: CupertinoNavigationBar(
           leading: PlatformCloseButton(onPop: onPop,),
           middle: Text('Dictation'),
+          bottom: PreferredSize(preferredSize: Size.fromHeight(5), child: PlatformLinearIndicator(progress: 0.5)),
         ),
         child: Stack(
           fit: StackFit.expand,
