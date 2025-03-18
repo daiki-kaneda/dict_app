@@ -6,8 +6,7 @@ part of 'file_details_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sentencePageControllerHash() =>
-    r'8bfde66cf25c179bdf24adfde25f61e300ceaafc';
+String _$completionRateHash() => r'9e829c77fa8c746c499f4f3dd6af84523efb89da';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,6 +28,152 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
+
+/// See also [completionRate].
+@ProviderFor(completionRate)
+const completionRateProvider = CompletionRateFamily();
+
+/// See also [completionRate].
+class CompletionRateFamily extends Family<double> {
+  /// See also [completionRate].
+  const CompletionRateFamily();
+
+  /// See also [completionRate].
+  CompletionRateProvider call(
+    int fileId, {
+    bool alphabetOnly = true,
+  }) {
+    return CompletionRateProvider(
+      fileId,
+      alphabetOnly: alphabetOnly,
+    );
+  }
+
+  @override
+  CompletionRateProvider getProviderOverride(
+    covariant CompletionRateProvider provider,
+  ) {
+    return call(
+      provider.fileId,
+      alphabetOnly: provider.alphabetOnly,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'completionRateProvider';
+}
+
+/// See also [completionRate].
+class CompletionRateProvider extends AutoDisposeProvider<double> {
+  /// See also [completionRate].
+  CompletionRateProvider(
+    int fileId, {
+    bool alphabetOnly = true,
+  }) : this._internal(
+          (ref) => completionRate(
+            ref as CompletionRateRef,
+            fileId,
+            alphabetOnly: alphabetOnly,
+          ),
+          from: completionRateProvider,
+          name: r'completionRateProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$completionRateHash,
+          dependencies: CompletionRateFamily._dependencies,
+          allTransitiveDependencies:
+              CompletionRateFamily._allTransitiveDependencies,
+          fileId: fileId,
+          alphabetOnly: alphabetOnly,
+        );
+
+  CompletionRateProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.fileId,
+    required this.alphabetOnly,
+  }) : super.internal();
+
+  final int fileId;
+  final bool alphabetOnly;
+
+  @override
+  Override overrideWith(
+    double Function(CompletionRateRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: CompletionRateProvider._internal(
+        (ref) => create(ref as CompletionRateRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        fileId: fileId,
+        alphabetOnly: alphabetOnly,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<double> createElement() {
+    return _CompletionRateProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CompletionRateProvider &&
+        other.fileId == fileId &&
+        other.alphabetOnly == alphabetOnly;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, fileId.hashCode);
+    hash = _SystemHash.combine(hash, alphabetOnly.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin CompletionRateRef on AutoDisposeProviderRef<double> {
+  /// The parameter `fileId` of this provider.
+  int get fileId;
+
+  /// The parameter `alphabetOnly` of this provider.
+  bool get alphabetOnly;
+}
+
+class _CompletionRateProviderElement extends AutoDisposeProviderElement<double>
+    with CompletionRateRef {
+  _CompletionRateProviderElement(super.provider);
+
+  @override
+  int get fileId => (origin as CompletionRateProvider).fileId;
+  @override
+  bool get alphabetOnly => (origin as CompletionRateProvider).alphabetOnly;
+}
+
+String _$sentencePageControllerHash() =>
+    r'cae9e3db50d365e4f1eb1faea9f3f66cad939216';
 
 abstract class _$SentencePageController
     extends BuildlessAutoDisposeNotifier<PageController> {

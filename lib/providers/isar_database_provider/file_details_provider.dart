@@ -331,3 +331,11 @@ class ShowSectionSuccessEffect extends _$ShowSectionSuccessEffect {
     state = !state;
   }
 }
+
+@riverpod
+double completionRate(CompletionRateRef ref,int fileId,{bool alphabetOnly=true}) {
+  final paragraphs = ref.watch(FileNotifierProvider(fileId).select(
+    (f)=>f?.paragraphs
+  ));
+  return (paragraphs?.completionRate(alphabetOnly: alphabetOnly) ?? 0).clamp(0, 1);
+}

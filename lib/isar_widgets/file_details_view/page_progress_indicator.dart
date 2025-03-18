@@ -18,3 +18,12 @@ class PageProgressIndicator extends ConsumerWidget {
     return AnimatedPlatformPageViewLinearIndicator(controller, pageLength: pageLength);
   }
 }
+
+class DictationProgressIndicator extends ConsumerWidget {
+  const DictationProgressIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container();
+  }
+}
