@@ -37,6 +37,9 @@
   - startEndProviderProvider
 - completionRateProvider(fileId,alphabetOnly: alphabetOnly)
 - typedTextNotifier
+- showSectionSuccessEffect(fileId)
+- showSentenceSuccessEffect(fileId)
+- showWordSuccessEffect(fileId)
 **ListeningView以下で生きるprovider**
 - currentSentenceIndexInAllSentencesProvider(fileId),
 - sentencePageControllerProvider(fileId),
