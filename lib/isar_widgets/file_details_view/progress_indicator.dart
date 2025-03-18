@@ -8,32 +8,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PageProgressIndicator extends ConsumerWidget {
-  const PageProgressIndicator(this.fileId,{super.key});
+  const PageProgressIndicator(this.fileId, {super.key});
   final int fileId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageLength = ref.read(fileNotifierProvider(fileId).select(
-      (f)=>f?.getAllSentences?.length ?? 1
-    ));
+    final pageLength = ref.read(fileNotifierProvider(fileId)
+        .select((f) => f?.getAllSentences?.length ?? 1));
     final controller = ref.watch(sentencePageControllerProvider(fileId));
 
-    return AnimatedPlatformPageViewLinearIndicator(controller, pageLength: pageLength);
+    return AnimatedPlatformPageViewLinearIndicator(controller,
+        pageLength: pageLength);
   }
 }
 
 class DictationCompletionRateIndicator extends ConsumerWidget {
-  const DictationCompletionRateIndicator(this.fileId,{super.key,this.alphabetOnly=true});
+  const DictationCompletionRateIndicator(this.fileId,
+      {super.key, this.alphabetOnly = true});
 
   final int fileId;
   final bool alphabetOnly;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final completionRate = ref.watch(completionRateProvider(fileId,alphabetOnly: alphabetOnly));
-    return PlatformLinearIndicator(
-      progress:completionRate,
-      activeColor: Platform.isIOS ? CupertinoColors.systemBlue.resolveFrom(context):Colors.blue,
-      );
+    final isIOS = Platform.isIOS;
+    final completionRate =
+        ref.watch(completionRateProvider(fileId, alphabetOnly: alphabetOnly));
+    final showWordSuccessEffect =
+        ref.watch(showWordSuccessEffectProvider(fileId));
+    final showSectionSuccessEffect =
+        ref.watch(showSectionSuccessEffectProvider(fileId));
+
+    final wordSuccessColor =
+        isIOS ? CupertinoColors.systemGreen : Colors.greenAccent;
+    final sectionSuccessColor =
+        isIOS ? CupertinoColors.systemPurple : Colors.purpleAccent;
+    final normalColor =
+        isIOS ? CupertinoColors.systemBlue.resolveFrom(context) : Colors.blue;
+
+    return AnimatedPlatformLinearIndicator(
+        progress: completionRate,
+        activeColor: showSectionSuccessEffect
+            ? sectionSuccessColor
+            : (showWordSuccessEffect ? wordSuccessColor : normalColor));
   }
 }
