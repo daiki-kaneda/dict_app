@@ -28,6 +28,7 @@
 - sentencePageControllerProvider(fileId),
 - currentWordIndexProvider(fileId)
 - showErrorEffectProvider(fileId)
+- InputTextFieldFocusNodeProvider
 - audioPlayer関連のprovider
   - audioPlayerNotifierProvider
   - playerStateProvider
