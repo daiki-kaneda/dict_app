@@ -188,6 +188,11 @@ class DictationSection {
           .toList() ??
       [];
 
+  double completionRate({bool alphabetOnly=true}){
+    final characters = allCharacters().where((c)=>(!alphabetOnly)||isAlphabet(c.character ?? ''));
+    return characters.isEmpty ? 0:characters.where((c)=>c.isSolved).length/characters.length;
+  }
+
   factory DictationSection.fromJson(Map<String, dynamic> json) =>
       _$DictationSectionFromJson(json);
 

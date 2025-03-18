@@ -1,4 +1,5 @@
 import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:characters/characters.dart';
 
@@ -35,6 +36,7 @@ void main() {
   );
 
   final targetCharacters = 'world'.characters.toList();
+  final allAlphabetsCount = 'Hello world.This is a test.'.characters.where((c)=>isAlphabet(c)).length;
 
   DictationCharacter getCharacter(int index) =>
       dictation.paragraphs![0].sentences![0].words![1].characters![index];
@@ -51,6 +53,10 @@ void main() {
     expect(dictation.accuracy(), accuracy);
   }
 
+  void verifyCompletionRate(DictationSection dictation,double completionRate){
+    expect(dictation.completionRate(), completionRate);
+  }
+
   void updateDictation(String input, int index) {
     final (newDictation, result) = dictation.tryCharacter(
       input: input,
@@ -59,6 +65,7 @@ void main() {
       wordIndex: 1,
     );
     dictation = newDictation;
+    verifyCompletionRate(dictation, (index+1)/allAlphabetsCount);
     expect(result.status, index == targetCharacters.length - 1 ? SolveStatus.wordSolved : SolveStatus.characterSolved);
     verifyAccuracy(dictation, 1);
   }
