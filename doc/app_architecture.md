@@ -35,6 +35,7 @@
   - playerPositionProvider
   - playerDurationProvider
   - startEndProviderProvider
+- completionRateProvider(fileId,alphabetOnly: alphabetOnly)
 - typedTextNotifier
 **ListeningView以下で生きるprovider**
 - currentSentenceIndexInAllSentencesProvider(fileId),
