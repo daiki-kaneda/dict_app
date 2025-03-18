@@ -184,6 +184,33 @@ class TypedTextNotifier extends _$TypedTextNotifier {
 }
 
 @riverpod
+class InputTextFieldFocusNode extends _$InputTextFieldFocusNode {
+  @override
+  FocusNode build() {
+    ref.onDispose((){
+      state.dispose();
+    });
+    return FocusNode();
+  }
+
+  void requestFocus() {
+    if(!state.hasFocus)state.requestFocus();
+  }
+
+  void unfocus() {
+    if(state.hasFocus)state.unfocus();
+  }
+
+  void toggle() {
+    if (state.hasFocus) {
+      state.unfocus();
+    } else {
+      state.requestFocus();
+    }
+  }
+}
+
+@riverpod
 class CurrentTabIndex extends _$CurrentTabIndex {
   @override
   int build(int fileId) {

@@ -900,6 +900,23 @@ class _TypedTextNotifierProviderElement
   int get fileId => (origin as TypedTextNotifierProvider).fileId;
 }
 
+String _$inputTextFieldFocusNodeHash() =>
+    r'1f96be962cf7050455a05496b8d4160d61ad7ec7';
+
+/// See also [InputTextFieldFocusNode].
+@ProviderFor(InputTextFieldFocusNode)
+final inputTextFieldFocusNodeProvider =
+    AutoDisposeNotifierProvider<InputTextFieldFocusNode, FocusNode>.internal(
+  InputTextFieldFocusNode.new,
+  name: r'inputTextFieldFocusNodeProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$inputTextFieldFocusNodeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$InputTextFieldFocusNode = AutoDisposeNotifier<FocusNode>;
 String _$currentTabIndexHash() => r'bf6ca23d839391198a0a7573f0dd01d2821ad32e';
 
 abstract class _$CurrentTabIndex extends BuildlessAutoDisposeNotifier<int> {
