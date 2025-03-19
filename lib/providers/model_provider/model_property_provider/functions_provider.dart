@@ -19,7 +19,7 @@ part 'functions_provider.g.dart';
         return (
           names: names,
           functions: {
-            names[0]: ref.read(fileNotifierProvider(r.fileId).notifier).updateFile
+            names[0]: ref.read(fileNotifierProvider(r.fileId).notifier).llmSendTranslatedSentences
           },
           declartions: [
             FunctionDeclaration(

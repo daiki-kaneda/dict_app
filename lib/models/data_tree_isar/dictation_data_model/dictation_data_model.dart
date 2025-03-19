@@ -53,11 +53,13 @@ class DictationSection {
     List<DictationParagraph>? paragraphs,
     int? index,
     int? parentIndex,
+    List<String>? translatedSentences,
   }) {
     return DictationSection(
       paragraphs: paragraphs ?? this.paragraphs,
       index: index ?? this.index,
       parentIndex: parentIndex ?? this.parentIndex,
+      translatedSentences: translatedSentences ?? this.translatedSentences
     );
   }
 

@@ -124,4 +124,25 @@ class FileNotifier extends _$FileNotifier {
         {}
     }
   }
+
+  Future<Map<String, dynamic>?> llmSendTranslatedSentences(
+      Map<String, dynamic> args) async {
+    print(args);
+    try {
+      final translatedSentences = (args['translatedSentences'] as List<dynamic>)
+          .cast<String>()
+          .toList();
+
+      final file = await isar.files.get(id);
+      if (file == null) return args;
+      final newSection =
+          file.paragraphs.copyWith(translatedSentences: translatedSentences);
+      updateFile(paragraphs: newSection);
+    } catch (e) {
+      print(e);
+      return {};
+    }
+
+    return args;
+  }
 }
