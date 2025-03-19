@@ -17,9 +17,10 @@ sealed class LLMRole {
 }
 
 final class TranslateSenteces extends LLMRole {
-  const TranslateSenteces() : super(
+  const TranslateSenteces(this.fileId) : super(
     id:null,
     mode: FunctionCallingMode.any
     );
+    final int fileId;
 }
 

@@ -12,10 +12,11 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   final container = createContainer();
+  const int sampleFileId =0;
   container.listen(
-      modelNotifierProvider(role: const TranslateSenteces()), (_, __) {});
+      modelNotifierProvider(role: const TranslateSenteces(sampleFileId)), (_, __) {});
   container.listen(
-      systemInstructionProvider(role: const TranslateSenteces()), (_, __) {});
+      systemInstructionProvider(role: const TranslateSenteces(sampleFileId)), (_, __) {});
   group('model_provider test start', () {
     test('translate complicated sentences test', () {
       List<String> englishSentences = [
@@ -28,7 +29,7 @@ void main() {
 
       expect(
           container
-              .read(modelNotifierProvider(role: const TranslateSenteces())
+              .read(modelNotifierProvider(role: const TranslateSenteces(sampleFileId))
                   .notifier)
               .sendMessage(jsonEncode(englishSentences)),
           completes);

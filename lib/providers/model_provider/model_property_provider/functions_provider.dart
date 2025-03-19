@@ -1,3 +1,4 @@
+import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,11 +14,12 @@ part 'functions_provider.g.dart';
   switch (role) {
     case TranslateSenteces():
       {
+        final r = role;
         final names = ['sendTranslatedSentences'];
         return (
           names: names,
           functions: {
-            names[0]: (args)=>print(args)
+            names[0]: ref.read(fileNotifierProvider(r.fileId).notifier).updateFile
           },
           declartions: [
             FunctionDeclaration(
