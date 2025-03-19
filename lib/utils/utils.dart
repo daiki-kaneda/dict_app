@@ -1,7 +1,7 @@
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dict_app/constants/scaffold_key.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
@@ -46,7 +46,7 @@ bool validateAudioSize(int size, int maxMbs) {
   return maxMbs > (size / (1024 * 1024));
 }
 
-Future<bool> validateAudioLength(String url)async{
+Future<bool> validateAudioLength(String url) async {
   final tempPlayer = AudioPlayer();
   await tempPlayer.setSourceDeviceFile(url);
   final audioLength = (await tempPlayer.getDuration())?.inSeconds;
@@ -61,10 +61,16 @@ extension ListEx<T> on List<List<T>> {
   }
 }
 
-extension NumListEx on Iterable<double>{
-  double get mean => isEmpty ? double.nan : (reduce((a, b) => (a + b)) / length).toDouble();
+extension NumListEx on Iterable<double> {
+  double get mean =>
+      isEmpty ? double.nan : (reduce((a, b) => (a + b)) / length).toDouble();
 }
 
-void hideKeyboard(){
+void hideKeyboard() {
   SystemChannels.textInput.invokeMethod('TextInput.hide');
+}
+
+Color transitionalColor({Color? begin, Color? end, double progress = 0}) {
+  final colorTween = ColorTween(begin: begin, end: end);
+  return colorTween.transform(progress.clamp(0.0, 1.0)) ?? Colors.transparent;
 }
