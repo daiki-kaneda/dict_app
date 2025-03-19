@@ -4,7 +4,7 @@ import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_view.dart';
-import 'package:dict_app/isar_widgets/file_details_view/setting_view/setting_view.dart';
+import 'package:dict_app/isar_widgets/setting_view/setting_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/stats_view/stats_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/store_ui/store_sheet.dart';
@@ -117,27 +117,26 @@ class IsarFolderStructureApp extends StatelessWidget {
                     },
                   ),
                   GoRoute(
-                    name: 'settings',
-                    path: 'settings',
-                    pageBuilder: (context, state) {
-                      final fileId = state.currentParameterValue(fileIdKey)!;
-                      final settingsWidget = FileSettingView(fileId);
-                      return platformPage(
-                        context: context,child: settingsWidget,
-                        fullscreenDialog: true);
-                    },
-                  ),
-                  GoRoute(
                     name: 'stats',
                     path: 'stats',
                     pageBuilder: (context, state) {
                       final fileId = state.currentParameterValue(fileIdKey)!;
                       return platformPage(
-                        context: context,child: StatsView(fileId),
-                        fullscreenDialog: true);
+                          context: context,
+                          child: StatsView(fileId),
+                          fullscreenDialog: true);
                     },
                   ),
-                ])
+                ]),
+            GoRoute(
+              name: 'settings',
+              path: '/settings',
+              pageBuilder: (context, state) =>platformPage(
+                    context: context,
+                    child:FileSettingView(),
+                    fullscreenDialog: true)
+              ,
+            ),
           ])
     ]);
     return CupertinoApp.router(

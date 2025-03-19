@@ -3,9 +3,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 class FileSettingView extends StatelessWidget {
-  const FileSettingView(this.fileId, {super.key});
-
-  final int fileId;
+  const FileSettingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,7 @@ class ShowFileSettingsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PlatformIconButton(
-      onPressed: () => context.pushNamed('settings', pathParameters: {'fileId': fileId.toString()}),
+      onPressed: () => context.pushNamed('settings'),
       icon: Icon(PlatformIcons(context).settings),
     );
   }
