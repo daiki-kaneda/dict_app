@@ -4,7 +4,6 @@ import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/iap_provider/localized_price_provider.dart';
 import 'package:dict_app/providers/iap_provider/packages_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
-import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/trailing_button/select_folder_list.dart/expansion_tile/custom_expansion_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

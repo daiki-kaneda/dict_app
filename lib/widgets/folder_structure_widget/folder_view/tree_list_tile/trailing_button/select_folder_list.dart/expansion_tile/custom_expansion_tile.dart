@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';

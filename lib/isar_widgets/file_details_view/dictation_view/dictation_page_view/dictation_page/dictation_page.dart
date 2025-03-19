@@ -1,9 +1,7 @@
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/dictation_page/dict_sentence_widget/dict_sentence_widget.dart';
 import 'package:dict_app/isar_widgets/file_details_view/translated_text.dart';
 import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
-import 'package:dict_app/providers/translation_helper_provider/translation_helper_provider.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictationPage extends ConsumerWidget {

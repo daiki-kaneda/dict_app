@@ -1,16 +1,12 @@
-import 'dart:convert';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:dict_app/providers/model_provider/llm_role.dart';
 import 'package:dict_app/providers/model_provider/model_property_provider/functions_provider.dart';
 import 'package:dict_app/providers/model_provider/model_property_provider/system_instruction_provider.dart';
 import 'package:dict_app/providers/model_provider/model_repository.dart';
 import 'package:dict_app/providers/model_provider/model_status_provider.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:uuid/uuid.dart';
 
 part 'model_provider.g.dart';
 
