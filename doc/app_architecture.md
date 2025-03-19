@@ -23,6 +23,7 @@
 - subItemsProvider(parentId)
 **FileDetailsView以下で生きるprovider**
 - fileProvider(fileId),currentTabIndexProvider
+- modelNotifierProvider(TranslateSentences(fileId))
 **DictationView以下で生きるprovider**
 - currentSentenceIndexInAllSentencesProvider(fileId),
 - sentencePageControllerProvider(fileId),
