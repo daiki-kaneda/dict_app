@@ -338,3 +338,11 @@ double completionRate(CompletionRateRef ref,int fileId,{bool alphabetOnly=true})
   ));
   return (paragraphs?.completionRate(alphabetOnly: alphabetOnly) ?? 0).clamp(0, 1);
 }
+
+@riverpod
+List<String> translatedSentences(TranslatedSentencesRef ref,int fileId,) {
+  final translatedSentences = ref.watch(FileNotifierProvider(fileId).select(
+    (f)=>f?.paragraphs.translatedSentences ?? []
+  ));
+  return translatedSentences;
+}

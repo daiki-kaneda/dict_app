@@ -7,6 +7,8 @@ import 'package:dict_app/isar_widgets/file_details_view/stats_view/stats_view.da
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/model_provider/llm_role.dart';
+import 'package:dict_app/providers/model_provider/model_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +22,8 @@ class FileDetailsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(ModelNotifierProvider(role: TranslateSenteces(id)));
+    
     final file = ref.watch(fileNotifierProvider(id));
     if(file==null)return Center(child: PlatformCircularProgressIndicator(),);
 

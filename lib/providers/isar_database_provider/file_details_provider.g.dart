@@ -172,6 +172,136 @@ class _CompletionRateProviderElement extends AutoDisposeProviderElement<double>
   bool get alphabetOnly => (origin as CompletionRateProvider).alphabetOnly;
 }
 
+String _$translatedSentencesHash() =>
+    r'7c1a7346c0a95d1d28cb97511c0eabb578984dd7';
+
+/// See also [translatedSentences].
+@ProviderFor(translatedSentences)
+const translatedSentencesProvider = TranslatedSentencesFamily();
+
+/// See also [translatedSentences].
+class TranslatedSentencesFamily extends Family<List<String>> {
+  /// See also [translatedSentences].
+  const TranslatedSentencesFamily();
+
+  /// See also [translatedSentences].
+  TranslatedSentencesProvider call(
+    int fileId,
+  ) {
+    return TranslatedSentencesProvider(
+      fileId,
+    );
+  }
+
+  @override
+  TranslatedSentencesProvider getProviderOverride(
+    covariant TranslatedSentencesProvider provider,
+  ) {
+    return call(
+      provider.fileId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'translatedSentencesProvider';
+}
+
+/// See also [translatedSentences].
+class TranslatedSentencesProvider extends AutoDisposeProvider<List<String>> {
+  /// See also [translatedSentences].
+  TranslatedSentencesProvider(
+    int fileId,
+  ) : this._internal(
+          (ref) => translatedSentences(
+            ref as TranslatedSentencesRef,
+            fileId,
+          ),
+          from: translatedSentencesProvider,
+          name: r'translatedSentencesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$translatedSentencesHash,
+          dependencies: TranslatedSentencesFamily._dependencies,
+          allTransitiveDependencies:
+              TranslatedSentencesFamily._allTransitiveDependencies,
+          fileId: fileId,
+        );
+
+  TranslatedSentencesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.fileId,
+  }) : super.internal();
+
+  final int fileId;
+
+  @override
+  Override overrideWith(
+    List<String> Function(TranslatedSentencesRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: TranslatedSentencesProvider._internal(
+        (ref) => create(ref as TranslatedSentencesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        fileId: fileId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<List<String>> createElement() {
+    return _TranslatedSentencesProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TranslatedSentencesProvider && other.fileId == fileId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, fileId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin TranslatedSentencesRef on AutoDisposeProviderRef<List<String>> {
+  /// The parameter `fileId` of this provider.
+  int get fileId;
+}
+
+class _TranslatedSentencesProviderElement
+    extends AutoDisposeProviderElement<List<String>>
+    with TranslatedSentencesRef {
+  _TranslatedSentencesProviderElement(super.provider);
+
+  @override
+  int get fileId => (origin as TranslatedSentencesProvider).fileId;
+}
+
 String _$sentencePageControllerHash() =>
     r'cae9e3db50d365e4f1eb1faea9f3f66cad939216';
 

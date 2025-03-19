@@ -41,6 +41,7 @@
 - showSectionSuccessEffect(fileId)
 - showSentenceSuccessEffect(fileId)
 - showWordSuccessEffect(fileId)
+- translatedSentencesProvider(fileId)
 **ListeningView以下で生きるprovider**
 - currentSentenceIndexInAllSentencesProvider(fileId),
 - sentencePageControllerProvider(fileId),
@@ -50,6 +51,7 @@
   - playerPositionProvider
   - playerDurationProvider
   - startEndProviderProvider
+- translatedSentencesProvider(fileId)
 **PrintView以下で生きるprovider**
 **SettingView以下で生きるprovider**
 
