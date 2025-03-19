@@ -4,6 +4,7 @@ import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening
 import 'package:dict_app/isar_widgets/file_details_view/print_view/dictation.dart';
 import 'package:dict_app/isar_widgets/file_details_view/print_view/print_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/setting_view/setting_view.dart';
+import 'package:dict_app/isar_widgets/file_details_view/stats_view/stats_view.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
@@ -59,7 +60,9 @@ class FileNavTrailing extends ConsumerWidget {
     final currentIndex = ref.watch(currentTabIndexProvider(fileId));
     final file = ref.watch(fileNotifierProvider(fileId));
     if (file == null) return Container();
-    if (currentIndex == 2) {
+    if(currentIndex==0){
+      return ShowStatsButton(fileId);
+    }else if (currentIndex == 2) {
       return PlatformIconButton(
           onPressed: () {
             showCustomActionSheet(

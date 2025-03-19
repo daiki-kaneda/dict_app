@@ -5,6 +5,7 @@ import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/setting_view/setting_view.dart';
+import 'package:dict_app/isar_widgets/file_details_view/stats_view/stats_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/store_ui/store_sheet.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
@@ -123,6 +124,16 @@ class IsarFolderStructureApp extends StatelessWidget {
                       final settingsWidget = FileSettingView(fileId);
                       return platformPage(
                         context: context,child: settingsWidget,
+                        fullscreenDialog: true);
+                    },
+                  ),
+                  GoRoute(
+                    name: 'stats',
+                    path: 'stats',
+                    pageBuilder: (context, state) {
+                      final fileId = state.currentParameterValue(fileIdKey)!;
+                      return platformPage(
+                        context: context,child: StatsView(fileId),
                         fullscreenDialog: true);
                     },
                   ),
