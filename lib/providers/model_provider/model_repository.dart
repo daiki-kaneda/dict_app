@@ -86,7 +86,7 @@ class ModelRepository {
 
 Future<String> getApiKey() async {
   await dotenv.load(fileName: '.env');
-  return dotenv.get('API_KEY');
+  return dotenv.get('API_KEY_GEMINI');
 }
 
 Future<GenerativeModel> getModel(
