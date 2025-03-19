@@ -62,7 +62,7 @@ class File extends Item {
   // final TranscriptModel? transcriptModel;
 
   List<DictationSentence>? get getAllSentences =>
-      paragraphs.paragraphs?.map((p) => p.sentences ?? []).toList().concat();
+      paragraphs.paragraphs.map((p) => p.sentences ?? []).toList().concat();
 
   File({
     this.id,

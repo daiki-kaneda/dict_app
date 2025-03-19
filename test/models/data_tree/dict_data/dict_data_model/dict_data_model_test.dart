@@ -39,7 +39,7 @@ void main() {
   final allAlphabetsCount = 'Hello world.This is a test.'.characters.where((c)=>isAlphabet(c)).length;
 
   DictationCharacter getCharacter(int index) =>
-      dictation.paragraphs![0].sentences![0].words![1].characters![index];
+      dictation.paragraphs[0].sentences[0].words![1].characters[index];
 
   void verifyCharacterState(int index, {required bool solved, required int attempts, required int solvedCount, required int solveWithHintCount}) {
     final char = getCharacter(index);

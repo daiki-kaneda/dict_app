@@ -7,7 +7,7 @@ part of 'mlkit_translation_helper_provider.dart';
 // **************************************************************************
 
 String _$mlkitTranslationHelperHash() =>
-    r'f0c5551dd02c10ba729e2965b124502336e97a2e';
+    r'150d0f15c02f500773adcdbd37b17b7486a10f6f';
 
 /// See also [mlkitTranslationHelper].
 @ProviderFor(mlkitTranslationHelper)

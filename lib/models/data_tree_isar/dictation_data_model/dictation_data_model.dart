@@ -10,21 +10,19 @@ part 'dictation_data_model.g.dart';
 @embedded
 class DictationSection {
   DictationSection({
-    this.paragraphs,
+    this.paragraphs = const [],
     this.index,
     this.parentIndex,
   });
 
-  List<DictationParagraph>? paragraphs;
+  List<DictationParagraph> paragraphs;
   int? index;
   int? parentIndex;
 
   bool get isCompleted =>
-      paragraphs?.map((e) => e.isCompleted).where((e) => e == false).isEmpty ??
-      true;
+      paragraphs.map((e) => e.isCompleted).where((e) => e == false).isEmpty;
 
-  String get displayText =>
-      paragraphs?.map((e) => e.displayText).join(' ') ?? '';
+  String get displayText => paragraphs.map((e) => e.displayText).join(' ');
 
   static DictationSection from({
     required Paragraphs paragraphs,
@@ -70,17 +68,17 @@ class DictationSection {
   }) {
     if (isCompleted) return (this, AnswerResult());
 
-    if (paragraphs == null || paragraphIndex >= paragraphs!.length) {
+    if (paragraphIndex >= paragraphs.length) {
       return (this, AnswerResult());
     }
 
-    final (updateParagraph, result) = paragraphs![paragraphIndex].tryCharacter(
+    final (updateParagraph, result) = paragraphs[paragraphIndex].tryCharacter(
         input: input,
         sentenceIndex: sentenceIndex,
         wordIndex: wordIndex,
         solveAnyway: solveAnyway);
 
-    final newList = List<DictationParagraph>.from(paragraphs!);
+    final newList = List<DictationParagraph>.from(paragraphs);
     newList[paragraphIndex] = updateParagraph;
 
     final newSection = copyWith(paragraphs: newList);
@@ -93,16 +91,16 @@ class DictationSection {
 
   DictationSection reset({bool alphabetOnly = true}) {
     final newList =
-        paragraphs?.map((p) => p.reset(alphabetOnly: alphabetOnly)).toList();
+        paragraphs.map((p) => p.reset(alphabetOnly: alphabetOnly)).toList();
     return copyWith(paragraphs: newList);
   }
 
   DictationSection resetParagraph({required int paragraphIndex}) {
-    if (paragraphs == null || paragraphIndex >= paragraphs!.length) return this;
+    if (paragraphIndex >= paragraphs.length) return this;
 
-    final target = paragraphs![paragraphIndex];
+    final target = paragraphs[paragraphIndex];
 
-    final newList = List<DictationParagraph>.from(paragraphs!);
+    final newList = List<DictationParagraph>.from(paragraphs);
     newList[paragraphIndex] = target.reset();
 
     return copyWith(paragraphs: newList);
@@ -110,20 +108,19 @@ class DictationSection {
 
   DictationSection resetSentence(
       {required int paragraphIndex, required int sentenceIndex}) {
-    if (paragraphs == null || paragraphIndex >= paragraphs!.length) return this;
-    final targetParagraph = paragraphs![paragraphIndex];
+    if (paragraphIndex >= paragraphs.length) return this;
+    final targetParagraph = paragraphs[paragraphIndex];
 
-    if (targetParagraph.sentences == null ||
-        sentenceIndex >= targetParagraph.sentences!.length) {
+    if (sentenceIndex >= targetParagraph.sentences.length) {
       return this;
     }
-    final targetSentence = targetParagraph.sentences![sentenceIndex];
+    final targetSentence = targetParagraph.sentences[sentenceIndex];
 
     final newSentences =
-        List<DictationSentence>.from(targetParagraph.sentences!);
+        List<DictationSentence>.from(targetParagraph.sentences);
     newSentences[sentenceIndex] = targetSentence.reset();
 
-    final newList = List<DictationParagraph>.from(paragraphs!);
+    final newList = List<DictationParagraph>.from(paragraphs);
     newList[paragraphIndex] = targetParagraph.copyWith(sentences: newSentences);
 
     return copyWith(paragraphs: newList);
@@ -133,14 +130,13 @@ class DictationSection {
       {required int paragraphIndex,
       required int sentenceIndex,
       required int wordIndex}) {
-    if (paragraphs == null || paragraphIndex >= paragraphs!.length) return this;
-    final targetParagraph = paragraphs![paragraphIndex];
+    if (paragraphIndex >= paragraphs.length) return this;
+    final targetParagraph = paragraphs[paragraphIndex];
 
-    if (targetParagraph.sentences == null ||
-        sentenceIndex >= targetParagraph.sentences!.length) {
+    if (sentenceIndex >= targetParagraph.sentences.length) {
       return this;
     }
-    final targetSentence = targetParagraph.sentences![sentenceIndex];
+    final targetSentence = targetParagraph.sentences[sentenceIndex];
 
     if (targetSentence.words == null ||
         wordIndex >= targetSentence.words!.length) {
@@ -152,27 +148,25 @@ class DictationSection {
     newWords[wordIndex] = targetWord.updateIsSolved(false);
 
     final newSentences =
-        List<DictationSentence>.from(targetParagraph.sentences!);
+        List<DictationSentence>.from(targetParagraph.sentences);
     newSentences[sentenceIndex] = targetSentence.copyWith(words: newWords);
 
-    final newList = List<DictationParagraph>.from(paragraphs!);
+    final newList = List<DictationParagraph>.from(paragraphs);
     newList[paragraphIndex] = targetParagraph.copyWith(sentences: newSentences);
 
     return copyWith(paragraphs: newList);
   }
 
   List<DictationSentence>? get getAllSentences =>
-      paragraphs?.map((p) => p.sentences ?? []).toList().concat();
+      paragraphs.map((p) => p.sentences).toList().concat();
 
   int newestUnsolvedIndex() {
-    if (paragraphs == null) return 0;
-    final index = paragraphs!.indexWhere((p) => !(p.isCompleted));
-    if (index == -1) return paragraphs!.length - 1;
+    final index = paragraphs.indexWhere((p) => !(p.isCompleted));
+    if (index == -1) return paragraphs.length - 1;
     return index;
   }
 
-  int get firstUnsolvedIndex =>
-      paragraphs?.indexWhere((e) => !e.isCompleted) ?? -1;
+  int get firstUnsolvedIndex => paragraphs.indexWhere((e) => !e.isCompleted);
 
   double? accuracy() {
     final attempts = allCharacters().fold(0, (sum, c) => sum + c.attempts);
@@ -183,14 +177,14 @@ class DictationSection {
   }
 
   List<DictationCharacter> allCharacters() =>
-      paragraphs
-          ?.expand<DictationCharacter>((p) => p.allCharacters())
-          .toList() ??
-      [];
+      paragraphs.expand<DictationCharacter>((p) => p.allCharacters()).toList();
 
-  double completionRate({bool alphabetOnly=true}){
-    final characters = allCharacters().where((c)=>(!alphabetOnly)||isAlphabet(c.character ?? ''));
-    return characters.isEmpty ? 0:characters.where((c)=>c.isSolved).length/characters.length;
+  double completionRate({bool alphabetOnly = true}) {
+    final characters = allCharacters()
+        .where((c) => (!alphabetOnly) || isAlphabet(c.character ?? ''));
+    return characters.isEmpty
+        ? 0
+        : characters.where((c) => c.isSolved).length / characters.length;
   }
 
   factory DictationSection.fromJson(Map<String, dynamic> json) =>
@@ -205,23 +199,21 @@ class DictationParagraph {
   DictationParagraph({
     this.index,
     this.parentIndex,
-    this.sentences,
+    this.sentences = const [],
     this.start,
     this.end,
   });
 
   int? index;
   int? parentIndex;
-  List<DictationSentence>? sentences;
+  List<DictationSentence> sentences;
   double? start;
   double? end;
 
   bool get isCompleted =>
-      sentences?.map((e) => e.isCompleted).where((e) => e == false).isEmpty ??
-      true;
+      sentences.map((e) => e.isCompleted).where((e) => e == false).isEmpty;
 
-  String get displayText =>
-      sentences?.map((e) => e.displayText).join(' ') ?? '';
+  String get displayText => sentences.map((e) => e.displayText).join(' ');
 
   static DictationParagraph from({
     required int index,
@@ -272,9 +264,8 @@ class DictationParagraph {
   }
 
   int newestUnsolvedIndex() {
-    if (sentences == null) return 0;
-    final index = sentences!.indexWhere((p) => !(p.isCompleted));
-    if (index == -1) return sentences!.length - 1;
+    final index = sentences.indexWhere((p) => !(p.isCompleted));
+    if (index == -1) return sentences.length - 1;
     return index;
   }
 
@@ -284,14 +275,14 @@ class DictationParagraph {
       required int wordIndex,
       bool solveAnyway = false}) {
     if (isCompleted) return (this, AnswerResult());
-    if (sentences == null || sentenceIndex >= sentences!.length) {
+    if (sentenceIndex >= sentences.length) {
       return (this, AnswerResult());
     }
 
-    final (updatedSentence, result) = sentences![sentenceIndex].tryCharacter(
+    final (updatedSentence, result) = sentences[sentenceIndex].tryCharacter(
         input: input, wordIndex: wordIndex, solveAnyway: solveAnyway);
 
-    final newList = List<DictationSentence>.from(sentences!);
+    final newList = List<DictationSentence>.from(sentences);
     newList[sentenceIndex] = updatedSentence;
 
     final newParagraph = copyWith(sentences: newList);
@@ -306,12 +297,11 @@ class DictationParagraph {
 
   DictationParagraph reset({bool alphabetOnly = true}) {
     final newList =
-        sentences?.map((p) => p.reset(alphabetOnly: alphabetOnly)).toList();
+        sentences.map((p) => p.reset(alphabetOnly: alphabetOnly)).toList();
     return copyWith(sentences: newList);
   }
 
-  int get firstUnsolvedIndex =>
-      sentences?.indexWhere((e) => !e.isCompleted) ?? -1;
+  int get firstUnsolvedIndex => sentences.indexWhere((e) => !e.isCompleted);
 
   double? accuracy() {
     final attempts = allCharacters().fold(0, (sum, c) => sum + c.attempts);
@@ -322,9 +312,7 @@ class DictationParagraph {
   }
 
   List<DictationCharacter> allCharacters() =>
-      sentences
-          ?.expand<DictationCharacter>((s) => s.allCharacters())
-          .toList() ??
+      sentences.expand<DictationCharacter>((s) => s.allCharacters()).toList() ??
       [];
 
   factory DictationParagraph.fromJson(Map<String, dynamic> json) =>
@@ -463,8 +451,7 @@ class DictationSentence {
   }
 
   List<DictationCharacter> allCharacters() =>
-      words?.expand<DictationCharacter>((w) => w.characters ?? []).toList() ??
-      [];
+      words?.expand<DictationCharacter>((w) => w.characters).toList() ?? [];
 
   factory DictationSentence.fromJson(Map<String, dynamic> json) =>
       _$DictationSentenceFromJson(json);
@@ -478,7 +465,7 @@ class DictationWord {
     this.index,
     this.parentIndex,
     this.word,
-    this.characters,
+    this.characters = const [],
     this.start,
     this.end,
   });
@@ -486,15 +473,14 @@ class DictationWord {
   int? index;
   int? parentIndex;
   String? word;
-  List<DictationCharacter>? characters;
+  List<DictationCharacter> characters;
   double? start;
   double? end;
 
   bool get isCompleted =>
-      characters?.map((e) => e.isSolved).where((e) => e == false).isEmpty ??
-      true;
+      characters.map((e) => e.isSolved).where((e) => e == false).isEmpty;
 
-  String get displayText => characters?.map((e) => e.character).join() ?? '';
+  String get displayText => characters.map((e) => e.character).join();
 
   static DictationWord from({
     required int index,
@@ -542,9 +528,8 @@ class DictationWord {
   }
 
   int newestUnsolvedIndex() {
-    if (characters == null) return 0;
-    final index = characters!.indexWhere((p) => !(p.isSolved));
-    if (index == -1) return characters!.length - 1;
+    final index = characters.indexWhere((p) => !(p.isSolved));
+    if (index == -1) return characters.length - 1;
     return index;
   }
 
@@ -552,13 +537,13 @@ class DictationWord {
       {required String input, bool solveAnyway = false}) {
     final result = AnswerResult();
     if (isCompleted) return (this, result);
-    if (characters == null || characters!.isEmpty) return (this, result);
+    if (characters.isEmpty) return (this, result);
 
     if (firstUnsolvedIndex == -1) return (this, result);
 
-    final firstUnsolvedCharacter = characters![firstUnsolvedIndex];
+    final firstUnsolvedCharacter = characters[firstUnsolvedIndex];
 
-    final newList = List<DictationCharacter>.from(characters!);
+    final newList = List<DictationCharacter>.from(characters);
 
     if (solveAnyway ||
         firstUnsolvedCharacter.character!.toLowerCase() ==
@@ -581,18 +566,17 @@ class DictationWord {
 
   DictationWord updateIsSolved(bool target, {bool alphabetOnly = true}) {
     final newList = characters
-        ?.map((c) => c.updateIsSolved(target, alphabetOnly: alphabetOnly))
+        .map((c) => c.updateIsSolved(target, alphabetOnly: alphabetOnly))
         .toList();
     return copyWith(characters: newList);
   }
 
-  int get firstUnsolvedIndex =>
-      characters?.indexWhere((e) => !e.isSolved) ?? -1;
+  int get firstUnsolvedIndex => characters.indexWhere((e) => !e.isSolved);
 
   double? accuracy() {
-    final attempts = characters!.fold(0, (sum, c) => sum + c.attempts);
-    final solvedWithoutHintCount = characters!
-        .fold(0, (sum, c) => sum + (c.solvedCount - c.solveWithHintCount));
+    final attempts = characters.fold(0, (sum, c) => sum + c.attempts);
+    final solvedWithoutHintCount = characters.fold(
+        0, (sum, c) => sum + (c.solvedCount - c.solveWithHintCount));
     if (attempts == 0) return null;
     return (solvedWithoutHintCount / attempts).clamp(0.0, 1.0);
   }
