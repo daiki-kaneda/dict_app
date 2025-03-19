@@ -11,7 +11,7 @@ part 'functions_provider.g.dart';
   List<FunctionDeclaration> declartions
 }) functions(FunctionsRef ref, {required LLMRole role}) {
   switch (role) {
-    case Translate():
+    case TranslateSenteces():
       {
         final names = ['sendTranslatedSentences'];
         return (

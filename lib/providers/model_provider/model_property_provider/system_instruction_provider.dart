@@ -9,7 +9,7 @@ class SystemInstruction extends _$SystemInstruction {
   @override
   Future<String> build({required LLMRole role}) async {
     switch(role){
-      case Translate():return '''
+      case TranslateSenteces():return '''
 You will be given a list of English sentences. Your task is to translate each sentence into Japanese and return the translated sentences as a list. You should call the function sendTranslatedSentences(List<String> translatedSentences) to send the translated sentences.
 
 Please ensure the following:
