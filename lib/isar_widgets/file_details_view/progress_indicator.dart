@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dict_app/isar_widgets/utils/platform_linear_indicator.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,23 +42,27 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
     final showSectionSuccessEffect =
         ref.watch(showSectionSuccessEffectProvider(fileId));
 
+    final backgroundColor = Platform.isIOS
+        ? CupertinoColors.systemGrey5.resolveFrom(context)
+        : Colors.grey[300]!;
     final wordSuccessColor = isIOS
-        ? CupertinoColors.systemGreen.resolveFrom(context)
-        : Colors.greenAccent;
-    final sentenceSuccessColor = isIOS
-        ? CupertinoColors.systemOrange.resolveFrom(context)
-        : Colors.orangeAccent;
-    final sectionSuccessColor = isIOS
-        ? CupertinoColors.systemBlue.resolveFrom(context)
-        : Colors.blueAccent;
-    final normalColor = isIOS
         ? CupertinoColors.systemTeal.resolveFrom(context)
         : Colors.tealAccent;
+    final sentenceSuccessColor = isIOS
+        ? CupertinoColors.systemBlue.resolveFrom(context)
+        : Colors.blueAccent;
+    final sectionSuccessColor = isIOS
+        ? CupertinoColors.systemIndigo.resolveFrom(context)
+        : Colors.indigoAccent;
+    final normalColor = isIOS
+        ? CupertinoColors.systemGreen.resolveFrom(context)
+        : Colors.greenAccent;
 
     return AnimatedPlatformLinearIndicator(
         progress: completionRate,
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeIn,
+        backgroundColor: backgroundColor,
         activeColor: showSectionSuccessEffect
             ? sectionSuccessColor
             : (showSentenceSuccessEffect
@@ -67,21 +72,27 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
 }
 
 class FileDictationProgressIndicator extends ConsumerWidget {
-  const FileDictationProgressIndicator(this.fileId,{super.key,this.alphabetOnly=true});
+  const FileDictationProgressIndicator(this.fileId,
+      {super.key, this.alphabetOnly = true});
 
   final int fileId;
   final bool alphabetOnly;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-      final completionRate =
+    final completionRate =
         ref.watch(completionRateProvider(fileId, alphabetOnly: alphabetOnly));
-          final activeColor = Platform.isIOS
+    final backgroundColor = Platform.isIOS
+        ? CupertinoColors.systemGrey5.resolveFrom(context)
+        : Colors.grey[300]!;
+    final activeColor = Platform.isIOS
         ? CupertinoColors.systemGreen.resolveFrom(context)
         : Colors.greenAccent;
     return PlatformLinearIndicator(
+      backgroundColor: backgroundColor,
       progress: completionRate,
-      activeColor: activeColor,);
+      activeColor: activeColor,
+    );
   }
 }
 
