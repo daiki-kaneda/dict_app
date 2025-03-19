@@ -61,7 +61,7 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
     return AnimatedPlatformLinearIndicator(
         progress: completionRate,
         duration: const Duration(milliseconds: 200),
-        curve: Curves.easeIn,
+        curve: Curves.easeInOut,
         backgroundColor: backgroundColor,
         activeColor: showSectionSuccessEffect
             ? sectionSuccessColor
