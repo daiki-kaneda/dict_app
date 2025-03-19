@@ -13,11 +13,13 @@ class DictationSection {
     this.paragraphs = const [],
     this.index,
     this.parentIndex,
+    this.translatedSentences=const[],
   });
 
   List<DictationParagraph> paragraphs;
   int? index;
   int? parentIndex;
+  List<String> translatedSentences;
 
   bool get isCompleted =>
       paragraphs.map((e) => e.isCompleted).where((e) => e == false).isEmpty;
