@@ -130,8 +130,6 @@ class BottomNavigationWidget extends ConsumerWidget {
           BottomNavigationBarItem(
               icon: Icon(Platform.isIOS ? CupertinoIcons.printer : Icons.print),
               label: 'Print'),
-          BottomNavigationBarItem(
-              icon: Icon(PlatformIcons(context).settings), label: 'Settings'),
         ]);
   }
 }

@@ -36,7 +36,6 @@ class FileDetailsView extends ConsumerWidget {
           DictationView(id),
           ListeningView(id),
           PrintView(id),
-          SettingView(id),
         ][index]);
   }
 }
