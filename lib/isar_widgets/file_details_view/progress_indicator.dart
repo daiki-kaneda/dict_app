@@ -41,15 +41,18 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
     final showSectionSuccessEffect =
         ref.watch(showSectionSuccessEffectProvider(fileId));
 
-    final wordSuccessColor =
-        isIOS ? CupertinoColors.systemIndigo.resolveFrom(context) : Colors.indigoAccent;
-    final sentenceSuccessColor =
-        isIOS ? CupertinoColors.systemGreen.resolveFrom(context) : Colors.greenAccent;
-    final sectionSuccessColor =
-        isIOS ? CupertinoColors.systemPurple.resolveFrom(context) : Colors.purpleAccent;
-    final normalColor = isIOS
+    final wordSuccessColor = isIOS
+        ? CupertinoColors.systemGreen.resolveFrom(context)
+        : Colors.greenAccent;
+    final sentenceSuccessColor = isIOS
+        ? CupertinoColors.systemOrange.resolveFrom(context)
+        : Colors.orangeAccent;
+    final sectionSuccessColor = isIOS
         ? CupertinoColors.systemBlue.resolveFrom(context)
         : Colors.blueAccent;
+    final normalColor = isIOS
+        ? CupertinoColors.systemTeal.resolveFrom(context)
+        : Colors.tealAccent;
 
     return AnimatedPlatformLinearIndicator(
         progress: completionRate,
