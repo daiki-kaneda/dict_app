@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/dictation_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/input_text_field.dart';
@@ -12,6 +14,8 @@ import 'package:dict_app/providers/audio_player_provider/player_position_provide
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/model_provider/llm_role.dart';
+import 'package:dict_app/providers/model_provider/model_provider.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -35,6 +39,13 @@ class DictationView extends ConsumerWidget {
 
     void initDict({int startSentenceIndex=0}) {
       if (file == null) return;
+      // make translated sentences
+      final sentences = file.getAllSentences!.map((s)=>s.displayText).toList();
+      if(file.paragraphs.translatedSentences.isEmpty){
+        ref.read(modelNotifierProvider(role: TranslateSenteces(fileId)).notifier)
+        .sendMessage(jsonEncode(sentences));
+      }
+
       // - set audio path to AudioPlayer
       final audioPath = file.audioPath;
       ref.read(audioPlayerNotifierProvider.notifier).setSource(audioPath);

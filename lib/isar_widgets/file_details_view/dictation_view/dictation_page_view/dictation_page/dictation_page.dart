@@ -26,7 +26,8 @@ class DictationPage extends ConsumerWidget {
               sentence: dictationSentence,
             ),
             SizedBox(height: 20,),
-            TranslatedText(dictationSentence.displayText),
+            LlmTranslatedText(fileId)
+            // TranslatedText(dictationSentence.displayText),
           ],
         ),
         ));

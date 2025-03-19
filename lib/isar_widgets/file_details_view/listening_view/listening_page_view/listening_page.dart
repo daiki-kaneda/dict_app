@@ -24,7 +24,8 @@ class ListeningPage extends ConsumerWidget {
               style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
             ),
             SizedBox(height: 20,),
-            TranslatedText(dictationSentence.displayText),
+            LlmTranslatedText(fileId)
+            // TranslatedText(dictationSentence.displayText),
           ],
         ),
         ));
