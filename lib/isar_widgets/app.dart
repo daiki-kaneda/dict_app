@@ -4,7 +4,7 @@ import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_view.dart';
-import 'package:dict_app/isar_widgets/file_details_view/setting_sheet_view/setting_sheet_view.dart';
+import 'package:dict_app/isar_widgets/file_details_view/setting_view/setting_view.dart';
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/store_ui/store_sheet.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
@@ -120,9 +120,10 @@ class IsarFolderStructureApp extends StatelessWidget {
                     path: 'settings',
                     pageBuilder: (context, state) {
                       final fileId = state.currentParameterValue(fileIdKey)!;
-                      final settingsWidget = SettingSheetView(fileId);
-                      return Platform.isIOS ? CupertinoSheetPage(builder:(context) => settingsWidget,):
-                      MaterialSheetPage(builder:(context) => settingsWidget, isScrollControlled: false);
+                      final settingsWidget = FileSettingView(fileId);
+                      return platformPage(
+                        context: context,child: settingsWidget,
+                        fullscreenDialog: true);
                     },
                   ),
                 ])
