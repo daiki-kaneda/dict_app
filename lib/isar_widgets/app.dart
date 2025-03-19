@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
@@ -5,6 +7,7 @@ import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/store_ui/store_sheet.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
+import 'package:dict_app/isar_widgets/utils/sheet_page.dart';
 import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
@@ -71,9 +74,9 @@ class IsarFolderStructureApp extends StatelessWidget {
               path: '/store',
               pageBuilder: (context, state) {
                 return platformPage(
-                          context: context,
-                          fullscreenDialog: true,
-                          child: StoreSheet());
+                    context: context,
+                    fullscreenDialog: true,
+                    child: StoreSheet());
               },
             ),
             GoRoute(
@@ -111,6 +114,19 @@ class IsarFolderStructureApp extends StatelessWidget {
                           child: ListeningContentView(fileId));
                     },
                   ),
+                  GoRoute(
+                    name: 'settings',
+                    path: 'settings',
+                    pageBuilder: (context, state) {
+                      final fileId = state.currentParameterValue(fileIdKey)!;
+                      final settingsWidget = CupertinoPageScaffold(
+                              child: Center(
+                            child: Text('Settings'),
+                          ));
+                      return Platform.isIOS ? CupertinoSheetPage(builder:(context) => settingsWidget,):
+                      MaterialSheetPage(builder:(context) => settingsWidget, isScrollControlled: false);
+                    },
+                  ),
                 ])
           ])
     ]);
@@ -135,7 +151,8 @@ class _EagerInitialization extends ConsumerWidget {
 
     ref.watch(settingNotifierProvider);
 
-    if (![isar.value,translator.value,iap.value,localDatabase.value].contains(null)) {
+    if (![isar.value, translator.value, iap.value, localDatabase.value]
+        .contains(null)) {
       return child;
     } else {
       return PlatformScaffold(
