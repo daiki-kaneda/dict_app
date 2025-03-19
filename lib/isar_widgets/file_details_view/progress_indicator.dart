@@ -65,3 +65,42 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
                 : (showWordSuccessEffect ? wordSuccessColor : normalColor)));
   }
 }
+
+class FileDictationProgressIndicator extends ConsumerWidget {
+  const FileDictationProgressIndicator(this.fileId,{super.key,this.alphabetOnly=true});
+
+  final int fileId;
+  final bool alphabetOnly;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+      final completionRate =
+        ref.watch(completionRateProvider(fileId, alphabetOnly: alphabetOnly));
+          final activeColor = Platform.isIOS
+        ? CupertinoColors.systemGreen.resolveFrom(context)
+        : Colors.greenAccent;
+    return PlatformLinearIndicator(
+      progress: completionRate,
+      activeColor: activeColor,);
+  }
+}
+
+
+// class FolderDictationProgressIndicator extends ConsumerWidget {
+//   const FolderDictationProgressIndicator(this.fileId,{super.key,this.alphabetOnly=true});
+
+//   final int fileId;
+//   final bool alphabetOnly;
+
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//       final completionRate =
+//         ref.watch(completionRateProvider(fileId, alphabetOnly: alphabetOnly));
+//           final activeColor = Platform.isIOS
+//         ? CupertinoColors.systemGreen.resolveFrom(context)
+//         : Colors.greenAccent;
+//     return PlatformLinearIndicator(
+//       progress: completionRate,
+//       activeColor: activeColor,);
+//   }
+// }
