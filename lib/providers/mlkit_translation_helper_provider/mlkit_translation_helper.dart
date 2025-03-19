@@ -1,7 +1,7 @@
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
-class EnglishTranslationHelper {
-  EnglishTranslationHelper(this.targetLanguageCode);
+class MlkitEnglishTranslationHelper {
+  MlkitEnglishTranslationHelper(this.targetLanguageCode);
 
   final String targetLanguageCode;
   late final TranslateLanguage targetLanguage;

@@ -12,7 +12,7 @@ import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
-import 'package:dict_app/providers/translation_helper_provider/translation_helper_provider.dart';
+import 'package:dict_app/providers/mlkit_translation_helper_provider/mlkit_translation_helper_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -151,7 +151,7 @@ class _EagerInitialization extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isar = ref.watch(isarProvider);
-    final translator = ref.watch(translationHelperProvider);
+    final translator = ref.watch(mlkitTranslationHelperProvider);
     final iap = ref.watch(iapNotifierProvider);
     final localDatabase = ref.watch(localDatabaseProvider);
 
