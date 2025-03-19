@@ -35,26 +35,11 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
     final isIOS = Platform.isIOS;
     final completionRate =
         ref.watch(completionRateProvider(fileId, alphabetOnly: alphabetOnly));
-    final showWordSuccessEffect =
-        ref.watch(showWordSuccessEffectProvider(fileId));
-    final showSentenceSuccessEffect =
-        ref.watch(showSentenceSuccessEffectProvider(fileId));
-    final showSectionSuccessEffect =
-        ref.watch(showSectionSuccessEffectProvider(fileId));
 
     final backgroundColor = Platform.isIOS
         ? CupertinoColors.systemGrey5.resolveFrom(context)
         : Colors.grey[300]!;
-    final wordSuccessColor = isIOS
-        ? CupertinoColors.systemTeal.resolveFrom(context)
-        : Colors.tealAccent;
-    final sentenceSuccessColor = isIOS
-        ? CupertinoColors.systemBlue.resolveFrom(context)
-        : Colors.blueAccent;
-    final sectionSuccessColor = isIOS
-        ? CupertinoColors.systemIndigo.resolveFrom(context)
-        : Colors.indigoAccent;
-    final normalColor = isIOS
+    final activeColor = isIOS
         ? CupertinoColors.systemGreen.resolveFrom(context)
         : Colors.greenAccent;
 
@@ -63,11 +48,7 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
         backgroundColor: backgroundColor,
-        activeColor: showSectionSuccessEffect
-            ? sectionSuccessColor
-            : (showSentenceSuccessEffect
-                ? sentenceSuccessColor
-                : (showWordSuccessEffect ? wordSuccessColor : normalColor)));
+        activeColor: activeColor);
   }
 }
 
