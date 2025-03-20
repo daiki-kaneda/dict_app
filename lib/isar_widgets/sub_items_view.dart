@@ -10,6 +10,7 @@ import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
 import 'package:dict_app/isar_widgets/utils/select_folder_list.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
+import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/folder_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
 import 'package:dict_app/utils/utils.dart';
@@ -146,19 +147,19 @@ class ItemTile extends StatelessWidget {
       case File():
         {
           final file = (item as File);
-          assert(file.id!=null);
+          assert(file.id != null);
+          final fileId = file.id!;
 
           final parentId = PathParamerterKeys.parentId.getCurrentValue();
           return PlatformListTile(
-            leading: CompletionRing(file.id!),
+            leading: CompletionRing(fileId),
             title: Text(
               file.title.toString(),
             ),
-            subtitle: Text('id: ${file.id}'),
-            // subtitle: Text(formatDateTime(file.lastUpdatedAt)),
+            subtitle: LastFileUpdatedAtText(fileId),
             onTap: () {
               if (parentId == null) return;
-              context.push('/file-details/${file.id}');
+              context.push('/file-details/$fileId');
               if (onFileTapped != null) onFileTapped!();
             },
             trailing: ActionButton(item),
@@ -267,14 +268,15 @@ class ActionButton extends ConsumerWidget {
 }
 
 class CompletionRing extends ConsumerWidget {
-  const CompletionRing(this.fileId, {super.key,this.alphabetOnly=true});
+  const CompletionRing(this.fileId, {super.key, this.alphabetOnly = true});
 
   final int fileId;
   final bool alphabetOnly;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final completionRate = ref.watch(completionRateProvider(fileId,alphabetOnly: alphabetOnly));
+    final completionRate =
+        ref.watch(completionRateProvider(fileId, alphabetOnly: alphabetOnly));
     final bool isCupertino = Platform.isIOS;
     final Color backgroundColor = isCupertino
         ? CupertinoColors.systemFill.resolveFrom(context)
@@ -292,5 +294,18 @@ class CompletionRing extends ConsumerWidget {
       progressColor: progressColor,
       completionColor: completionColor,
     );
+  }
+}
+
+class LastFileUpdatedAtText extends ConsumerWidget {
+  const LastFileUpdatedAtText(this.fileId, {super.key});
+
+  final int fileId;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lastUpdatedAt =
+        ref.watch(fileNotifierProvider(fileId).select((f) => f?.lastUpdatedAt));
+    return Text(
+        lastUpdatedAt != null ? formatDateTime(lastUpdatedAt, context) : '');
   }
 }
