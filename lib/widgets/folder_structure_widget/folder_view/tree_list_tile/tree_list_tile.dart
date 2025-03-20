@@ -48,7 +48,7 @@ class TreeListTile extends ConsumerWidget {
               dict.value.title,
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
-            subtitle: Text(formatDateTime(dict.value.createdAt)),
+            subtitle: Text(formatDateTime(dict.value.createdAt,context)),
             onTap: isEditing
                 ? null
                 : () {
