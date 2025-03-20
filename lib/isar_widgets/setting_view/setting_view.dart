@@ -1,23 +1,91 @@
+import 'dart:io';
+
+import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class FileSettingView extends StatelessWidget {
-  const FileSettingView({super.key});
+class SettingView extends ConsumerWidget {
+  const SettingView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final setting = ref.watch(settingNotifierProvider).value;
+    final notifier = ref.read(settingNotifierProvider.notifier);
+    final currentIndex = ref.read(currentTabIndexProvider);
+    if (setting == null) {
+      return LoadingPage(
+          backgroundColor: Platform.isIOS
+              ? CupertinoColors.systemGroupedBackground.resolveFrom(context)
+              : null);
+    }
+
     return PlatformScaffold(
-      appBar: PlatformAppBar(),
-      body: Center(
-        child: Text('settings'),
+      appBar: PlatformAppBar(
+        cupertino: (context, platform) => CupertinoNavigationBarData(
+            backgroundColor:
+                CupertinoColors.systemGroupedBackground.resolveFrom(context)),
+        title: Text("Settings"),
+      ),
+      body: ListView(
+        children: [
+          CupertinoListSection(
+            header: const Text("一般"),
+            children: [
+              CupertinoListTile(
+                title: const Text("フォントサイズ"),
+                subtitle: Text('20'),
+              ),
+              CupertinoListTile(
+                title: const Text("翻訳を表示"),
+                trailing: CupertinoSwitch(
+                  value: setting.showTranslation,
+                  onChanged: (value) {
+                    notifier.updateSetting(
+                        showTranslation: !setting.showTranslation);
+                  },
+                ),
+              ),
+              CupertinoListTile(
+                  title: const Text("翻訳先の言語"),
+                  subtitle: Text(setting.translationTarget),
+                  onTap: () {}),
+            ],
+          ),
+          CupertinoListSection(
+            header: const Text("PDF設定"),
+            children: [
+              CupertinoListTile(
+                title: const Text("答えを追加"),
+                trailing: CupertinoSwitch(
+                  value: setting.appendAnswer,
+                  onChanged: (value) {
+                    notifier.updateSetting(appendAnswer: value);
+                  },
+                ),
+              ),
+              CupertinoListTile(
+                title: const Text("ページナンバーの表示"),
+                trailing: CupertinoSwitch(
+                  value: setting.showPageNumbers,
+                  onChanged: (value) {
+                    notifier.updateSetting(showPageNumbers: value);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
 
-class ShowFileSettingsButton extends StatelessWidget {
-  const ShowFileSettingsButton(this.fileId,{super.key});
+class ShowSettingViewButton extends StatelessWidget {
+  const ShowSettingViewButton(this.fileId, {super.key});
 
   final int fileId;
 

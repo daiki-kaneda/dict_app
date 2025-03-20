@@ -117,11 +117,11 @@ class BottomNavigationWidget extends ConsumerWidget {
   final int fileId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = ref.watch(currentTabIndexProvider(fileId));
+    final currentIndex = ref.watch(currentTabIndexProvider);
     return PlatformBottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (newIndex) =>
-            ref.read(currentTabIndexProvider(fileId).notifier).updateIndex(newIndex),
+            ref.read(currentTabIndexProvider.notifier).updateIndex(newIndex),
         items: [
           BottomNavigationBarItem(
               icon: Icon(PlatformIcons(context).pen), label: 'Dictation'),

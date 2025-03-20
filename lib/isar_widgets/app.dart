@@ -7,6 +7,7 @@ import 'package:dict_app/isar_widgets/file_details_view/stats_view/stats_view.da
 import 'package:dict_app/isar_widgets/home.dart';
 import 'package:dict_app/isar_widgets/store_ui/store_sheet.dart';
 import 'package:dict_app/isar_widgets/sub_items_view.dart';
+import 'package:dict_app/models/setting.dart';
 import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
@@ -132,7 +133,7 @@ class IsarFolderStructureApp extends StatelessWidget {
               path: '/settings',
               pageBuilder: (context, state) => platformPage(
                   context: context,
-                  child: FileSettingView(),
+                  child: SettingView(),
                   fullscreenDialog: true),
             ),
           ])
@@ -175,13 +176,13 @@ extension GoRouterStateEx on GoRouterState {
 }
 
 class LoadingPage extends StatelessWidget {
-  const LoadingPage({super.key});
+  const LoadingPage({super.key, this.backgroundColor});
 
+  final Color? backgroundColor;
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-        body: Center(
-      child: PlatformCircularProgressIndicator()
-    ));
+        backgroundColor: backgroundColor,
+        body: Center(child: PlatformCircularProgressIndicator()));
   }
 }

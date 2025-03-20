@@ -1192,148 +1192,22 @@ final inputTextFieldFocusNodeProvider =
 );
 
 typedef _$InputTextFieldFocusNode = AutoDisposeNotifier<FocusNode>;
-String _$currentTabIndexHash() => r'bf6ca23d839391198a0a7573f0dd01d2821ad32e';
-
-abstract class _$CurrentTabIndex extends BuildlessAutoDisposeNotifier<int> {
-  late final int fileId;
-
-  int build(
-    int fileId,
-  );
-}
+String _$currentTabIndexHash() => r'273ad7f6e402e1baa8246dc8449a3f48eb8f95a3';
 
 /// See also [CurrentTabIndex].
 @ProviderFor(CurrentTabIndex)
-const currentTabIndexProvider = CurrentTabIndexFamily();
+final currentTabIndexProvider =
+    AutoDisposeNotifierProvider<CurrentTabIndex, int>.internal(
+  CurrentTabIndex.new,
+  name: r'currentTabIndexProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentTabIndexHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-/// See also [CurrentTabIndex].
-class CurrentTabIndexFamily extends Family<int> {
-  /// See also [CurrentTabIndex].
-  const CurrentTabIndexFamily();
-
-  /// See also [CurrentTabIndex].
-  CurrentTabIndexProvider call(
-    int fileId,
-  ) {
-    return CurrentTabIndexProvider(
-      fileId,
-    );
-  }
-
-  @override
-  CurrentTabIndexProvider getProviderOverride(
-    covariant CurrentTabIndexProvider provider,
-  ) {
-    return call(
-      provider.fileId,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'currentTabIndexProvider';
-}
-
-/// See also [CurrentTabIndex].
-class CurrentTabIndexProvider
-    extends AutoDisposeNotifierProviderImpl<CurrentTabIndex, int> {
-  /// See also [CurrentTabIndex].
-  CurrentTabIndexProvider(
-    int fileId,
-  ) : this._internal(
-          () => CurrentTabIndex()..fileId = fileId,
-          from: currentTabIndexProvider,
-          name: r'currentTabIndexProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$currentTabIndexHash,
-          dependencies: CurrentTabIndexFamily._dependencies,
-          allTransitiveDependencies:
-              CurrentTabIndexFamily._allTransitiveDependencies,
-          fileId: fileId,
-        );
-
-  CurrentTabIndexProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.fileId,
-  }) : super.internal();
-
-  final int fileId;
-
-  @override
-  int runNotifierBuild(
-    covariant CurrentTabIndex notifier,
-  ) {
-    return notifier.build(
-      fileId,
-    );
-  }
-
-  @override
-  Override overrideWith(CurrentTabIndex Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: CurrentTabIndexProvider._internal(
-        () => create()..fileId = fileId,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        fileId: fileId,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeNotifierProviderElement<CurrentTabIndex, int> createElement() {
-    return _CurrentTabIndexProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is CurrentTabIndexProvider && other.fileId == fileId;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, fileId.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-mixin CurrentTabIndexRef on AutoDisposeNotifierProviderRef<int> {
-  /// The parameter `fileId` of this provider.
-  int get fileId;
-}
-
-class _CurrentTabIndexProviderElement
-    extends AutoDisposeNotifierProviderElement<CurrentTabIndex, int>
-    with CurrentTabIndexRef {
-  _CurrentTabIndexProviderElement(super.provider);
-
-  @override
-  int get fileId => (origin as CurrentTabIndexProvider).fileId;
-}
-
+typedef _$CurrentTabIndex = AutoDisposeNotifier<int>;
 String _$showErrorEffectHash() => r'd81c078b35986486a4dac893b7f583f0aeb5efb4';
 
 abstract class _$ShowErrorEffect extends BuildlessAutoDisposeNotifier<bool> {

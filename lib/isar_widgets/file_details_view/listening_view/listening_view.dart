@@ -77,7 +77,7 @@ class ListeningContentView extends ConsumerWidget {
     return PlatformScaffold(
         appBar: PlatformAppBar(
           leading: PlatformCloseButton(onPop: onPop),
-          trailingActions: [ShowFileSettingsButton(fileId)],
+          trailingActions: [ShowSettingViewButton(fileId)],
         ),
         body: SafeArea(
           child: Column(

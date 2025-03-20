@@ -38,10 +38,49 @@ class SettingNotifier extends _$SettingNotifier {
     localData.saveData(LocalDataStatus.setting, jsonEncode(previousState));
   }
 
-  Future<void> updateSetting({int? remainingTickets}) async {
+  Future<void> updateSetting({
+    int? remainingTickets,
+    int? textSize,
+    bool? showTranslation,
+    double? audioSpeed,
+    bool? repeatAudio,
+    bool? maskOnlyAlphabetOnReset,
+    SpaceKeyAction? spaceKeyAction,
+    bool? showScrollBar,
+    bool? appendAnswer,
+    bool? appendWordList,
+    bool? separateWordsWithParentheses,
+    bool? connectUnderlinedParts,
+    bool? showUnderlinedParts,
+    bool? showPageNumbers,
+    bool? hideOnlyAlphabet,
+    String? translationTarget,
+    int? fontSize,
+    String? englishFont,
+    String? nonEnglishFont,
+  }) async {
     final previousState = await future;
-    state =
-        AsyncData(previousState.copyWith(remainingTickets: remainingTickets));
+    state = AsyncData(previousState.copyWith(
+      remainingTickets: remainingTickets,
+      textSize: textSize,
+      showTranslation: showTranslation,
+      audioSpeed: audioSpeed,
+      repeatAudio: repeatAudio,
+      maskOnlyAlphabetOnReset: maskOnlyAlphabetOnReset,
+      spaceKeyAction: spaceKeyAction,
+      showScrollBar: showScrollBar,
+      appendAnswer: appendAnswer,
+      appendWordList: appendWordList,
+      separateWordsWithParentheses: separateWordsWithParentheses,
+      connectUnderlinedParts: connectUnderlinedParts,
+      showUnderlinedParts: showUnderlinedParts,
+      showPageNumbers: showPageNumbers,
+      hideOnlyAlphabet: hideOnlyAlphabet,
+      translationTarget: translationTarget,
+      fontSize: fontSize,
+      englishFont: englishFont,
+      nonEnglishFont: nonEnglishFont,
+    ));
   }
 
   Future<void> consumeTickets({int amount = 1}) async {
@@ -54,8 +93,8 @@ class SettingNotifier extends _$SettingNotifier {
     state = AsyncData(previousState.addTickets(amount));
   }
 
-  Future<bool> hasTickets()async{
+  Future<bool> hasTickets() async {
     final previousState = await future;
-    return previousState.remainingTickets>0;
+    return previousState.remainingTickets > 0;
   }
 }

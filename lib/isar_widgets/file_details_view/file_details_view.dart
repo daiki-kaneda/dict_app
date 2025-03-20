@@ -27,8 +27,8 @@ class FileDetailsView extends ConsumerWidget {
     final file = ref.watch(fileNotifierProvider(id));
     if (file == null) LoadingPage();
 
-    final index = ref.watch(currentTabIndexProvider(id));
-    ref.listen(currentTabIndexProvider(id), (prev, next) {
+    final index = ref.watch(currentTabIndexProvider);
+    ref.listen(currentTabIndexProvider, (prev, next) {
       print('previous tabIndex:$prev,next tabIndex:$next');
     });
     return PlatformScaffold(
@@ -60,7 +60,7 @@ class FileNavTrailing extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = ref.watch(currentTabIndexProvider(fileId));
+    final currentIndex = ref.watch(currentTabIndexProvider);
     final file = ref.watch(fileNotifierProvider(fileId));
     if (file == null) return Container();
     if (currentIndex == 0) {

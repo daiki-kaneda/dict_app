@@ -222,7 +222,7 @@ class InputTextFieldFocusNode extends _$InputTextFieldFocusNode {
 @riverpod
 class CurrentTabIndex extends _$CurrentTabIndex {
   @override
-  int build(int fileId) {
+  int build() {
     return 0;
   }
 
