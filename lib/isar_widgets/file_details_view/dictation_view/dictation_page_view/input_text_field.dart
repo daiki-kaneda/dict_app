@@ -1,5 +1,6 @@
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InputTextField extends ConsumerStatefulWidget {
@@ -18,7 +19,7 @@ class _InputTextFieldState extends ConsumerState<InputTextField> {
     return Opacity(
       opacity: 0,
       child: IgnorePointer(
-        child: CupertinoTextField(
+        child: PlatformTextField(
           maxLines: null,
           maxLength: null,
           autocorrect: false,

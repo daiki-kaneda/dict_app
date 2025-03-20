@@ -1,4 +1,3 @@
-
 import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/file_details_view.dart';
@@ -83,10 +82,7 @@ class IsarFolderStructureApp extends StatelessWidget {
                 builder: (context, state) {
                   final id = state.currentParameterValue(fileIdKey);
                   if (id == null) {
-                    return const CupertinoPageScaffold(
-                        child: Center(
-                      child: CupertinoActivityIndicator(),
-                    ));
+                    return LoadingPage();
                   }
                   return FileDetailsView(id: id);
                 },
@@ -128,15 +124,14 @@ class IsarFolderStructureApp extends StatelessWidget {
             GoRoute(
               name: 'settings',
               path: '/settings',
-              pageBuilder: (context, state) =>platformPage(
-                    context: context,
-                    child:FileSettingView(),
-                    fullscreenDialog: true)
-              ,
+              pageBuilder: (context, state) => platformPage(
+                  context: context,
+                  child: FileSettingView(),
+                  fullscreenDialog: true),
             ),
           ])
     ]);
-    return CupertinoApp.router(
+    return PlatformApp.router(
       routerConfig: router,
       debugShowCheckedModeBanner: false,
     );
@@ -161,13 +156,7 @@ class _EagerInitialization extends ConsumerWidget {
         .contains(null)) {
       return child;
     } else {
-      return PlatformScaffold(
-        body: Center(
-          child: Center(
-            child: PlatformCircularProgressIndicator(),
-          ),
-        ),
-      );
+      return LoadingPage();
     }
   }
 }
@@ -176,5 +165,17 @@ extension GoRouterStateEx on GoRouterState {
   int? currentParameterValue(String key) {
     final value = pathParameters[key];
     return value != null ? int.tryParse(value) : null;
+  }
+}
+
+class LoadingPage extends StatelessWidget {
+  const LoadingPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return PlatformScaffold(
+        body: Center(
+      child: PlatformCircularProgressIndicator()
+    ));
   }
 }

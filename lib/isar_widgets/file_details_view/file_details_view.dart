@@ -1,4 +1,4 @@
-
+import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/print_view/dictation.dart';
@@ -23,20 +23,20 @@ class FileDetailsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(ModelNotifierProvider(role: TranslateSenteces(id)));
-    
+
     final file = ref.watch(fileNotifierProvider(id));
-    if(file==null)return Center(child: PlatformCircularProgressIndicator(),);
+    if (file == null) LoadingPage();
 
     final index = ref.watch(currentTabIndexProvider(id));
-    ref.listen(currentTabIndexProvider(id),(prev,next){
+    ref.listen(currentTabIndexProvider(id), (prev, next) {
       print('previous tabIndex:$prev,next tabIndex:$next');
     });
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: FileNavTitle(),
-          trailing: FileNavTrailing(id),
+    return PlatformScaffold(
+        appBar: PlatformAppBar(
+          title: FileNavTitle(),
+          trailingActions: [FileNavTrailing(id)],
         ),
-        child: [
+        body: [
           DictationView(id),
           ListeningView(id),
           PrintView(id),
@@ -63,9 +63,9 @@ class FileNavTrailing extends ConsumerWidget {
     final currentIndex = ref.watch(currentTabIndexProvider(fileId));
     final file = ref.watch(fileNotifierProvider(fileId));
     if (file == null) return Container();
-    if(currentIndex==0){
+    if (currentIndex == 0) {
       return ShowStatsButton(fileId);
-    }else if (currentIndex == 2) {
+    } else if (currentIndex == 2) {
       return PlatformIconButton(
           onPressed: () {
             showCustomActionSheet(
@@ -80,8 +80,8 @@ class FileNavTrailing extends ConsumerWidget {
                   ActionSheetAction('シェア', isDefaultAction: true,
                       onTap: () async {
                     Printing.sharePdf(
-                        bytes: await generateDictationDocument(
-                            PdfPageFormat.a4, DictationDocumentData(file: file)));
+                        bytes: await generateDictationDocument(PdfPageFormat.a4,
+                            DictationDocumentData(file: file)));
                   }),
                 ]);
           },
