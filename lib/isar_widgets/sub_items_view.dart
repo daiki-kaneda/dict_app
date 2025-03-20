@@ -80,7 +80,6 @@ class SubItemsList extends ConsumerWidget {
                 ],
               );
             } else {
-              // final parentFolder = ref.watch(folderProvider(parentId!));
               return CustomScrollView(
                 slivers: [
                   // CupertinoSliverNavigationBar(
