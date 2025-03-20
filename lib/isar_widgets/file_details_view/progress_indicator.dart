@@ -38,40 +38,17 @@ class DictationCompletionRateIndicator extends ConsumerWidget {
     final backgroundColor = Platform.isIOS
         ? CupertinoColors.systemGrey5.resolveFrom(context)
         : Colors.grey[300]!;
-    final activeColor = isIOS
-        ? CupertinoColors.systemGreen.resolveFrom(context)
-        : Colors.greenAccent;
+    final activeColor =
+        isIOS ? CupertinoColors.systemCyan.resolveFrom(context) : Colors.cyan;
+    final completionColor =
+        isIOS ? CupertinoColors.systemGreen.resolveFrom(context) : Colors.green;
 
     return AnimatedPlatformLinearIndicator(
-        progress: completionRate,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
-        backgroundColor: backgroundColor,
-        activeColor: activeColor);
-  }
-}
-
-class FileDictationProgressIndicator extends ConsumerWidget {
-  const FileDictationProgressIndicator(this.fileId,
-      {super.key, this.alphabetOnly = true});
-
-  final int fileId;
-  final bool alphabetOnly;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final completionRate =
-        ref.watch(completionRateProvider(fileId, alphabetOnly: alphabetOnly));
-    final backgroundColor = Platform.isIOS
-        ? CupertinoColors.systemGrey5.resolveFrom(context)
-        : Colors.grey[300]!;
-    final activeColor = Platform.isIOS
-        ? CupertinoColors.systemGreen.resolveFrom(context)
-        : Colors.greenAccent;
-    return PlatformLinearIndicator(
-      backgroundColor: backgroundColor,
       progress: completionRate,
-      activeColor: activeColor,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+      backgroundColor: backgroundColor,
+      activeColor: completionRate == 1 ? completionColor : activeColor,
     );
   }
 }

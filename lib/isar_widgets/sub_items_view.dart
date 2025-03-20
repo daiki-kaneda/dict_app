@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/store_ui/store_sheet.dart';
+import 'package:dict_app/isar_widgets/utils/custom_paints/progress_ring.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_text_form.dart';
 import 'package:dict_app/isar_widgets/utils/select_folder_list.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
+import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/folder_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
 import 'package:dict_app/utils/utils.dart';
@@ -142,9 +146,11 @@ class ItemTile extends StatelessWidget {
       case File():
         {
           final file = (item as File);
+          assert(file.id!=null);
+
           final parentId = PathParamerterKeys.parentId.getCurrentValue();
           return PlatformListTile(
-            leading: const Icon(CupertinoIcons.doc),
+            leading: CompletionRing(file.id!),
             title: Text(
               file.title.toString(),
             ),
@@ -256,6 +262,35 @@ class ActionButton extends ConsumerWidget {
             }
         }
       },
+    );
+  }
+}
+
+class CompletionRing extends ConsumerWidget {
+  const CompletionRing(this.fileId, {super.key,this.alphabetOnly=true});
+
+  final int fileId;
+  final bool alphabetOnly;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final completionRate = ref.watch(completionRateProvider(fileId,alphabetOnly: alphabetOnly));
+    final bool isCupertino = Platform.isIOS;
+    final Color backgroundColor = isCupertino
+        ? CupertinoColors.systemFill.resolveFrom(context)
+        : Colors.grey[300]!;
+    final Color progressColor = isCupertino
+        ? CupertinoColors.systemCyan.resolveFrom(context)
+        : Colors.cyan;
+    final Color completionColor = isCupertino
+        ? CupertinoColors.systemGreen.resolveFrom(context)
+        : Colors.green;
+
+    return ProgressRingStatic(
+      progress: completionRate,
+      backgroundColor: backgroundColor,
+      progressColor: progressColor,
+      completionColor: completionColor,
     );
   }
 }

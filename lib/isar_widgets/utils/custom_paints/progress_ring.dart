@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 
-class ProgressRingPainter extends CustomPainter {
-  ProgressRingPainter({
+class _ProgressRingPainter extends CustomPainter {
+  _ProgressRingPainter({
     required this.progress,
     required this.strokeWidth,
     required this.backgroundColor,
@@ -49,7 +49,7 @@ class ProgressRingPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant ProgressRingPainter oldDelegate) =>
+  bool shouldRepaint(covariant _ProgressRingPainter oldDelegate) =>
       progress != oldDelegate.progress ||
       strokeWidth != oldDelegate.strokeWidth ||
       backgroundColor != oldDelegate.backgroundColor ||
@@ -84,7 +84,7 @@ class ProgressRingStatic extends StatelessWidget {
       width: dimension,
       height: dimension,
       child: CustomPaint(
-        painter: ProgressRingPainter(
+        painter: _ProgressRingPainter(
           progress: progress,
           strokeWidth: strokeWidth,
           backgroundColor: backgroundColor,
