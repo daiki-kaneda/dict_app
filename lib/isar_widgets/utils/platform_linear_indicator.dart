@@ -1,12 +1,11 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 class PlatformLinearIndicator extends StatelessWidget {
   const PlatformLinearIndicator({
     super.key,
     required this.progress,
-    this.backgroundColor = Colors.grey, // 初期色を設定
-    this.activeColor = Colors.green,     // 初期色を設定
+    this.backgroundColor = Colors.grey, 
+    this.activeColor = Colors.green,    
     this.height = 4.0,
     this.padding = const EdgeInsets.symmetric(horizontal: 10),
   });
@@ -19,8 +18,6 @@ class PlatformLinearIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isIOS = Platform.isIOS;
-    
     return Padding(
       padding: padding,
       child: ColorBar(
@@ -96,8 +93,8 @@ class AnimatedPlatformLinearIndicator extends StatelessWidget {
   const AnimatedPlatformLinearIndicator({
     super.key,
     required this.progress,
-    this.backgroundColor = Colors.grey, // 初期色を設定
-    this.activeColor = Colors.green,     // 初期色を設定
+    this.backgroundColor = Colors.grey,
+    this.activeColor = Colors.green,     
     this.height = 4.0,
     this.padding = const EdgeInsets.symmetric(horizontal: 10),
     this.duration = const Duration(milliseconds: 250),
@@ -114,7 +111,6 @@ class AnimatedPlatformLinearIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isIOS = Platform.isIOS;
     return Padding(
       padding: padding,
       child: AnimatedColorBar(

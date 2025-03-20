@@ -80,7 +80,7 @@ class DictWordWidget extends ConsumerWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            for (final c in word.characters ?? []) DictCharacterWidget(fileId,c)
+            for (final c in word.characters) DictCharacterWidget(fileId,c)
           ],
         ),
       ),

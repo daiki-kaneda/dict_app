@@ -316,8 +316,7 @@ class DictationParagraph {
   }
 
   List<DictationCharacter> allCharacters() =>
-      sentences.expand<DictationCharacter>((s) => s.allCharacters()).toList() ??
-      [];
+      sentences.expand<DictationCharacter>((s) => s.allCharacters()).toList();
 
   factory DictationParagraph.fromJson(Map<String, dynamic> json) =>
       _$DictationParagraphFromJson(json);
