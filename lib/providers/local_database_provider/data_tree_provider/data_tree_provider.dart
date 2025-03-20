@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dict_app/constants/inner_navigator_key.dart';
 import 'package:dict_app/models/data_tree/data_tree.dart';
 import 'package:dict_app/models/data_tree/dict_data/dict_data.dart';
-import 'package:dict_app/models/data_tree/dict_data/transcript_model.dart';
+import 'package:dict_app/models/data_tree_isar/dictation_data_model/transcript_model.dart';
 import 'package:dict_app/models/data_tree/folder_metadata.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
 import 'package:dict_app/providers/app_directory_provider/app_support_directory_provider.dart';
