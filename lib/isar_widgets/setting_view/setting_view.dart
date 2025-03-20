@@ -15,19 +15,21 @@ class SettingView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final setting = ref.watch(settingNotifierProvider).value;
     final notifier = ref.read(settingNotifierProvider.notifier);
-    final currentIndex = ref.read(currentTabIndexProvider);
+    final isDictOrListening =
+        ref.read(currentTabIndexProvider.select((i) => i == 0 || i == 1));
+
+    final backgroundColor = Platform.isIOS
+        ? CupertinoColors.systemGroupedBackground.resolveFrom(context)
+        : null;
     if (setting == null) {
-      return LoadingPage(
-          backgroundColor: Platform.isIOS
-              ? CupertinoColors.systemGroupedBackground.resolveFrom(context)
-              : null);
+      return LoadingPage(backgroundColor: backgroundColor);
     }
 
     return PlatformScaffold(
+      backgroundColor: backgroundColor,
       appBar: PlatformAppBar(
-        cupertino: (context, platform) => CupertinoNavigationBarData(
-            backgroundColor:
-                CupertinoColors.systemGroupedBackground.resolveFrom(context)),
+        cupertino: (context, platform) =>
+            CupertinoNavigationBarData(backgroundColor: backgroundColor),
         title: Text("Settings"),
       ),
       body: ListView(
@@ -35,10 +37,6 @@ class SettingView extends ConsumerWidget {
           CupertinoListSection(
             header: const Text("一般"),
             children: [
-              CupertinoListTile(
-                title: const Text("フォントサイズ"),
-                subtitle: Text('20'),
-              ),
               CupertinoListTile(
                 title: const Text("翻訳を表示"),
                 trailing: CupertinoSwitch(
@@ -49,12 +47,13 @@ class SettingView extends ConsumerWidget {
                   },
                 ),
               ),
-              CupertinoListTile(
-                  title: const Text("翻訳先の言語"),
-                  subtitle: Text(setting.translationTarget),
-                  onTap: () {}),
+              // CupertinoListTile(
+              //     title: const Text("翻訳先の言語"),
+              //     subtitle: Text(setting.translationTarget),
+              //     onTap: () {}),
             ],
           ),
+          if(!isDictOrListening)
           CupertinoListSection(
             header: const Text("PDF設定"),
             children: [

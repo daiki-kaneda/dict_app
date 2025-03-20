@@ -44,20 +44,13 @@ class SettingNotifier extends _$SettingNotifier {
     bool? showTranslation,
     double? audioSpeed,
     bool? repeatAudio,
-    bool? maskOnlyAlphabetOnReset,
-    SpaceKeyAction? spaceKeyAction,
-    bool? showScrollBar,
     bool? appendAnswer,
-    bool? appendWordList,
     bool? separateWordsWithParentheses,
     bool? connectUnderlinedParts,
     bool? showUnderlinedParts,
     bool? showPageNumbers,
     bool? hideOnlyAlphabet,
     String? translationTarget,
-    int? fontSize,
-    String? englishFont,
-    String? nonEnglishFont,
   }) async {
     final previousState = await future;
     state = AsyncData(previousState.copyWith(
@@ -66,20 +59,13 @@ class SettingNotifier extends _$SettingNotifier {
       showTranslation: showTranslation,
       audioSpeed: audioSpeed,
       repeatAudio: repeatAudio,
-      maskOnlyAlphabetOnReset: maskOnlyAlphabetOnReset,
-      spaceKeyAction: spaceKeyAction,
-      showScrollBar: showScrollBar,
       appendAnswer: appendAnswer,
-      appendWordList: appendWordList,
       separateWordsWithParentheses: separateWordsWithParentheses,
       connectUnderlinedParts: connectUnderlinedParts,
       showUnderlinedParts: showUnderlinedParts,
       showPageNumbers: showPageNumbers,
       hideOnlyAlphabet: hideOnlyAlphabet,
       translationTarget: translationTarget,
-      fontSize: fontSize,
-      englishFont: englishFont,
-      nonEnglishFont: nonEnglishFont,
     ));
   }
 
