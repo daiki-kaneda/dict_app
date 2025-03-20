@@ -15,7 +15,7 @@ String formatDuration(Duration duration) {
   return '$minutes:$seconds';
 }
 
-String formatDateTime(DateTime dateTime) {
+String formatDateTime(DateTime dateTime,BuildContext context) {
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final startOfWeek = today.subtract(Duration(days: today.weekday - 1));
@@ -28,8 +28,8 @@ String formatDateTime(DateTime dateTime) {
   } else if (dateTime.isAfter(startOfWeek) &&
       dateTime.isBefore(endOfWeek.add(const Duration(days: 1)))) {
     // 今週の日付の場合
-    return DateFormat.EEEE(Localizations.localeOf(scaffoldKey.currentContext!)
-                .toLanguageTag() // 'ja'
+    return DateFormat.EEEE(Localizations.localeOf(context)
+                .toLanguageTag()
             )
         .format(dateTime); // 曜日を日本語で表示
   } else {
