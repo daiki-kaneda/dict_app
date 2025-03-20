@@ -40,7 +40,8 @@ class FileNotifier extends _$FileNotifier {
             isFavorite: isFavorite,
             duration: duration,
             transcript: transcript,
-            paragraphs: paragraphs));
+            paragraphs: paragraphs,
+            lastUpdatedAt: DateTime.now()));
       }
     });
     ref.invalidateSelf();

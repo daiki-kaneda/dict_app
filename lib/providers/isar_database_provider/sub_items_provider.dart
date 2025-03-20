@@ -24,6 +24,7 @@ class SubItemsProvider extends _$SubItemsProvider {
   }
 
   Isar get isar => ref.read(isarProvider).requireValue;
+  DateTime now() => DateTime.now();
 
   // Utility
   Future<List<Folder>> getSubFolders(int? parentId) async {
@@ -36,8 +37,9 @@ class SubItemsProvider extends _$SubItemsProvider {
 
   // CRUD Folder
   Future<void> createFolder({required String title}) async {
+    final current = now();
     final newFolder =
-        Folder(parentId: parentId, title: title, createdAt: DateTime.now());
+        Folder(parentId: parentId, title: title, createdAt: current,lastUpdatedAt: current);
     await isar.writeTxn(() async {
       await isar.folders.put(newFolder);
     });
@@ -48,7 +50,9 @@ class SubItemsProvider extends _$SubItemsProvider {
     final folder = await isar.folders.get(id);
     if (folder != null) {
       await isar.writeTxn(() async {
-        await isar.folders.put(folder.copyWith(title: newTitle));
+        await isar.folders.put(folder.copyWith(
+          title: newTitle,
+          lastUpdatedAt: now()));
       });
     }
     ref.invalidateSelf();
@@ -136,7 +140,8 @@ class SubItemsProvider extends _$SubItemsProvider {
     final file = await isar.files.get(id);
     if (file != null) {
       await isar.writeTxn(() async {
-        await isar.files.put(file.copyWith(title: title));
+        await isar.files.put(file.copyWith(title: title,
+        lastUpdatedAt: now()));
       });
     }
     ref.invalidateSelf();
@@ -153,9 +158,11 @@ class SubItemsProvider extends _$SubItemsProvider {
   Future<void> moveFile(int id, int? newParentId) async {
     final file = await isar.files.get(id);
     if (file != null) {
-      file.parentId = newParentId;
       await isar.writeTxn(() async {
-        await isar.files.put(file);
+        await isar.files.put(file.copyWith(
+          parentId: newParentId,
+          lastUpdatedAt: now()
+        ));
       });
     }
     ref.invalidateSelf();
@@ -165,9 +172,11 @@ class SubItemsProvider extends _$SubItemsProvider {
   Future<void> moveFolder(int id, int? newParentId) async {
     final folder = await isar.folders.get(id);
     if (folder != null) {
-      folder.parentId = newParentId;
       await isar.writeTxn(() async {
-        await isar.folders.put(folder);
+        await isar.folders.put(folder.copyWith(
+          parentId: newParentId,
+          lastUpdatedAt: now()
+        ));
       });
     }
     ref.invalidateSelf();

@@ -22,13 +22,18 @@ const FolderSchema = CollectionSchema(
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
-    r'parentId': PropertySchema(
+    r'lastUpdatedAt': PropertySchema(
       id: 1,
+      name: r'lastUpdatedAt',
+      type: IsarType.dateTime,
+    ),
+    r'parentId': PropertySchema(
+      id: 2,
       name: r'parentId',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'title',
       type: IsarType.string,
     )
@@ -64,8 +69,9 @@ void _folderSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDateTime(offsets[0], object.createdAt);
-  writer.writeLong(offsets[1], object.parentId);
-  writer.writeString(offsets[2], object.title);
+  writer.writeDateTime(offsets[1], object.lastUpdatedAt);
+  writer.writeLong(offsets[2], object.parentId);
+  writer.writeString(offsets[3], object.title);
 }
 
 Folder _folderDeserialize(
@@ -77,8 +83,9 @@ Folder _folderDeserialize(
   final object = Folder(
     createdAt: reader.readDateTime(offsets[0]),
     id: id,
-    parentId: reader.readLongOrNull(offsets[1]),
-    title: reader.readString(offsets[2]),
+    lastUpdatedAt: reader.readDateTime(offsets[1]),
+    parentId: reader.readLongOrNull(offsets[2]),
+    title: reader.readString(offsets[3]),
   );
   return object;
 }
@@ -93,8 +100,10 @@ P _folderDeserializeProp<P>(
     case 0:
       return (reader.readDateTime(offset)) as P;
     case 1:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 2:
+      return (reader.readLongOrNull(offset)) as P;
+    case 3:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -302,6 +311,59 @@ extension FolderQueryFilter on QueryBuilder<Folder, Folder, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> lastUpdatedAtEqualTo(
+      DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lastUpdatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> lastUpdatedAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lastUpdatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> lastUpdatedAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lastUpdatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterFilterCondition> lastUpdatedAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lastUpdatedAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -527,6 +589,18 @@ extension FolderQuerySortBy on QueryBuilder<Folder, Folder, QSortBy> {
     });
   }
 
+  QueryBuilder<Folder, Folder, QAfterSortBy> sortByLastUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> sortByLastUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<Folder, Folder, QAfterSortBy> sortByParentId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentId', Sort.asc);
@@ -577,6 +651,18 @@ extension FolderQuerySortThenBy on QueryBuilder<Folder, Folder, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenByLastUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Folder, Folder, QAfterSortBy> thenByLastUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<Folder, Folder, QAfterSortBy> thenByParentId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentId', Sort.asc);
@@ -609,6 +695,12 @@ extension FolderQueryWhereDistinct on QueryBuilder<Folder, Folder, QDistinct> {
     });
   }
 
+  QueryBuilder<Folder, Folder, QDistinct> distinctByLastUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastUpdatedAt');
+    });
+  }
+
   QueryBuilder<Folder, Folder, QDistinct> distinctByParentId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'parentId');
@@ -633,6 +725,12 @@ extension FolderQueryProperty on QueryBuilder<Folder, Folder, QQueryProperty> {
   QueryBuilder<Folder, DateTime, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
+    });
+  }
+
+  QueryBuilder<Folder, DateTime, QQueryOperations> lastUpdatedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastUpdatedAt');
     });
   }
 
@@ -691,29 +789,34 @@ const FileSchema = CollectionSchema(
       name: r'isFavorite',
       type: IsarType.bool,
     ),
-    r'paragraphs': PropertySchema(
+    r'lastUpdatedAt': PropertySchema(
       id: 6,
+      name: r'lastUpdatedAt',
+      type: IsarType.dateTime,
+    ),
+    r'paragraphs': PropertySchema(
+      id: 7,
       name: r'paragraphs',
       type: IsarType.object,
       target: r'DictationSection',
     ),
     r'parentId': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'parentId',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'title',
       type: IsarType.string,
     ),
     r'transcript': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'transcript',
       type: IsarType.string,
     ),
     r'words': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'words',
       type: IsarType.objectList,
       target: r'WordData',
@@ -800,17 +903,18 @@ void _fileSerialize(
     object.getAllSentences,
   );
   writer.writeBool(offsets[5], object.isFavorite);
+  writer.writeDateTime(offsets[6], object.lastUpdatedAt);
   writer.writeObject<DictationSection>(
-    offsets[6],
+    offsets[7],
     allOffsets,
     DictationSectionSchema.serialize,
     object.paragraphs,
   );
-  writer.writeLong(offsets[7], object.parentId);
-  writer.writeString(offsets[8], object.title);
-  writer.writeString(offsets[9], object.transcript);
+  writer.writeLong(offsets[8], object.parentId);
+  writer.writeString(offsets[9], object.title);
+  writer.writeString(offsets[10], object.transcript);
   writer.writeObjectList<WordData>(
-    offsets[10],
+    offsets[11],
     allOffsets,
     WordDataSchema.serialize,
     object.words,
@@ -830,17 +934,18 @@ File _fileDeserialize(
     duration: reader.readDouble(offsets[3]),
     id: id,
     isFavorite: reader.readBool(offsets[5]),
+    lastUpdatedAt: reader.readDateTime(offsets[6]),
     paragraphs: reader.readObjectOrNull<DictationSection>(
-          offsets[6],
+          offsets[7],
           DictationSectionSchema.deserialize,
           allOffsets,
         ) ??
         DictationSection(),
-    parentId: reader.readLongOrNull(offsets[7]),
-    title: reader.readString(offsets[8]),
-    transcript: reader.readString(offsets[9]),
+    parentId: reader.readLongOrNull(offsets[8]),
+    title: reader.readString(offsets[9]),
+    transcript: reader.readString(offsets[10]),
     words: reader.readObjectList<WordData>(
-          offsets[10],
+          offsets[11],
           WordDataSchema.deserialize,
           allOffsets,
           WordData(),
@@ -875,19 +980,21 @@ P _fileDeserializeProp<P>(
     case 5:
       return (reader.readBool(offset)) as P;
     case 6:
+      return (reader.readDateTime(offset)) as P;
+    case 7:
       return (reader.readObjectOrNull<DictationSection>(
             offset,
             DictationSectionSchema.deserialize,
             allOffsets,
           ) ??
           DictationSection()) as P;
-    case 7:
-      return (reader.readLongOrNull(offset)) as P;
     case 8:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 9:
       return (reader.readString(offset)) as P;
     case 10:
+      return (reader.readString(offset)) as P;
+    case 11:
       return (reader.readObjectList<WordData>(
             offset,
             WordDataSchema.deserialize,
@@ -1558,6 +1665,59 @@ extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
     });
   }
 
+  QueryBuilder<File, File, QAfterFilterCondition> lastUpdatedAtEqualTo(
+      DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lastUpdatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> lastUpdatedAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lastUpdatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> lastUpdatedAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lastUpdatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<File, File, QAfterFilterCondition> lastUpdatedAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lastUpdatedAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<File, File, QAfterFilterCondition> parentIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -2055,6 +2215,18 @@ extension FileQuerySortBy on QueryBuilder<File, File, QSortBy> {
     });
   }
 
+  QueryBuilder<File, File, QAfterSortBy> sortByLastUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<File, File, QAfterSortBy> sortByLastUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<File, File, QAfterSortBy> sortByParentId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentId', Sort.asc);
@@ -2165,6 +2337,18 @@ extension FileQuerySortThenBy on QueryBuilder<File, File, QSortThenBy> {
     });
   }
 
+  QueryBuilder<File, File, QAfterSortBy> thenByLastUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<File, File, QAfterSortBy> thenByLastUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<File, File, QAfterSortBy> thenByParentId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentId', Sort.asc);
@@ -2235,6 +2419,12 @@ extension FileQueryWhereDistinct on QueryBuilder<File, File, QDistinct> {
     });
   }
 
+  QueryBuilder<File, File, QDistinct> distinctByLastUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastUpdatedAt');
+    });
+  }
+
   QueryBuilder<File, File, QDistinct> distinctByParentId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'parentId');
@@ -2300,6 +2490,12 @@ extension FileQueryProperty on QueryBuilder<File, File, QQueryProperty> {
     });
   }
 
+  QueryBuilder<File, DateTime, QQueryOperations> lastUpdatedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastUpdatedAt');
+    });
+  }
+
   QueryBuilder<File, DictationSection, QQueryOperations> paragraphsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'paragraphs');
@@ -2340,6 +2536,7 @@ Folder _$FolderFromJson(Map<String, dynamic> json) => Folder(
       parentId: (json['parentId'] as num?)?.toInt(),
       title: json['title'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
+      lastUpdatedAt: DateTime.parse(json['lastUpdatedAt'] as String),
     );
 
 Map<String, dynamic> _$FolderToJson(Folder instance) {
@@ -2355,6 +2552,7 @@ Map<String, dynamic> _$FolderToJson(Folder instance) {
   writeNotNull('parentId', instance.parentId);
   val['title'] = instance.title;
   val['createdAt'] = instance.createdAt.toIso8601String();
+  val['lastUpdatedAt'] = instance.lastUpdatedAt.toIso8601String();
   return val;
 }
 
@@ -2363,6 +2561,7 @@ File _$FileFromJson(Map<String, dynamic> json) => File(
       parentId: (json['parentId'] as num?)?.toInt(),
       title: json['title'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
+      lastUpdatedAt: DateTime.parse(json['lastUpdatedAt'] as String),
       audioPath: json['audioPath'] as String,
       description: json['description'] as String?,
       isFavorite: json['isFavorite'] as bool,
@@ -2388,6 +2587,7 @@ Map<String, dynamic> _$FileToJson(File instance) {
   writeNotNull('parentId', instance.parentId);
   val['title'] = instance.title;
   val['createdAt'] = instance.createdAt.toIso8601String();
+  val['lastUpdatedAt'] = instance.lastUpdatedAt.toIso8601String();
   val['audioPath'] = instance.audioPath;
   writeNotNull('description', instance.description);
   val['isFavorite'] = instance.isFavorite;

@@ -18,13 +18,14 @@ class Folder extends Item {
     required this.parentId,
     required this.title,
     required this.createdAt,
+    required this.lastUpdatedAt,
   });
 
   Id? id;
-
   int? parentId;
   final String title;
   final DateTime createdAt;
+  DateTime lastUpdatedAt;
 
   factory Folder.fromJson(Map<String, dynamic> json) => _$FolderFromJson(json);
 
@@ -35,13 +36,19 @@ class Folder extends Item {
     int? parentId,
     String? title,
     DateTime? createdAt,
+    DateTime? lastUpdatedAt,
   }) {
     return Folder(
       id: id ?? this.id,
       parentId: parentId ?? this.parentId,
       title: title ?? this.title,
       createdAt: createdAt ?? this.createdAt,
+      lastUpdatedAt: lastUpdatedAt ?? this.lastUpdatedAt,
     );
+  }
+
+  void updateLastUpdatedAt() {
+    lastUpdatedAt = DateTime.now();
   }
 }
 
@@ -52,6 +59,7 @@ class File extends Item {
   int? parentId;
   final String title;
   final DateTime createdAt;
+  final DateTime lastUpdatedAt;
   final String audioPath;
   final String? description;
   final bool isFavorite;
@@ -69,6 +77,7 @@ class File extends Item {
     required this.parentId,
     required this.title,
     required this.createdAt,
+    required this.lastUpdatedAt,
     required this.audioPath,
     required this.description,
     required this.isFavorite,
@@ -100,6 +109,7 @@ class File extends Item {
         parentId: parentId,
         title: title,
         createdAt: DateTime.now(),
+        lastUpdatedAt: DateTime.now(),
         audioPath: audioPath,
         description: description ?? '',
         isFavorite: false,
@@ -128,6 +138,7 @@ class File extends Item {
     int? parentId,
     String? title,
     DateTime? createdAt,
+    DateTime? lastUpdatedAt,
     String? audioPath,
     String? description,
     bool? isFavorite,
@@ -141,6 +152,7 @@ class File extends Item {
         parentId: parentId ?? this.parentId,
         title: title ?? this.title,
         createdAt: createdAt ?? this.createdAt,
+        lastUpdatedAt: lastUpdatedAt ?? this.lastUpdatedAt,
         audioPath: audioPath ?? this.audioPath,
         description: description ?? this.description,
         isFavorite: isFavorite ?? this.isFavorite,
