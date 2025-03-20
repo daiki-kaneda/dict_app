@@ -8,6 +8,7 @@ import 'package:dict_app/isar_widgets/utils/select_folder_list.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/isar_database_provider/folder_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -148,6 +149,7 @@ class ItemTile extends StatelessWidget {
               file.title.toString(),
             ),
             subtitle: Text('id: ${file.id}'),
+            // subtitle: Text(formatDateTime(file.lastUpdatedAt)),
             onTap: () {
               if (parentId == null) return;
               context.push('/file-details/${file.id}');
