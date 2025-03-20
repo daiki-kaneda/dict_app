@@ -68,6 +68,12 @@ class IsarFolderStructureApp extends StatelessWidget {
               },
             ),
             GoRoute(
+              path: '/all-files',
+              builder: (context, state) {
+                return LoadingPage();
+              },
+            ),
+            GoRoute(
               name: 'store',
               path: '/store',
               pageBuilder: (context, state) {
