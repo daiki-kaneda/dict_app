@@ -305,6 +305,6 @@ class LastFileUpdatedAtText extends ConsumerWidget {
     final lastUpdatedAt =
         ref.watch(fileNotifierProvider(fileId).select((f) => f?.lastUpdatedAt));
     return Text(
-        lastUpdatedAt != null ? formatDateTime(lastUpdatedAt, context) : '');
+        lastUpdatedAt != null ? formatDateTime(lastUpdatedAt, 'ja') : '');
   }
 }

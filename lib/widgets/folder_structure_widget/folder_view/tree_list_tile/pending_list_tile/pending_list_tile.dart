@@ -28,7 +28,7 @@ class PendingListTile extends ConsumerWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(formatDateTime(data.createdAt,context),
+          Text(formatDateTime(data.createdAt,'ja'),
           style: TextStyle(
             color: Colors.grey.shade700
           ),),
