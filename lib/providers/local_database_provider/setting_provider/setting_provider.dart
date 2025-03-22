@@ -39,11 +39,11 @@ class SettingNotifier extends _$SettingNotifier {
   }
 
   Future<void> updateSetting({
-    int? remainingTickets,
     int? textSize,
     bool? showTranslation,
     double? audioSpeed,
     bool? repeatAudio,
+    bool? showTranslationInPDF,
     bool? appendAnswer,
     bool? separateWordsWithParentheses,
     bool? connectUnderlinedParts,
@@ -54,11 +54,11 @@ class SettingNotifier extends _$SettingNotifier {
   }) async {
     final previousState = await future;
     state = AsyncData(previousState.copyWith(
-      remainingTickets: remainingTickets,
       textSize: textSize,
       showTranslation: showTranslation,
       audioSpeed: audioSpeed,
       repeatAudio: repeatAudio,
+      showTranslationInPDF: showTranslationInPDF,
       appendAnswer: appendAnswer,
       separateWordsWithParentheses: separateWordsWithParentheses,
       connectUnderlinedParts: connectUnderlinedParts,

@@ -67,26 +67,37 @@ class FileNavTrailing extends ConsumerWidget {
     if (currentIndex == 0) {
       return ShowStatsButton(fileId);
     } else if (currentIndex == 2) {
-      return PlatformIconButton(
-          onPressed: () {
-            showCustomActionSheet(
-                isCupertino: true,
-                context: context,
-                actions: [
-                  ActionSheetAction('プリント', isDefaultAction: true, onTap: () {
-                    Printing.layoutPdf(
-                        onLayout: (format) => generateDictationDocument(
-                            format, DictationDocumentData(file: file)));
-                  }),
-                  ActionSheetAction('シェア', isDefaultAction: true,
-                      onTap: () async {
-                    Printing.sharePdf(
-                        bytes: await generateDictationDocument(PdfPageFormat.a4,
-                            DictationDocumentData(file: file)));
-                  }),
-                ]);
-          },
-          icon: Icon(PlatformIcons(context).share));
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ShowSettingViewButton(fileId),
+          SizedBox(
+            width: 10,
+          ),
+          PlatformIconButton(
+              onPressed: () {
+                showCustomActionSheet(
+                    isCupertino: true,
+                    context: context,
+                    actions: [
+                      ActionSheetAction('プリント', isDefaultAction: true,
+                          onTap: () {
+                        Printing.layoutPdf(
+                            onLayout: (format) => generateDictationDocument(
+                                format, DictationDocumentData(file: file)));
+                      }),
+                      ActionSheetAction('シェア', isDefaultAction: true,
+                          onTap: () async {
+                        Printing.sharePdf(
+                            bytes: await generateDictationDocument(
+                                PdfPageFormat.a4,
+                                DictationDocumentData(file: file)));
+                      }),
+                    ]);
+              },
+              icon: Icon(PlatformIcons(context).share)),
+        ],
+      );
     }
     return Container();
   }

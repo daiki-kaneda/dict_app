@@ -35,10 +35,6 @@ Future<Uint8List> generateDictationDocument(
       : await PdfGoogleFonts.openSansBold();
 
   doc.addPage(pw.MultiPage(
-      theme: pw.ThemeData.withFont(
-        base: font1,
-        bold: font2,
-      ),
       pageFormat: format.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
       orientation: pw.PageOrientation.portrait,
       crossAxisAlignment: pw.CrossAxisAlignment.start,

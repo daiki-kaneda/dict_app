@@ -34,49 +34,99 @@ class SettingView extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          CupertinoListSection(
-            header: const Text("一般"),
-            children: [
-              CupertinoListTile(
-                title: const Text("翻訳を表示"),
-                trailing: CupertinoSwitch(
-                  value: setting.showTranslation,
-                  onChanged: (value) {
-                    notifier.updateSetting(
-                        showTranslation: !setting.showTranslation);
-                  },
+          if (isDictOrListening)
+            CupertinoListSection(
+              hasLeading: false,
+              header: const Text("一般"),
+              children: [
+                CupertinoListTile(
+                  title: const Text("翻訳を表示"),
+                  trailing: CupertinoSwitch(
+                    value: setting.showTranslation,
+                    onChanged: (value) {
+                      notifier.updateSetting(
+                          showTranslation: !setting.showTranslation);
+                    },
+                  ),
                 ),
+              ],
+            ),
+          if (!isDictOrListening)
+            CupertinoListSection(
+              header: const Text("PDF設定"),
+              hasLeading: false,
+              children: [
+              PlatformListTile(
+                title: Text('翻訳をつける'),
+                trailing: PlatformSwitch(
+                    value: setting.showTranslationInPDF,
+                    onChanged: (value) {
+                      ref
+                          .read(settingNotifierProvider.notifier)
+                          .updateSetting(showTranslationInPDF: value);
+                    }),
               ),
-              // CupertinoListTile(
-              //     title: const Text("翻訳先の言語"),
-              //     subtitle: Text(setting.translationTarget),
-              //     onTap: () {}),
-            ],
-          ),
-          if(!isDictOrListening)
-          CupertinoListSection(
-            header: const Text("PDF設定"),
-            children: [
-              CupertinoListTile(
-                title: const Text("答えを追加"),
-                trailing: CupertinoSwitch(
-                  value: setting.appendAnswer,
-                  onChanged: (value) {
-                    notifier.updateSetting(appendAnswer: value);
-                  },
-                ),
+              PlatformListTile(
+                title: Text('答えをつける'),
+                trailing: PlatformSwitch(
+                    value: setting.appendAnswer,
+                    onChanged: (value) {
+                      ref
+                          .read(settingNotifierProvider.notifier)
+                          .updateSetting(appendAnswer: value);
+                    }),
               ),
-              CupertinoListTile(
-                title: const Text("ページナンバーの表示"),
-                trailing: CupertinoSwitch(
-                  value: setting.showPageNumbers,
-                  onChanged: (value) {
-                    notifier.updateSetting(showPageNumbers: value);
-                  },
-                ),
+              PlatformListTile(
+                title: Text('ワードをカッコで分ける'),
+                trailing: PlatformSwitch(
+                    value: setting.separateWordsWithParentheses,
+                    onChanged: (value) {
+                      ref
+                          .read(settingNotifierProvider.notifier)
+                          .updateSetting(separateWordsWithParentheses: value);
+                    }),
               ),
-            ],
-          ),
+              PlatformListTile(
+                title: Text('アンダーラインをつなげる'),
+                trailing: PlatformSwitch(
+                    value: setting.connectUnderlinedParts,
+                    onChanged: (value) {
+                      ref
+                          .read(settingNotifierProvider.notifier)
+                          .updateSetting(connectUnderlinedParts: value);
+                    }),
+              ),
+              PlatformListTile(
+                title: Text('アンダーラインを表示する'),
+                trailing: PlatformSwitch(
+                    value: setting.showUnderlinedParts,
+                    onChanged: (value) {
+                      ref
+                          .read(settingNotifierProvider.notifier)
+                          .updateSetting(showUnderlinedParts: value);
+                    }),
+              ),
+              PlatformListTile(
+                title: Text('ページ番号をつける'),
+                trailing: PlatformSwitch(
+                    value: setting.showPageNumbers,
+                    onChanged: (value) {
+                      ref
+                          .read(settingNotifierProvider.notifier)
+                          .updateSetting(showPageNumbers: value);
+                    }),
+              ),
+              PlatformListTile(
+                title: Text('アルファベットのみを隠す'),
+                trailing: PlatformSwitch(
+                    value: setting.hideOnlyAlphabet,
+                    onChanged: (value) {
+                      ref
+                          .read(settingNotifierProvider.notifier)
+                          .updateSetting(hideOnlyAlphabet: value);
+                    }),
+              ),
+            ]),
         ],
       ),
     );
