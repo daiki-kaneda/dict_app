@@ -23,8 +23,8 @@ class Setting {
   final bool showPageNumbers;
   final bool hideOnlyAlphabet;
 
-  // Translation settings
-  final String translationTarget;
+  // Translation and font depends of this languageCode
+  final String languageCode;
 
   const Setting({
     required this.remainingTickets,
@@ -39,7 +39,7 @@ class Setting {
     this.showUnderlinedParts = true,
     this.showPageNumbers = true,
     this.hideOnlyAlphabet = true,
-    this.translationTarget = "ja",
+    this.languageCode = "ja",
   });
 
   Setting copyWith({
@@ -72,7 +72,7 @@ class Setting {
       showUnderlinedParts: showUnderlinedParts ?? this.showUnderlinedParts,
       showPageNumbers: showPageNumbers ?? this.showPageNumbers,
       hideOnlyAlphabet: hideOnlyAlphabet ?? this.hideOnlyAlphabet,
-      translationTarget: translationTarget ?? this.translationTarget,
+      languageCode: translationTarget ?? this.languageCode,
     );
   }
 

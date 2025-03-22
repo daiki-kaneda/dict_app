@@ -27,14 +27,18 @@ Future<Uint8List> generateDictationDocument(
   final doc = pw.Document(pageMode: PdfPageMode.outlines);
   final separateWordsWithParentheses = setting.separateWordsWithParentheses;
 
-  final localizedFont = await getFontForLocale(setting.translationTarget);
+  final localizedFont = await getFontForLocale(setting.languageCode);
+  if (localizedFont == null) {
+    showNotifyDialog(navigatorKey.currentContext!,
+        title: '読み込みエラー', description: 'フォントの読み込みでエラーが発生しました。接続環境を確認してください。');
+  }
 
   if (sentences == null) return await doc.save();
 
   doc.addPage(pw.MultiPage(
       theme: pw.ThemeData.withFont(
-          base: localizedFont,
-          ),
+        base: localizedFont,
+      ),
       pageFormat: format.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
       orientation: pw.PageOrientation.portrait,
       crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -121,8 +125,8 @@ Future<Uint8List> generateDictationDocument(
   if (setting.appendAnswer) {
     doc.addPage(pw.MultiPage(
         theme: pw.ThemeData.withFont(
-            base: localizedFont,
-            ),
+          base: localizedFont,
+        ),
         pageFormat: format.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
         orientation: pw.PageOrientation.portrait,
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -197,24 +201,16 @@ Future<Uint8List> generateDictationDocument(
   return await doc.save();
 }
 
-
-Future<pw.Font?> getFontForLocale(String languageCode)async {
-  try{
+Future<pw.Font?> getFontForLocale(String languageCode) async {
   if (languageCode == 'ja') {
     return PdfGoogleFonts.notoSansJPRegular();
   } else if (languageCode == 'ko') {
     return PdfGoogleFonts.notoSansKRRegular();
   } else if (languageCode == 'zh') {
-      return PdfGoogleFonts.notoSansSCRegular(); 
+    return PdfGoogleFonts.notoSansSCRegular();
   } else if (languageCode == 'ar') {
     return PdfGoogleFonts.notoSansArabicRegular();
-  }  else {
+  } else {
     return PdfGoogleFonts.notoSansRegular();
-  }
-  }catch(e){
-    showNotifyDialog(
-      navigatorKey.currentContext!, 
-      title: '読み込みエラー', 
-      description: 'フォントの読み込みでエラーが発生しました。接続環境を確認してください。');
   }
 }
