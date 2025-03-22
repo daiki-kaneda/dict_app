@@ -50,7 +50,7 @@ class SettingNotifier extends _$SettingNotifier {
     bool? showUnderlinedParts,
     bool? showPageNumbers,
     bool? hideOnlyAlphabet,
-    String? translationTarget,
+    String? languageCode,
   }) async {
     final previousState = await future;
     state = AsyncData(previousState.copyWith(
@@ -65,7 +65,7 @@ class SettingNotifier extends _$SettingNotifier {
       showUnderlinedParts: showUnderlinedParts,
       showPageNumbers: showPageNumbers,
       hideOnlyAlphabet: hideOnlyAlphabet,
-      translationTarget: translationTarget,
+      languageCode: languageCode,
     ));
   }
 
