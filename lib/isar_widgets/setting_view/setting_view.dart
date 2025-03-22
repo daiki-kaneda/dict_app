@@ -59,11 +59,11 @@ class SettingView extends ConsumerWidget {
               PlatformListTile(
                 title: Text('翻訳をつける'),
                 trailing: PlatformSwitch(
-                    value: setting.showTranslationInPDF,
+                    value: setting.appendTranslation,
                     onChanged: (value) {
                       ref
                           .read(settingNotifierProvider.notifier)
-                          .updateSetting(showTranslationInPDF: value);
+                          .updateSetting(appendTranslation: value);
                     }),
               ),
               PlatformListTile(

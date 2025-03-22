@@ -15,7 +15,6 @@ class Setting {
   final bool repeatAudio;
 
   // PDF-related settings
-  final bool showTranslationInPDF;
   final bool appendAnswer;
   final bool appendTranslation;
   final bool separateWordsWithParentheses;
@@ -33,7 +32,6 @@ class Setting {
     this.showTranslation = true,
     this.audioSpeed = 1.0,
     this.repeatAudio = false,
-    this.showTranslationInPDF=true,
     this.appendAnswer = true,
     this.appendTranslation=true,
     this.separateWordsWithParentheses = true,
@@ -50,8 +48,8 @@ class Setting {
     bool? showTranslation,
     double? audioSpeed,
     bool? repeatAudio,
-    bool? showTranslationInPDF,
     bool? appendAnswer,
+    bool? appendTranslation,
     bool? separateWordsWithParentheses,
     bool? connectUnderlinedParts,
     bool? showUnderlinedParts,
@@ -65,7 +63,7 @@ class Setting {
       showTranslation: showTranslation ?? this.showTranslation,
       audioSpeed: audioSpeed ?? this.audioSpeed,
       repeatAudio: repeatAudio ?? this.repeatAudio,
-      showTranslationInPDF: showTranslationInPDF ?? this.showTranslationInPDF,
+      appendTranslation: appendTranslation ?? this.appendTranslation,
       appendAnswer: appendAnswer ?? this.appendAnswer,
       separateWordsWithParentheses:
           separateWordsWithParentheses ?? this.separateWordsWithParentheses,

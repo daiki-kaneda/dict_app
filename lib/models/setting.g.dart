@@ -12,7 +12,6 @@ Setting _$SettingFromJson(Map<String, dynamic> json) => Setting(
       showTranslation: json['showTranslation'] as bool? ?? true,
       audioSpeed: (json['audioSpeed'] as num?)?.toDouble() ?? 1.0,
       repeatAudio: json['repeatAudio'] as bool? ?? false,
-      showTranslationInPDF: json['showTranslationInPDF'] as bool? ?? true,
       appendAnswer: json['appendAnswer'] as bool? ?? true,
       appendTranslation: json['appendTranslation'] as bool? ?? true,
       separateWordsWithParentheses:
@@ -30,7 +29,6 @@ Map<String, dynamic> _$SettingToJson(Setting instance) => <String, dynamic>{
       'showTranslation': instance.showTranslation,
       'audioSpeed': instance.audioSpeed,
       'repeatAudio': instance.repeatAudio,
-      'showTranslationInPDF': instance.showTranslationInPDF,
       'appendAnswer': instance.appendAnswer,
       'appendTranslation': instance.appendTranslation,
       'separateWordsWithParentheses': instance.separateWordsWithParentheses,

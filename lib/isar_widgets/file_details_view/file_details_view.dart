@@ -8,6 +8,7 @@ import 'package:dict_app/isar_widgets/setting_view/setting_view.dart';
 import 'package:dict_app/isar_widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
 import 'package:dict_app/providers/model_provider/model_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,7 +64,8 @@ class FileNavTrailing extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(currentTabIndexProvider);
     final file = ref.watch(fileNotifierProvider(fileId));
-    if (file == null) return Container();
+    final setting = ref.watch(settingNotifierProvider).value;
+    if (file == null||setting==null) return Container();
     if (currentIndex == 0) {
       return ShowStatsButton(fileId);
     } else if (currentIndex == 2) {
@@ -84,14 +86,14 @@ class FileNavTrailing extends ConsumerWidget {
                           onTap: () {
                         Printing.layoutPdf(
                             onLayout: (format) => generateDictationDocument(
-                                format, DictationDocumentData(file: file)));
+                                format, DictationDocumentData(file: file,setting: setting)));
                       }),
                       ActionSheetAction('シェア', isDefaultAction: true,
                           onTap: () async {
                         Printing.sharePdf(
                             bytes: await generateDictationDocument(
                                 PdfPageFormat.a4,
-                                DictationDocumentData(file: file)));
+                                DictationDocumentData(file: file,setting: setting)));
                       }),
                     ]);
               },

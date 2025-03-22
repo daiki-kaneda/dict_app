@@ -6,6 +6,7 @@ import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/trailing_button/select_folder_list.dart/expansion_tile/custom_expansion_tile.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:printing/printing.dart';
@@ -18,7 +19,8 @@ class PrintView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final file = ref.watch(fileNotifierProvider(fileId));
-    if (file == null) return Container();
+    final setting = ref.watch(settingNotifierProvider).value;
+    if (file == null || setting==null) return Center(child: CircularProgressIndicator.adaptive(),);
 
     return SafeArea(
         child: Column(
@@ -35,7 +37,7 @@ class PrintView extends ConsumerWidget {
               : null,
           maxPageWidth: 700,
           build: (format) => generateDictationDocument(
-              format, DictationDocumentData(file: file)),
+              format, DictationDocumentData(file: file,setting: setting)),
         )),
         BottomShellWidgetPlaceHolder()
       ],
