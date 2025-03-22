@@ -13,6 +13,7 @@ import 'package:dict_app/providers/isar_database_provider/file_details_provider.
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/folder_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -304,7 +305,8 @@ class LastFileUpdatedAtText extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lastUpdatedAt =
         ref.watch(fileNotifierProvider(fileId).select((f) => f?.lastUpdatedAt));
+    final locale = ref.watch(settingNotifierProvider);
     return Text(
-        lastUpdatedAt != null ? formatDateTime(lastUpdatedAt, 'ja') : '');
+        lastUpdatedAt != null ? formatDateTime(lastUpdatedAt,locale.value?.languageCode ?? 'en') : '');
   }
 }
