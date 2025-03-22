@@ -28,7 +28,7 @@ String formatDateTime(DateTime dateTime,String locale) {
   } else if (dateTime.isAfter(startOfWeek) &&
       dateTime.isBefore(endOfWeek.add(const Duration(days: 1)))) {
     // 今週の日付の場合
-    return DateFormat.EEEE()
+    return DateFormat.EEEE(locale)
         .format(dateTime); // 曜日を日本語で表示
   } else {
     // 今日でも今週でもない場合
