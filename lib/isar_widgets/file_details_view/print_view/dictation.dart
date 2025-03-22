@@ -1,8 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/models/setting.dart';
 import 'package:dict_app/utils/utils.dart';
+import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -24,15 +27,13 @@ Future<Uint8List> generateDictationDocument(
   final doc = pw.Document(pageMode: PdfPageMode.outlines);
   final separateWordsWithParentheses = setting.separateWordsWithParentheses;
 
-  final font1 = await PdfGoogleFonts.notoSansJPMedium();
-  final font2 = await PdfGoogleFonts.notoSansJPBold();
+  final localizedFont = await getFontForLocale(setting.translationTarget);
 
   if (sentences == null) return await doc.save();
 
   doc.addPage(pw.MultiPage(
       theme: pw.ThemeData.withFont(
-          base: font1,
-          bold: font2,
+          base: localizedFont,
           ),
       pageFormat: format.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
       orientation: pw.PageOrientation.portrait,
@@ -120,8 +121,7 @@ Future<Uint8List> generateDictationDocument(
   if (setting.appendAnswer) {
     doc.addPage(pw.MultiPage(
         theme: pw.ThemeData.withFont(
-            base: font1,
-            bold: font2
+            base: localizedFont,
             ),
         pageFormat: format.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
         orientation: pw.PageOrientation.portrait,
@@ -195,4 +195,26 @@ Future<Uint8List> generateDictationDocument(
   }
 
   return await doc.save();
+}
+
+
+Future<pw.Font?> getFontForLocale(String languageCode)async {
+  try{
+  if (languageCode == 'ja') {
+    return PdfGoogleFonts.notoSansJPRegular();
+  } else if (languageCode == 'ko') {
+    return PdfGoogleFonts.notoSansKRRegular();
+  } else if (languageCode == 'zh') {
+      return PdfGoogleFonts.notoSansSCRegular(); 
+  } else if (languageCode == 'ar') {
+    return PdfGoogleFonts.notoSansArabicRegular();
+  }  else {
+    return PdfGoogleFonts.notoSansRegular();
+  }
+  }catch(e){
+    showNotifyDialog(
+      navigatorKey.currentContext!, 
+      title: '読み込みエラー', 
+      description: 'フォントの読み込みでエラーが発生しました。接続環境を確認してください。');
+  }
 }
