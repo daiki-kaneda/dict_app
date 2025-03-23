@@ -35,7 +35,7 @@ class FileDetailsView extends ConsumerWidget {
     });
     return PlatformScaffold(
         appBar: PlatformAppBar(
-          title: FileNavTitle(),
+          title: FileNavTitle(id),
           trailingActions: [FileNavTrailing(id)],
         ),
         body: [
@@ -47,11 +47,14 @@ class FileDetailsView extends ConsumerWidget {
 }
 
 class FileNavTitle extends ConsumerWidget {
-  const FileNavTitle({super.key});
+  const FileNavTitle(this.fileId,{super.key});
+
+  final int fileId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Text('data');
+    final title = ref.watch(fileNotifierProvider(fileId).select((f)=>f?.title ??''));
+    return Text(title);
   }
 }
 

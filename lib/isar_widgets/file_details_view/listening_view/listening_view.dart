@@ -50,13 +50,13 @@ class ListeningView extends ConsumerWidget {
     }
 
     return Center(
-      child: PlatformElevatedButton(
+      child: PlatformTextButton(
         onPressed: () {
           initListening();
           context.pushNamed('listening',
               pathParameters: {'fileId': fileId.toString()});
         },
-        child: Text('Start'),
+        child: Text('リスニングを開始',style: TextStyle(fontWeight: FontWeight.bold),),
       ),
     );
   }
@@ -76,6 +76,7 @@ class ListeningContentView extends ConsumerWidget {
     return PlatformScaffold(
         appBar: PlatformAppBar(
           leading: PlatformCloseButton(onPop: onPop),
+          title: Text('Listening'),
           trailingActions: [ShowSettingViewButton()],
         ),
         body: SafeArea(

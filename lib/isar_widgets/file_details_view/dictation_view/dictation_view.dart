@@ -86,7 +86,8 @@ class DictationView extends ConsumerWidget {
             pushDictProblemPage();
           }
         },
-        child: Text('ディクテーションを開始'),
+        child: Text('ディクテーションを開始',
+        style: TextStyle(fontWeight: FontWeight.bold),),
       ),
     );
   }
