@@ -10,36 +10,58 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:printing/printing.dart';
 
-class PrintView extends ConsumerWidget {
+class PrintView extends ConsumerStatefulWidget {
   const PrintView(this.fileId, {super.key});
 
   final int fileId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final file = ref.watch(fileNotifierProvider(fileId));
+  ConsumerState<PrintView> createState() => _PrintViewState();
+}
+
+class _PrintViewState extends ConsumerState<PrintView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(settingNotifierProvider.notifier).createTranslatedSentences(widget.fileId);
+      debugPrint('PrintView initialized with fileId: ${widget.fileId}');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final file = ref.watch(fileNotifierProvider(widget.fileId));
     final setting = ref.watch(settingNotifierProvider).value;
-    if (file == null || setting==null) return Center(child: CircularProgressIndicator.adaptive(),);
+
+    if (file == null || setting == null) {
+      return const Center(child: CircularProgressIndicator.adaptive());
+    }
 
     return SafeArea(
-        child: Column(
-      children: [
-        Expanded(
+      child: Column(
+        children: [
+          Expanded(
             child: PdfPreview(
-          loadingWidget: Center(
-            child: PlatformCircularProgressIndicator(),
+              loadingWidget: Center(
+                child: PlatformCircularProgressIndicator(),
+              ),
+              useActions: false,
+              scrollViewDecoration: Platform.isIOS
+                  ? BoxDecoration(
+                      color:
+                          CupertinoColors.systemBackground.resolveFrom(context))
+                  : null,
+              maxPageWidth: 700,
+              build: (format) => generateDictationDocument(
+                format,
+                DictationDocumentData(file: file, setting: setting),
+              ),
+            ),
           ),
-          useActions: false,
-          scrollViewDecoration: Platform.isIOS
-              ? BoxDecoration(
-                  color: CupertinoColors.systemBackground.resolveFrom(context))
-              : null,
-          maxPageWidth: 700,
-          build: (format) => generateDictationDocument(
-              format, DictationDocumentData(file: file,setting: setting)),
-        )),
-        BottomShellWidgetPlaceHolder()
-      ],
-    ));
+          const BottomShellWidgetPlaceHolder(),
+        ],
+      ),
+    );
   }
 }

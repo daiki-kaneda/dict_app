@@ -69,7 +69,7 @@ class File extends Item {
   final List<WordData> words;
   // final TranscriptModel? transcriptModel;
 
-  List<DictationSentence>? get getAllSentences =>
+  List<DictationSentence> get getAllSentences =>
       paragraphs.paragraphs.map((p) => p.sentences).toList().concat();
 
   File({

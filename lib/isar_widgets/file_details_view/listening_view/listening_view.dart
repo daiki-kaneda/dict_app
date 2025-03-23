@@ -38,11 +38,8 @@ class ListeningView extends ConsumerWidget {
       if (file == null|| setting==null) return;
 
       // make translated sentences
-      final sentences = file.getAllSentences!.map((s)=>s.displayText).toList();
-      if(file.paragraphs.translatedSentences(setting.languageCode).isEmpty){
-        ref.read(modelNotifierProvider(role: TranslateSenteces(fileId)).notifier)
-        .sendMessage(jsonEncode(sentences));
-      }
+      ref.read(settingNotifierProvider.notifier).createTranslatedSentences(fileId);
+      
       // - set audio path to AudioPlayer
       final audioPath = file.audioPath;
       ref.read(audioPlayerNotifierProvider.notifier).setSource(audioPath);

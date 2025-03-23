@@ -1,8 +1,11 @@
 import 'dart:convert';
 
 import 'package:dict_app/models/setting.dart';
+import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_data_status.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
+import 'package:dict_app/providers/model_provider/llm_role.dart';
+import 'package:dict_app/providers/model_provider/model_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'setting_provider.g.dart';
@@ -82,5 +85,19 @@ class SettingNotifier extends _$SettingNotifier {
   Future<bool> hasTickets() async {
     final previousState = await future;
     return previousState.remainingTickets > 0;
+  }
+
+  Future<void> createTranslatedSentences(int fileId) async {
+    final previousSetting = await future;
+    final file = ref.read(fileNotifierProvider(fileId));
+    if (file == null) return;
+    if (file.paragraphs
+        .translatedSentences(previousSetting.languageCode)
+        .isEmpty) {
+      final sentences = file.getAllSentences.map((s) => s.displayText).toList();
+      ref
+          .read(modelNotifierProvider(role: TranslateSenteces(fileId)).notifier)
+          .sendMessage(jsonEncode(sentences));
+    }
   }
 }
