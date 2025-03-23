@@ -72,7 +72,7 @@ class DictationView extends ConsumerWidget {
             final shouldReset = await showConfirmDialog(context,
                 title: 'リセット',
                 description:
-                    'すでに完全に解き終わっています.すべてリセットしますか？リセットされた回数は記録され、リセットしても正答率のデータは維持されます');
+                    'すでに完全に解き終わっています.すべてリセットしますか？クリアされた回数は記録され、リセットしても正答率のデータは維持されます');
             if (shouldReset == true) {
               await ref
                   .read(fileNotifierProvider(fileId).notifier)

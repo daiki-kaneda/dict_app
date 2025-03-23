@@ -15,54 +15,58 @@ class StatsView extends ConsumerWidget {
   final int fileId;
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isIOS = Platform.isIOS;
-    final section = ref.watch(fileNotifierProvider(fileId).select(
-      (f)=>f?.paragraphs
-    ));
-    final backgroundColor = isIOS ? CupertinoColors.systemGroupedBackground.resolveFrom(context):null;
-    if(section==null)return LoadingPage(backgroundColor: backgroundColor);
+    final section =
+        ref.watch(fileNotifierProvider(fileId).select((f) => f?.paragraphs));
+    final backgroundColor = isIOS
+        ? CupertinoColors.systemGroupedBackground.resolveFrom(context)
+        : null;
+    if (section == null) return LoadingPage(backgroundColor: backgroundColor);
     return PlatformScaffold(
-      backgroundColor: backgroundColor,
-      appBar: PlatformAppBar(
         backgroundColor: backgroundColor,
-        title: Text('統計'),
-      ),
-      body: ListView(
-        children: [
-          CupertinoListSection.insetGrouped(
-            hasLeading: false,
-            children: [
-              PlatformListTile(
-                title: Text('クリア回数:'),
-                trailing: Text('${section.completedCount}'),)
-            ],
-          ),
-          CupertinoListSection.insetGrouped(
-            header: Text('正答率'),
-            hasLeading: false,
-            children: [
-              PlatformListTile(title: Text('全体の正答率'),
-              trailing: Text('${NumberFormat.percentPattern('${section.accuracy() ?? 0}')}'),
-              )
-            ],
-          ),
-        ],
-      )
-    );
+        appBar: PlatformAppBar(
+          backgroundColor: backgroundColor,
+          title: Text('統計'),
+        ),
+        body: ListView(
+          children: [
+            CupertinoListSection.insetGrouped(
+              hasLeading: false,
+              children: [
+                PlatformListTile(
+                  title: Text('クリア回数:'),
+                  trailing: Text('${section.completedCount}'),
+                )
+              ],
+            ),
+            CupertinoListSection.insetGrouped(
+              header: Text('正答率'),
+              hasLeading: false,
+              children: [
+                PlatformListTile(
+                  title: Text('全体の正答率'),
+                  trailing: Text(NumberFormat('0.00%')
+                      .format(section.accuracy() ?? 0)),
+                ),
+              ],
+            ),
+          ],
+        ));
   }
 }
 
 class ShowStatsButton extends StatelessWidget {
-  const ShowStatsButton(this.fileId,{super.key});
+  const ShowStatsButton(this.fileId, {super.key});
 
   final int fileId;
 
   @override
   Widget build(BuildContext context) {
     return PlatformIconButton(
-      onPressed: () => context.pushNamed('stats', pathParameters: {'fileId': fileId.toString()}),
-      icon: Icon(Platform.isIOS ? CupertinoIcons.chart_bar:Icons.bar_chart),
+      onPressed: () => context
+          .pushNamed('stats', pathParameters: {'fileId': fileId.toString()}),
+      icon: Icon(Platform.isIOS ? CupertinoIcons.chart_bar_fill : Icons.bar_chart),
     );
   }
 }
