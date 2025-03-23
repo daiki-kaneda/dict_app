@@ -303,7 +303,7 @@ class _TranslatedSentencesProviderElement
 }
 
 String _$sentencePageControllerHash() =>
-    r'cae9e3db50d365e4f1eb1faea9f3f66cad939216';
+    r'e3a391923582f157df5efd8998065baece72dd0d';
 
 abstract class _$SentencePageController
     extends BuildlessAutoDisposeNotifier<PageController> {
@@ -449,7 +449,7 @@ class _SentencePageControllerProviderElement
 }
 
 String _$currentSentenceIndexInAllSentencesHash() =>
-    r'69151520301418fcb33f6f84dfeaf833670b0ace';
+    r'27683540fc56543a3f95b5a614d44914d7a8b87f';
 
 abstract class _$CurrentSentenceIndexInAllSentences
     extends BuildlessAutoDisposeNotifier<int> {

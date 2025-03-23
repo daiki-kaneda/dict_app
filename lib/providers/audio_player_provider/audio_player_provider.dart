@@ -9,6 +9,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
   @override
   AudioPlayer build() {
     final player = AudioPlayer();
+    player.setReleaseMode(ReleaseMode.stop);
     // audio player can have only one source.
     ref.onDispose((){
       player.dispose();

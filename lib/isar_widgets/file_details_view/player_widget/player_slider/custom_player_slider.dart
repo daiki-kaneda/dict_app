@@ -26,8 +26,10 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
     final position = ref.watch(playerPositionProvider);
     final state = ref.watch(playerStateProvider);
     final (startInMilliseconds, endInMilliseconds) = ref.watch(
-        startEndProviderProvider
-            .select((p) => ((p.start * 1000)-padInMilliseconds, (p.end * 1000)+padInMilliseconds)));
+        startEndProviderProvider.select((p) => (
+              (p.start * 1000) - padInMilliseconds,
+              (p.end * 1000) + padInMilliseconds
+            )));
     assert(startInMilliseconds < endInMilliseconds);
 
     // if reached end, reset first position
@@ -38,15 +40,25 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
             .seek(Duration(milliseconds: startInMilliseconds.toInt()));
       }
     });
+    // if completion reset position
+    ref.listen(playerStateProvider, (_, next) {
+      if (next.value == PlayerState.completed) {
+        ref
+            .read(audioPlayerNotifierProvider.notifier)
+            .seek(Duration(milliseconds: startInMilliseconds.toInt()));
+        ref.read(audioPlayerNotifierProvider.notifier)
+        .resume();
+      }
+    });
     final color = CupertinoColors.label.resolveFrom(context);
-    final customDuration =
-        endInMilliseconds - startInMilliseconds;
+    final customDuration = endInMilliseconds - startInMilliseconds;
     if (duration.hasValue && position.hasValue && state.hasValue) {
       final positionInMilliseconds = position.value!.inMilliseconds.toDouble();
       final value =
           (positionInMilliseconds.toDouble() - startInMilliseconds.toDouble()) /
               customDuration;
-      print('value:$value');
+      print(
+          'position:${positionInMilliseconds.toDouble()}\n,start:${startInMilliseconds.toDouble()},\nvalue:$value,\n');
       return PlatformSlider(
         min: 0,
         max: 1,

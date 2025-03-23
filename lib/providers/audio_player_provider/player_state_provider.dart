@@ -10,7 +10,6 @@ Stream<PlayerState> playerState(PlayerStateRef ref) async*{
   yield PlayerState.stopped;
   yield* player.onPlayerStateChanged
   ..listen((event) {
-    // ref.read(toastNotifierProvider.notifier)
-    // .showToast('audio state:${event.toString()}');
+    print('audio state:${event.toString()}');
   });
 }
