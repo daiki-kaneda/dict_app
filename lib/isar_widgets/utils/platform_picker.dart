@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dict_app/utils/language_local.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class PlatformPicker extends StatelessWidget {
   const PlatformPicker({

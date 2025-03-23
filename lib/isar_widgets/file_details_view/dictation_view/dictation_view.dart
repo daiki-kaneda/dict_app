@@ -68,10 +68,11 @@ class DictationView extends ConsumerWidget {
 
     void pushDictProblemPage() => navigatorKey.currentContext!
         .pushNamed('dictation', pathParameters: {'fileId': fileId.toString()});
-    if (file == null)
+    if (file == null) {
       return Center(
         child: PlatformCircularProgressIndicator(),
       );
+    }
     return Center(
       child: PlatformTextButton(
         onPressed: () async {

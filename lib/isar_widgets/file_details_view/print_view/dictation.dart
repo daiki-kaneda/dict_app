@@ -6,7 +6,6 @@ import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/models/setting.dart';
 import 'package:dict_app/utils/utils.dart';
-import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -81,13 +80,11 @@ Future<Uint8List> generateDictationDocument(
                     pw.Wrap(spacing: 5 * PdfPageFormat.mm, children: [
                       for (final w in t.$2.words!.map((w) => w.displayText))
                         pw.Text(
-                            '${separateWordsWithParentheses ? '(' : ''}' +
-                                w.replaceAll(
+                            '${separateWordsWithParentheses ? '(' : ''}${w.replaceAll(
                                     setting.hideOnlyAlphabet
                                         ? RegExp(r'[a-zA-Z]')
                                         : RegExp(r'.'),
-                                    '${setting.showUnderlinedParts ? '_' : ' '}') +
-                                '${separateWordsWithParentheses ? ')' : ''}',
+                                    setting.showUnderlinedParts ? '_' : ' ')}${separateWordsWithParentheses ? ')' : ''}',
                             style: pw.TextStyle(
                                 fontSize: 0.8 * PdfPageFormat.cm,
                                 letterSpacing: setting.connectUnderlinedParts
