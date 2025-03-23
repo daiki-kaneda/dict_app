@@ -42,7 +42,7 @@ class _DictationPageViewState extends ConsumerState<DictationPageView> {
     final sentences = file?.getAllSentences;
     // when sentence index changed
     ref.listen(currentSentenceIndexInAllSentencesProvider(widget.id), (_, i) {
-      final s = file?.getAllSentences?[i];
+      final s = file?.getAllSentences[i];
       // update range of audio to play
       ref
           .read(startEndProviderProvider.notifier)

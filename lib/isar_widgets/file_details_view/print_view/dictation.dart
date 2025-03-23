@@ -33,8 +33,6 @@ Future<Uint8List> generateDictationDocument(
         title: '読み込みエラー', description: 'フォントの読み込みでエラーが発生しました。接続環境を確認してください。');
   }
 
-  if (sentences == null) return await doc.save();
-
   doc.addPage(pw.MultiPage(
       theme: pw.ThemeData.withFont(
         base: localizedFont,

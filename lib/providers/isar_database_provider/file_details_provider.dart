@@ -41,7 +41,7 @@ class SentencePageController extends _$SentencePageController {
     final firstUnsolvedIndex = ref
             .read(FileNotifierProvider(fileId))
             ?.getAllSentences
-            ?.indexWhere((s) => !s.isCompleted) ??
+            .indexWhere((s) => !s.isCompleted) ??
         -1;
     if (firstUnsolvedIndex != -1 && state.hasClients) {
       state.animateToPage(firstUnsolvedIndex,
@@ -62,7 +62,7 @@ class CurrentSentenceIndexInAllSentences
 
   DictationSentence? getCurrentSentence() {
     final targetSentence =
-        ref.read(fileNotifierProvider(fileId))?.getAllSentences?[state];
+        ref.read(fileNotifierProvider(fileId))?.getAllSentences[state];
     print(('currentText:${targetSentence?.displayText}'));
     return targetSentence;
   }

@@ -14,7 +14,7 @@ class PageProgressIndicator extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageLength = ref.read(fileNotifierProvider(fileId)
-        .select((f) => f?.getAllSentences?.length ?? 1));
+        .select((f) => f?.getAllSentences.length ?? 1));
     final controller = ref.watch(sentencePageControllerProvider(fileId));
 
     return AnimatedPlatformPageViewLinearIndicator(controller,

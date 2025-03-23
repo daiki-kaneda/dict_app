@@ -21,7 +21,7 @@ class ListeningPageView extends ConsumerWidget {
     final sentences = file?.getAllSentences;
     // when sentence index changed
     ref.listen(currentSentenceIndexInAllSentencesProvider(id), (_, i) {
-      final s = file?.getAllSentences?[i];
+      final s = file?.getAllSentences[i];
       // update range of audio to play
       ref
           .read(startEndProviderProvider.notifier)

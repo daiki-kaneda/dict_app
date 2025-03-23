@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/dictation_page_view.dart';
@@ -15,8 +14,6 @@ import 'package:dict_app/providers/audio_player_provider/player_state_provider.d
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
-import 'package:dict_app/providers/model_provider/llm_role.dart';
-import 'package:dict_app/providers/model_provider/model_provider.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -52,7 +49,7 @@ class DictationView extends ConsumerWidget {
       print('audioPath set :$audioPath');
       // - set latest start,end
       final sentenceToBegin =
-          file.getAllSentences?.elementAtOrNull(startSentenceIndex);
+          file.getAllSentences.elementAtOrNull(startSentenceIndex);
       if ([sentenceToBegin?.start, sentenceToBegin?.end].contains(null)) return;
       ref
           .read(startEndProviderProvider.notifier)

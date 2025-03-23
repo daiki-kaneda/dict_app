@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_page_view/listening_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
@@ -11,8 +10,6 @@ import 'package:dict_app/providers/audio_player_provider/player_state_provider.d
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
-import 'package:dict_app/providers/model_provider/llm_role.dart';
-import 'package:dict_app/providers/model_provider/model_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,7 +43,7 @@ class ListeningView extends ConsumerWidget {
       print('audioPath set :$audioPath');
       // - set latest start,end
       ref.read(startEndProviderProvider.notifier).setNewValue(
-          file.getAllSentences!.first.start!, file.getAllSentences!.first.end!);
+          file.getAllSentences.first.start!, file.getAllSentences.first.end!);
     }
 
     return Center(
