@@ -1,4 +1,3 @@
-
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/dictation_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/input_text_field.dart';
@@ -13,6 +12,7 @@ import 'package:dict_app/providers/audio_player_provider/player_position_provide
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,7 +41,9 @@ class DictationView extends ConsumerWidget {
       if (file == null || setting == null) return;
 
       // make translated sentences
-      ref.read(settingNotifierProvider.notifier).createTranslatedSentences(fileId);
+      ref
+          .read(settingNotifierProvider.notifier)
+          .createTranslatedSentences(fileId);
 
       // - set audio path to AudioPlayer
       final audioPath = file.audioPath;
@@ -83,8 +85,10 @@ class DictationView extends ConsumerWidget {
             pushDictProblemPage();
           }
         },
-        child: Text('ディクテーションを開始',
-        style: TextStyle(fontWeight: FontWeight.bold),),
+        child: Text(
+          'ディクテーションを開始',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
@@ -99,6 +103,9 @@ class DictationProblemView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     void onPop() {
       ref.read(audioPlayerNotifierProvider.notifier).pause();
+      // rebuild sub-items-view of parent for tracking file.paragraphs.isCompleted
+      final file = ref.read(fileNotifierProvider(fileId));
+      ref.invalidate(subItemsProviderProvider(file?.parentId));
       hideKeyboard();
     }
 
