@@ -80,7 +80,30 @@ class FileNotifier extends _$FileNotifier {
     _updateUIByResult(result);
   }
 
-  Future<void> _recordResult(AnswerResult result) async {}
+  Future<void> _recordResult(AnswerResult result) async {
+    switch (result.status) {
+      case SolveStatus.unSolved:
+        {}
+      case SolveStatus.sectionSolved:
+        {
+          final file = isar.files.getSync(id);
+          if (file != null) {
+            updateFile(
+                paragraphs: file.paragraphs.copyWith(
+                    completedCount: file.paragraphs.completedCount + 1));
+          }
+        }
+      case SolveStatus.paragraphSolved:
+        {}
+      case SolveStatus.sentenceSolved:
+        {}
+      case SolveStatus.wordSolved:
+        {}
+      case SolveStatus.characterSolved:
+        {}
+    }
+  }
+
   Future<void> _updateUIByResult(AnswerResult result) async {
     final withoutHint = !result.solveAnyway;
     switch (result.status) {

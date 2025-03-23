@@ -857,18 +857,13 @@ int _fileEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  bytesCount += 3 + object.getAllSentences.length * 3;
   {
-    final list = object.getAllSentences;
-    if (list != null) {
-      bytesCount += 3 + list.length * 3;
-      {
-        final offsets = allOffsets[DictationSentence]!;
-        for (var i = 0; i < list.length; i++) {
-          final value = list[i];
-          bytesCount +=
-              DictationSentenceSchema.estimateSize(value, offsets, allOffsets);
-        }
-      }
+    final offsets = allOffsets[DictationSentence]!;
+    for (var i = 0; i < object.getAllSentences.length; i++) {
+      final value = object.getAllSentences[i];
+      bytesCount +=
+          DictationSentenceSchema.estimateSize(value, offsets, allOffsets);
     }
   }
   bytesCount += 3 +
@@ -973,11 +968,12 @@ P _fileDeserializeProp<P>(
       return (reader.readDouble(offset)) as P;
     case 4:
       return (reader.readObjectList<DictationSentence>(
-        offset,
-        DictationSentenceSchema.deserialize,
-        allOffsets,
-        DictationSentence(),
-      )) as P;
+            offset,
+            DictationSentenceSchema.deserialize,
+            allOffsets,
+            DictationSentence(),
+          ) ??
+          []) as P;
     case 5:
       return (reader.readBool(offset)) as P;
     case 6:
@@ -1483,22 +1479,6 @@ extension FileQueryFilter on QueryBuilder<File, File, QFilterCondition> {
         upper: upper,
         includeUpper: includeUpper,
         epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'getAllSentences',
-      ));
-    });
-  }
-
-  QueryBuilder<File, File, QAfterFilterCondition> getAllSentencesIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'getAllSentences',
       ));
     });
   }
@@ -2478,7 +2458,7 @@ extension FileQueryProperty on QueryBuilder<File, File, QQueryProperty> {
     });
   }
 
-  QueryBuilder<File, List<DictationSentence>?, QQueryOperations>
+  QueryBuilder<File, List<DictationSentence>, QQueryOperations>
       getAllSentencesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'getAllSentences');

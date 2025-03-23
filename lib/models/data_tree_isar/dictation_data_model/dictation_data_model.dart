@@ -14,13 +14,15 @@ class DictationSection {
     this.paragraphs = const [],
     this.index,
     this.parentIndex,
-    this.translations=const []
+    this.translations=const [],
+    this.completedCount = 0
   });
 
   List<DictationParagraph> paragraphs;
   int? index;
   int? parentIndex;
   List<TranslatedSentences> translations;
+  int completedCount;
 
   bool get isCompleted =>
       paragraphs.map((e) => e.isCompleted).where((e) => e == false).isEmpty;
@@ -55,12 +57,14 @@ class DictationSection {
     int? index,
     int? parentIndex,
     List<TranslatedSentences>? translations,
+    int? completedCount,
   }) {
     return DictationSection(
       paragraphs: paragraphs ?? this.paragraphs,
       index: index ?? this.index,
       parentIndex: parentIndex ?? this.parentIndex,
-      translations: translations ?? this.translations
+      translations: translations ?? this.translations,
+      completedCount:  completedCount ?? this.completedCount,
     );
   }
 

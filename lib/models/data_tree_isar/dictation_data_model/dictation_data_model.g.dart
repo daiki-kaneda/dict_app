@@ -13,45 +13,50 @@ const DictationSectionSchema = Schema(
   name: r'DictationSection',
   id: -1549784492033707822,
   properties: {
-    r'displayText': PropertySchema(
+    r'completedCount': PropertySchema(
       id: 0,
+      name: r'completedCount',
+      type: IsarType.long,
+    ),
+    r'displayText': PropertySchema(
+      id: 1,
       name: r'displayText',
       type: IsarType.string,
     ),
     r'firstUnsolvedIndex': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'firstUnsolvedIndex',
       type: IsarType.long,
     ),
     r'getAllSentences': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'getAllSentences',
       type: IsarType.objectList,
       target: r'DictationSentence',
     ),
     r'index': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'index',
       type: IsarType.long,
     ),
     r'isCompleted': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'isCompleted',
       type: IsarType.bool,
     ),
     r'paragraphs': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'paragraphs',
       type: IsarType.objectList,
       target: r'DictationParagraph',
     ),
     r'parentIndex': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'parentIndex',
       type: IsarType.long,
     ),
     r'translations': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'translations',
       type: IsarType.objectList,
       target: r'TranslatedSentences',
@@ -111,25 +116,26 @@ void _dictationSectionSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.displayText);
-  writer.writeLong(offsets[1], object.firstUnsolvedIndex);
+  writer.writeLong(offsets[0], object.completedCount);
+  writer.writeString(offsets[1], object.displayText);
+  writer.writeLong(offsets[2], object.firstUnsolvedIndex);
   writer.writeObjectList<DictationSentence>(
-    offsets[2],
+    offsets[3],
     allOffsets,
     DictationSentenceSchema.serialize,
     object.getAllSentences,
   );
-  writer.writeLong(offsets[3], object.index);
-  writer.writeBool(offsets[4], object.isCompleted);
+  writer.writeLong(offsets[4], object.index);
+  writer.writeBool(offsets[5], object.isCompleted);
   writer.writeObjectList<DictationParagraph>(
-    offsets[5],
+    offsets[6],
     allOffsets,
     DictationParagraphSchema.serialize,
     object.paragraphs,
   );
-  writer.writeLong(offsets[6], object.parentIndex);
+  writer.writeLong(offsets[7], object.parentIndex);
   writer.writeObjectList<TranslatedSentences>(
-    offsets[7],
+    offsets[8],
     allOffsets,
     TranslatedSentencesSchema.serialize,
     object.translations,
@@ -143,17 +149,18 @@ DictationSection _dictationSectionDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = DictationSection(
-    index: reader.readLongOrNull(offsets[3]),
+    completedCount: reader.readLongOrNull(offsets[0]) ?? 0,
+    index: reader.readLongOrNull(offsets[4]),
     paragraphs: reader.readObjectList<DictationParagraph>(
-          offsets[5],
+          offsets[6],
           DictationParagraphSchema.deserialize,
           allOffsets,
           DictationParagraph(),
         ) ??
         const [],
-    parentIndex: reader.readLongOrNull(offsets[6]),
+    parentIndex: reader.readLongOrNull(offsets[7]),
     translations: reader.readObjectList<TranslatedSentences>(
-          offsets[7],
+          offsets[8],
           TranslatedSentencesSchema.deserialize,
           allOffsets,
           TranslatedSentences(),
@@ -171,21 +178,23 @@ P _dictationSectionDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 2:
+      return (reader.readLong(offset)) as P;
+    case 3:
       return (reader.readObjectList<DictationSentence>(
         offset,
         DictationSentenceSchema.deserialize,
         allOffsets,
         DictationSentence(),
       )) as P;
-    case 3:
-      return (reader.readLongOrNull(offset)) as P;
     case 4:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 5:
+      return (reader.readBool(offset)) as P;
+    case 6:
       return (reader.readObjectList<DictationParagraph>(
             offset,
             DictationParagraphSchema.deserialize,
@@ -193,9 +202,9 @@ P _dictationSectionDeserializeProp<P>(
             DictationParagraph(),
           ) ??
           const []) as P;
-    case 6:
-      return (reader.readLongOrNull(offset)) as P;
     case 7:
+      return (reader.readLongOrNull(offset)) as P;
+    case 8:
       return (reader.readObjectList<TranslatedSentences>(
             offset,
             TranslatedSentencesSchema.deserialize,
@@ -210,6 +219,62 @@ P _dictationSectionDeserializeProp<P>(
 
 extension DictationSectionQueryFilter
     on QueryBuilder<DictationSection, DictationSection, QFilterCondition> {
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
+      completedCountEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'completedCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
+      completedCountGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'completedCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
+      completedCountLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'completedCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
+      completedCountBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'completedCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
       displayTextEqualTo(
     String value, {
@@ -4706,6 +4771,7 @@ DictationSection _$DictationSectionFromJson(Map<String, dynamic> json) =>
                   TranslatedSentences.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      completedCount: (json['completedCount'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$DictationSectionToJson(DictationSection instance) {
@@ -4722,6 +4788,7 @@ Map<String, dynamic> _$DictationSectionToJson(DictationSection instance) {
   writeNotNull('index', instance.index);
   writeNotNull('parentIndex', instance.parentIndex);
   val['translations'] = instance.translations.map((e) => e.toJson()).toList();
+  val['completedCount'] = instance.completedCount;
   return val;
 }
 
