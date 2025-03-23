@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/bottom_shell_widget.dart';
 import 'package:dict_app/isar_widgets/store_ui/store_sheet.dart';
@@ -156,7 +157,10 @@ class ItemTile extends StatelessWidget {
             title: Text(
               file.title.toString(),
             ),
-            subtitle: LastFileUpdatedAtText(fileId),
+            subtitle: LastFileUpdatedAtText(
+              fileId,
+              parentId: file.parentId,
+            ),
             onTap: () {
               if (parentId == null) return;
               context.push('/file-details/$fileId');
@@ -300,15 +304,29 @@ class CompletionRing extends ConsumerWidget {
 }
 
 class LastFileUpdatedAtText extends ConsumerWidget {
-  const LastFileUpdatedAtText(this.fileId, {super.key});
+  const LastFileUpdatedAtText(this.fileId, {super.key, this.parentId});
 
+  final int? parentId;
   final int fileId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final lastUpdatedAt =
-        ref.watch(fileNotifierProvider(fileId).select((f) => f?.lastUpdatedAt));
-    final locale = ref.watch(settingNotifierProvider);
-    return Text(
-        lastUpdatedAt != null ? formatDateTime(lastUpdatedAt,locale.value?.languageCode ?? 'en') : '');
+    final lastUpdatedAtFuture = ref.watch(SubItemsProviderProvider(parentId)
+        .selectAsync((subs) => subs
+            .whereType<File>()
+            .firstWhereOrNull((f) => f.id == fileId)
+            ?.lastUpdatedAt));
+    final setting = ref.watch(settingNotifierProvider);
+
+    return FutureBuilder(
+      future: lastUpdatedAtFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(formatDateTime(
+              snapshot.data!, setting.value?.languageCode ?? 'en'));
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 }
