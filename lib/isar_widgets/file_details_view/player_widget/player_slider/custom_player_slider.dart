@@ -4,6 +4,7 @@ import 'package:dict_app/providers/audio_player_provider/player_duration_provide
 import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,6 +26,8 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
     final duration = ref.watch(playerDurationProvider);
     final position = ref.watch(playerPositionProvider);
     final state = ref.watch(playerStateProvider);
+    final setting = ref.watch(settingNotifierProvider);
+    final audioNotifier = ref.read(audioPlayerNotifierProvider.notifier);
     final (startInMilliseconds, endInMilliseconds) = ref.watch(
         startEndProviderProvider.select((p) => (
               (p.start * 1000) - padInMilliseconds,
@@ -35,19 +38,26 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
     // if reached end, reset first position
     ref.listen(playerPositionProvider, (prev, next) {
       if (next.hasValue && next.value!.inMilliseconds >= endInMilliseconds) {
-        ref
-            .read(audioPlayerNotifierProvider.notifier)
-            .seek(Duration(milliseconds: startInMilliseconds.toInt()));
+        if (setting.value?.repeatAudio == true) {
+          audioNotifier
+              .seek(Duration(milliseconds: startInMilliseconds.toInt()));
+        } else {
+          audioNotifier.pause();
+        }
       }
     });
     // if completion reset position
     ref.listen(playerStateProvider, (_, next) {
       if (next.value == PlayerState.completed) {
-        ref
-            .read(audioPlayerNotifierProvider.notifier)
-            .seek(Duration(milliseconds: startInMilliseconds.toInt()));
-        ref.read(audioPlayerNotifierProvider.notifier)
-        .resume();
+        if (setting.value?.repeatAudio == true) {
+          audioNotifier
+              .seek(Duration(milliseconds: startInMilliseconds.toInt()));
+          audioNotifier.resume();
+        }else{
+          audioNotifier
+              .seek(Duration(milliseconds: endInMilliseconds.toInt()));
+          audioNotifier.pause();
+        }
       }
     });
     final color = CupertinoColors.label.resolveFrom(context);
@@ -72,18 +82,17 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
               wasPlaying = false;
             }
           });
-          ref.read(audioPlayerNotifierProvider.notifier).pause();
+          audioNotifier.pause();
         },
         onChanged: (value) {
           final newPositionInMilliseconds =
               startInMilliseconds + value * customDuration;
-          ref
-              .read(audioPlayerNotifierProvider.notifier)
+          audioNotifier
               .seek(Duration(milliseconds: newPositionInMilliseconds.toInt()));
         },
         onChangeEnd: (_) {
           if (wasPlaying) {
-            ref.read(audioPlayerNotifierProvider.notifier).resume();
+            audioNotifier.resume();
           }
         },
       );

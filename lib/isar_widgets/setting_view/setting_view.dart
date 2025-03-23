@@ -48,7 +48,17 @@ class SettingView extends ConsumerWidget {
                     value: setting.showTranslation,
                     onChanged: (value) {
                       notifier.updateSetting(
-                          showTranslation: !setting.showTranslation);
+                          showTranslation: value);
+                    },
+                  ),
+                ),
+                CupertinoListTile(
+                  title: const Text("音声をリピート"),
+                  trailing: CupertinoSwitch(
+                    value: setting.repeatAudio,
+                    onChanged: (value) {
+                      notifier.updateSetting(
+                          repeatAudio: value);
                     },
                   ),
                 ),
