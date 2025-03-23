@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dict_app/constants/inner_navigator_key.dart';
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
@@ -19,8 +20,13 @@ class SubItemsProvider extends _$SubItemsProvider {
   Future<List<Item>> build(int? parentId) async {
     final List<Folder> subFolders = await getSubFolders(parentId);
     final List<File> subFiles = await getSubFiles(parentId);
+    final sortedSubFiles = [
+      ...subFiles.where((f)=>!f.paragraphs.isCompleted)
+      .sorted((x,y)=>y.lastUpdatedAt.compareTo(x.lastUpdatedAt)),
+      ...subFiles.where((f)=>f.paragraphs.isCompleted)
+      .sorted((x,y)=>y.lastUpdatedAt.compareTo(x.lastUpdatedAt))];
 
-    return [...subFolders, ...subFiles];
+    return [...subFolders, ...sortedSubFiles];
   }
 
   Isar get isar => ref.read(isarProvider).requireValue;
