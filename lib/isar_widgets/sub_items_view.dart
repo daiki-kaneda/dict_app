@@ -197,6 +197,7 @@ class ActionButton extends ConsumerWidget {
                         context: context,
                         builder: (context) {
                           return PlatformTextFieldDialog(
+                            initialValue: folder.title,
                             title: 'New folder name',
                           );
                         },
@@ -236,6 +237,7 @@ class ActionButton extends ConsumerWidget {
                         context: context,
                         builder: (context) {
                           return PlatformTextFieldDialog(
+                            initialValue: file.title,
                             title: 'New file name',
                           );
                         },
