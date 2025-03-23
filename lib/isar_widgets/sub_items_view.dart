@@ -51,7 +51,7 @@ class SubItemsList extends ConsumerWidget {
     if (!subItems.hasValue) return Container();
     final items = subItems.value!;
 
-    Future<void> prepareFileToOpen(File file) async {
+    Future<void> onFileOpen(File file) async {
       print('file title:${file.title}');
     }
 
@@ -95,7 +95,7 @@ class SubItemsList extends ConsumerWidget {
                           item: item,
                           onFileTapped: () {
                             final file = (item as File);
-                            prepareFileToOpen(file);
+                            onFileOpen(file);
                           },
                         );
                       },
