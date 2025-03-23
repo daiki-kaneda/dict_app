@@ -35,18 +35,24 @@ class SettingView extends ConsumerWidget {
       ),
       body: ListView(
         children: [
+          CupertinoListSection(
+            hasLeading: false,
+            header: const Text('使用言語'),
+            children: [
+              PlatformLanguagePicker(
+                  initialLanguage: setting.languageCode,
+                  onLanguageChanged: (code) {
+                    ref
+                        .read(settingNotifierProvider.notifier)
+                        .updateSetting(languageCode: code);
+                  }),
+            ],
+          ),
           if (isDictOrListening)
             CupertinoListSection(
               hasLeading: false,
               header: const Text("一般"),
               children: [
-                PlatformLanguagePicker(
-                    initialLanguage: setting.languageCode,
-                    onLanguageChanged: (code) {
-                      ref
-                          .read(settingNotifierProvider.notifier)
-                          .updateSetting(languageCode: code);
-                    }),
                 CupertinoListTile(
                   title: const Text("翻訳を表示"),
                   trailing: CupertinoSwitch(
