@@ -52,7 +52,15 @@ class SubItemsList extends ConsumerWidget {
     final items = subItems.value!;
 
     Future<void> onFileOpen(File file) async {
+      // just update 'lastUpdatedAt'
+      ref.read(subItemsProviderProvider(parentId).notifier).updateFile(file.id!);
       print('file title:${file.title}');
+    }
+
+    Future<void> onFolderOpen(Folder folder) async {
+      // just update 'lastUpdatedAt'
+      ref.read(subItemsProviderProvider(parentId).notifier).updateFolder(folder.id!);
+      print('folder title:${folder.title}');
     }
 
     return SafeArea(
@@ -96,6 +104,10 @@ class SubItemsList extends ConsumerWidget {
                           onFileTapped: () {
                             final file = (item as File);
                             onFileOpen(file);
+                          },
+                          onFolderTapped: () {
+                            final folder = (item as Folder);
+                            onFolderOpen(folder);
                           },
                         );
                       },
@@ -207,7 +219,7 @@ class ActionButton extends ConsumerWidget {
                         },
                       );
                       if (newTitle == null) return;
-                      notifier.updateFolder(id, newTitle);
+                      notifier.updateFolder(id,newTitle:  newTitle);
                     }),
                     ActionSheetAction('移動', onTap: () async {
                       final int? newParentId =
@@ -248,7 +260,7 @@ class ActionButton extends ConsumerWidget {
                       );
 
                       if (newTitle == null) return;
-                      notifier.updateFile(id, newTitle);
+                      notifier.updateFile(id,title:  newTitle);
                     }),
                     ActionSheetAction('移動', onTap: () async {
                       final int? newParentId =

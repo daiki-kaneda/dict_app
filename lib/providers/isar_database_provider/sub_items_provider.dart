@@ -52,7 +52,7 @@ class SubItemsProvider extends _$SubItemsProvider {
     ref.invalidateSelf();
   }
 
-  Future<void> updateFolder(int id, String newTitle) async {
+  Future<void> updateFolder(int id, {String? newTitle}) async {
     final folder = await isar.folders.get(id);
     if (folder != null) {
       await isar.writeTxn(() async {
@@ -142,7 +142,7 @@ class SubItemsProvider extends _$SubItemsProvider {
   //   ref.invalidateSelf();
   // }
 
-  Future<void> updateFile(int id, String title) async {
+  Future<void> updateFile(int id,{String? title}) async {
     final file = await isar.files.get(id);
     if (file != null) {
       await isar.writeTxn(() async {

@@ -46,10 +46,6 @@ class Folder extends Item {
       lastUpdatedAt: lastUpdatedAt ?? this.lastUpdatedAt,
     );
   }
-
-  void updateLastUpdatedAt() {
-    lastUpdatedAt = DateTime.now();
-  }
 }
 
 @Collection()
