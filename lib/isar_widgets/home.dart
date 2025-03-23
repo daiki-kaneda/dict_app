@@ -13,7 +13,7 @@ class Home extends ConsumerWidget {
     return PlatformScaffold(
       appBar: PlatformAppBar(
         title: Text('フォルダ'),
-        leading: ShowSettingViewButton(),
+        leading: ShowSettingViewButton(isHome: true,),
       ),
       body: SubItemsList(parentId: null)
       );
