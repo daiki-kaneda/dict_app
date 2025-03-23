@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:collection/collection.dart';
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/utils/platform_dialog.dart';
 import 'package:dict_app/models/data_tree_isar/item.dart';
@@ -99,8 +100,8 @@ Future<Uint8List> generateDictationDocument(
                               pw.EdgeInsets.only(top: 0.3 * PdfPageFormat.cm)),
                       pw.Builder(
                         builder: (context) {
-                          final translatedSentence = file
-                              .paragraphs.translatedSentences
+                          final translatedSentence = file.paragraphs
+                              .translatedSentences(setting.languageCode)
                               .elementAtOrNull(t.$1);
                           return pw.Text(translatedSentence ?? '',
                               style: pw.TextStyle(
@@ -173,8 +174,8 @@ Future<Uint8List> generateDictationDocument(
                                 top: 0.3 * PdfPageFormat.cm)),
                         pw.Builder(
                           builder: (context) {
-                            final translatedSentence = file
-                                .paragraphs.translatedSentences
+                            final translatedSentence = file.paragraphs
+                                .translatedSentences(setting.languageCode)
                                 .elementAtOrNull(t.$1);
                             return pw.Text(translatedSentence ?? '',
                                 style: pw.TextStyle(
@@ -208,7 +209,15 @@ Future<pw.Font?> getFontForLocale(String languageCode) async {
     return PdfGoogleFonts.notoSansKRRegular();
   } else if (languageCode == 'zh') {
     return PdfGoogleFonts.notoSansSCRegular();
-  } else if (languageCode == 'ar') {
+  } else if (languageCode == 'hi') {
+    return PdfGoogleFonts.notoSansDevanagariRegular();
+  } else if (languageCode == 'bn') {
+    return PdfGoogleFonts.notoSansBengaliRegular();
+  } else if (languageCode == 'ta') {
+    return PdfGoogleFonts.notoSansTamilRegular();
+  } else if (languageCode == 'ar' ||
+      languageCode == 'ur' ||
+      languageCode == 'fa') {
     return PdfGoogleFonts.notoSansArabicRegular();
   } else {
     return PdfGoogleFonts.notoSansRegular();

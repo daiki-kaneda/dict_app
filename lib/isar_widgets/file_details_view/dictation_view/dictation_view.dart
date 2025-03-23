@@ -14,6 +14,7 @@ import 'package:dict_app/providers/audio_player_provider/player_position_provide
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
 import 'package:dict_app/providers/model_provider/model_provider.dart';
 import 'package:dict_app/utils/utils.dart';
@@ -37,13 +38,19 @@ class DictationView extends ConsumerWidget {
     ref.watch(playerDurationProvider);
     ref.watch(startEndProviderProvider);
 
-    void initDict({int startSentenceIndex=0}) {
-      if (file == null) return;
+    void initDict({int startSentenceIndex = 0}) {
+      final file = ref.read(fileNotifierProvider(fileId));
+      final setting = ref.read(settingNotifierProvider).value;
+      if (file == null || setting == null) return;
+
       // make translated sentences
-      final sentences = file.getAllSentences!.map((s)=>s.displayText).toList();
-      if(file.paragraphs.translatedSentences.isEmpty){
-        ref.read(modelNotifierProvider(role: TranslateSenteces(fileId)).notifier)
-        .sendMessage(jsonEncode(sentences));
+      final sentences =
+          file.getAllSentences!.map((s) => s.displayText).toList();
+      if (file.paragraphs.translatedSentences(setting.languageCode).isEmpty) {
+        ref
+            .read(
+                modelNotifierProvider(role: TranslateSenteces(fileId)).notifier)
+            .sendMessage(jsonEncode(sentences));
       }
 
       // - set audio path to AudioPlayer
@@ -51,33 +58,38 @@ class DictationView extends ConsumerWidget {
       ref.read(audioPlayerNotifierProvider.notifier).setSource(audioPath);
       print('audioPath set :$audioPath');
       // - set latest start,end
-      final sentenceToBegin = file.getAllSentences?.elementAtOrNull(startSentenceIndex);
-      if([sentenceToBegin?.start,sentenceToBegin?.end].contains(null))return;
-      ref.read(startEndProviderProvider.notifier).setNewValue(
-          sentenceToBegin!.start!, sentenceToBegin.end!);
+      final sentenceToBegin =
+          file.getAllSentences?.elementAtOrNull(startSentenceIndex);
+      if ([sentenceToBegin?.start, sentenceToBegin?.end].contains(null)) return;
+      ref
+          .read(startEndProviderProvider.notifier)
+          .setNewValue(sentenceToBegin!.start!, sentenceToBegin.end!);
     }
 
-    void pushDictProblemPage()=> navigatorKey.currentContext!.pushNamed('dictation',
-              pathParameters: {'fileId': fileId.toString()});
-    if(file==null)return Center(child: PlatformCircularProgressIndicator(),);
+    void pushDictProblemPage() => navigatorKey.currentContext!
+        .pushNamed('dictation', pathParameters: {'fileId': fileId.toString()});
+    if (file == null)
+      return Center(
+        child: PlatformCircularProgressIndicator(),
+      );
     return Center(
       child: PlatformTextButton(
-        onPressed: () async{
-          if(file.paragraphs.isCompleted){
-            final shouldReset = await showConfirmDialog(
-              context, 
-              title: 'リセット', 
-              description: 'すでに完全に解き終わっています.すべてリセットしますか？リセットされた回数は記録され、リセットしても正答率のデータは維持されます');
-            if(shouldReset==true){
-              await ref.read(fileNotifierProvider(fileId).notifier).resetSection();
+        onPressed: () async {
+          if (file.paragraphs.isCompleted) {
+            final shouldReset = await showConfirmDialog(context,
+                title: 'リセット',
+                description:
+                    'すでに完全に解き終わっています.すべてリセットしますか？リセットされた回数は記録され、リセットしても正答率のデータは維持されます');
+            if (shouldReset == true) {
+              await ref
+                  .read(fileNotifierProvider(fileId).notifier)
+                  .resetSection();
               initDict();
               pushDictProblemPage();
             }
-          }else{
-              initDict(startSentenceIndex: 
-                file.paragraphs.firstUnsolvedIndex
-              );
-              pushDictProblemPage();
+          } else {
+            initDict(startSentenceIndex: file.paragraphs.firstUnsolvedIndex);
+            pushDictProblemPage();
           }
         },
         child: Text('ディクテーションを開始'),
@@ -100,11 +112,13 @@ class DictationProblemView extends ConsumerWidget {
 
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          leading: PlatformCloseButton(onPop: onPop,),
+          leading: PlatformCloseButton(
+            onPop: onPop,
+          ),
           middle: Text('Dictation'),
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(5), 
-            child: DictationCompletionRateIndicator(fileId)),
+              preferredSize: Size.fromHeight(5),
+              child: DictationCompletionRateIndicator(fileId)),
           trailing: ShowSettingViewButton(fileId),
         ),
         child: Stack(
@@ -115,7 +129,9 @@ class DictationProblemView extends ConsumerWidget {
               child: Column(
                 children: [
                   Expanded(child: DictationPageView(id: fileId)),
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: PlayerWidget(fileId),

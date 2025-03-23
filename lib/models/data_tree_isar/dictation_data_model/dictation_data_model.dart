@@ -1,4 +1,5 @@
 import 'package:characters/characters.dart';
+import 'package:collection/collection.dart';
 import 'package:dict_app/models/data_tree_isar/dictation_data_model/transcript_model.dart'; // Assuming this path is correct
 import 'package:dict_app/utils/utils.dart';
 import 'package:isar/isar.dart';
@@ -13,13 +14,13 @@ class DictationSection {
     this.paragraphs = const [],
     this.index,
     this.parentIndex,
-    this.translatedSentences=const[],
+    this.translations=const []
   });
 
   List<DictationParagraph> paragraphs;
   int? index;
   int? parentIndex;
-  List<String> translatedSentences;
+  List<TranslatedSentences> translations;
 
   bool get isCompleted =>
       paragraphs.map((e) => e.isCompleted).where((e) => e == false).isEmpty;
@@ -53,13 +54,13 @@ class DictationSection {
     List<DictationParagraph>? paragraphs,
     int? index,
     int? parentIndex,
-    List<String>? translatedSentences,
+    List<TranslatedSentences>? translations,
   }) {
     return DictationSection(
       paragraphs: paragraphs ?? this.paragraphs,
       index: index ?? this.index,
       parentIndex: parentIndex ?? this.parentIndex,
-      translatedSentences: translatedSentences ?? this.translatedSentences
+      translations: translations ?? this.translations
     );
   }
 
@@ -189,6 +190,9 @@ class DictationSection {
     return characters.isEmpty
         ? 0
         : characters.where((c) => c.isSolved).length / characters.length;
+  }
+  List<String> translatedSentences(String languageCode){
+    return translations.firstWhereOrNull((t)=>t.languageCode==languageCode)?.translatedSentences ?? [];
   }
 
   factory DictationSection.fromJson(Map<String, dynamic> json) =>
@@ -667,6 +671,23 @@ class DictationCharacter {
       _$DictationCharacterFromJson(json);
   Map<String, dynamic> toJson() => _$DictationCharacterToJson(this);
 }
+
+@JsonSerializable()
+@embedded
+class TranslatedSentences {
+  TranslatedSentences({
+    this.languageCode = '',
+    this.translatedSentences = const [],
+  });
+
+  String languageCode;
+  List<String> translatedSentences;
+
+  factory TranslatedSentences.fromJson(Map<String, dynamic> json) =>
+      _$TranslatedSentencesFromJson(json);
+  Map<String, dynamic> toJson() => _$TranslatedSentencesToJson(this);
+}
+
 
 enum SolveStatus {
   unSolved,

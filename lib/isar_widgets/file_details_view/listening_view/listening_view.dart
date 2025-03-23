@@ -10,6 +10,7 @@ import 'package:dict_app/providers/audio_player_provider/player_position_provide
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
 import 'package:dict_app/providers/model_provider/model_provider.dart';
 import 'package:flutter/material.dart';
@@ -33,11 +34,12 @@ class ListeningView extends ConsumerWidget {
 
     void initListening() {
       final file = ref.read(fileNotifierProvider(fileId));
-      if (file == null) return;
+      final setting = ref.read(settingNotifierProvider).value;
+      if (file == null|| setting==null) return;
 
       // make translated sentences
       final sentences = file.getAllSentences!.map((s)=>s.displayText).toList();
-      if(file.paragraphs.translatedSentences.isEmpty){
+      if(file.paragraphs.translatedSentences(setting.languageCode).isEmpty){
         ref.read(modelNotifierProvider(role: TranslateSenteces(fileId)).notifier)
         .sendMessage(jsonEncode(sentences));
       }

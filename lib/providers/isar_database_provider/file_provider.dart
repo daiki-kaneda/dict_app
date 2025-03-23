@@ -4,6 +4,7 @@ import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_da
 import 'package:dict_app/models/data_tree_isar/item.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -133,11 +134,17 @@ class FileNotifier extends _$FileNotifier {
       final translatedSentences = (args['translatedSentences'] as List<dynamic>)
           .cast<String>()
           .toList();
+      final languageCode =
+          (await ref.read(settingNotifierProvider.future)).languageCode;
 
       final file = await isar.files.get(id);
       if (file == null) return args;
-      final newSection =
-          file.paragraphs.copyWith(translatedSentences: translatedSentences);
+      final newSection = file.paragraphs.copyWith(translations: [
+        ...file.paragraphs.translations,
+        TranslatedSentences(
+            languageCode: languageCode,
+            translatedSentences: translatedSentences)
+      ]);
       updateFile(paragraphs: newSection);
     } catch (e) {
       print(e);

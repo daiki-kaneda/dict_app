@@ -835,6 +835,7 @@ const FileSchema = CollectionSchema(
     r'DictationSentence': DictationSentenceSchema,
     r'DictationWord': DictationWordSchema,
     r'DictationCharacter': DictationCharacterSchema,
+    r'TranslatedSentences': TranslatedSentencesSchema,
     r'WordData': WordDataSchema
   },
   getId: _fileGetId,

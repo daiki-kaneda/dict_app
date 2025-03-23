@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -341,8 +343,10 @@ double completionRate(CompletionRateRef ref,int fileId,{bool alphabetOnly=true})
 
 @riverpod
 List<String> translatedSentences(TranslatedSentencesRef ref,int fileId,) {
+  final setting = ref.watch(settingNotifierProvider);
+  final languageCode = setting.value?.languageCode ?? '';
   final translatedSentences = ref.watch(FileNotifierProvider(fileId).select(
-    (f)=>f?.paragraphs.translatedSentences ?? []
+    (f)=>f?.paragraphs.translations.firstWhereOrNull((t)=>t.languageCode==languageCode)?.translatedSentences ?? []
   ));
   return translatedSentences;
 }

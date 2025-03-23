@@ -50,10 +50,11 @@ const DictationSectionSchema = Schema(
       name: r'parentIndex',
       type: IsarType.long,
     ),
-    r'translatedSentences': PropertySchema(
+    r'translations': PropertySchema(
       id: 7,
-      name: r'translatedSentences',
-      type: IsarType.stringList,
+      name: r'translations',
+      type: IsarType.objectList,
+      target: r'TranslatedSentences',
     )
   },
   estimateSize: _dictationSectionEstimateSize,
@@ -92,11 +93,13 @@ int _dictationSectionEstimateSize(
           DictationParagraphSchema.estimateSize(value, offsets, allOffsets);
     }
   }
-  bytesCount += 3 + object.translatedSentences.length * 3;
+  bytesCount += 3 + object.translations.length * 3;
   {
-    for (var i = 0; i < object.translatedSentences.length; i++) {
-      final value = object.translatedSentences[i];
-      bytesCount += value.length * 3;
+    final offsets = allOffsets[TranslatedSentences]!;
+    for (var i = 0; i < object.translations.length; i++) {
+      final value = object.translations[i];
+      bytesCount +=
+          TranslatedSentencesSchema.estimateSize(value, offsets, allOffsets);
     }
   }
   return bytesCount;
@@ -125,7 +128,12 @@ void _dictationSectionSerialize(
     object.paragraphs,
   );
   writer.writeLong(offsets[6], object.parentIndex);
-  writer.writeStringList(offsets[7], object.translatedSentences);
+  writer.writeObjectList<TranslatedSentences>(
+    offsets[7],
+    allOffsets,
+    TranslatedSentencesSchema.serialize,
+    object.translations,
+  );
 }
 
 DictationSection _dictationSectionDeserialize(
@@ -144,7 +152,13 @@ DictationSection _dictationSectionDeserialize(
         ) ??
         const [],
     parentIndex: reader.readLongOrNull(offsets[6]),
-    translatedSentences: reader.readStringList(offsets[7]) ?? const [],
+    translations: reader.readObjectList<TranslatedSentences>(
+          offsets[7],
+          TranslatedSentencesSchema.deserialize,
+          allOffsets,
+          TranslatedSentences(),
+        ) ??
+        const [],
   );
   return object;
 }
@@ -182,7 +196,13 @@ P _dictationSectionDeserializeProp<P>(
     case 6:
       return (reader.readLongOrNull(offset)) as P;
     case 7:
-      return (reader.readStringList(offset) ?? const []) as P;
+      return (reader.readObjectList<TranslatedSentences>(
+            offset,
+            TranslatedSentencesSchema.deserialize,
+            allOffsets,
+            TranslatedSentences(),
+          ) ??
+          const []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -737,148 +757,10 @@ extension DictationSectionQueryFilter
   }
 
   QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'translatedSentences',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'translatedSentences',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'translatedSentences',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'translatedSentences',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'translatedSentences',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'translatedSentences',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementContains(String value,
-          {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'translatedSentences',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementMatches(String pattern,
-          {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'translatedSentences',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'translatedSentences',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'translatedSentences',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesLengthEqualTo(int length) {
+      translationsLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'translatedSentences',
+        r'translations',
         length,
         true,
         length,
@@ -888,10 +770,10 @@ extension DictationSectionQueryFilter
   }
 
   QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesIsEmpty() {
+      translationsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'translatedSentences',
+        r'translations',
         0,
         true,
         0,
@@ -901,10 +783,10 @@ extension DictationSectionQueryFilter
   }
 
   QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesIsNotEmpty() {
+      translationsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'translatedSentences',
+        r'translations',
         0,
         false,
         999999,
@@ -914,13 +796,13 @@ extension DictationSectionQueryFilter
   }
 
   QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesLengthLessThan(
+      translationsLengthLessThan(
     int length, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'translatedSentences',
+        r'translations',
         0,
         true,
         length,
@@ -930,13 +812,13 @@ extension DictationSectionQueryFilter
   }
 
   QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesLengthGreaterThan(
+      translationsLengthGreaterThan(
     int length, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'translatedSentences',
+        r'translations',
         length,
         include,
         999999,
@@ -946,7 +828,7 @@ extension DictationSectionQueryFilter
   }
 
   QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
-      translatedSentencesLengthBetween(
+      translationsLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -954,7 +836,7 @@ extension DictationSectionQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'translatedSentences',
+        r'translations',
         lower,
         includeLower,
         upper,
@@ -977,6 +859,13 @@ extension DictationSectionQueryObject
       paragraphsElement(FilterQuery<DictationParagraph> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'paragraphs');
+    });
+  }
+
+  QueryBuilder<DictationSection, DictationSection, QAfterFilterCondition>
+      translationsElement(FilterQuery<TranslatedSentences> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'translations');
     });
   }
 }
@@ -4350,6 +4239,455 @@ extension DictationCharacterQueryFilter
 extension DictationCharacterQueryObject
     on QueryBuilder<DictationCharacter, DictationCharacter, QFilterCondition> {}
 
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+const TranslatedSentencesSchema = Schema(
+  name: r'TranslatedSentences',
+  id: 5720529720229231680,
+  properties: {
+    r'languageCode': PropertySchema(
+      id: 0,
+      name: r'languageCode',
+      type: IsarType.string,
+    ),
+    r'translatedSentences': PropertySchema(
+      id: 1,
+      name: r'translatedSentences',
+      type: IsarType.stringList,
+    )
+  },
+  estimateSize: _translatedSentencesEstimateSize,
+  serialize: _translatedSentencesSerialize,
+  deserialize: _translatedSentencesDeserialize,
+  deserializeProp: _translatedSentencesDeserializeProp,
+);
+
+int _translatedSentencesEstimateSize(
+  TranslatedSentences object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.languageCode.length * 3;
+  bytesCount += 3 + object.translatedSentences.length * 3;
+  {
+    for (var i = 0; i < object.translatedSentences.length; i++) {
+      final value = object.translatedSentences[i];
+      bytesCount += value.length * 3;
+    }
+  }
+  return bytesCount;
+}
+
+void _translatedSentencesSerialize(
+  TranslatedSentences object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.languageCode);
+  writer.writeStringList(offsets[1], object.translatedSentences);
+}
+
+TranslatedSentences _translatedSentencesDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = TranslatedSentences(
+    languageCode: reader.readStringOrNull(offsets[0]) ?? '',
+    translatedSentences: reader.readStringList(offsets[1]) ?? const [],
+  );
+  return object;
+}
+
+P _translatedSentencesDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 1:
+      return (reader.readStringList(offset) ?? const []) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+extension TranslatedSentencesQueryFilter on QueryBuilder<TranslatedSentences,
+    TranslatedSentences, QFilterCondition> {
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'languageCode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'languageCode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'languageCode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'languageCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'languageCode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'languageCode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'languageCode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'languageCode',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'languageCode',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      languageCodeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'languageCode',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'translatedSentences',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'translatedSentences',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'translatedSentences',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'translatedSentences',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'translatedSentences',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'translatedSentences',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementContains(String value,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'translatedSentences',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementMatches(String pattern,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'translatedSentences',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'translatedSentences',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'translatedSentences',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'translatedSentences',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'translatedSentences',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'translatedSentences',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'translatedSentences',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'translatedSentences',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<TranslatedSentences, TranslatedSentences, QAfterFilterCondition>
+      translatedSentencesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'translatedSentences',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+}
+
+extension TranslatedSentencesQueryObject on QueryBuilder<TranslatedSentences,
+    TranslatedSentences, QFilterCondition> {}
+
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
@@ -4363,8 +4701,9 @@ DictationSection _$DictationSectionFromJson(Map<String, dynamic> json) =>
           const [],
       index: (json['index'] as num?)?.toInt(),
       parentIndex: (json['parentIndex'] as num?)?.toInt(),
-      translatedSentences: (json['translatedSentences'] as List<dynamic>?)
-              ?.map((e) => e as String)
+      translations: (json['translations'] as List<dynamic>?)
+              ?.map((e) =>
+                  TranslatedSentences.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );
@@ -4382,7 +4721,7 @@ Map<String, dynamic> _$DictationSectionToJson(DictationSection instance) {
 
   writeNotNull('index', instance.index);
   writeNotNull('parentIndex', instance.parentIndex);
-  val['translatedSentences'] = instance.translatedSentences;
+  val['translations'] = instance.translations.map((e) => e.toJson()).toList();
   return val;
 }
 
@@ -4507,3 +4846,19 @@ Map<String, dynamic> _$DictationCharacterToJson(DictationCharacter instance) {
   val['solveWithHintCount'] = instance.solveWithHintCount;
   return val;
 }
+
+TranslatedSentences _$TranslatedSentencesFromJson(Map<String, dynamic> json) =>
+    TranslatedSentences(
+      languageCode: json['languageCode'] as String? ?? '',
+      translatedSentences: (json['translatedSentences'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+    );
+
+Map<String, dynamic> _$TranslatedSentencesToJson(
+        TranslatedSentences instance) =>
+    <String, dynamic>{
+      'languageCode': instance.languageCode,
+      'translatedSentences': instance.translatedSentences,
+    };
