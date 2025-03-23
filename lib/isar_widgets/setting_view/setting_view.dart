@@ -10,7 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class SettingView extends ConsumerWidget {
-  const SettingView({super.key});
+  const SettingView({super.key,this.isHome=false});
+
+  final bool isHome;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +37,7 @@ class SettingView extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          if (isDictOrListening)
+          if (isDictOrListening&&!isHome)
             CupertinoListSection(
               hasLeading: false,
               header: const Text("一般"),
@@ -52,7 +54,7 @@ class SettingView extends ConsumerWidget {
                 ),
               ],
             ),
-          if (!isDictOrListening)
+          if (!isDictOrListening&&!isHome)
             CupertinoListSection(
                 header: const Text("PDF設定"),
                 hasLeading: false,
@@ -129,6 +131,7 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                 ]),
+          if(isHome)
           CupertinoListSection(
             hasLeading: false,
             header: const Text('使用言語'),
@@ -149,13 +152,16 @@ class SettingView extends ConsumerWidget {
 }
 
 class ShowSettingViewButton extends StatelessWidget {
-  const ShowSettingViewButton({super.key});
+  const ShowSettingViewButton({super.key,this.isHome=false});
+
+  final bool isHome;
 
   @override
   Widget build(BuildContext context) {
     return PlatformIconButton(
-      onPressed: () => context.pushNamed('settings'),
-      icon: Icon(PlatformIcons(context).settings),
+      onPressed: () => context.pushNamed('settings',extra: isHome),
+      icon: Padding(padding: EdgeInsets.zero,
+      child: Icon(PlatformIcons(context).settings),),
     );
   }
 }

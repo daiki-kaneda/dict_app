@@ -130,10 +130,12 @@ class IsarFolderStructureApp extends StatelessWidget {
             GoRoute(
               name: 'settings',
               path: '/settings',
-              pageBuilder: (context, state) => platformPage(
+              pageBuilder: (context, state) { 
+                final isHome = state.extra as bool?;
+                return platformPage(
                   context: context,
-                  child: SettingView(),
-                  fullscreenDialog: true),
+                  child: SettingView(isHome: isHome ?? false,),
+                  fullscreenDialog: true);}
             ),
           ])
     ]);
