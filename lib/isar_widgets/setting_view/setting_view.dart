@@ -35,19 +35,6 @@ class SettingView extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          CupertinoListSection(
-            hasLeading: false,
-            header: const Text('使用言語'),
-            children: [
-              PlatformLanguagePicker(
-                  initialLanguage: setting.languageCode,
-                  onLanguageChanged: (code) {
-                    ref
-                        .read(settingNotifierProvider.notifier)
-                        .updateSetting(languageCode: code);
-                  }),
-            ],
-          ),
           if (isDictOrListening)
             CupertinoListSection(
               hasLeading: false,
@@ -142,6 +129,19 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                 ]),
+          CupertinoListSection(
+            hasLeading: false,
+            header: const Text('使用言語'),
+            children: [
+              PlatformLanguagePicker(
+                  initialLanguage: setting.languageCode,
+                  onLanguageChanged: (code) {
+                    ref
+                        .read(settingNotifierProvider.notifier)
+                        .updateSetting(languageCode: code);
+                  }),
+            ],
+          ),
         ],
       ),
     );
@@ -149,9 +149,7 @@ class SettingView extends ConsumerWidget {
 }
 
 class ShowSettingViewButton extends StatelessWidget {
-  const ShowSettingViewButton(this.fileId, {super.key});
-
-  final int fileId;
+  const ShowSettingViewButton({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -136,7 +136,7 @@ class ItemTile extends StatelessWidget {
             title: Text(
               folder.title.toString(),
             ),
-            subtitle: Text('id: ${folder.id}'),
+            // subtitle: Text('id: ${folder.id}'),
             onTap: () {
               context.push('/sub-items/${folder.id.toString()}');
               if (onFolderTapped != null) onFolderTapped!();

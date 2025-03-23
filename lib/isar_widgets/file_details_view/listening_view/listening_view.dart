@@ -39,7 +39,7 @@ class ListeningView extends ConsumerWidget {
 
       // make translated sentences
       ref.read(settingNotifierProvider.notifier).createTranslatedSentences(fileId);
-      
+
       // - set audio path to AudioPlayer
       final audioPath = file.audioPath;
       ref.read(audioPlayerNotifierProvider.notifier).setSource(audioPath);
@@ -76,7 +76,7 @@ class ListeningContentView extends ConsumerWidget {
     return PlatformScaffold(
         appBar: PlatformAppBar(
           leading: PlatformCloseButton(onPop: onPop),
-          trailingActions: [ShowSettingViewButton(fileId)],
+          trailingActions: [ShowSettingViewButton()],
         ),
         body: SafeArea(
           child: Column(

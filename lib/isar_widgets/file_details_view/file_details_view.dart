@@ -72,7 +72,7 @@ class FileNavTrailing extends ConsumerWidget {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ShowSettingViewButton(fileId),
+          ShowSettingViewButton(),
           SizedBox(
             width: 10,
           ),

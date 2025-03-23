@@ -113,7 +113,7 @@ class DictationProblemView extends ConsumerWidget {
           bottom: PreferredSize(
               preferredSize: Size.fromHeight(5),
               child: DictationCompletionRateIndicator(fileId)),
-          trailing: ShowSettingViewButton(fileId),
+          trailing: ShowSettingViewButton(),
         ),
         child: Stack(
           fit: StackFit.expand,
