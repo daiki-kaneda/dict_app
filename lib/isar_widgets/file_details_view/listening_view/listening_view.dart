@@ -97,7 +97,7 @@ class ListeningContentView extends ConsumerWidget {
                   ),
                   PlayerWidget(
                     fileId,
-                    trailingActions: [SpeedButton(),TextSizeButton()],)
+                    trailingActions: [SpeedButton(),],)
                 ],
               )),
             ],
