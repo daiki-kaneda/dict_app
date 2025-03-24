@@ -21,6 +21,8 @@ class TextSizeButton extends ConsumerWidget {
                 final newSize = await showPlatformCounterDialog(
                   context, 
                   initialValue: snapshot.data!,
+                  min: 12,
+                  max: 40,
                   titleBuilder:(_,__)=> Text('フォントサイズ')
                   );
                 if (newSize != null) {
