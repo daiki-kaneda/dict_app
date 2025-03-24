@@ -1,6 +1,7 @@
 
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_page_view/listening_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/buttons/speed_button.dart';
+import 'package:dict_app/isar_widgets/file_details_view/player_widget/buttons/text_size_button.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
 import 'package:dict_app/isar_widgets/setting_view/setting_view.dart';
 import 'package:dict_app/isar_widgets/utils/close_button.dart';
@@ -96,7 +97,7 @@ class ListeningContentView extends ConsumerWidget {
                   ),
                   PlayerWidget(
                     fileId,
-                    trailingActions: [SpeedButton()],)
+                    trailingActions: [SpeedButton(),TextSizeButton()],)
                 ],
               )),
             ],

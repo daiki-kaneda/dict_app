@@ -38,28 +38,3 @@ class TextSizeButton extends ConsumerWidget {
     );
   }
 }
-
-class DefaultTextSizeWrapper extends ConsumerWidget {
-  const DefaultTextSizeWrapper(this.child,{super.key,required this.style});
-
-  final Widget child;
-  final TextStyle style;
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final textSize =
-        ref.watch(settingNotifierProvider.selectAsync((s) => s.textSize));
-    return FutureBuilder(
-      future: textSize,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return DefaultTextStyle(
-            style: style.copyWith(
-              fontSize: snapshot.data!.toDouble()
-            ), child: child);
-        } else {
-          return Container();
-        }
-      },
-    );
-  }
-}
