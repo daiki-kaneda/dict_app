@@ -79,28 +79,7 @@ class FileNavTrailing extends ConsumerWidget {
           SizedBox(
             width: 10,
           ),
-          PlatformIconButton(
-              onPressed: () {
-                showCustomActionSheet(
-                    isCupertino: true,
-                    context: context,
-                    actions: [
-                      ActionSheetAction('プリント', isDefaultAction: true,
-                          onTap: () {
-                        Printing.layoutPdf(
-                            onLayout: (format) => generateDictationDocument(
-                                format, DictationDocumentData(file: file,setting: setting)));
-                      }),
-                      ActionSheetAction('シェア', isDefaultAction: true,
-                          onTap: () async {
-                        Printing.sharePdf(
-                            bytes: await generateDictationDocument(
-                                PdfPageFormat.a4,
-                                DictationDocumentData(file: file,setting: setting)));
-                      }),
-                    ]);
-              },
-              icon: Icon(PlatformIcons(context).share)),
+          PDFShareOrPrintButton(fileId)
         ],
       );
     }
