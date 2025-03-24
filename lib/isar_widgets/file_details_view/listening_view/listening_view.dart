@@ -1,5 +1,6 @@
 
 import 'package:dict_app/isar_widgets/file_details_view/listening_view/listening_page_view/listening_page_view.dart';
+import 'package:dict_app/isar_widgets/file_details_view/player_widget/buttons/speed_button.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
 import 'package:dict_app/isar_widgets/setting_view/setting_view.dart';
 import 'package:dict_app/isar_widgets/utils/close_button.dart';
@@ -10,6 +11,7 @@ import 'package:dict_app/providers/audio_player_provider/player_state_provider.d
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
 import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
+import 'package:dict_app/widgets/player_widget/buttons/hint_fill_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -88,7 +90,9 @@ class ListeningContentView extends ConsumerWidget {
                   SizedBox(
                     height: 15,
                   ),
-                  PlayerWidget(fileId)
+                  PlayerWidget(
+                    fileId,
+                    trailingActions: [SpeedButton()],)
                 ],
               )),
             ],

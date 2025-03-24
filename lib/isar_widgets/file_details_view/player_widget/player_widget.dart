@@ -7,11 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlayerWidget extends ConsumerWidget {
-  const PlayerWidget(this.fileId,{
+  const PlayerWidget(
+    this.fileId, {
     super.key,
+    this.leadingActions = const [],
+    this.trailingActions = const [],
   });
 
   final int fileId;
+  final List<Widget> leadingActions;
+  final List<Widget> trailingActions;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,14 +39,25 @@ class PlayerWidget extends ConsumerWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
-            child:  
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                HintFillButton(fileId),
-                PlayPauseButton(),
-                SpeedButton(),
+                Expanded(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ...leadingActions,
+                  ],
+                )),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: PlayPauseButton(),
+                ),
+                Expanded(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [...trailingActions],
+                )),
               ],
             ),
           )

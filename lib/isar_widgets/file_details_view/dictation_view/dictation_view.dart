@@ -1,6 +1,8 @@
 import 'package:dict_app/isar_widgets/app.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/dictation_page_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/dictation_view/dictation_page_view/input_text_field.dart';
+import 'package:dict_app/isar_widgets/file_details_view/player_widget/buttons/hint_fill_button.dart';
+import 'package:dict_app/isar_widgets/file_details_view/player_widget/buttons/speed_button.dart';
 import 'package:dict_app/isar_widgets/file_details_view/progress_indicator.dart';
 import 'package:dict_app/isar_widgets/setting_view/setting_view.dart';
 import 'package:dict_app/isar_widgets/file_details_view/player_widget/player_widget.dart';
@@ -133,7 +135,10 @@ class DictationProblemView extends ConsumerWidget {
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: PlayerWidget(fileId),
+                    child: PlayerWidget(
+                      fileId,
+                      leadingActions: [HintFillButton(fileId)],
+                      trailingActions: [SpeedButton()],),
                   )
                 ],
               ),
