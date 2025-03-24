@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/isar_widgets/file_details_view/player_widget/buttons/text_size_button.dart';
 import 'package:dict_app/isar_widgets/utils/platform_counter_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_picker.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
@@ -62,6 +63,10 @@ class SettingView extends ConsumerWidget {
                           repeatAudio: value);
                     },
                   ),
+                ),
+                CupertinoListTile(
+                  title: const Text("英文のテキストサイズ"),
+                  trailing: TextSizeButton()
                 ),
               ],
             ),
