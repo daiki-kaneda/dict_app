@@ -65,7 +65,7 @@ class SettingView extends ConsumerWidget {
                   ),
                 ),
                 CupertinoListTile(
-                  title: const Text("英文のテキストサイズ"),
+                  title: const Text("テキストサイズ"),
                   trailing: TextSizeButton()
                 ),
               ],

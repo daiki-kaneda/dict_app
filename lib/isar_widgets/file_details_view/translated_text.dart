@@ -43,10 +43,14 @@ class LlmTranslatedText extends ConsumerWidget {
     final translatedSentences = ref.watch(translatedSentencesProvider(fileId));
     final sentence = translatedSentences.elementAtOrNull(currentSentenceIndex);
 
+    final setting = ref.watch(settingNotifierProvider);
+
     if (sentence != null) {
       return Text(
         sentence,
-        style: TextStyle(fontWeight: FontWeight.w600),
+        style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: setting.value?.textSize.toDouble() ?? 20),
       );
     } else {
       return Center(
