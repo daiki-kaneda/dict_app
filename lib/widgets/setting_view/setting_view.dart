@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/file_details_view/player_widget/buttons/text_size_button.dart';
 import 'package:dict_app/widgets/utils/platform_picker.dart';
-import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_details_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';

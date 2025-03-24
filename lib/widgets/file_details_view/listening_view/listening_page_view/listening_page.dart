@@ -1,5 +1,5 @@
 import 'package:dict_app/widgets/file_details_view/translated_text.dart';
-import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
+import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

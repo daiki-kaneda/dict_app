@@ -1,6 +1,6 @@
 import 'package:dict_app/widgets/file_details_view/dictation_view/dictation_page_view/dictation_page/dict_sentence_widget/dict_sentence_widget.dart';
 import 'package:dict_app/widgets/file_details_view/translated_text.dart';
-import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
+import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

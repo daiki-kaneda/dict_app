@@ -4,8 +4,8 @@ import 'package:dict_app/widgets/file_details_view/listening_view/listening_view
 import 'package:dict_app/widgets/file_details_view/print_view/print_view.dart';
 import 'package:dict_app/widgets/file_details_view/stats_view/stats_view.dart';
 import 'package:dict_app/widgets/setting_view/setting_view.dart';
-import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
-import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_details_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
 import 'package:dict_app/providers/model_provider/model_provider.dart';

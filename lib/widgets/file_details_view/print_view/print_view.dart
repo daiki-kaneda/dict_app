@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dict_app/widgets/bottom_shell_widget.dart';
 import 'package:dict_app/widgets/file_details_view/print_view/dictation.dart';
 import 'package:dict_app/widgets/utils/platform_action_sheet.dart';
-import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

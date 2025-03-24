@@ -1,4 +1,4 @@
-import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

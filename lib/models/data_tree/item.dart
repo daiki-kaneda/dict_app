@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:dict_app/models/data_tree_isar/dictation_data_model/transcript_model.dart';
-import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
-import 'package:dict_app/models/data_tree_isar/word_data.dart';
+import 'package:dict_app/models/data_tree/dictation_data_model/transcript_model.dart';
+import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
+import 'package:dict_app/models/data_tree/word_data.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';

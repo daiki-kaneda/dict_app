@@ -1,5 +1,5 @@
 import 'package:dict_app/widgets/file_details_view/dictation_view/dictation_page_view/dictation_page/dict_sentence_widget/dict_word_widget.dart';
-import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
+import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 

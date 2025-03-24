@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:collection/collection.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/utils/platform_dialog.dart';
-import 'package:dict_app/models/data_tree_isar/item.dart';
+import 'package:dict_app/models/data_tree/item.dart';
 import 'package:dict_app/models/setting.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:pdf/pdf.dart';

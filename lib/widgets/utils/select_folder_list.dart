@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:dict_app/models/data_tree_isar/item.dart';
-import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
+import 'package:dict_app/models/data_tree/item.dart';
+import 'package:dict_app/providers/datatree_provider/sub_items_provider.dart';
 import 'package:dict_app/widgets/utils/expansion_tile/custom_expansion_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

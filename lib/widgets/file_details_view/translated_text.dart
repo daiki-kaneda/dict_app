@@ -1,4 +1,4 @@
-import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_details_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/mlkit_translation_helper_provider/mlkit_translation_helper_provider.dart';
 import 'package:flutter/widgets.dart';

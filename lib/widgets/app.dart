@@ -8,7 +8,7 @@ import 'package:dict_app/widgets/home.dart';
 import 'package:dict_app/widgets/store_ui/store_sheet.dart';
 import 'package:dict_app/widgets/sub_items_view.dart';
 import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
-import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
+import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/mlkit_translation_helper_provider/mlkit_translation_helper_provider.dart';

@@ -1,6 +1,6 @@
 import 'package:dict_app/widgets/file_details_view/dictation_view/dictation_page_view/dictation_page/dict_sentence_widget/dict_character_widget.dart';
-import 'package:dict_app/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
-import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
+import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
+import 'package:dict_app/providers/datatree_provider/file_details_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

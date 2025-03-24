@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:dict_app/widgets/app.dart';
-import 'package:dict_app/models/data_tree_isar/item.dart';
+import 'package:dict_app/models/data_tree/item.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
 import 'package:dict_app/providers/app_directory_provider/app_support_directory_provider.dart';
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
-import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
+import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/utils/dialog.dart';
 import 'package:dict_app/utils/utils.dart';

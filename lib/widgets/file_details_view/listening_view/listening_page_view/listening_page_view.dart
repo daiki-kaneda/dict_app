@@ -1,7 +1,7 @@
 import 'package:dict_app/widgets/file_details_view/listening_view/listening_page_view/listening_page.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
-import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
-import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_details_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

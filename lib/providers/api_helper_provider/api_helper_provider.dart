@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:dict_app/models/data_tree_isar/dictation_data_model/transcript_model.dart';
+import 'package:dict_app/models/data_tree/dictation_data_model/transcript_model.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper/api_helper.dart';
 import 'package:dict_app/providers/api_helper_provider/api_key_provider/api_key_provider.dart';
 import 'package:dio/dio.dart';

@@ -13,8 +13,8 @@ import 'package:dict_app/providers/audio_player_provider/player_duration_provide
 import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
 import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
-import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
-import 'package:dict_app/providers/isar_database_provider/sub_items_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_provider.dart';
+import 'package:dict_app/providers/datatree_provider/sub_items_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';

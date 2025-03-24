@@ -1,4 +1,4 @@
-import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_details_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

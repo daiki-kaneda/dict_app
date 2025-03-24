@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dict_app/models/setting.dart';
-import 'package:dict_app/providers/isar_database_provider/file_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_data_status.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
