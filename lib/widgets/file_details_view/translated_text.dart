@@ -50,7 +50,7 @@ class LlmTranslatedText extends ConsumerWidget {
         sentence,
         style: TextStyle(
             fontWeight: FontWeight.w600,
-            fontSize: setting.value?.textSize.toDouble() ?? 20),
+            fontSize: (setting.value?.textSize.toDouble() ?? 20)*0.85),
       );
     } else {
       return Center(
