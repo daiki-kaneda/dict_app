@@ -1,4 +1,4 @@
-import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/my_dict/widgets/app.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

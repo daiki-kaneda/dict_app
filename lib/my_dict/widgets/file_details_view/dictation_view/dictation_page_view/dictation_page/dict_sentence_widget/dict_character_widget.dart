@@ -1,0 +1,36 @@
+
+import 'package:dict_app/my_dict/models/data_tree_isar/dictation_data_model/dictation_data_model.dart';
+import 'package:dict_app/my_dict/providers/isar_database_provider/file_details_provider.dart';
+import 'package:dict_app/my_dict/providers/local_database_provider/setting_provider/setting_provider.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class DictCharacterWidget extends ConsumerWidget {
+  const DictCharacterWidget(this.fileId,this.character,{super.key});
+
+  final int fileId;
+  final DictationCharacter character;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final showErrorEffect = ref.watch(ShowErrorEffectProvider(fileId));
+    final isSolved = character.isSolved;
+
+    final setting = ref.watch(settingNotifierProvider);
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeOut,
+      child: AnimatedDefaultTextStyle(
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: setting.value?.textSize.toDouble() ?? 20,
+          color: showErrorEffect ? 
+          CupertinoColors.systemPink.resolveFrom(context):
+          (isSolved ? CupertinoTheme.of(context).textTheme.textStyle.color:CupertinoColors.systemGrey),
+        ), duration: const Duration(milliseconds: 50),
+        child: Text(
+          isSolved ? character.character ?? '' : '-',
+          ),),);
+  }
+}

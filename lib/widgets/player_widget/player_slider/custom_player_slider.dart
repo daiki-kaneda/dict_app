@@ -1,10 +1,10 @@
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_duration_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_position_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/player_state_provider.dart';
-import 'package:dict_app/providers/audio_player_provider/start_end_provider.dart';
+import 'package:dict_app/my_dict/providers/audio_player_provider/audio_player_provider.dart';
+import 'package:dict_app/my_dict/providers/audio_player_provider/player_duration_provider.dart';
+import 'package:dict_app/my_dict/providers/audio_player_provider/player_position_provider.dart';
+import 'package:dict_app/my_dict/providers/audio_player_provider/player_state_provider.dart';
+import 'package:dict_app/my_dict/providers/audio_player_provider/start_end_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

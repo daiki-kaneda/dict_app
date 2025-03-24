@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:dict_app/providers/model_provider/llm_role.dart';
-import 'package:dict_app/providers/model_provider/model_property_provider/system_instruction_provider.dart';
-import 'package:dict_app/providers/model_provider/model_provider.dart';
+import 'package:dict_app/my_dict/providers/model_provider/llm_role.dart';
+import 'package:dict_app/my_dict/providers/model_provider/model_property_provider/system_instruction_provider.dart';
+import 'package:dict_app/my_dict/providers/model_provider/model_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

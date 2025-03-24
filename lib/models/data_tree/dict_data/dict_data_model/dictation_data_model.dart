@@ -1,6 +1,6 @@
-import 'package:dict_app/extension/extension.dart';
-import 'package:dict_app/models/data_tree_isar/dictation_data_model/transcript_model.dart';
-import 'package:dict_app/utils/utils.dart';
+import 'package:dict_app/my_dict/extension/extension.dart';
+import 'package:dict_app/my_dict/models/data_tree_isar/dictation_data_model/transcript_model.dart';
+import 'package:dict_app/my_dict/utils/utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:characters/characters.dart';
 

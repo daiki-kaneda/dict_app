@@ -1,5 +1,5 @@
-import 'package:dict_app/models/pending_dict_data.dart';
-import 'package:dict_app/utils/utils.dart';
+import 'package:dict_app/my_dict/models/pending_dict_data.dart';
+import 'package:dict_app/my_dict/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:dict_app/extension/extension.dart';
+import 'package:dict_app/my_dict/extension/extension.dart';
 import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

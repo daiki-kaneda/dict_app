@@ -1,0 +1,28 @@
+import 'dart:typed_data';
+
+import 'package:dict_app/my_dict/models/data_tree_isar/dictation_data_model/transcript_model.dart';
+import 'package:dict_app/my_dict/providers/api_helper_provider/api_helper/api_helper.dart';
+import 'package:dict_app/my_dict/providers/api_helper_provider/api_key_provider/api_key_provider.dart';
+import 'package:dio/dio.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'api_helper_provider.g.dart';
+@riverpod
+class ApiHelperNotifer extends _$ApiHelperNotifer {
+  @override
+  FutureOr<ApiRepository> build() async{
+    final apiKey = await ref.read(apiKeyProvider.future);
+    return ApiRepository(apiKey);
+  }
+
+  Future<TranscriptModel?> stt({
+    required String ext,
+    required Uint8List bytes,
+  })async{
+    final helper = await future;
+    final transcriptModel = await helper.speechToTextRequest(
+      bytes, ext: ext, cancelToken: CancelToken());
+    
+    return transcriptModel;
+  }
+}

@@ -1,5 +1,5 @@
 import 'package:dict_app/models/data_tree/dict_data/dict_data_model/dictation_data_model.dart';
-import 'package:dict_app/models/data_tree_isar/dictation_data_model/transcript_model.dart';
+import 'package:dict_app/my_dict/models/data_tree_isar/dictation_data_model/transcript_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'dict_data.g.dart';

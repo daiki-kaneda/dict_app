@@ -1,7 +1,7 @@
 import 'package:dict_app/models/data_tree/data_tree.dart';
-import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
+import 'package:dict_app/my_dict/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
-import 'package:dict_app/utils/utils.dart';
+import 'package:dict_app/my_dict/utils/utils.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_structure_widget.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/select_button.dart';
 import 'package:dict_app/widgets/folder_structure_widget/folder_view/tree_list_tile/trailing_button/trailing_button.dart';

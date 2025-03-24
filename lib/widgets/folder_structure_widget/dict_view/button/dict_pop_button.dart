@@ -1,4 +1,4 @@
-import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
+import 'package:dict_app/my_dict/providers/audio_player_provider/audio_player_provider.dart';
 import 'package:dict_app/widgets/delay_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,4 +1,4 @@
-import 'package:dict_app/models/pending_dict_data.dart';
+import 'package:dict_app/my_dict/models/pending_dict_data.dart';
 import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
