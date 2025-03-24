@@ -4,6 +4,7 @@ import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/iap_provider/localized_price_provider.dart';
 import 'package:dict_app/providers/iap_provider/packages_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/utils/expansion_tile/custom_expansion_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -187,9 +188,9 @@ class TicketIcon extends StatelessWidget {
   }
 }
 
-const List<(String, String)> qa = [
+final List<(String, String)> qa = [
   ('一回に消費されるチケットの枚数は？', '一枚のみです。'),
-  ('解析するオーディオの長さの上限はある？', 'はい。オーディオの上限は一回120秒までです。'),
+  ('解析するオーディオの長さの上限はある？', 'はい。オーディオの上限は一回$maxAudioLengthInSeconds秒までです。'),
   (
     '解析データやチケットのバックアップはとる？',
     'いいえ。アプリを削除したり、機種変更などをすると、解析データおよびチケットなどのすべてのデータは削除され、復元できません。'
