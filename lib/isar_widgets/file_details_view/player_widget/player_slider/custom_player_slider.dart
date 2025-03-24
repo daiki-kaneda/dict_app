@@ -22,7 +22,7 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
   bool wasPlaying = false;
   @override
   Widget build(BuildContext context) {
-    const double padInMilliseconds = 50;
+    const double padInMilliseconds = 0;
     final duration = ref.watch(playerDurationProvider);
     final position = ref.watch(playerPositionProvider);
     final state = ref.watch(playerStateProvider);
@@ -38,12 +38,8 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
     // if reached end, reset first position
     ref.listen(playerPositionProvider, (prev, next) {
       if (next.hasValue && next.value!.inMilliseconds >= endInMilliseconds) {
-        if (setting.value?.repeatAudio == true) {
-          audioNotifier
-              .seek(Duration(milliseconds: startInMilliseconds.toInt()));
-        } else {
-          audioNotifier.pause();
-        }
+        audioNotifier.seek(Duration(milliseconds: startInMilliseconds.toInt()));
+        if (setting.value?.repeatAudio != true) audioNotifier.pause();
       }
     });
     // if completion reset position
@@ -53,9 +49,8 @@ class _PlayerSliderState extends ConsumerState<CustomPlayerSlider> {
           audioNotifier
               .seek(Duration(milliseconds: startInMilliseconds.toInt()));
           audioNotifier.resume();
-        }else{
-          audioNotifier
-              .seek(Duration(milliseconds: endInMilliseconds.toInt()));
+        } else {
+          audioNotifier.seek(Duration(milliseconds: endInMilliseconds.toInt()));
           audioNotifier.pause();
         }
       }
