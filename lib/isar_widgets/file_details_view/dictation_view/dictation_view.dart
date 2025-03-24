@@ -58,6 +58,10 @@ class DictationView extends ConsumerWidget {
       ref
           .read(startEndProviderProvider.notifier)
           .setNewValue(sentenceToBegin!.start!, sentenceToBegin.end!);
+      // - set audioPlaybackRate
+      ref.read(audioPlayerNotifierProvider.notifier).setPlaybackRate(
+        setting.audioSpeed
+      );
     }
 
     void pushDictProblemPage() => navigatorKey.currentContext!

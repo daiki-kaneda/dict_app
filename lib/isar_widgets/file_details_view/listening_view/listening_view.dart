@@ -46,6 +46,10 @@ class ListeningView extends ConsumerWidget {
       // - set latest start,end
       ref.read(startEndProviderProvider.notifier).setNewValue(
           file.getAllSentences.first.start!, file.getAllSentences.first.end!);
+      // - set audioPlaybackRate
+      ref.read(audioPlayerNotifierProvider.notifier).setPlaybackRate(
+        setting.audioSpeed
+      );
     }
 
     return Center(
