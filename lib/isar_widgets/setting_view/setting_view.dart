@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dict_app/isar_widgets/app.dart';
+import 'package:dict_app/isar_widgets/utils/platform_counter_dialog.dart';
 import 'package:dict_app/isar_widgets/utils/platform_picker.dart';
 import 'package:dict_app/providers/isar_database_provider/file_details_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
