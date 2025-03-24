@@ -1,132 +1,189 @@
-
-
-import 'package:dict_app/my_dict/constants/inner_navigator_key.dart';
-import 'package:dict_app/my_dict/constants/scaffold_key.dart';
-import 'package:dict_app/my_dict/providers/app_directory_provider/app_documents_directory_provider.dart';
-import 'package:dict_app/my_dict/providers/audio_player_provider/audio_player_provider.dart';
-import 'package:dict_app/my_dict/providers/audio_player_provider/player_completion_provider.dart';
-import 'package:dict_app/my_dict/providers/audio_player_provider/player_duration_provider.dart';
-import 'package:dict_app/my_dict/providers/audio_player_provider/player_position_provider.dart';
-import 'package:dict_app/my_dict/providers/audio_player_provider/player_state_provider.dart';
-import 'package:dict_app/my_dict/providers/audio_player_provider/start_end_provider.dart';
-import 'package:dict_app/providers/dict_view_provider/dict_view_provider.dart';
-import 'package:dict_app/providers/local_database_provider/data_tree_provider/data_tree_provider.dart';
-import 'package:dict_app/providers/navigator_observer_provider/navigator_observer_provider.dart';
-import 'package:dict_app/providers/pending_dict_provider/pending_dict_provider.dart';
-import 'package:dict_app/providers/utility%20_provider/utility_provider.dart';
-import 'package:dict_app/widgets/folder_structure_widget/folder_structure_widget.dart';
-import 'package:dict_app/widgets/fotter_button/footer_button.dart';
+import 'package:dict_app/widgets/bottom_shell_widget.dart';
+import 'package:dict_app/widgets/file_details_view/dictation_view/dictation_view.dart';
+import 'package:dict_app/widgets/file_details_view/file_details_view.dart';
+import 'package:dict_app/widgets/file_details_view/listening_view/listening_view.dart';
+import 'package:dict_app/widgets/setting_view/setting_view.dart';
+import 'package:dict_app/widgets/file_details_view/stats_view/stats_view.dart';
+import 'package:dict_app/widgets/home.dart';
+import 'package:dict_app/widgets/store_ui/store_sheet.dart';
+import 'package:dict_app/widgets/sub_items_view.dart';
+import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
+import 'package:dict_app/providers/isar_database_provider/isar_provider.dart';
+import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
+import 'package:dict_app/providers/mlkit_translation_helper_provider/mlkit_translation_helper_provider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+// Future<void> main() async {
+//   runApp(const ProviderScope(child: IsarFolderStructureApp()));
+// }
 
-class App extends ConsumerWidget {
-  const  App({super.key});
+final navigatorKey = GlobalKey<NavigatorState>();
+
+enum PathParamerterKeys {
+  parentId,
+  fileId;
+
+  int? getCurrentValue() {
+    return GoRouter.of(navigatorKey.currentContext!)
+        .state
+        .currentParameterValue(name);
+  }
+}
+
+class IsarFolderStructureApp extends StatelessWidget {
+  const IsarFolderStructureApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final todoTree = ref.watch(dataTreeNotifierProvider);
-    final isDictShowing = ref.watch(isDictShowingProvider);
-    final isSheetShowing = ref.watch(isSheetShowingProvider);
-
-      const defaultCupertinoTheme = CupertinoThemeData(
-      brightness: null,
-      primaryColor: CupertinoColors.systemBlue,
-      barBackgroundColor: CupertinoDynamicColor.withBrightness(
-        color: Color(0xF0F9F9F9),
-        darkColor: Color(0xF01D1D1D),
-      ),
-      scaffoldBackgroundColor: CupertinoColors.systemBackground,
-      textTheme: CupertinoTextThemeData(
-        primaryColor: CupertinoColors.label,
-      ),
-    );
-    return _EagerInitialization(
-      MaterialApp(
-            theme: ThemeData.from(
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: const Color(0xff6750a4)))
-          .copyWith(
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              brightness: Brightness.light,
-              cupertinoOverrideTheme:
-                  defaultCupertinoTheme.copyWith(brightness: Brightness.light)),
-      darkTheme: ThemeData.from(
-              colorScheme: ColorScheme.fromSeed(
-                  brightness: Brightness.dark,
-                  seedColor: const Color(0xff6750a4)))
-          .copyWith(
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              brightness: Brightness.dark,
-              cupertinoOverrideTheme:
-                  defaultCupertinoTheme.copyWith(brightness: Brightness.dark)),
-      themeMode: ThemeMode.system,
-      home: Builder(builder:(context) {
-        if(todoTree.hasValue){
-          return 
-          Scaffold(
-          key: scaffoldKey,
-          body: Navigator(
-            key: innerNavigatorKey,
-            observers: [ref.read(customNavigatorObserverProvider)],
-            onGenerateRoute: (settings) {
-              return CupertinoPageRoute(
-                settings: RouteSettings(arguments: {'treeId':todoTree.value!.id}),
-                builder: (context) {
-                  return CurrentTreeWidget(todoTree.value!.id);
+  Widget build(BuildContext context) {
+    final parentIdKey = PathParamerterKeys.parentId.name;
+    final fileIdKey = PathParamerterKeys.fileId.name;
+    final router =
+        GoRouter(navigatorKey: navigatorKey, initialLocation: '/', routes: [
+      ShellRoute(
+          builder: (context, state, child) {
+            return Stack(
+              children: [
+                child,
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SafeArea(child: BottomShellWidget(state: state)))
+              ],
+            );
+          },
+          routes: [
+            GoRoute(
+              path: '/',
+              builder: (context, state) =>
+                  const _EagerInitialization(child: Home()),
+            ),
+            GoRoute(
+              path: '/sub-items/:$parentIdKey',
+              builder: (context, state) {
+                final parentId = state.currentParameterValue(parentIdKey);
+                return SubItemsView(parentId: parentId!);
+              },
+            ),
+            GoRoute(
+              path: '/all-files',
+              builder: (context, state) {
+                return LoadingPage();
+              },
+            ),
+            GoRoute(
+              name: 'store',
+              path: '/store',
+              pageBuilder: (context, state) {
+                return platformPage(
+                    context: context,
+                    fullscreenDialog: true,
+                    child: StoreSheet());
+              },
+            ),
+            GoRoute(
+                path: '/file-details/:$fileIdKey',
+                builder: (context, state) {
+                  final id = state.currentParameterValue(fileIdKey);
+                  if (id == null) {
+                    return LoadingPage();
+                  }
+                  return FileDetailsView(id: id);
                 },
-              );
-            },
-          )
-          ,
-          persistentFooterButtons:(!isSheetShowing && isDictShowing.value==false) ? const [
-             FooterButton()
-          ]:null,
-        );
-        }else{
-          return PlatformScaffold(
-            body: 
-            Center(
-              child: PlatformCircularProgressIndicator()
-            )
-          );
-        }
-      },)
-    )
+                routes: [
+                  GoRoute(
+                    name: 'dictation',
+                    path: 'dictation',
+                    pageBuilder: (context, state) {
+                      final fileId = state.currentParameterValue(fileIdKey)!;
+                      return platformPage(
+                          context: context,
+                          fullscreenDialog: true,
+                          child: DictationProblemView(fileId));
+                    },
+                  ),
+                  GoRoute(
+                    name: 'listening',
+                    path: 'listening',
+                    pageBuilder: (context, state) {
+                      final fileId = state.currentParameterValue(fileIdKey)!;
+                      return platformPage(
+                          context: context,
+                          fullscreenDialog: true,
+                          child: ListeningContentView(fileId));
+                    },
+                  ),
+                  GoRoute(
+                    name: 'stats',
+                    path: 'stats',
+                    pageBuilder: (context, state) {
+                      final fileId = state.currentParameterValue(fileIdKey)!;
+                      return platformPage(
+                          context: context,
+                          child: StatsView(fileId),
+                          fullscreenDialog: true);
+                    },
+                  ),
+                ]),
+            GoRoute(
+              name: 'settings',
+              path: '/settings',
+              pageBuilder: (context, state) { 
+                final isHome = state.extra as bool?;
+                return platformPage(
+                  context: context,
+                  child: SettingView(isHome: isHome ?? false,),
+                  fullscreenDialog: true);}
+            ),
+          ])
+    ]);
+    return PlatformApp.router(
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class _EagerInitialization extends ConsumerWidget {
-  const _EagerInitialization(this.child);
+  const _EagerInitialization({required this.child});
 
   final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(dataTreeNotifierProvider);
-    ref.watch(pendingDictListNotifierProvider);
-    ref.watch(appDocumentsDirectoryNotifierProvider);
-    ref.watch(currentTreeIdNotifierProvider);
-    ref.watch(isDictShowingProvider);
-    ref.watch(isEditingNotifierProvider);
-    ref.watch(selectedIdsProvider);
-    ref.watch(canPopProvider);
-    ref.watch(isSheetShowingProvider);
-    ref.watch(inputTextFieldFocusNodeProvider);
-    ref.watch(typedTextNotifierProvider);
-    ref.watch(audioPlayerNotifierProvider);
-    ref.watch(startEndProviderProvider);
-    ref.watch(playerCompletionProvider);
-    ref.watch(playerDurationProvider);
-    ref.watch(playerPositionProvider);
-    ref.watch(playerStateProvider);
-    
-    ref.watch(wordIndexNotifierProvider);
-    ref.watch(sentenceIndexNotifierProvider);
-    ref.watch(paragraphIndexNotifierProvider);
-    return child;
+    final isar = ref.watch(isarProvider);
+    final translator = ref.watch(mlkitTranslationHelperProvider);
+    final iap = ref.watch(iapNotifierProvider);
+    final localDatabase = ref.watch(localDatabaseProvider);
+
+    ref.watch(settingNotifierProvider);
+
+    if (![isar.value, translator.value, iap.value, localDatabase.value]
+        .contains(null)) {
+      return child;
+    } else {
+      return LoadingPage();
+    }
+  }
+}
+
+extension GoRouterStateEx on GoRouterState {
+  int? currentParameterValue(String key) {
+    final value = pathParameters[key];
+    return value != null ? int.tryParse(value) : null;
+  }
+}
+
+class LoadingPage extends StatelessWidget {
+  const LoadingPage({super.key, this.backgroundColor});
+
+  final Color? backgroundColor;
+  @override
+  Widget build(BuildContext context) {
+    return PlatformScaffold(
+        backgroundColor: backgroundColor,
+        body: Center(child: PlatformCircularProgressIndicator()));
   }
 }

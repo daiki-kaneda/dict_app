@@ -1,4 +1,3 @@
-import 'package:dict_app/my_dict/widgets/app.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,14 +13,4 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
   runApp(const ProviderScope(child:  IsarFolderStructureApp()));
-}
-
-class DictApp extends StatelessWidget {
-  const DictApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return App();
-  }
 }
