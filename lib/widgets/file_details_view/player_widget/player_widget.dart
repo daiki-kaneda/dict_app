@@ -1,6 +1,4 @@
-import 'package:dict_app/widgets/file_details_view/player_widget/buttons/hint_fill_button.dart';
 import 'package:dict_app/widgets/file_details_view/player_widget/buttons/play_pause_button.dart';
-import 'package:dict_app/widgets/file_details_view/player_widget/buttons/speed_button.dart';
 import 'package:dict_app/widgets/file_details_view/player_widget/player_slider/custom_player_slider.dart';
 import 'package:dict_app/widgets/file_details_view/player_widget/player_slider/duration_widget.dart';
 import 'package:flutter/material.dart';

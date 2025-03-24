@@ -17,7 +17,7 @@ class PlatformListSection extends StatelessWidget {
   final Color? separatorColor;
 
   const PlatformListSection({
-    Key? key,
+    super.key,
     required this.children,
     this.header,
     this.footer,
@@ -30,7 +30,7 @@ class PlatformListSection extends StatelessWidget {
     this.topMargin,
     this.hasLeading = true,
     this.separatorColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
