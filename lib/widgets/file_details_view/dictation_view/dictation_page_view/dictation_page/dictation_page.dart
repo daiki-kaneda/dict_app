@@ -6,10 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DictationPage extends ConsumerWidget {
   const DictationPage(this.fileId,
-      {super.key, required this.dictationSentence});
+      {super.key, required this.dictationSentence,required this.pageIndex});
 
   final int fileId;
   final DictationSentence dictationSentence;
+  final int pageIndex;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,7 +27,7 @@ class DictationPage extends ConsumerWidget {
               sentence: dictationSentence,
             ),
             SizedBox(height: 20,),
-            ShowTranslationWrapper(builder:(_)=>LlmTranslatedText(fileId))
+            ShowTranslationWrapper(builder:(_)=>LlmTranslatedText(fileId,currentSentenceIndex:pageIndex,))
           ],
         ),
         ));

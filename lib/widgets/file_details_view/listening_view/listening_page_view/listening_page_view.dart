@@ -38,7 +38,7 @@ class ListeningPageView extends ConsumerWidget {
           itemCount: sentences.length,
           itemBuilder: (context, index) {
             final dictationSentence = sentences[index];
-            return ListeningPage(id, dictationSentence: dictationSentence);
+            return ListeningPage(id, dictationSentence: dictationSentence,pageIndex: index,);
           },
         ));
   }

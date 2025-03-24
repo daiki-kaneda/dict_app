@@ -64,7 +64,8 @@ class _DictationPageViewState extends ConsumerState<DictationPageView> {
           itemBuilder: (context, index) {
             final dictationSentence = sentences[index];
             return DictationPage(widget.id,
-                dictationSentence: dictationSentence);
+                dictationSentence: dictationSentence,
+                pageIndex: index,);
           },
         ));
   }

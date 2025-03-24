@@ -32,14 +32,15 @@ class TranslatedText extends ConsumerWidget {
 }
 
 class LlmTranslatedText extends ConsumerWidget {
-  const LlmTranslatedText(this.fileId, {super.key});
+  const LlmTranslatedText(this.fileId, {super.key,required this.currentSentenceIndex});
 
   final int fileId;
+  final int currentSentenceIndex;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentSentenceIndex =
-        ref.watch(currentSentenceIndexInAllSentencesProvider(fileId));
+    // final currentSentenceIndex =
+    //     ref.watch(currentSentenceIndexInAllSentencesProvider(fileId));
     final translatedSentences = ref.watch(translatedSentencesProvider(fileId));
     final sentence = translatedSentences.elementAtOrNull(currentSentenceIndex);
 
