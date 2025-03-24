@@ -49,16 +49,21 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
     state.release();
   }
 
-  Future<void> setPlayBackrate(SpeedStatus status)async{
+  Future<void> setPlayBackrateByStatus(SpeedStatus status)async{
     // 音声のスピードを調整する
     assert(status.rate>=0.5&&status.rate<=2.0);
-    await state.setPlaybackRate(status.rate); // half speed
+    await state.setPlaybackRate(status.rate.clamp(0.5, 2.0));
+  }
+
+    Future<void> setPlaybackRate(double rate)async{
+    assert(rate>=0.5&&rate<=2.0);
+    await state.setPlaybackRate(rate.clamp(0.5, 2.0)); 
   }
 
   Future<void> prepare(String filePath)async{
     // playerを開く時の処理
       // set playBackRate to 1.0 because of SpeedButton logic
-    setPlayBackrate(SpeedStatus.normal);
+    setPlayBackrateByStatus(SpeedStatus.normal);
       // 新しい音声のソースをセットする
     final source = await ref.read(appSupportDirectoryNotifierProvider.notifier)
     .fullPath(filePath);

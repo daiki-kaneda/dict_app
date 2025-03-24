@@ -38,7 +38,7 @@ class _SpeedButtonState extends ConsumerState<SpeedButton> {
               break;
           }
         });
-        ref.read(audioPlayerNotifierProvider.notifier).setPlayBackrate(status);
+        ref.read(audioPlayerNotifierProvider.notifier).setPlayBackrateByStatus(status);
       },
       child: Text(
         '×${status.rate}',

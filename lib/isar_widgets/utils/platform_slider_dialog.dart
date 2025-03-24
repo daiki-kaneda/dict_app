@@ -5,6 +5,7 @@ class PlatformSliderDialog extends StatefulWidget {
   const PlatformSliderDialog(
       {super.key,
       required this.titleBuilder,
+      this.onChanged,
       this.initialValue = 0,
       this.min = 0,
       this.max = 1,
@@ -12,6 +13,7 @@ class PlatformSliderDialog extends StatefulWidget {
       this.trailing});
 
   final Widget Function(BuildContext context, double currentValue) titleBuilder;
+  final void Function(double)? onChanged;
   final double initialValue;
   final Widget? leading;
   final Widget? trailing;
@@ -34,22 +36,29 @@ class _PlatformSliderDialogState extends State<PlatformSliderDialog> {
   Widget build(BuildContext context) {
     return PlatformAlertDialog(
         title: widget.titleBuilder(context, currentValue),
-        content: Row(
-          children: [
-            widget.leading ?? Container(),
-            Expanded(
-              child: PlatformSlider(
-                  value: currentValue,
-                  min: widget.min,
-                  max: widget.max,
-                  onChanged: (nextValue) {
-                    setState(() {
-                      currentValue = nextValue;
-                    });
-                  }),
-            ),
-            widget.trailing ?? Container()
-          ],
+        content: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: Row(
+            children: [
+              widget.leading ?? Container(),
+              Expanded(
+                child: PlatformSlider(
+                    value: currentValue,
+                    min: widget.min,
+                    max: widget.max,
+                    onChanged: (nextValue) {
+                      final onChanged = widget.onChanged;
+                      if (onChanged != null) onChanged(nextValue);
+                      setState(() {
+                        currentValue = nextValue;
+                      });
+                    }),
+              ),
+              widget.trailing ?? Container()
+            ],
+          ),
         ),
         actions: [
           PlatformTextButton(
@@ -62,4 +71,29 @@ class _PlatformSliderDialogState extends State<PlatformSliderDialog> {
           )
         ]);
   }
+}
+
+Future<double?> showPlatformSliderDialog(BuildContext context,
+    {required Widget Function(BuildContext context, double currentValue)
+        titleBuilder,
+    void Function(double)? onChanged,
+    double initialValue = 0,
+    double min = 0,
+    double max = 1,
+    Widget? leading,
+    Widget? trailing}) async {
+  return showPlatformDialog(
+    context: context,
+    builder: (context) {
+      return PlatformSliderDialog(
+        titleBuilder: titleBuilder,
+        onChanged: onChanged,
+        initialValue: initialValue,
+        min: min,
+        max: max,
+        leading: leading,
+        trailing: trailing,
+      );
+    },
+  );
 }

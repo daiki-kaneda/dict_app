@@ -36,7 +36,7 @@ class DictSentenceListview extends ConsumerWidget {
             ref.read(sentenceIndexNotifierProvider.notifier).updateIndex(e.key);
             ref.read(wordIndexNotifierProvider.notifier).updateIndex(-1);
             ref.read(audioPlayerNotifierProvider.notifier)
-            .setPlayBackrate(SpeedStatus.normal);
+            .setPlayBackrateByStatus(SpeedStatus.normal);
             ref.read(startEndProviderProvider.notifier)
             .setNewValue(e.value.start, e.value.end);
 

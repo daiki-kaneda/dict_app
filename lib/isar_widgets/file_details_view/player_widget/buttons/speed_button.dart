@@ -1,54 +1,51 @@
+import 'package:dict_app/isar_widgets/utils/platform_slider_dialog.dart';
 import 'package:dict_app/providers/audio_player_provider/audio_player_provider.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
-
-class SpeedButton extends ConsumerStatefulWidget {
+class SpeedButton extends ConsumerWidget {
   const SpeedButton({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SpeedButtonState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final audioSpeed =
+        ref.watch(settingNotifierProvider.selectAsync((s) => s.audioSpeed));
 
-class _SpeedButtonState extends ConsumerState<SpeedButton> {
-  SpeedStatus status=SpeedStatus.normal;
+    String formatSpeedRate(double rate) {
+      return '×${NumberFormat('0.0').format(rate)}';
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    
-    return PlatformTextButton(
-      onPressed: () {
-        setState(() {
-          switch (status) {
-            case SpeedStatus.slow2:
-              status = SpeedStatus.slow1;
-              break;
-            case SpeedStatus.slow1:
-              status = SpeedStatus.normal;
-              break;
-            case SpeedStatus.normal:
-              status = SpeedStatus.fast2;
-              break;
-            case SpeedStatus.fast2:
-              status = SpeedStatus.fast1;
-              break;
-            case SpeedStatus.fast1:
-              status = SpeedStatus.slow2;
-              break;
-          }
-        });
-        ref.read(audioPlayerNotifierProvider.notifier).setPlayBackrate(status);
+    return FutureBuilder(
+      future: audioSpeed,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return PlatformTextButton(
+              onPressed: () async {
+                final newSpeed = await showPlatformSliderDialog(context,
+                    initialValue: snapshot.data!,
+                    titleBuilder: (context, currentValue) =>
+                        Text(formatSpeedRate(currentValue)),
+                    min: 0.5,
+                    max: 2.0);
+                if (newSpeed != null) {
+                  ref
+                      .read(settingNotifierProvider.notifier)
+                      .updateSetting(audioSpeed: newSpeed);
+                  ref
+                      .read(audioPlayerNotifierProvider.notifier)
+                      .setPlaybackRate(newSpeed);
+                  print(newSpeed);
+                }
+              },
+              child: Text(formatSpeedRate(snapshot.data!)));
+        } else {
+          return Container();
+        }
       },
-      child: Stack(
-        children: [
-          //placeholder
-          for(final s in SpeedStatus.values)
-          Visibility.maintain(visible: false ,child: Text('×${s.rate}')),
-          Text('×${status.rate}',)
-        ],
-      ),
     );
-}
+  }
 }

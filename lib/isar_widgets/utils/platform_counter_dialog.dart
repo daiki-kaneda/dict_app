@@ -63,3 +63,18 @@ class _PlatformCounterDialogState extends State<PlatformCounterDialog> {
         ]);
   }
 }
+
+Future<int?> showPlatformCounterDialog(BuildContext context,
+    {required Widget Function(BuildContext context, int currentValue)
+        titleBuilder,
+    int initialValue = 0}) async {
+  return showPlatformDialog(
+    context: context,
+    builder: (context) {
+      return PlatformCounterDialog(
+        titleBuilder: titleBuilder,
+        initialValue: initialValue,
+      );
+    },
+  );
+}
