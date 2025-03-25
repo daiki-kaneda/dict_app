@@ -6,11 +6,11 @@ part of 'logs_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$logsSizeHash() => r'39e4c6018a754842a7a560f2f18ba372d289040d';
+String _$logsSizeHash() => r'3ac925ed8c5a9511b973c7e2a1ef0968c72d08e8';
 
 /// See also [logsSize].
 @ProviderFor(logsSize)
-final logsSizeProvider = AutoDisposeProvider<int>.internal(
+final logsSizeProvider = Provider<int>.internal(
   logsSize,
   name: r'logsSizeProvider',
   debugGetCreateSourceHash:
@@ -19,8 +19,8 @@ final logsSizeProvider = AutoDisposeProvider<int>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef LogsSizeRef = AutoDisposeProviderRef<int>;
-String _$logsHash() => r'e94f9c28225028337c6e1e3b79bc169411ff7f45';
+typedef LogsSizeRef = ProviderRef<int>;
+String _$logsHash() => r'5d51cb1b5914bff591e6fea8f324d9b80ebbbaec';
 
 /// See also [Logs].
 @ProviderFor(Logs)

@@ -21,8 +21,8 @@ class Logs extends _$Logs {
   Isar get isar => ref.read(isarProvider).requireValue;
 
   addLogEntry(
-      {required DateTime date, required int fileId, required AnswerResult result}) {
-    final newLogEntry = LogEntry(date: date, fileId: fileId, result: result);
+      {required int fileId, required AnswerResult result}) {
+    final newLogEntry = LogEntry(date: DateTime.now(), fileId: fileId, result: result);
     isar.writeTxnSync(() {
       isar.logEntrys.putSync(newLogEntry);
     });
@@ -51,7 +51,7 @@ class Logs extends _$Logs {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 int logsSize(LogsSizeRef ref) {
   final isar = ref.read(isarProvider).requireValue;
   final size = isar.logEntrys.getSizeSync();

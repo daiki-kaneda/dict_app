@@ -1,3 +1,4 @@
+import 'package:dict_app/providers/logs_provider/logs_provider.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/utils/platform_dialog.dart';
 import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
@@ -81,6 +82,10 @@ class FileNotifier extends _$FileNotifier {
   }
 
   Future<void> _recordResult(AnswerResult result) async {
+    ref.read(logsProvider.notifier).addLogEntry(
+      fileId: id, 
+      result: result);
+
     switch (result.status) {
       case SolveStatus.unSolved:
         {}
