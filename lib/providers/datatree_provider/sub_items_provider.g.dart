@@ -6,7 +6,7 @@ part of 'sub_items_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$subItemsProviderHash() => r'29185bbaab7ba78eb77ccce7456faaa030268846';
+String _$subItemsProviderHash() => r'92941e70469c29cbce5dc2369bf3ab02e91c333b';
 
 /// Copied from Dart SDK
 class _SystemHash {

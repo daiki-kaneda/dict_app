@@ -7,7 +7,7 @@ part of 'app_support_directory_provider.dart';
 // **************************************************************************
 
 String _$appSupportDirectoryNotifierHash() =>
-    r'1f2daf12e86fd8a59eb3da3d61f9ea54a1e902cb';
+    r'875b640df44f492af20abf8dd13c1565d7b3df76';
 
 /// See also [AppSupportDirectoryNotifier].
 @ProviderFor(AppSupportDirectoryNotifier)
