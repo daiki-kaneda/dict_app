@@ -4,6 +4,7 @@ import 'package:dict_app/widgets/bottom_shell_widget.dart';
 import 'package:dict_app/widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/widgets/file_details_view/file_details_view.dart';
 import 'package:dict_app/widgets/file_details_view/listening_view/listening_view.dart';
+import 'package:dict_app/widgets/logs_view/logs_view.dart';
 import 'package:dict_app/widgets/setting_view/setting_view.dart';
 import 'package:dict_app/widgets/file_details_view/stats_view/stats_view.dart';
 import 'package:dict_app/widgets/home.dart';
@@ -74,8 +75,11 @@ class IsarFolderStructureApp extends StatelessWidget {
             ),
             GoRoute(
               path: '/logs',
-              builder: (context, state) {
-                return LoadingPage();
+              pageBuilder: (context, state) {
+                return platformPage(
+                    context: context,
+                    fullscreenDialog: true,
+                    child: LogsView());
               },
             ),
             GoRoute(
