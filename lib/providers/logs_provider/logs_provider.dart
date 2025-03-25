@@ -1,3 +1,4 @@
+import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/log_entry.dart';
 import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +21,7 @@ class Logs extends _$Logs {
   Isar get isar => ref.read(isarProvider).requireValue;
 
   addLogEntry(
-      {required DateTime date, required int fileId, required Result result}) {
+      {required DateTime date, required int fileId, required AnswerResult result}) {
     final newLogEntry = LogEntry(date: date, fileId: fileId, result: result);
     isar.writeTxnSync(() {
       isar.logEntrys.putSync(newLogEntry);
