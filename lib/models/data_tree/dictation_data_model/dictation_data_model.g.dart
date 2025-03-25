@@ -4753,6 +4753,170 @@ extension TranslatedSentencesQueryFilter on QueryBuilder<TranslatedSentences,
 extension TranslatedSentencesQueryObject on QueryBuilder<TranslatedSentences,
     TranslatedSentences, QFilterCondition> {}
 
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+const AnswerResultSchema = Schema(
+  name: r'AnswerResult',
+  id: -1018733647865215909,
+  properties: {
+    r'solveAnyway': PropertySchema(
+      id: 0,
+      name: r'solveAnyway',
+      type: IsarType.bool,
+    ),
+    r'status': PropertySchema(
+      id: 1,
+      name: r'status',
+      type: IsarType.byte,
+      enumMap: _AnswerResultstatusEnumValueMap,
+    )
+  },
+  estimateSize: _answerResultEstimateSize,
+  serialize: _answerResultSerialize,
+  deserialize: _answerResultDeserialize,
+  deserializeProp: _answerResultDeserializeProp,
+);
+
+int _answerResultEstimateSize(
+  AnswerResult object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  return bytesCount;
+}
+
+void _answerResultSerialize(
+  AnswerResult object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeBool(offsets[0], object.solveAnyway);
+  writer.writeByte(offsets[1], object.status.index);
+}
+
+AnswerResult _answerResultDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = AnswerResult(
+    solveAnyway: reader.readBoolOrNull(offsets[0]) ?? false,
+    status:
+        _AnswerResultstatusValueEnumMap[reader.readByteOrNull(offsets[1])] ??
+            SolveStatus.unSolved,
+  );
+  return object;
+}
+
+P _answerResultDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readBoolOrNull(offset) ?? false) as P;
+    case 1:
+      return (_AnswerResultstatusValueEnumMap[reader.readByteOrNull(offset)] ??
+          SolveStatus.unSolved) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+const _AnswerResultstatusEnumValueMap = {
+  'unSolved': 0,
+  'characterSolved': 1,
+  'wordSolved': 2,
+  'sentenceSolved': 3,
+  'paragraphSolved': 4,
+  'sectionSolved': 5,
+};
+const _AnswerResultstatusValueEnumMap = {
+  0: SolveStatus.unSolved,
+  1: SolveStatus.characterSolved,
+  2: SolveStatus.wordSolved,
+  3: SolveStatus.sentenceSolved,
+  4: SolveStatus.paragraphSolved,
+  5: SolveStatus.sectionSolved,
+};
+
+extension AnswerResultQueryFilter
+    on QueryBuilder<AnswerResult, AnswerResult, QFilterCondition> {
+  QueryBuilder<AnswerResult, AnswerResult, QAfterFilterCondition>
+      solveAnywayEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'solveAnyway',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AnswerResult, AnswerResult, QAfterFilterCondition> statusEqualTo(
+      SolveStatus value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'status',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AnswerResult, AnswerResult, QAfterFilterCondition>
+      statusGreaterThan(
+    SolveStatus value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'status',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AnswerResult, AnswerResult, QAfterFilterCondition>
+      statusLessThan(
+    SolveStatus value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'status',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AnswerResult, AnswerResult, QAfterFilterCondition> statusBetween(
+    SolveStatus lower,
+    SolveStatus upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'status',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension AnswerResultQueryObject
+    on QueryBuilder<AnswerResult, AnswerResult, QFilterCondition> {}
+
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
@@ -4929,3 +5093,24 @@ Map<String, dynamic> _$TranslatedSentencesToJson(
       'languageCode': instance.languageCode,
       'translatedSentences': instance.translatedSentences,
     };
+
+AnswerResult _$AnswerResultFromJson(Map<String, dynamic> json) => AnswerResult(
+      status: $enumDecodeNullable(_$SolveStatusEnumMap, json['status']) ??
+          SolveStatus.unSolved,
+      solveAnyway: json['solveAnyway'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$AnswerResultToJson(AnswerResult instance) =>
+    <String, dynamic>{
+      'status': _$SolveStatusEnumMap[instance.status]!,
+      'solveAnyway': instance.solveAnyway,
+    };
+
+const _$SolveStatusEnumMap = {
+  SolveStatus.unSolved: 'unSolved',
+  SolveStatus.characterSolved: 'characterSolved',
+  SolveStatus.wordSolved: 'wordSolved',
+  SolveStatus.sentenceSolved: 'sentenceSolved',
+  SolveStatus.paragraphSolved: 'paragraphSolved',
+  SolveStatus.sectionSolved: 'sectionSolved',
+};

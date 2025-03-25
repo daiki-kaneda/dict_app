@@ -30,8 +30,8 @@ const LogEntrySchema = CollectionSchema(
     r'result': PropertySchema(
       id: 2,
       name: r'result',
-      type: IsarType.byte,
-      enumMap: _LogEntryresultEnumValueMap,
+      type: IsarType.object,
+      target: r'AnswerResult',
     )
   },
   estimateSize: _logEntryEstimateSize,
@@ -41,7 +41,7 @@ const LogEntrySchema = CollectionSchema(
   idName: r'id',
   indexes: {},
   links: {},
-  embeddedSchemas: {},
+  embeddedSchemas: {r'AnswerResult': AnswerResultSchema},
   getId: _logEntryGetId,
   getLinks: _logEntryGetLinks,
   attach: _logEntryAttach,
@@ -54,6 +54,9 @@ int _logEntryEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 +
+      AnswerResultSchema.estimateSize(
+          object.result, allOffsets[AnswerResult]!, allOffsets);
   return bytesCount;
 }
 
@@ -65,7 +68,12 @@ void _logEntrySerialize(
 ) {
   writer.writeDateTime(offsets[0], object.date);
   writer.writeLong(offsets[1], object.fileId);
-  writer.writeByte(offsets[2], object.result.index);
+  writer.writeObject<AnswerResult>(
+    offsets[2],
+    allOffsets,
+    AnswerResultSchema.serialize,
+    object.result,
+  );
 }
 
 LogEntry _logEntryDeserialize(
@@ -77,8 +85,12 @@ LogEntry _logEntryDeserialize(
   final object = LogEntry(
     date: reader.readDateTime(offsets[0]),
     fileId: reader.readLong(offsets[1]),
-    result: _LogEntryresultValueEnumMap[reader.readByteOrNull(offsets[2])] ??
-        Result.success,
+    result: reader.readObjectOrNull<AnswerResult>(
+          offsets[2],
+          AnswerResultSchema.deserialize,
+          allOffsets,
+        ) ??
+        AnswerResult(),
   );
   object.id = id;
   return object;
@@ -96,23 +108,16 @@ P _logEntryDeserializeProp<P>(
     case 1:
       return (reader.readLong(offset)) as P;
     case 2:
-      return (_LogEntryresultValueEnumMap[reader.readByteOrNull(offset)] ??
-          Result.success) as P;
+      return (reader.readObjectOrNull<AnswerResult>(
+            offset,
+            AnswerResultSchema.deserialize,
+            allOffsets,
+          ) ??
+          AnswerResult()) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
-
-const _LogEntryresultEnumValueMap = {
-  'success': 0,
-  'failure': 1,
-  'usedHint': 2,
-};
-const _LogEntryresultValueEnumMap = {
-  0: Result.success,
-  1: Result.failure,
-  2: Result.usedHint,
-};
 
 Id _logEntryGetId(LogEntry object) {
   return object.id;
@@ -360,63 +365,17 @@ extension LogEntryQueryFilter
       ));
     });
   }
-
-  QueryBuilder<LogEntry, LogEntry, QAfterFilterCondition> resultEqualTo(
-      Result value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'result',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<LogEntry, LogEntry, QAfterFilterCondition> resultGreaterThan(
-    Result value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'result',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<LogEntry, LogEntry, QAfterFilterCondition> resultLessThan(
-    Result value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'result',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<LogEntry, LogEntry, QAfterFilterCondition> resultBetween(
-    Result lower,
-    Result upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'result',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
 }
 
 extension LogEntryQueryObject
-    on QueryBuilder<LogEntry, LogEntry, QFilterCondition> {}
+    on QueryBuilder<LogEntry, LogEntry, QFilterCondition> {
+  QueryBuilder<LogEntry, LogEntry, QAfterFilterCondition> result(
+      FilterQuery<AnswerResult> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'result');
+    });
+  }
+}
 
 extension LogEntryQueryLinks
     on QueryBuilder<LogEntry, LogEntry, QFilterCondition> {}
@@ -443,18 +402,6 @@ extension LogEntryQuerySortBy on QueryBuilder<LogEntry, LogEntry, QSortBy> {
   QueryBuilder<LogEntry, LogEntry, QAfterSortBy> sortByFileIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'fileId', Sort.desc);
-    });
-  }
-
-  QueryBuilder<LogEntry, LogEntry, QAfterSortBy> sortByResult() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'result', Sort.asc);
-    });
-  }
-
-  QueryBuilder<LogEntry, LogEntry, QAfterSortBy> sortByResultDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'result', Sort.desc);
     });
   }
 }
@@ -496,18 +443,6 @@ extension LogEntryQuerySortThenBy
       return query.addSortBy(r'id', Sort.desc);
     });
   }
-
-  QueryBuilder<LogEntry, LogEntry, QAfterSortBy> thenByResult() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'result', Sort.asc);
-    });
-  }
-
-  QueryBuilder<LogEntry, LogEntry, QAfterSortBy> thenByResultDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'result', Sort.desc);
-    });
-  }
 }
 
 extension LogEntryQueryWhereDistinct
@@ -521,12 +456,6 @@ extension LogEntryQueryWhereDistinct
   QueryBuilder<LogEntry, LogEntry, QDistinct> distinctByFileId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'fileId');
-    });
-  }
-
-  QueryBuilder<LogEntry, LogEntry, QDistinct> distinctByResult() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'result');
     });
   }
 }
@@ -551,7 +480,7 @@ extension LogEntryQueryProperty
     });
   }
 
-  QueryBuilder<LogEntry, Result, QQueryOperations> resultProperty() {
+  QueryBuilder<LogEntry, AnswerResult, QQueryOperations> resultProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'result');
     });
@@ -565,18 +494,12 @@ extension LogEntryQueryProperty
 LogEntry _$LogEntryFromJson(Map<String, dynamic> json) => LogEntry(
       date: DateTime.parse(json['date'] as String),
       fileId: (json['fileId'] as num).toInt(),
-      result: $enumDecode(_$ResultEnumMap, json['result']),
+      result: AnswerResult.fromJson(json['result'] as Map<String, dynamic>),
     )..id = (json['id'] as num).toInt();
 
 Map<String, dynamic> _$LogEntryToJson(LogEntry instance) => <String, dynamic>{
       'id': instance.id,
       'date': instance.date.toIso8601String(),
       'fileId': instance.fileId,
-      'result': _$ResultEnumMap[instance.result]!,
+      'result': instance.result.toJson(),
     };
-
-const _$ResultEnumMap = {
-  Result.success: 'success',
-  Result.failure: 'failure',
-  Result.usedHint: 'usedHint',
-};

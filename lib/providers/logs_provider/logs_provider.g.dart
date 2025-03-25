@@ -20,7 +20,7 @@ final logsSizeProvider = AutoDisposeProvider<int>.internal(
 );
 
 typedef LogsSizeRef = AutoDisposeProviderRef<int>;
-String _$logsHash() => r'a9e6fa53f1cfce3e7ecaa05b06ec647f1d4a5001';
+String _$logsHash() => r'e94f9c28225028337c6e1e3b79bc169411ff7f45';
 
 /// See also [Logs].
 @ProviderFor(Logs)

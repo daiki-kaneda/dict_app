@@ -694,6 +694,7 @@ class TranslatedSentences {
 
 
 enum SolveStatus {
+  // Order of these value must not be changed because of EnumType.ordinal
   unSolved,
   characterSolved,
   wordSolved,
@@ -702,12 +703,15 @@ enum SolveStatus {
   sectionSolved,
 }
 
+@JsonSerializable()
+@embedded
 class AnswerResult {
   const AnswerResult({
     this.status = SolveStatus.unSolved,
     this.solveAnyway = false,
   });
 
+  @Enumerated(EnumType.ordinal)
   final SolveStatus status;
   final bool solveAnyway;
 
@@ -725,4 +729,7 @@ class AnswerResult {
   String toString() {
     return 'Response(status: ${status.name}, solveAnyway: $solveAnyway)';
   }
+
+  factory AnswerResult.fromJson(Map<String, dynamic> json) => _$AnswerResultFromJson(json);
+  Map<String, dynamic> toJson() => _$AnswerResultToJson(this);
 }
