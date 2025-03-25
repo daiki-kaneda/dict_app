@@ -1,4 +1,3 @@
-import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/widgets/file_details_view/listening_view/listening_view.dart';
 import 'package:dict_app/widgets/file_details_view/print_view/print_view.dart';

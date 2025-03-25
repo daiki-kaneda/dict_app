@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/file_details_view/player_widget/buttons/text_size_button.dart';
 import 'package:dict_app/widgets/utils/loading_page.dart';
 import 'package:dict_app/widgets/utils/platform_picker.dart';
