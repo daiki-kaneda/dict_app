@@ -159,7 +159,7 @@ class _EagerInitialization extends ConsumerWidget {
     final connectivity = ref.watch(connectivityProvider);
 
     ref.watch(settingNotifierProvider);
-    ref.watch(logsProvider);
+    ref.watch(filteredLogsProvider);
 
     if (![isar.value, translator.value, iap.value, localDatabase.value, connectivity.value]
         .contains(null)) {
