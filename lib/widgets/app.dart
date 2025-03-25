@@ -1,4 +1,5 @@
 import 'package:dict_app/providers/connectivity_provider/connectivity_provider.dart';
+import 'package:dict_app/providers/logs_provider/logs_provider.dart';
 import 'package:dict_app/widgets/bottom_shell_widget.dart';
 import 'package:dict_app/widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/widgets/file_details_view/file_details_view.dart';
@@ -158,6 +159,7 @@ class _EagerInitialization extends ConsumerWidget {
     final connectivity = ref.watch(connectivityProvider);
 
     ref.watch(settingNotifierProvider);
+    ref.watch(logsProvider);
 
     if (![isar.value, translator.value, iap.value, localDatabase.value, connectivity.value]
         .contains(null)) {
