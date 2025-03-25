@@ -1,3 +1,4 @@
+import 'package:dict_app/widgets/logs_view/logs_view.dart';
 import 'package:dict_app/widgets/setting_view/setting_view.dart';
 import 'package:dict_app/widgets/sub_items_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +14,12 @@ class Home extends ConsumerWidget {
     return PlatformScaffold(
       appBar: PlatformAppBar(
         title: Text('フォルダ'),
-        leading: ShowSettingViewButton(isHome: true,),
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+          ShowSettingViewButton(isHome: true,),
+          ShowLogsViewButton()
+        ],),
       ),
       body: SubItemsList(parentId: null)
       );

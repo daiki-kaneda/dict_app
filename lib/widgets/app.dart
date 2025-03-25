@@ -74,6 +74,7 @@ class IsarFolderStructureApp extends StatelessWidget {
               },
             ),
             GoRoute(
+              name: 'logs',
               path: '/logs',
               pageBuilder: (context, state) {
                 return platformPage(
@@ -169,10 +170,10 @@ class _EagerInitialization extends ConsumerWidget {
     final connectivity = ref.watch(connectivityProvider);
 
     ref.watch(settingNotifierProvider);
-    ref.watch(filteredLogsProvider);
 
     if (![isar.value, translator.value, iap.value, localDatabase.value, connectivity.value]
         .contains(null)) {
+      ref.watch(logsProvider);
       return child;
     } else {
       return LoadingPage();
