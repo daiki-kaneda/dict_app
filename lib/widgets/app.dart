@@ -13,6 +13,7 @@ import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/mlkit_translation_helper_provider/mlkit_translation_helper_provider.dart';
+import 'package:dict_app/widgets/utils/loading_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -175,17 +176,5 @@ extension GoRouterStateEx on GoRouterState {
   int? currentParameterValue(String key) {
     final value = pathParameters[key];
     return value != null ? int.tryParse(value) : null;
-  }
-}
-
-class LoadingPage extends StatelessWidget {
-  const LoadingPage({super.key, this.backgroundColor});
-
-  final Color? backgroundColor;
-  @override
-  Widget build(BuildContext context) {
-    return PlatformScaffold(
-        backgroundColor: backgroundColor,
-        body: Center(child: PlatformCircularProgressIndicator()));
   }
 }
