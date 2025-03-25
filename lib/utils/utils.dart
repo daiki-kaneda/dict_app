@@ -70,3 +70,22 @@ Color transitionalColor({Color? begin, Color? end, double progress = 0}) {
   final colorTween = ColorTween(begin: begin, end: end);
   return colorTween.transform(progress.clamp(0.0, 1.0)) ?? Colors.transparent;
 }
+
+String formatBytes(int bytes, {int decimals = 2}) {
+  if (bytes <= 0) return "0 B";
+
+  const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  int i = 0;
+  double size = bytes.toDouble();
+
+  while (size >= 1024 && i < suffixes.length - 1) {
+    size /= 1024;
+    i++;
+  }
+
+  final String formattedSize = (decimals == 0)
+      ? NumberFormat("#,##0").format(size)
+      : NumberFormat("#,##0.${"#" * decimals}").format(size); 
+
+  return "$formattedSize ${suffixes[i]}";
+}

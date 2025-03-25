@@ -1,7 +1,6 @@
 import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/log_entry.dart';
 import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
-import 'package:intl/intl.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -57,23 +56,4 @@ int logsSize(LogsSizeRef ref) {
   final size = isar.logEntrys.getSizeSync();
   print('Size of logEntrys :$size');
   return isar.logEntrys.getSizeSync();
-}
-
-String formatBytes(int bytes, {int decimals = 2}) {
-  if (bytes <= 0) return "0 B";
-
-  const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-  int i = 0;
-  double size = bytes.toDouble();
-
-  while (size >= 1024 && i < suffixes.length - 1) {
-    size /= 1024;
-    i++;
-  }
-
-  final String formattedSize = (decimals == 0)
-      ? NumberFormat("#,##0").format(size)
-      : NumberFormat("#,##0.${"#" * decimals}").format(size); 
-
-  return "$formattedSize ${suffixes[i]}";
 }
