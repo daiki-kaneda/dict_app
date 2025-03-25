@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:dict_app/providers/connectivity_provider/connectivity_provider.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/models/data_tree/item.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
@@ -95,6 +96,14 @@ class SubItemsProvider extends _$SubItemsProvider {
     String? title,
   }) async {
     try {
+      final connection = await ref.read(connectivityProvider.future);
+      if(connection!=true){
+        showNotifyDialog(
+          navigatorKey.currentContext!, 
+          title: 'エラー', 
+          description: 'インターネットの接続を確認してください😓');
+        return;
+      }
       final result =
           await ref.read(filerPickerNotifierProvider.notifier).getAudioData();
       if (result != null) {

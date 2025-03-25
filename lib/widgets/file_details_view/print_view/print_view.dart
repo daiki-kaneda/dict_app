@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:dict_app/providers/connectivity_provider/connectivity_provider.dart';
+import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/bottom_shell_widget.dart';
 import 'package:dict_app/widgets/file_details_view/print_view/dictation.dart';
 import 'package:dict_app/widgets/utils/platform_action_sheet.dart';
 import 'package:dict_app/providers/datatree_provider/file_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
+import 'package:dict_app/widgets/utils/platform_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -26,11 +29,18 @@ class _PrintViewState extends ConsumerState<PrintView> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       ref
           .read(settingNotifierProvider.notifier)
           .createTranslatedSentences(widget.fileId);
-      debugPrint('PrintView initialized with fileId: ${widget.fileId}');
+
+      final connection = await ref.read(connectivityProvider.future);
+      if (connection != true) {
+        showNotifyDialog(navigatorKey.currentContext!,
+            title: 'エラー',
+            description: 'インターネットの接続を確認してください😓 PDFのフォントが正しく読み込まれない可能性があります');
+        return;
+      }
     });
   }
 
