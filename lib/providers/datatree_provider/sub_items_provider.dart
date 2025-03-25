@@ -6,8 +6,8 @@ import 'package:dict_app/providers/app_directory_provider/app_support_directory_
 import 'package:dict_app/providers/file_picker_provider/file_picker_provider.dart';
 import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
-import 'package:dict_app/utils/dialog.dart';
 import 'package:dict_app/utils/utils.dart';
+import 'package:dict_app/widgets/utils/platform_dialog.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,10 +20,13 @@ class SubItemsProvider extends _$SubItemsProvider {
     final List<Folder> subFolders = await getSubFolders(parentId);
     final List<File> subFiles = await getSubFiles(parentId);
     final sortedSubFiles = [
-      ...subFiles.where((f)=>!f.paragraphs.isCompleted)
-      .sorted((x,y)=>y.lastUpdatedAt.compareTo(x.lastUpdatedAt)),
-      ...subFiles.where((f)=>f.paragraphs.isCompleted)
-      .sorted((x,y)=>y.lastUpdatedAt.compareTo(x.lastUpdatedAt))];
+      ...subFiles
+          .where((f) => !f.paragraphs.isCompleted)
+          .sorted((x, y) => y.lastUpdatedAt.compareTo(x.lastUpdatedAt)),
+      ...subFiles
+          .where((f) => f.paragraphs.isCompleted)
+          .sorted((x, y) => y.lastUpdatedAt.compareTo(x.lastUpdatedAt))
+    ];
 
     return [...subFolders, ...sortedSubFiles];
   }
@@ -43,8 +46,11 @@ class SubItemsProvider extends _$SubItemsProvider {
   // CRUD Folder
   Future<void> createFolder({required String title}) async {
     final current = now();
-    final newFolder =
-        Folder(parentId: parentId, title: title, createdAt: current,lastUpdatedAt: current);
+    final newFolder = Folder(
+        parentId: parentId,
+        title: title,
+        createdAt: current,
+        lastUpdatedAt: current);
     await isar.writeTxn(() async {
       await isar.folders.put(newFolder);
     });
@@ -55,9 +61,8 @@ class SubItemsProvider extends _$SubItemsProvider {
     final folder = await isar.folders.get(id);
     if (folder != null) {
       await isar.writeTxn(() async {
-        await isar.folders.put(folder.copyWith(
-          title: newTitle,
-          lastUpdatedAt: now()));
+        await isar.folders
+            .put(folder.copyWith(title: newTitle, lastUpdatedAt: now()));
       });
     }
     ref.invalidateSelf();
@@ -69,10 +74,16 @@ class SubItemsProvider extends _$SubItemsProvider {
 
       // delete all sub items
       await isar.files.deleteAll(
-        (await getSubFiles(id)).map((file) => file.id).whereType<int>().toList(),
+        (await getSubFiles(id))
+            .map((file) => file.id)
+            .whereType<int>()
+            .toList(),
       );
       await isar.folders.deleteAll(
-        (await getSubFolders(id)).map((folder) => folder.id).whereType<int>().toList(),
+        (await getSubFolders(id))
+            .map((folder) => folder.id)
+            .whereType<int>()
+            .toList(),
       );
     });
     ref.invalidateSelf();
@@ -91,7 +102,10 @@ class SubItemsProvider extends _$SubItemsProvider {
         final (path, bytes, size) = result;
         final isValidate = await validateAudioLength(path);
         if (!isValidate) {
-          DialogStatus.exceedMaxAudioLengthError.showCustomDialog(navigatorKey.currentContext!);
+          showNotifyDialog(navigatorKey.currentContext!,
+              title: 'エラー',
+              description:
+                  'ディクテーション用の英語の音声は$maxAudioLengthInSeconds秒以内にしてください🥺');
           return;
         }
         final ext = path.split('.').lastOrNull;
@@ -121,7 +135,8 @@ class SubItemsProvider extends _$SubItemsProvider {
         ref.read(settingNotifierProvider.notifier).consumeTickets();
       }
     } catch (e) {
-      DialogStatus.unExpectedError.showCustomDialog(navigatorKey.currentContext!);
+      showNotifyDialog(navigatorKey.currentContext!,
+          title: 'エラー', description: '予期せぬエラーが発生しました🥵');
       print(e.toString());
     }
   }
@@ -141,12 +156,11 @@ class SubItemsProvider extends _$SubItemsProvider {
   //   ref.invalidateSelf();
   // }
 
-  Future<void> updateFile(int id,{String? title}) async {
+  Future<void> updateFile(int id, {String? title}) async {
     final file = await isar.files.get(id);
     if (file != null) {
       await isar.writeTxn(() async {
-        await isar.files.put(file.copyWith(title: title,
-        lastUpdatedAt: now()));
+        await isar.files.put(file.copyWith(title: title, lastUpdatedAt: now()));
       });
     }
     ref.invalidateSelf();
@@ -164,10 +178,8 @@ class SubItemsProvider extends _$SubItemsProvider {
     final file = await isar.files.get(id);
     if (file != null) {
       await isar.writeTxn(() async {
-        await isar.files.put(file.copyWith(
-          parentId: newParentId,
-          lastUpdatedAt: now()
-        ));
+        await isar.files
+            .put(file.copyWith(parentId: newParentId, lastUpdatedAt: now()));
       });
     }
     ref.invalidateSelf();
@@ -178,10 +190,8 @@ class SubItemsProvider extends _$SubItemsProvider {
     final folder = await isar.folders.get(id);
     if (folder != null) {
       await isar.writeTxn(() async {
-        await isar.folders.put(folder.copyWith(
-          parentId: newParentId,
-          lastUpdatedAt: now()
-        ));
+        await isar.folders
+            .put(folder.copyWith(parentId: newParentId, lastUpdatedAt: now()));
       });
     }
     ref.invalidateSelf();
