@@ -19,10 +19,6 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-// Future<void> main() async {
-//   runApp(const ProviderScope(child: IsarFolderStructureApp()));
-// }
-
 final navigatorKey = GlobalKey<NavigatorState>();
 
 enum PathParamerterKeys {
