@@ -149,8 +149,7 @@ class LogPeriod {
   }
 
   bool containsDate(DateTime date) {
-    final dateOnly = DateTime(date.year, date.month, date.day);
-    return startDate.isBefore(dateOnly.add(const Duration(days: 1))) &&
-           endDate.isAfter(dateOnly.subtract(const Duration(days: 1)));
+    return startDate.isBefore(date) &&
+           endDate.isAfter(date);
   }
 }
