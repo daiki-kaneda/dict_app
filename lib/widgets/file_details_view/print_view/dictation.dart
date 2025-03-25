@@ -70,7 +70,7 @@ Future<Uint8List> generateDictationDocument(
       },
       build: (pw.Context context) => <pw.Widget>[
             pw.Header(level: 1, text: file.title),
-            for (final t in file.paragraphs.getAllSentences!.indexed) ...[
+            for (final t in sentences.indexed) ...[
               pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.stretch,
                   mainAxisSize: pw.MainAxisSize.min,
@@ -152,7 +152,7 @@ Future<Uint8List> generateDictationDocument(
         },
         build: (pw.Context context) => <pw.Widget>[
               pw.Header(level: 2, text: 'Answers'),
-              for (final t in file.paragraphs.getAllSentences!.indexed) ...[
+              for (final t in sentences.indexed) ...[
                 pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.stretch,
                     mainAxisSize: pw.MainAxisSize.min,
