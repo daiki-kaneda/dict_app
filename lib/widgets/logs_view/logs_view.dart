@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
-import 'package:dict_app/models/log_entry.dart';
 import 'package:dict_app/providers/logs_provider/logs_provider.dart';
 import 'package:dict_app/widgets/logs_view/logs_bar_chart.dart';
 import 'package:dict_app/widgets/utils/platform_list_section.dart';
@@ -19,7 +17,7 @@ class LogsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(logsFilterOptionProvider);
-    ref.watch(filteredLogsProvider);
+    final logs = ref.watch(filteredLogsProvider);
 
     final backgroundColor = Platform.isIOS
         ? CupertinoColors.systemGroupedBackground.resolveFrom(context)
@@ -32,10 +30,14 @@ class LogsView extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          LogsBarChart(
-            logs: [],
-            type: LogPeriodType.today,
-          ),
+          PlatformListSection(children: [
+            AspectRatio(
+                aspectRatio: 1.6,
+                child: LogBarChart(
+                  data: [],
+                  title: [],
+                )),
+          ]),
           PeriodPicker(),
           LogsDetails()
         ],
@@ -52,16 +54,18 @@ class PeriodPicker extends ConsumerWidget {
     final initialItem = ref.read(logsFilterOptionProvider);
     final types = LogPeriodType.values;
 
-    return SizedBox(
-      height: 200,
-      child: PlatformPicker(
-          itemExtent: 50,
-          scrollController: FixedExtentScrollController(
-              initialItem: types.indexOf(initialItem)),
-          onSelectedItemChanged: (i) =>
-              ref.read(logsFilterOptionProvider.notifier).update(types[i]),
-          children: types.map((t) => Text(t.name)).toList()),
-    );
+    return PlatformListSection(children: [
+      SizedBox(
+        height: 200,
+        child: PlatformPicker(
+            itemExtent: 50,
+            scrollController: FixedExtentScrollController(
+                initialItem: types.indexOf(initialItem)),
+            onSelectedItemChanged: (i) =>
+                ref.read(logsFilterOptionProvider.notifier).update(types[i]),
+            children: types.map((t) => Text(t.name)).toList()),
+      )
+    ]);
   }
 }
 
