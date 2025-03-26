@@ -10,6 +10,7 @@ class LogEntry {
   LogEntry({required this.date, required this.fileId, required this.result});
 
   Id id = Isar.autoIncrement;
+  @Index()
   final DateTime date;
   final int fileId;
   final AnswerResult result;

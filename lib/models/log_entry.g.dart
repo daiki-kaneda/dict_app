@@ -39,7 +39,21 @@ const LogEntrySchema = CollectionSchema(
   deserialize: _logEntryDeserialize,
   deserializeProp: _logEntryDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'date': IndexSchema(
+      id: -7552997827385218417,
+      name: r'date',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'date',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {r'AnswerResult': AnswerResultSchema},
   getId: _logEntryGetId,
@@ -137,6 +151,14 @@ extension LogEntryQueryWhereSort on QueryBuilder<LogEntry, LogEntry, QWhere> {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
+
+  QueryBuilder<LogEntry, LogEntry, QAfterWhere> anyDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'date'),
+      );
+    });
+  }
 }
 
 extension LogEntryQueryWhere on QueryBuilder<LogEntry, LogEntry, QWhereClause> {
@@ -200,6 +222,96 @@ extension LogEntryQueryWhere on QueryBuilder<LogEntry, LogEntry, QWhereClause> {
         lower: lowerId,
         includeLower: includeLower,
         upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<LogEntry, LogEntry, QAfterWhereClause> dateEqualTo(
+      DateTime date) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'date',
+        value: [date],
+      ));
+    });
+  }
+
+  QueryBuilder<LogEntry, LogEntry, QAfterWhereClause> dateNotEqualTo(
+      DateTime date) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'date',
+              lower: [],
+              upper: [date],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'date',
+              lower: [date],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'date',
+              lower: [date],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'date',
+              lower: [],
+              upper: [date],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<LogEntry, LogEntry, QAfterWhereClause> dateGreaterThan(
+    DateTime date, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'date',
+        lower: [date],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<LogEntry, LogEntry, QAfterWhereClause> dateLessThan(
+    DateTime date, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'date',
+        lower: [],
+        upper: [date],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<LogEntry, LogEntry, QAfterWhereClause> dateBetween(
+    DateTime lowerDate,
+    DateTime upperDate, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'date',
+        lower: [lowerDate],
+        includeLower: includeLower,
+        upper: [upperDate],
         includeUpper: includeUpper,
       ));
     });
