@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
+import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/logs_provider/logs_provider.dart';
 import 'package:dict_app/widgets/logs_view/logs_bar_chart.dart';
 import 'package:dict_app/widgets/utils/platform_list_section.dart';
@@ -18,11 +19,13 @@ class LogsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(logsFilterOptionProvider);
     final type = ref.watch(logsFilterOptionProvider);
+    final setting = ref.watch(settingNotifierProvider);
 
     final backgroundColor = Platform.isIOS
         ? CupertinoColors.systemGroupedBackground.resolveFrom(context)
         : null;
     final now = DateTime.now();
+    final types = LogPeriodType.values;
     return PlatformScaffold(
       backgroundColor: backgroundColor,
       appBar: PlatformAppBar(
@@ -35,14 +38,16 @@ class LogsView extends ConsumerWidget {
             AspectRatio(
                 aspectRatio: 1.6,
                 child: AnimatedSwitcher(
-                    duration: Duration(milliseconds: 100),
-                    child: [
-                      LogsBarChartDay(key: UniqueKey(), now),
-                      LogsBarChartWeek(key: UniqueKey(), now),
-                      LogsBarChartMonth(key: UniqueKey(), now),
-                      LogsBarChart6Months(key: UniqueKey(), now),
-                      LogsBarChartYear(key: UniqueKey(), now),
-                    ][LogPeriodType.values.indexOf(type)])),
+                  duration: const Duration(milliseconds: 200),
+                  child: types
+                      .map((type) => LogsBarChartByType(
+                            key: UniqueKey(),
+                            type: type,
+                            now: now,
+                            locale: setting.value?.languageCode,
+                          ))
+                      .toList()[types.indexOf(type)],
+                )),
           ]),
           PeriodPicker(),
           LogsDetails()
