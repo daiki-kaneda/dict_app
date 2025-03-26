@@ -20,9 +20,9 @@ class Logs extends _$Logs {
 
   Isar get isar => ref.read(isarProvider).requireValue;
 
-  addLogEntry(
-      {required int fileId, required AnswerResult result}) {
-    final newLogEntry = LogEntry(date: DateTime.now(), fileId: fileId, result: result);
+  addLogEntry({required int fileId, required AnswerResult result}) {
+    final newLogEntry =
+        LogEntry(date: DateTime.now(), fileId: fileId, result: result);
     isar.writeTxnSync(() {
       isar.logEntrys.putSync(newLogEntry);
     });
@@ -62,12 +62,12 @@ int logsSize(LogsSizeRef ref) {
 @Riverpod(keepAlive: true)
 class LogsFilterOption extends _$LogsFilterOption {
   @override
-  LogPeriod build() {
-    return LogPeriod.today();
+  LogPeriodType build() {
+    return LogPeriodType.today;
   }
 
-  update(LogPeriod newPeriod){
-    state = newPeriod;
+  update(LogPeriodType newType) {
+    state = newType;
   }
 }
 
@@ -75,7 +75,7 @@ class LogsFilterOption extends _$LogsFilterOption {
 List<LogEntry> filteredLogs(FilteredLogsRef ref) {
   final period = ref.watch(logsFilterOptionProvider);
   final logs = ref.watch(logsProvider);
-  return logs.where((e)=>period.containsDate(e.date)).toList();
+  return logs.where((e) => period.containsDate(e.date)).toList();
 }
 
 enum LogPeriodType {
@@ -83,73 +83,43 @@ enum LogPeriodType {
   pastWeek,
   pastMonth,
   pastSixMonths,
-  pastYear,
-  custom,
-}
-
-class LogPeriod {
-  final LogPeriodType type;
-  final DateTime startDate;
-  final DateTime endDate;
-
-  static final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
-
-  LogPeriod._({required this.type, required this.startDate, required this.endDate});
-
-  factory LogPeriod.today() {
-    final now = DateTime.now();
-    return LogPeriod._(
-      type: LogPeriodType.today,
-      startDate: DateTime(now.year, now.month, now.day),
-      endDate: DateTime(now.year, now.month, now.day, 23, 59, 59),
-    );
-  }
-
-  factory LogPeriod.pastWeek() => _getRangeFromNow(LogPeriodType.pastWeek, days: 6);
-  factory LogPeriod.pastMonth() => _getRangeFromNow(LogPeriodType.pastMonth, months: 1);
-  factory LogPeriod.pastSixMonths() => _getRangeFromNow(LogPeriodType.pastSixMonths, months: 6);
-  factory LogPeriod.pastYear() => _getRangeFromNow(LogPeriodType.pastYear, years: 1);
-
-  factory LogPeriod.custom({required DateTime startDate, required DateTime endDate}) {
-    assert(startDate.isBefore(endDate) || startDate.isAtSameMomentAs(endDate),
-        'startDate must be before or equal to endDate.');
-    return LogPeriod._(
-      type: LogPeriodType.custom,
-      startDate: DateTime(startDate.year, startDate.month, startDate.day),
-      endDate: DateTime(endDate.year, endDate.month, endDate.day, 23, 59, 59),
-    );
-  }
-
-  static LogPeriod _getRangeFromNow(LogPeriodType type, {int days = 0, int months = 0, int years = 0}) {
-    final now = DateTime.now();
-    final endDate = DateTime(now.year, now.month, now.day, 23, 59, 59);
-    final startDate = DateTime(now.year - years, now.month - months, now.day - days);
-    return LogPeriod._(type: type, startDate: startDate, endDate: endDate);
-  }
-
-  String get startDateString => _dateFormat.format(startDate);
-  String get endDateString => _dateFormat.format(endDate);
-
-  @override
-  String toString() {
-    switch (type) {
-      case LogPeriodType.today:
-        return '今日: $startDateString';
-      case LogPeriodType.pastWeek:
-        return '過去1週間: $startDateString - $endDateString';
-      case LogPeriodType.pastMonth:
-        return '過去1ヶ月: $startDateString - $endDateString';
-      case LogPeriodType.pastSixMonths:
-        return '過去6ヶ月: $startDateString - $endDateString';
-      case LogPeriodType.pastYear:
-        return '過去1年: $startDateString - $endDateString';
-      case LogPeriodType.custom:
-        return 'カスタム: $startDateString - $endDateString';
-    }
-  }
+  pastYear;
 
   bool containsDate(DateTime date) {
-    return startDate.isBefore(date) &&
-           endDate.isAfter(date);
+    final startDate = range.startDate;
+    final endDate = range.endDate;
+    return date.isBefore(endDate) &&
+        (date.isAfter(startDate) || date.isAtSameMomentAs(startDate));
+  }
+
+  ({DateTime startDate, DateTime endDate}) get range {
+    final now = DateTime.now();
+    switch (this) {
+      case LogPeriodType.today:
+        return (
+          startDate: DateTime(now.year, now.month, now.day),
+          endDate: DateTime(now.year, now.month, now.day + 1)
+        );
+      case LogPeriodType.pastWeek:
+        return (
+          startDate: DateTime(now.year, now.month, now.day - 6),
+          endDate: DateTime(now.year, now.month, now.day + 1)
+        );
+      case LogPeriodType.pastMonth:
+        return (
+          startDate: DateTime(now.year, now.month),
+          endDate: DateTime(now.year, now.month + 1)
+        );
+      case LogPeriodType.pastSixMonths:
+        return (
+          startDate: DateTime(now.year, now.month - 5),
+          endDate: DateTime(now.year, now.month + 1)
+        );
+      case LogPeriodType.pastYear:
+        return (
+          startDate: DateTime(now.year, now.month - 11),
+          endDate: DateTime(now.year, now.month + 1)
+        );
+    }
   }
 }

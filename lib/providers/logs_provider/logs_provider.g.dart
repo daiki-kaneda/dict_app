@@ -20,7 +20,7 @@ final logsSizeProvider = Provider<int>.internal(
 );
 
 typedef LogsSizeRef = ProviderRef<int>;
-String _$filteredLogsHash() => r'05f0635b6101073451a9d631c1b3cb84b8374c62';
+String _$filteredLogsHash() => r'799ae5392fe3ffb02e298ef6be4afe9158100de4';
 
 /// See also [filteredLogs].
 @ProviderFor(filteredLogs)
@@ -48,12 +48,12 @@ final logsProvider = AutoDisposeNotifierProvider<Logs, List<LogEntry>>.internal(
 );
 
 typedef _$Logs = AutoDisposeNotifier<List<LogEntry>>;
-String _$logsFilterOptionHash() => r'ca0c580eff0361f4c5ef38794aa7dfaf9eda55b6';
+String _$logsFilterOptionHash() => r'37d09ba4814ddac687663ac93d1235d47ff41af8';
 
 /// See also [LogsFilterOption].
 @ProviderFor(LogsFilterOption)
 final logsFilterOptionProvider =
-    NotifierProvider<LogsFilterOption, LogPeriod>.internal(
+    NotifierProvider<LogsFilterOption, LogPeriodType>.internal(
   LogsFilterOption.new,
   name: r'logsFilterOptionProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -63,6 +63,6 @@ final logsFilterOptionProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$LogsFilterOption = Notifier<LogPeriod>;
+typedef _$LogsFilterOption = Notifier<LogPeriodType>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
