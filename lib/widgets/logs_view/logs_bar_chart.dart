@@ -104,7 +104,7 @@ class LogsBarChartStatic extends StatelessWidget {
         barGroups: _barGroups(logValues),
         gridData: const FlGridData(show: false),
         alignment: BarChartAlignment.spaceAround,
-        maxY: maxValue + 10,
+        maxY: maxValue + maxValue*0.1 + 10,
       ),
     );
   }
@@ -113,7 +113,7 @@ class LogsBarChartStatic extends StatelessWidget {
         enabled: false,
         touchTooltipData: BarTouchTooltipData(
           fitInsideVertically: true,
-          fitInsideHorizontally: true,
+          fitInsideHorizontally: false,
           getTooltipColor: (group) => Colors.transparent,
           tooltipPadding: EdgeInsets.zero,
           tooltipMargin: 8,

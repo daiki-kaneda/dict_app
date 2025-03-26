@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/logs_provider/logs_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/logs_view/logs_bar_chart.dart';
 import 'package:dict_app/widgets/utils/platform_list_section.dart';
 import 'package:dict_app/widgets/utils/platform_picker.dart';
@@ -34,23 +35,31 @@ class LogsView extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          PlatformListSection(children: [
-            AspectRatio(
-                aspectRatio: 1.6,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  child: types
-                      .map((type) => LogsBarChartByType(
-                            key: UniqueKey(),
-                            type: type,
-                            now: now,
-                            locale: setting.value?.languageCode,
-                          ))
-                      .toList()[types.indexOf(type)],
-                )),
+          PlatformListSection(clipBehavior: Clip.none, children: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: 10,
+                right: 10,
+                left: 10,
+              ),
+              child: AspectRatio(
+                  aspectRatio: 1.6,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: types
+                        .map((type) => LogsBarChartByType(
+                              key: UniqueKey(),
+                              type: type,
+                              now: now,
+                              locale: setting.value?.languageCode,
+                            ))
+                        .toList()[types.indexOf(type)],
+                  )),
+            )
           ]),
           PeriodPicker(),
-          LogsDetails()
+          LogsDetails(),
+          LogsDataAmount()
         ],
       ),
     );
@@ -91,6 +100,22 @@ class LogsDetails extends ConsumerWidget {
         title: Text('ヒントを使わずに入力した文字数'),
         trailing: Text(
             '${filteredLogs.where((l) => l.result.status != SolveStatus.unSolved && l.result.solveAnyway == false).length}'),
+      )
+    ]);
+  }
+}
+
+class LogsDataAmount extends ConsumerWidget {
+  const LogsDataAmount({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bytes = ref.watch(logsSizeProvider);
+    return PlatformListSection(children: [
+      PlatformListTile(
+        title: Text('ログ全体のデータ'),
+        trailing: Text(
+            formatBytes(bytes)),
       )
     ]);
   }
