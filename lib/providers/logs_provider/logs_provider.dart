@@ -1,7 +1,7 @@
 import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/log_entry.dart';
 import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
-import 'package:intl/intl.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -49,6 +49,50 @@ class Logs extends _$Logs {
     }
     ref.invalidateSelf();
   }
+
+  List<LogEntry> getLogsFromStartAndEnd(DateTime start, DateTime end) {
+    return isar.logEntrys
+        .where()
+        .dateBetween(start, end, includeLower: false, includeUpper: true)
+        .findAllSync();
+  }
+
+  // List<List<LogEntry>> getLogsByStepBeforeAt(
+  //   DateTime end, {
+  //   required int length,
+  //   required Duration step,
+  // }) {
+  //   if (length <= 0) return [];
+  //   List<List<LogEntry>> results = [];
+  //   for (int i = 1; i <= length; i++) {
+  //     results = [
+  //       getLogsFromStartAndEnd(
+  //           end.subtract(step * i), end.subtract(step * (i - 1)))
+  //     ];
+  //   }
+  //   return results;
+  // }
+
+  // List<(int int, int weekday)> getSuccessAndWeekdayForPastWeek() {
+  //   final now = DateTime.now();
+  //   final end = DateTime(now.year, now.month, now.day, 23, 59, 59);
+  //   const Duration step = Duration(days: 1);
+  //   const int length = 7;
+
+  //   final weekDays = getPastWeekdays(length: length);
+
+  //   final logsGroup = getLogsByStepBeforeAt(end, length: length, step: step);
+  //   return logsGroup.indexed
+  //       .map((t) => (
+  //             t.$2
+  //                 .where(
+  //                   (l) => l.isSuccess(),
+  //                 )
+  //                 .length,
+  //             weekDays[t.$1]
+  //           ))
+  //       .toList();
+  // }
 }
 
 @Riverpod(keepAlive: true)

@@ -34,8 +34,7 @@ class LogsView extends ConsumerWidget {
             AspectRatio(
                 aspectRatio: 1.6,
                 child: LogBarChart(
-                  data: [],
-                  title: [],
+                  dataAndTitle: [],
                 )),
           ]),
           PeriodPicker(),

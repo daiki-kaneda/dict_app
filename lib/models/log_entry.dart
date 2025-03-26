@@ -15,6 +15,10 @@ class LogEntry {
   final int fileId;
   final AnswerResult result;
 
+  bool isSuccess(){
+    return result.solveAnyway!=true && result.status!=SolveStatus.unSolved;
+  }
+
   factory LogEntry.fromJson(Map<String, dynamic> json) =>
       _$LogEntryFromJson(json);
   Map<String, dynamic> toJson() => _$LogEntryToJson(this);

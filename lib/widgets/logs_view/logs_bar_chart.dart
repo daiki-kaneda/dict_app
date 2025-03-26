@@ -1,18 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LogBarChart extends ConsumerWidget {
-  const LogBarChart({required this.data, required this.title, this.leftTitle=''});
+class LogBarChart extends StatelessWidget {
+  const LogBarChart({required this.dataAndTitle, this.leftTitle=''});
 
-  final List<int> data;
-  final List<String> title;
+  final List<(int,String)> dataAndTitle;
   final String leftTitle;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final int maxValue = data.reduce((a, b) => a > b ? a : b);
+  Widget build(BuildContext context) {
+    final int maxValue = dataAndTitle.map((e)=>e.$1).reduce((a, b) => a > b ? a : b);
 
     return BarChart(
       BarChartData(
@@ -58,7 +56,7 @@ class LogBarChart extends ConsumerWidget {
     );
     String text;
 
-    text = title.elementAtOrNull(value.toInt()) ?? '';
+    text =  dataAndTitle.map((e)=>e.$2).elementAtOrNull(value.toInt()) ?? '';
     return SideTitleWidget(
       meta: meta,
       space: 0,
@@ -99,7 +97,7 @@ class LogBarChart extends ConsumerWidget {
         end: Alignment.topCenter,
       );
 
-  List<BarChartGroupData> get barGroups => data.indexed
+  List<BarChartGroupData> get barGroups => dataAndTitle.map((e)=>e.$1).indexed
       .map((t) => BarChartGroupData(
             x: t.$1,
             barRods: [

@@ -89,3 +89,80 @@ String formatBytes(int bytes, {int decimals = 2}) {
 
   return "$formattedSize ${suffixes[i]}";
 }
+
+// List<int> getPastWeekdays({int length = 7}){
+//   final now = DateTime.now();
+//   List<int> results = [];
+//   for(int i=0;i<length;i++){
+//     results = [
+//       now.subtract(Duration(days: i)).weekday,...results
+//     ];
+//   }
+//   return results;
+// }
+
+List<T> past24hoursListBuilder<T>(
+  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
+){
+  final end = DateTime(now.year,now.month,now.day,23,59,59);
+  return List.generate(24, 
+  (i){
+    return elementBuilder(
+      end.subtract(Duration(hours: i+1)),
+      end.subtract(Duration(hours: i))
+    );
+  });
+}
+
+List<T> pastWeekListBuilder<T>(
+  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
+){
+  final end = DateTime(now.year,now.month,now.day,23,59,59);
+  return List.generate(7, 
+  (i){
+    return elementBuilder(
+      end.subtract(Duration(days: i+1)),
+      end.subtract(Duration(days: i))
+    );
+  });
+}
+
+List<T> pastMonthListBuilder<T>(
+  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
+){
+  final end = DateTime(now.year,now.month,now.day,23,59,59);
+  final dayCount = DateTime(now.year,now.month+1,0).day;
+  return List.generate(dayCount, 
+  (i){
+    return elementBuilder(
+      end.subtract(Duration(days: i+1)),
+      end.subtract(Duration(days: i))
+    );
+  });
+}
+
+List<String> past24hoursTitleList(DateTime now,{String? locale}){
+  return past24hoursListBuilder(now, (_,end)=>DateFormat.H(locale).format(now));
+}
+
+List<String> pastWeekTitleList(DateTime now,{String? locale}){
+  return pastWeekListBuilder(now, (_,end)=>DateFormat.E(locale).format(now));
+}
+
+List<String> pastMonthTitleList(DateTime now,{String? locale}){
+  return pastMonthListBuilder(now, (_,end)=>DateFormat.M(locale).format(now));
+}
+
+
+// List<T> past6MonthListBuilder<T>(
+//   DateTime now,T Function(DateTime start,DateTime end) elementBuilder
+// ){
+//   final end = DateTime(now.year,now.month+1,0,23,59,59);
+//   return List.generate(6, 
+//   (i){
+//     return elementBuilder(
+//       end.subtract(Duration(days: i+1)),
+//       end.subtract(Duration(days: i))
+//     );
+//   });
+// }
