@@ -111,7 +111,7 @@ List<T> past24hoursListBuilder<T>(
       end.subtract(Duration(hours: i+1)),
       end.subtract(Duration(hours: i))
     );
-  });
+  }).reversed.toList();
 }
 
 List<T> pastWeekListBuilder<T>(
@@ -124,7 +124,7 @@ List<T> pastWeekListBuilder<T>(
       end.subtract(Duration(days: i+1)),
       end.subtract(Duration(days: i))
     );
-  });
+  }).reversed.toList();
 }
 
 List<T> pastMonthListBuilder<T>(
@@ -138,22 +138,52 @@ List<T> pastMonthListBuilder<T>(
       end.subtract(Duration(days: i+1)),
       end.subtract(Duration(days: i))
     );
-  });
+  }).reversed.toList();
+}
+
+List<T> past6MonthsListBuilder<T>(
+  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
+){
+  return List.generate(6, 
+  (i){
+    return elementBuilder(
+      DateTime(now.year,now.month-i,1),
+      DateTime(now.year,now.month-i+1,0)
+    );
+  }).reversed.toList();
+}
+
+List<T> pastYearListBuilder<T>(
+  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
+){
+  return List.generate(12, 
+  (i){
+    return elementBuilder(
+      DateTime(now.year,now.month-i,1),
+      DateTime(now.year,now.month-i+1,0)
+    );
+  }).reversed.toList();
 }
 
 List<String> past24hoursTitleList(DateTime now,{String? locale}){
-  return past24hoursListBuilder(now, (_,end)=>DateFormat.H(locale).format(now));
+  return past24hoursListBuilder(now, (_,end)=>DateFormat.H(locale).format(end));
 }
 
 List<String> pastWeekTitleList(DateTime now,{String? locale}){
-  return pastWeekListBuilder(now, (_,end)=>DateFormat.E(locale).format(now));
+  return pastWeekListBuilder(now, (_,end)=>DateFormat.E(locale).format(end));
 }
 
 List<String> pastMonthTitleList(DateTime now,{String? locale}){
-  return pastMonthListBuilder(now, (_,end)=>DateFormat.M(locale).format(now));
+  return pastMonthListBuilder(now, (_,end)=>DateFormat.d(locale).format(end));
 }
 
+List<String> past6MonthsTitleList(DateTime now,{String? locale}){
+  return past6MonthsListBuilder(now, (_,end)=>DateFormat.MMM(locale).format(end));
+}
 
+List<String> pastYearTitleList(DateTime now,{String? locale}){
+  return pastYearListBuilder(now, (_,end)=>DateFormat.M(locale).format(end));
+}
 // List<T> past6MonthListBuilder<T>(
 //   DateTime now,T Function(DateTime start,DateTime end) elementBuilder
 // ){

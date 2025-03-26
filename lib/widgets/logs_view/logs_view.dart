@@ -17,11 +17,12 @@ class LogsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(logsFilterOptionProvider);
-    final logs = ref.watch(filteredLogsProvider);
+    final type = ref.watch(logsFilterOptionProvider);
 
     final backgroundColor = Platform.isIOS
         ? CupertinoColors.systemGroupedBackground.resolveFrom(context)
         : null;
+    final now = DateTime.now();
     return PlatformScaffold(
       backgroundColor: backgroundColor,
       appBar: PlatformAppBar(
@@ -33,9 +34,15 @@ class LogsView extends ConsumerWidget {
           PlatformListSection(children: [
             AspectRatio(
                 aspectRatio: 1.6,
-                child: LogBarChart(
-                  dataAndTitle: [],
-                )),
+                child: AnimatedSwitcher(
+                    duration: Duration(milliseconds: 100),
+                    child: [
+                      LogsBarChartDay(key: UniqueKey(), now),
+                      LogsBarChartWeek(key: UniqueKey(), now),
+                      LogsBarChartMonth(key: UniqueKey(), now),
+                      LogsBarChart6Months(key: UniqueKey(), now),
+                      LogsBarChartYear(key: UniqueKey(), now),
+                    ][LogPeriodType.values.indexOf(type)])),
           ]),
           PeriodPicker(),
           LogsDetails()
