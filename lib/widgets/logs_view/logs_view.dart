@@ -19,14 +19,10 @@ class LogsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(logsFilterOptionProvider);
-    final type = ref.watch(logsFilterOptionProvider);
-    final setting = ref.watch(settingNotifierProvider);
 
     final backgroundColor = Platform.isIOS
         ? CupertinoColors.systemGroupedBackground.resolveFrom(context)
         : null;
-    final now = DateTime.now();
-    final types = LogPeriodType.values;
     return PlatformScaffold(
       backgroundColor: backgroundColor,
       appBar: PlatformAppBar(
@@ -35,34 +31,47 @@ class LogsView extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          PlatformListSection(clipBehavior: Clip.none, children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: 10,
-                right: 10,
-                left: 10,
-              ),
-              child: AspectRatio(
-                  aspectRatio: 1.6,
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    child: types
-                        .map((type) => LogsBarChartByType(
-                              key: UniqueKey(),
-                              type: type,
-                              now: now,
-                              locale: setting.value?.languageCode,
-                            ))
-                        .toList()[types.indexOf(type)],
-                  )),
-            )
-          ]),
+          LogsBarChartSection(),
           PeriodPicker(),
           LogsDetails(),
-          LogsDataAmount()
+          // LogsDataAmount()
         ],
       ),
     );
+  }
+}
+
+class LogsBarChartSection extends ConsumerWidget {
+  const LogsBarChartSection({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final type = ref.watch(logsFilterOptionProvider);
+    final setting = ref.watch(settingNotifierProvider);
+    final now = DateTime.now();
+    final types = LogPeriodType.values;
+    return PlatformListSection(clipBehavior: Clip.none, children: [
+      Padding(
+        padding: EdgeInsets.only(
+          top: 10,
+          right: 10,
+          left: 10,
+        ),
+        child: AspectRatio(
+            aspectRatio: 1.6,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: types
+                  .map((type) => LogsBarChartByType(
+                        key: UniqueKey(),
+                        type: type,
+                        now: now,
+                        locale: setting.value?.languageCode,
+                      ))
+                  .toList()[types.indexOf(type)],
+            )),
+      )
+    ]);
   }
 }
 
@@ -74,7 +83,7 @@ class PeriodPicker extends ConsumerWidget {
     final initialItem = ref.read(logsFilterOptionProvider);
     final types = LogPeriodType.values;
 
-    return PlatformListSection(children: [
+    return PlatformListSection(header: Text('期間'), children: [
       SizedBox(
         height: 200,
         child: PlatformPicker(
@@ -83,7 +92,7 @@ class PeriodPicker extends ConsumerWidget {
                 initialItem: types.indexOf(initialItem)),
             onSelectedItemChanged: (i) =>
                 ref.read(logsFilterOptionProvider.notifier).update(types[i]),
-            children: types.map((t) => Text(t.name)).toList()),
+            children: types.map((t) => Text(t.getLabel(context))).toList()),
       )
     ]);
   }
@@ -114,8 +123,7 @@ class LogsDataAmount extends ConsumerWidget {
     return PlatformListSection(children: [
       PlatformListTile(
         title: Text('ログ全体のデータ'),
-        trailing: Text(
-            formatBytes(bytes)),
+        trailing: Text(formatBytes(bytes)),
       )
     ]);
   }
@@ -126,8 +134,8 @@ class PeriodTitle extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentType = ref.watch(logsFilterOptionProvider);
-    return Text(currentType.name);
+    // final currentType = ref.watch(logsFilterOptionProvider);
+    return Text('記録');
   }
 }
 

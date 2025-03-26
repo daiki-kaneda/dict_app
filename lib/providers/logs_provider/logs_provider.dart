@@ -2,6 +2,7 @@ import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_mo
 import 'package:dict_app/models/log_entry.dart';
 import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
 import 'package:dict_app/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -128,6 +129,16 @@ enum LogPeriodType {
   pastMonth,
   pastSixMonths,
   pastYear;
+
+  String getLabel(BuildContext context){
+    switch(this){
+      case LogPeriodType.today:return '今日';
+      case LogPeriodType.pastWeek:return '今週';
+      case LogPeriodType.pastMonth:return '今月';
+      case LogPeriodType.pastSixMonths:return '半年';
+      case LogPeriodType.pastYear:return '一年';
+    }
+  }
 
   bool containsDate(DateTime date) {
     final startDate = range.startDate;
