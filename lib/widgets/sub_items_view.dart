@@ -348,6 +348,9 @@ class InSessionIndicator extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final inSession = ref.watch(inSessionProvider);
-    return inSession ? PlatformCircularProgressIndicator():Container();
+    return AnimatedOpacity(
+      opacity: inSession ? 1.0:0.0, 
+      duration: Duration(milliseconds: 200),
+      child: PlatformCircularProgressIndicator());
   }
 }
