@@ -90,17 +90,6 @@ String formatBytes(int bytes, {int decimals = 2}) {
   return "$formattedSize ${suffixes[i]}";
 }
 
-// List<int> getPastWeekdays({int length = 7}){
-//   final now = DateTime.now();
-//   List<int> results = [];
-//   for(int i=0;i<length;i++){
-//     results = [
-//       now.subtract(Duration(days: i)).weekday,...results
-//     ];
-//   }
-//   return results;
-// }
-
 List<T> past24hoursListBuilder<T>(
   DateTime now,T Function(DateTime start,DateTime end) elementBuilder
 ){
@@ -184,15 +173,3 @@ List<String> past6MonthsTitleList(DateTime now,{String? locale}){
 List<String> pastYearTitleList(DateTime now,{String? locale}){
   return pastYearListBuilder(now, (_,end)=>DateFormat.M(locale).format(end));
 }
-// List<T> past6MonthListBuilder<T>(
-//   DateTime now,T Function(DateTime start,DateTime end) elementBuilder
-// ){
-//   final end = DateTime(now.year,now.month+1,0,23,59,59);
-//   return List.generate(6, 
-//   (i){
-//     return elementBuilder(
-//       end.subtract(Duration(days: i+1)),
-//       end.subtract(Duration(days: i))
-//     );
-//   });
-// }
