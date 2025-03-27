@@ -29,9 +29,10 @@ class LogsBarChartByType extends ConsumerWidget {
                 .where((l) => l.isSuccess())
                 .length;
           });
-          titles = past24hoursTitleList(now, locale: locale).indexed.map(
-            (t)=>[0,6,12,18].contains(t.$1) ? t.$2:''
-          ).toList();
+          titles = past24hoursTitleList(now, locale: locale)
+              .indexed
+              .map((t) => [0, 6, 12, 18].contains(t.$1) ? t.$2 : '')
+              .toList();
         }
       case LogPeriodType.pastWeek:
         {
@@ -51,9 +52,11 @@ class LogsBarChartByType extends ConsumerWidget {
                 .where((l) => l.isSuccess())
                 .length;
           });
-          titles = pastMonthTitleList(now, locale: locale).indexed.map(
-            (t)=>List.generate(8, (i)=>i*4).contains(t.$1) ? t.$2:''
-          ).toList();
+          titles = pastMonthTitleList(now, locale: locale)
+              .indexed
+              .map((t) =>
+                  List.generate(8, (i) => i * 4).contains(t.$1) ? t.$2 : '')
+              .toList();
         }
       case LogPeriodType.pastSixMonths:
         {
@@ -104,31 +107,34 @@ class LogsBarChartStatic extends StatelessWidget {
         barGroups: _barGroups(logValues),
         gridData: const FlGridData(show: false),
         alignment: BarChartAlignment.spaceAround,
-        maxY: maxValue + maxValue*0.1 + 10,
+        maxY: maxValue + maxValue * 0.1 + 10,
       ),
     );
   }
 
   BarTouchData get _barTouchData => BarTouchData(
-        enabled: false,
-        touchTooltipData: BarTouchTooltipData(
+      enabled: true,
+      touchTooltipData: BarTouchTooltipData(
           fitInsideVertically: true,
           fitInsideHorizontally: false,
           getTooltipColor: (group) => Colors.transparent,
           tooltipPadding: EdgeInsets.zero,
           tooltipMargin: 8,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
-            final format = NumberFormat.compact();
-            format.maximumFractionDigits=1;
+            final compactFormatter = NumberFormat.compact();
+            compactFormatter.maximumFractionDigits = 1;
+            final toY = rod.toY.round();
+            final text =
+                toY != 0 ? compactFormatter.format(rod.toY.round()) : '';
             return BarTooltipItem(
-              format.format(rod.toY.round()),
-            const TextStyle(
-              color: CupertinoColors.systemCyan,
-              fontWeight: FontWeight.bold,
-            ),
-          );}
-        ),
-      );
+              text,
+              const TextStyle(
+                color: CupertinoColors.systemCyan,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          }),
+      handleBuiltInTouches: true);
 
   Widget _getTitles(double value, TitleMeta meta) {
     final style = const TextStyle(
@@ -177,7 +183,6 @@ class LogsBarChartStatic extends StatelessWidget {
                 gradient: _barsGradient,
               )
             ],
-            showingTooltipIndicators: t.$2 == 0 ? [] : [0],
           ))
       .toList();
 }
