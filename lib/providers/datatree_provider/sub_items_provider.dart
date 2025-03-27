@@ -216,7 +216,7 @@ class InSession extends _$InSession {
 
   _updateValue(bool newValue){
     state=newValue;
-    ref.invalidateSelf();
+    print('inSession:$newValue');
   }
 
   sessionStart()=> _updateValue(true);

@@ -29,12 +29,12 @@ class SubItemsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final parentFolder = ref.watch(folderProvider(parentId!));
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: Text(parentFolder?.title ?? ''),
-          trailing: ShowStoreSheetButton(),
+    return PlatformScaffold(
+        appBar: PlatformAppBar(
+          title: Text(parentFolder?.title ?? ''),
+          trailingActions: [InSessionIndicator(),ShowStoreSheetButton()],
         ),
-        child: SubItemsList(parentId: parentId));
+        body: SubItemsList(parentId: parentId));
   }
 }
 
@@ -339,5 +339,15 @@ class LastFileUpdatedAtText extends ConsumerWidget {
         }
       },
     );
+  }
+}
+
+class InSessionIndicator extends ConsumerWidget {
+  const InSessionIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final inSession = ref.watch(inSessionProvider);
+    return inSession ? PlatformCircularProgressIndicator():Container();
   }
 }
