@@ -118,9 +118,9 @@ PODS:
   - restart_app (0.0.1):
     - Flutter
   - RevenueCat (5.19.0)
-  - SDWebImage (5.19.7):
-    - SDWebImage/Core (= 5.19.7)
-  - SDWebImage/Core (5.19.7)
+  - SDWebImage (5.21.0):
+    - SDWebImage/Core (= 5.21.0)
+  - SDWebImage/Core (5.21.0)
   - share_plus (0.0.1):
     - Flutter
   - shared_preferences_foundation (0.0.1):
@@ -235,7 +235,7 @@ SPEC CHECKSUMS:
   PurchasesHybridCommon: f27e7fe57a9934319373b10c260db5d6c10bbb64
   restart_app: 806659942bf932f6ce51c5372f91ce5e81c8c14a
   RevenueCat: 4be87c151dff652d2a5b7af46073db11f01ad93f
-  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
+  SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
   share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   SSZipArchive: 8a6ee5677c8e304bebc109e39cf0da91ccef22ea
