@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/logs_provider/logs_provider.dart';
 import 'package:dict_app/utils/utils.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class LogsView extends ConsumerWidget {
   const LogsView({super.key});
@@ -108,7 +108,7 @@ class LogsDetails extends ConsumerWidget {
       PlatformListTile(
         title: Text('ヒントを使わずに入力した文字数'),
         trailing: Text(
-            '${filteredLogs.where((l) => l.isSuccess()).length}'),
+            NumberFormat.compact().format(filteredLogs.where((l) => l.isSuccess()).length)),
       )
     ]);
   }

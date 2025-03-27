@@ -117,13 +117,16 @@ class LogsBarChartStatic extends StatelessWidget {
           getTooltipColor: (group) => Colors.transparent,
           tooltipPadding: EdgeInsets.zero,
           tooltipMargin: 8,
-          getTooltipItem: (group, groupIndex, rod, rodIndex) => BarTooltipItem(
-            NumberFormat.compact().format(rod.toY.round()),
+          getTooltipItem: (group, groupIndex, rod, rodIndex) {
+            final format = NumberFormat.compact();
+            format.maximumFractionDigits=1;
+            return BarTooltipItem(
+              format.format(rod.toY.round()),
             const TextStyle(
               color: CupertinoColors.systemCyan,
               fontWeight: FontWeight.bold,
             ),
-          ),
+          );}
         ),
       );
 
