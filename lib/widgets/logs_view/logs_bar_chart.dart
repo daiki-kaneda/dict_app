@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dict_app/providers/logs_provider/logs_provider.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -88,14 +90,18 @@ class LogsBarChartByType extends ConsumerWidget {
 
 class LogsBarChartStatic extends StatelessWidget {
   const LogsBarChartStatic(
-      {super.key, this.logValues = const [], this.titles = const []});
+      {super.key,
+      this.logValues = const [],
+      this.titles = const [],
+      this.width = 0});
 
   final List<int> logValues;
   final List<String> titles;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
-    final int maxValue = logValues.reduce((a, b) => a > b ? a : b);
+    final int maxValue = logValues.fold(0, max);
 
     return BarChart(
       duration: Duration(milliseconds: 200),
@@ -113,7 +119,7 @@ class LogsBarChartStatic extends StatelessWidget {
   }
 
   BarTouchData get _barTouchData => BarTouchData(
-      enabled: true,
+      enabled: false,
       touchTooltipData: BarTouchTooltipData(
           fitInsideVertically: true,
           fitInsideHorizontally: false,
@@ -129,12 +135,12 @@ class LogsBarChartStatic extends StatelessWidget {
             return BarTooltipItem(
               text,
               const TextStyle(
-                color: CupertinoColors.systemCyan,
-                fontWeight: FontWeight.bold,
-              ),
+                  color: CupertinoColors.systemCyan,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10),
             );
           }),
-      handleBuiltInTouches: true);
+      handleBuiltInTouches: false);
 
   Widget _getTitles(double value, TitleMeta meta) {
     final style = const TextStyle(
@@ -175,14 +181,13 @@ class LogsBarChartStatic extends StatelessWidget {
       );
 
   List<BarChartGroupData> _barGroups(List<int> values) => values.indexed
-      .map((t) => BarChartGroupData(
-            x: t.$1,
-            barRods: [
-              BarChartRodData(
-                toY: t.$2.toDouble(),
-                gradient: _barsGradient,
-              )
-            ],
-          ))
+      .map((t) => BarChartGroupData(x: t.$1, barRods: [
+            BarChartRodData(
+              toY: t.$2.toDouble(),
+              gradient: _barsGradient,
+            )
+          ], showingTooltipIndicators: [
+            0
+          ]))
       .toList();
 }
