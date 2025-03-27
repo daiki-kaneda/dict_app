@@ -137,7 +137,7 @@ List<T> past6MonthsListBuilder<T>(
   (i){
     return elementBuilder(
       DateTime(now.year,now.month-i,1),
-      DateTime(now.year,now.month-i+1,0)
+      DateTime(now.year,now.month-i+1,0,23,59,59)
     );
   }).reversed.toList();
 }
@@ -149,7 +149,7 @@ List<T> pastYearListBuilder<T>(
   (i){
     return elementBuilder(
       DateTime(now.year,now.month-i,1),
-      DateTime(now.year,now.month-i+1,0)
+      DateTime(now.year,now.month-i+1,0,23,59,59)
     );
   }).reversed.toList();
 }
