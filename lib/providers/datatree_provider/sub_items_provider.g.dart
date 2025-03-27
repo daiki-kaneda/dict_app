@@ -171,11 +171,11 @@ class _SubItemsProviderProviderElement
   int? get parentId => (origin as SubItemsProviderProvider).parentId;
 }
 
-String _$inSessionHash() => r'd62fa65fed4d427a1a4de3c024751d5c91f79be9';
+String _$inSessionHash() => r'0095784059bb09ee411462e8be545dfa8f5280e9';
 
 /// See also [InSession].
 @ProviderFor(InSession)
-final inSessionProvider = AutoDisposeNotifierProvider<InSession, bool>.internal(
+final inSessionProvider = NotifierProvider<InSession, bool>.internal(
   InSession.new,
   name: r'inSessionProvider',
   debugGetCreateSourceHash:
@@ -184,6 +184,6 @@ final inSessionProvider = AutoDisposeNotifierProvider<InSession, bool>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$InSession = AutoDisposeNotifier<bool>;
+typedef _$InSession = Notifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

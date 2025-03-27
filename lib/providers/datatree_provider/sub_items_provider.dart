@@ -207,7 +207,7 @@ class SubItemsProvider extends _$SubItemsProvider {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class InSession extends _$InSession {
   @override
   bool build() {
