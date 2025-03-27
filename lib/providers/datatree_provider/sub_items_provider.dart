@@ -93,7 +93,7 @@ class SubItemsProvider extends _$SubItemsProvider {
   // CRUD File
 
   Future<void> createFileFromLocalAudio({
-    String? title,
+    required String title,
   }) async {
     try {
       final connection = await ref.read(connectivityProvider.future);
@@ -132,7 +132,7 @@ class SubItemsProvider extends _$SubItemsProvider {
             'got transcription:${transcript.results?.channels?.firstOrNull?.alternatives?.firstOrNull?.transcript}');
         final newFile = File.from(
             parentId: parentId,
-            title: title ?? '新規ディクテーション',
+            title: title,
             transcript,
             audioPath: filePath);
 
@@ -206,3 +206,4 @@ class SubItemsProvider extends _$SubItemsProvider {
     ref.invalidateSelf();
   }
 }
+
