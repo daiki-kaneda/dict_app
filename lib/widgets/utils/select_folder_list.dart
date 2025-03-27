@@ -1,17 +1,17 @@
 import 'package:dict_app/models/data_tree/item.dart';
+import 'package:dict_app/providers/datatree_provider/file_provider.dart';
 import 'package:dict_app/providers/datatree_provider/sub_items_provider.dart';
+import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/utils/expansion_tile/custom_expansion_tile.dart';
+import 'package:dict_app/widgets/utils/platform_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SelectFolderList extends ConsumerWidget {
-  const SelectFolderList({
-    super.key,
-    required this.sourceId,
-    this.isFileMoving=false
-  });
+  const SelectFolderList(
+      {super.key, required this.sourceId, this.isFileMoving = false});
 
   final int sourceId;
   final bool isFileMoving;
@@ -31,7 +31,8 @@ class SelectFolderList extends ConsumerWidget {
         children: [
           // SelectTargetFolderListTile(root,sourceId)
           for (final subF in root.whereType<Folder>())
-            SelectTargetFolderListTile(subF, sourceId,isFileMoving:isFileMoving)
+            SelectTargetFolderListTile(subF, sourceId,
+                isFileMoving: isFileMoving)
         ],
       );
     } else {
@@ -43,7 +44,8 @@ class SelectFolderList extends ConsumerWidget {
 }
 
 class SelectTargetFolderListTile extends ConsumerWidget {
-  const SelectTargetFolderListTile(this.folder, this.sourceId, {super.key,this.isFileMoving=false});
+  const SelectTargetFolderListTile(this.folder, this.sourceId,
+      {super.key, this.isFileMoving = false});
 
   final Folder folder;
   final int sourceId;
@@ -65,8 +67,10 @@ class SelectTargetFolderListTile extends ConsumerWidget {
     // folder must not be moved to itself or descendant folder
     final enabled = sourceId != folder.id || isFileMoving;
 
-    void onTapTile() {
-      Navigator.of(context).pop(folder.id);
+    void onTapTile() async {
+      final confirm = await showConfirmDialog(context,
+          title: '確認', description: '${folder.title}に移動しますか？');
+      if(confirm==true)Navigator.of(navigatorKey.currentContext!).pop(folder.id);
     }
 
     if (subFolders == null) return Container();
@@ -94,7 +98,11 @@ class SelectTargetFolderListTile extends ConsumerWidget {
                 ? subFolders
                     .map((f) => Padding(
                           padding: EdgeInsets.only(left: 10),
-                          child: SelectTargetFolderListTile(f, sourceId,isFileMoving: isFileMoving,),
+                          child: SelectTargetFolderListTile(
+                            f,
+                            sourceId,
+                            isFileMoving: isFileMoving,
+                          ),
                         ))
                     .toList()
                 : [],
@@ -103,22 +111,23 @@ class SelectTargetFolderListTile extends ConsumerWidget {
   }
 }
 
-Future<int?> getNewFolderId(BuildContext context, int sourceId,{bool isFileMoving=false}) async {
+Future<int?> getNewFolderId(BuildContext context, int sourceId,
+    {bool isFileMoving = false}) async {
   return showPlatformModalSheet<int?>(
     context: context,
     builder: (context) {
       return PlatformScaffold(
         appBar: PlatformAppBar(
           leading: PlatformIconButton(
-            onPressed:()=>Navigator.of(context).pop(),
+            onPressed: () => Navigator.of(context).pop(),
             icon: Icon(PlatformIcons(context).clear),
           ),
           title: Text('フォルダ選択'),
         ),
         body: SelectFolderList(
-        sourceId: sourceId,
-        isFileMoving: isFileMoving,
-      ),
+          sourceId: sourceId,
+          isFileMoving: isFileMoving,
+        ),
       );
     },
   );
