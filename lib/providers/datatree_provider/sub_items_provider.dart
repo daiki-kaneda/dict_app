@@ -207,3 +207,19 @@ class SubItemsProvider extends _$SubItemsProvider {
   }
 }
 
+@riverpod
+class InSession extends _$InSession {
+  @override
+  bool build() {
+    return false;
+  }
+
+  _updateValue(bool newValue){
+    state=newValue;
+    ref.invalidateSelf();
+  }
+
+  sessionStart()=> _updateValue(true);
+  sessionEnd()=>_updateValue(false);
+  
+}

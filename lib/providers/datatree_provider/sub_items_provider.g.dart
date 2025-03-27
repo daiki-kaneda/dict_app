@@ -6,7 +6,7 @@ part of 'sub_items_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$subItemsProviderHash() => r'cad46202e000cddfdfee9eb251067ac7c9ad96b6';
+String _$subItemsProviderHash() => r'9e96b4e9ce32f0d8cb77203f28308364a67237c5';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -170,5 +170,20 @@ class _SubItemsProviderProviderElement
   @override
   int? get parentId => (origin as SubItemsProviderProvider).parentId;
 }
+
+String _$inSessionHash() => r'd62fa65fed4d427a1a4de3c024751d5c91f79be9';
+
+/// See also [InSession].
+@ProviderFor(InSession)
+final inSessionProvider = AutoDisposeNotifierProvider<InSession, bool>.internal(
+  InSession.new,
+  name: r'inSessionProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$inSessionHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$InSession = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

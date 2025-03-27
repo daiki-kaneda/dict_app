@@ -20,7 +20,7 @@ final logsSizeProvider = Provider<int>.internal(
 );
 
 typedef LogsSizeRef = ProviderRef<int>;
-String _$filteredLogsHash() => r'293c1d46662c4b02d08f9b13eb2cf8e939c4d78b';
+String _$filteredLogsHash() => r'4a7bdc1209d2b37e13c03d7e7e299c880b2d2215';
 
 /// See also [filteredLogs].
 @ProviderFor(filteredLogs)

@@ -34,13 +34,12 @@ class BottomShellWidget extends StatelessWidget {
         leading: CreateFolderButton(),
         trailing: CreateFileButton(),
       );
-    } else if (fullPath == '/file-details/:${PathParamerterKeys.fileId.name}'){
+    } else if (fullPath == '/file-details/:${PathParamerterKeys.fileId.name}') {
       final fileId = int.tryParse(
-        state.pathParameters[PathParamerterKeys.fileId.name] ?? ''
-        );
-      if(fileId==null)throw Exception('No fileId:int in pathparameters');
+          state.pathParameters[PathParamerterKeys.fileId.name] ?? '');
+      if (fileId == null) throw Exception('No fileId:int in pathparameters');
       return BottomNavigationWidget(fileId);
-    }else{
+    } else {
       return Container();
     }
   }
@@ -79,32 +78,38 @@ class CreateFileButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return PlatformIconButton(
       onPressed: () async {
-        try{
-        final parentId = PathParamerterKeys.parentId.getCurrentValue();
-        final String? title = await showPlatformDialog(
-          context: context,
-          builder: (context) {
-            return PlatformTextFieldDialog(
-              title: 'File name',
+        final inSessionNotifier = ref.read(inSessionProvider.notifier);
+        try {
+          final parentId = PathParamerterKeys.parentId.getCurrentValue();
+          final String? title = await showPlatformDialog(
+            context: context,
+            builder: (context) {
+              return PlatformTextFieldDialog(
+                title: 'File name',
+              );
+            },
+          );
+          if (title == null) return;
+          if (!(await ref
+              .read(settingNotifierProvider.notifier)
+              .hasTickets())) {
+            final openStore = await showConfirmDialog(
+              navigatorKey.currentContext!,
+              title: 'チケット不足',
+              description: 'チケットが足りません。ストアを開きますか？',
             );
-          },
-        );
-        if (title == null) return;
-        if(!(await ref.read(settingNotifierProvider.notifier).hasTickets())){
-          final openStore = await showConfirmDialog(
-            navigatorKey.currentContext!, 
-            title: 'チケット不足', 
-            description: 'チケットが足りません。ストアを開きますか？',
-            );
-          if(openStore==true)navigatorKey.currentContext?.pushNamed('store');
-          return;
+            if (openStore == true)navigatorKey.currentContext?.pushNamed('store');
+            return;
+          }
+          inSessionNotifier.sessionStart();
+          await ref
+              .read(subItemsProviderProvider(parentId).notifier)
+              .createFileFromLocalAudio(title: title);
+          inSessionNotifier.sessionEnd();
+        } catch (e) {
+          print(e);
+          inSessionNotifier.sessionEnd();
         }
-        ref
-            .read(subItemsProviderProvider(parentId).notifier)
-            .createFileFromLocalAudio(title: title);
-      }catch(e){
-        print(e);
-      }
       },
       icon: const Icon(CupertinoIcons.plus),
     );
@@ -112,7 +117,7 @@ class CreateFileButton extends ConsumerWidget {
 }
 
 class BottomNavigationWidget extends ConsumerWidget {
-  const BottomNavigationWidget(this.fileId,{super.key});
+  const BottomNavigationWidget(this.fileId, {super.key});
 
   final int fileId;
   @override
