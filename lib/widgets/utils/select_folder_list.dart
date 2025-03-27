@@ -1,5 +1,4 @@
 import 'package:dict_app/models/data_tree/item.dart';
-import 'package:dict_app/providers/datatree_provider/file_provider.dart';
 import 'package:dict_app/providers/datatree_provider/sub_items_provider.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/utils/expansion_tile/custom_expansion_tile.dart';

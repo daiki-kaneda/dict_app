@@ -127,7 +127,7 @@ pw.Widget _buildSentenceSection(
   final greyTextStyle =
       pw.TextStyle(fontSize: 0.5 * PdfPageFormat.cm, color: PdfColors.grey);
 
-  String _maskWord(String word, Setting setting) {
+  String maskWord(String word, Setting setting) {
     if (isAnswer) return word;
 
     return '${setting.separateWordsWithParentheses ? '(' : ''}${word.replaceAll(setting.hideOnlyAlphabet ? RegExp(r'[a-zA-Z]') : RegExp(r'.'), setting.showUnderlinedParts ? '_' : ' ')}${setting.separateWordsWithParentheses ? ')' : ''}';
@@ -141,7 +141,7 @@ pw.Widget _buildSentenceSection(
         spacing: isAnswer ? 2 * PdfPageFormat.mm : 5 * PdfPageFormat.mm,
         children: t.$2.words!
             .map((w) => pw.Text(
-                isAnswer ? w.displayText : _maskWord(w.displayText, setting),
+                isAnswer ? w.displayText : maskWord(w.displayText, setting),
                 style: isAnswer
                     ? smallTextStyle
                     : textStyle.copyWith(
