@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dict_app/models/data_tree/item.dart';
 import 'package:dict_app/providers/datatree_provider/sub_items_provider.dart';
 import 'package:dict_app/widgets/utils/expansion_tile/custom_expansion_tile.dart';
@@ -53,7 +51,7 @@ class SelectTargetFolderListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(expansionNotifierProvider(folder.id.toString()).notifier);
+    // ref.read(expansionNotifierProvider(folder.id.toString()).notifier);
 
     final subFolders =
         ref.watch(subItemsProviderProvider(folder.id).select((subFolderAsync) {
@@ -89,16 +87,6 @@ class SelectTargetFolderListTile extends ConsumerWidget {
             icon,
           ),
           title: Text(folder.title),
-          trailing: PlatformIconButton(
-              onPressed: () {
-                ref
-                    .read(expansionNotifierProvider(folder.id.toString())
-                        .notifier)
-                    .toggle();
-              },
-              icon: Icon(Platform.isIOS
-                  ? CupertinoIcons.chevron_down
-                  : Icons.expand_more)),
           onTap: enabled ? onTapTile : null,
           child: Column(
             // if souceId match folder.id,not show descendants
