@@ -108,7 +108,7 @@ class LogsDetails extends ConsumerWidget {
       PlatformListTile(
         title: Text('ヒントを使わずに入力した文字数'),
         trailing: Text(
-            '${filteredLogs.where((l) => l.result.status != SolveStatus.unSolved && l.result.solveAnyway == false).length}'),
+            '${filteredLogs.where((l) => l.isSuccess()).length}'),
       )
     ]);
   }

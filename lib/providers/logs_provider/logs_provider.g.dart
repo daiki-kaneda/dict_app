@@ -20,7 +20,7 @@ final logsSizeProvider = Provider<int>.internal(
 );
 
 typedef LogsSizeRef = ProviderRef<int>;
-String _$filteredLogsHash() => r'799ae5392fe3ffb02e298ef6be4afe9158100de4';
+String _$filteredLogsHash() => r'293c1d46662c4b02d08f9b13eb2cf8e939c4d78b';
 
 /// See also [filteredLogs].
 @ProviderFor(filteredLogs)
@@ -34,7 +34,7 @@ final filteredLogsProvider = AutoDisposeProvider<List<LogEntry>>.internal(
 );
 
 typedef FilteredLogsRef = AutoDisposeProviderRef<List<LogEntry>>;
-String _$logsHash() => r'5d51cb1b5914bff591e6fea8f324d9b80ebbbaec';
+String _$logsHash() => r'e72639f5932211b02312e0b102f37d12c5109611';
 
 /// See also [Logs].
 @ProviderFor(Logs)

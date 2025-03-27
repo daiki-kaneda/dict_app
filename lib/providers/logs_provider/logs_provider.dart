@@ -1,7 +1,6 @@
 import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/log_entry.dart';
 import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
-import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -57,43 +56,6 @@ class Logs extends _$Logs {
         .dateBetween(start, end, includeLower: false, includeUpper: true)
         .findAllSync();
   }
-
-  // List<List<LogEntry>> getLogsByStepBeforeAt(
-  //   DateTime end, {
-  //   required int length,
-  //   required Duration step,
-  // }) {
-  //   if (length <= 0) return [];
-  //   List<List<LogEntry>> results = [];
-  //   for (int i = 1; i <= length; i++) {
-  //     results = [
-  //       getLogsFromStartAndEnd(
-  //           end.subtract(step * i), end.subtract(step * (i - 1)))
-  //     ];
-  //   }
-  //   return results;
-  // }
-
-  // List<(int int, int weekday)> getSuccessAndWeekdayForPastWeek() {
-  //   final now = DateTime.now();
-  //   final end = DateTime(now.year, now.month, now.day, 23, 59, 59);
-  //   const Duration step = Duration(days: 1);
-  //   const int length = 7;
-
-  //   final weekDays = getPastWeekdays(length: length);
-
-  //   final logsGroup = getLogsByStepBeforeAt(end, length: length, step: step);
-  //   return logsGroup.indexed
-  //       .map((t) => (
-  //             t.$2
-  //                 .where(
-  //                   (l) => l.isSuccess(),
-  //                 )
-  //                 .length,
-  //             weekDays[t.$1]
-  //           ))
-  //       .toList();
-  // }
 }
 
 @Riverpod(keepAlive: true)
@@ -119,8 +81,13 @@ class LogsFilterOption extends _$LogsFilterOption {
 @riverpod
 List<LogEntry> filteredLogs(FilteredLogsRef ref) {
   final period = ref.watch(logsFilterOptionProvider);
-  final logs = ref.watch(logsProvider);
-  return logs.where((e) => period.containsDate(e.date)).toList();
+  final isar = ref.read(isarProvider).requireValue;
+  final range = period.range;
+  return isar.logEntrys
+      .where()
+      .dateBetween(range.startDate, range.endDate,
+          includeLower: false, includeUpper: true)
+      .findAllSync();
 }
 
 enum LogPeriodType {
@@ -130,21 +97,19 @@ enum LogPeriodType {
   pastSixMonths,
   pastYear;
 
-  String getLabel(BuildContext context){
-    switch(this){
-      case LogPeriodType.today:return '今日';
-      case LogPeriodType.pastWeek:return '今週';
-      case LogPeriodType.pastMonth:return '今月';
-      case LogPeriodType.pastSixMonths:return '半年';
-      case LogPeriodType.pastYear:return '一年';
+  String getLabel(BuildContext context) {
+    switch (this) {
+      case LogPeriodType.today:
+        return '今日';
+      case LogPeriodType.pastWeek:
+        return '今週';
+      case LogPeriodType.pastMonth:
+        return '今月';
+      case LogPeriodType.pastSixMonths:
+        return '半年';
+      case LogPeriodType.pastYear:
+        return '一年';
     }
-  }
-
-  bool containsDate(DateTime date) {
-    final startDate = range.startDate;
-    final endDate = range.endDate;
-    return date.isBefore(endDate) &&
-        (date.isAfter(startDate) || date.isAtSameMomentAs(startDate));
   }
 
   ({DateTime startDate, DateTime endDate}) get range {
@@ -153,27 +118,31 @@ enum LogPeriodType {
       case LogPeriodType.today:
         return (
           startDate: DateTime(now.year, now.month, now.day),
-          endDate: DateTime(now.year, now.month, now.day + 1)
+          endDate: DateTime(now.year, now.month, now.day, 23, 59, 59)
         );
       case LogPeriodType.pastWeek:
         return (
-          startDate: DateTime(now.year, now.month, now.day - 6),
-          endDate: DateTime(now.year, now.month, now.day + 1)
+          startDate: DateTime(
+            now.year,
+            now.month,
+            now.day - 6,
+          ),
+          endDate: DateTime(now.year, now.month, now.day, 23, 59, 59)
         );
       case LogPeriodType.pastMonth:
         return (
           startDate: DateTime(now.year, now.month),
-          endDate: DateTime(now.year, now.month + 1)
+          endDate: DateTime(now.year, now.month + 1, 0, 23, 59, 59)
         );
       case LogPeriodType.pastSixMonths:
         return (
           startDate: DateTime(now.year, now.month - 5),
-          endDate: DateTime(now.year, now.month + 1)
+          endDate: DateTime(now.year, now.month + 1, 0, 23, 59, 59)
         );
       case LogPeriodType.pastYear:
         return (
           startDate: DateTime(now.year, now.month - 11),
-          endDate: DateTime(now.year, now.month + 1)
+          endDate: DateTime(now.year, now.month + 1, 0, 23, 59, 59)
         );
     }
   }
