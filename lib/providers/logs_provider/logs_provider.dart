@@ -82,7 +82,8 @@ class LogsFilterOption extends _$LogsFilterOption {
 List<LogEntry> filteredLogs(FilteredLogsRef ref) {
   final period = ref.watch(logsFilterOptionProvider);
   final isar = ref.read(isarProvider).requireValue;
-  final range = period.range;
+  final now = DateTime.now();
+  final range = period.range(now);
   return isar.logEntrys
       .where()
       .dateBetween(range.startDate, range.endDate,
@@ -112,8 +113,7 @@ enum LogPeriodType {
     }
   }
 
-  ({DateTime startDate, DateTime endDate}) get range {
-    final now = DateTime.now();
+  ({DateTime startDate, DateTime endDate}) range(DateTime now) {
     switch (this) {
       case LogPeriodType.today:
         return (
