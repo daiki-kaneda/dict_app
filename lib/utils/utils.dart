@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -166,3 +169,15 @@ TextSpan iconTextSpan(IconData icon, {Color? color, double? size}) => TextSpan(
         package: icon.fontPackage,
       ),
     );
+
+TextSpan iconDescriptionTextSpan(BuildContext context,
+    {required IconData icon, double fontSize = 24, String description = ''}) {
+  return TextSpan(children: [
+    iconTextSpan(icon,
+        color: Platform.isIOS
+            ? CupertinoTheme.of(context).primaryColor
+            : Theme.of(context).colorScheme.primary,
+        size: fontSize),
+    TextSpan(text: '=> $description', style: TextStyle(fontSize: fontSize))
+  ]);
+}

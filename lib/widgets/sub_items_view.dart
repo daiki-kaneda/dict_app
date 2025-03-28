@@ -32,7 +32,7 @@ class SubItemsView extends ConsumerWidget {
     return PlatformScaffold(
         appBar: PlatformAppBar(
           title: Text(parentFolder?.title ?? ''),
-          trailingActions: [InSessionIndicator(),ShowStoreSheetButton()],
+          trailingActions: [InSessionIndicator(), ShowStoreSheetButton()],
         ),
         body: SubItemsList(parentId: parentId));
   }
@@ -52,13 +52,17 @@ class SubItemsList extends ConsumerWidget {
 
     Future<void> onFileOpen(File file) async {
       // just update 'lastUpdatedAt'
-      ref.read(subItemsProviderProvider(parentId).notifier).updateFile(file.id!);
+      ref
+          .read(subItemsProviderProvider(parentId).notifier)
+          .updateFile(file.id!);
       print('file title:${file.title}');
     }
 
     Future<void> onFolderOpen(Folder folder) async {
       // just update 'lastUpdatedAt'
-      ref.read(subItemsProviderProvider(parentId).notifier).updateFolder(folder.id!);
+      ref
+          .read(subItemsProviderProvider(parentId).notifier)
+          .updateFolder(folder.id!);
       print('folder title:${folder.title}');
     }
 
@@ -81,10 +85,8 @@ class SubItemsList extends ConsumerWidget {
                       itemCount: items.length,
                     ),
                   if (items.isEmpty)
-                    const SliverFillRemaining(
-                      child: Center(
-                        child: Text("Let's make first folder or file!"),
-                      ),
+                    SliverFillRemaining(
+                      child: Center(child: NoItemText()),
                     )
                 ],
               );
@@ -115,8 +117,9 @@ class SubItemsList extends ConsumerWidget {
                   if (items.isEmpty)
                     SliverFillRemaining(
                       child: Center(
-                        child: Text('No items in this folder(id:$parentId)'),
-                      ),
+                          child: NoItemText(
+                        isHome: false,
+                      )),
                     )
                 ],
               );
@@ -218,7 +221,7 @@ class ActionButton extends ConsumerWidget {
                         },
                       );
                       if (newTitle == null) return;
-                      notifier.updateFolder(id,newTitle:  newTitle);
+                      notifier.updateFolder(id, newTitle: newTitle);
                     }),
                     ActionSheetAction('移動', onTap: () async {
                       final int? newParentId =
@@ -259,7 +262,7 @@ class ActionButton extends ConsumerWidget {
                       );
 
                       if (newTitle == null) return;
-                      notifier.updateFile(id,title:  newTitle);
+                      notifier.updateFile(id, title: newTitle);
                     }),
                     ActionSheetAction('移動', onTap: () async {
                       final int? newParentId =
@@ -349,8 +352,49 @@ class InSessionIndicator extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final inSession = ref.watch(inSessionProvider);
     return AnimatedOpacity(
-      opacity: inSession ? 1.0:0.0, 
-      duration: Duration(milliseconds: 200),
-      child: PlatformCircularProgressIndicator());
+        opacity: inSession ? 1.0 : 0.0,
+        duration: Duration(milliseconds: 200),
+        child: PlatformCircularProgressIndicator());
+  }
+}
+
+class NoItemText extends StatelessWidget {
+  const NoItemText({super.key, this.isHome = true});
+
+  final bool isHome;
+
+  @override
+  Widget build(BuildContext context) {
+    final isIOS = Platform.isIOS;
+    final fontSize = MediaQuery.of(context).size.width > 600 ? 32.0 : 18.0;
+    if (isIOS) {
+      return isHome
+          ? Text.rich(iconDescriptionTextSpan(
+              context,
+              icon: CupertinoIcons.folder_badge_plus,
+              fontSize: fontSize,
+              description: '新規フォルダ作成',
+            ))
+          : Text.rich(
+              TextSpan(children: [
+                iconDescriptionTextSpan(
+                  context,
+                  icon: CupertinoIcons.folder_badge_plus,
+                  fontSize: fontSize,
+                  description: '新規フォルダ作成',
+                ),
+                TextSpan(text: '\n\n'),
+                iconDescriptionTextSpan(
+                  context,
+                  icon: CupertinoIcons.plus,
+                  fontSize: fontSize,
+                  description: '新規ディクテーション作成',
+                )
+              ]),
+              textAlign: TextAlign.center,
+            );
+    } else {
+      return Container();
+    }
   }
 }
