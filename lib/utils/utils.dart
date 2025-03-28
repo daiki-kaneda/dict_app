@@ -14,7 +14,7 @@ String formatDuration(Duration duration) {
   return '$minutes:$seconds';
 }
 
-String formatDateTime(DateTime dateTime,String locale) {
+String formatDateTime(DateTime dateTime, String locale) {
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final startOfWeek = today.subtract(Duration(days: today.weekday - 1));
@@ -27,8 +27,7 @@ String formatDateTime(DateTime dateTime,String locale) {
   } else if (dateTime.isAfter(startOfWeek) &&
       dateTime.isBefore(endOfWeek.add(const Duration(days: 1)))) {
     // 今週の日付の場合
-    return DateFormat.EEEE(locale)
-        .format(dateTime); // 曜日を日本語で表示
+    return DateFormat.EEEE(locale).format(dateTime); // 曜日を日本語で表示
   } else {
     // 今日でも今週でもない場合
     return DateFormat('yyyy/MM/dd').format(dateTime);
@@ -85,91 +84,85 @@ String formatBytes(int bytes, {int decimals = 2}) {
 
   final String formattedSize = (decimals == 0)
       ? NumberFormat("#,##0").format(size)
-      : NumberFormat("#,##0.${"#" * decimals}").format(size); 
+      : NumberFormat("#,##0.${"#" * decimals}").format(size);
 
   return "$formattedSize ${suffixes[i]}";
 }
 
 List<T> past24hoursListBuilder<T>(
-  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
-){
-  final end = DateTime(now.year,now.month,now.day,23,59,59);
-  return List.generate(24, 
-  (i){
+    DateTime now, T Function(DateTime start, DateTime end) elementBuilder) {
+  final end = DateTime(now.year, now.month, now.day, 23, 59, 59);
+  return List.generate(24, (i) {
     return elementBuilder(
-      end.subtract(Duration(hours: i+1)),
-      end.subtract(Duration(hours: i))
-    );
+        end.subtract(Duration(hours: i + 1)), end.subtract(Duration(hours: i)));
   }).reversed.toList();
 }
 
 List<T> pastWeekListBuilder<T>(
-  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
-){
-  final end = DateTime(now.year,now.month,now.day,23,59,59);
-  return List.generate(7, 
-  (i){
+    DateTime now, T Function(DateTime start, DateTime end) elementBuilder) {
+  final end = DateTime(now.year, now.month, now.day, 23, 59, 59);
+  return List.generate(7, (i) {
     return elementBuilder(
-      end.subtract(Duration(days: i+1)),
-      end.subtract(Duration(days: i))
-    );
+        end.subtract(Duration(days: i + 1)), end.subtract(Duration(days: i)));
   }).reversed.toList();
 }
 
 List<T> pastMonthListBuilder<T>(
-  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
-){
-  final end = DateTime(now.year,now.month,now.day,23,59,59);
-  final dayCount = DateTime(now.year,now.month+1,0).day;
-  return List.generate(dayCount, 
-  (i){
+    DateTime now, T Function(DateTime start, DateTime end) elementBuilder) {
+  final end = DateTime(now.year, now.month, now.day, 23, 59, 59);
+  final dayCount = DateTime(now.year, now.month + 1, 0).day;
+  return List.generate(dayCount, (i) {
     return elementBuilder(
-      end.subtract(Duration(days: i+1)),
-      end.subtract(Duration(days: i))
-    );
+        end.subtract(Duration(days: i + 1)), end.subtract(Duration(days: i)));
   }).reversed.toList();
 }
 
 List<T> past6MonthsListBuilder<T>(
-  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
-){
-  return List.generate(6, 
-  (i){
-    return elementBuilder(
-      DateTime(now.year,now.month-i,1),
-      DateTime(now.year,now.month-i+1,0,23,59,59)
-    );
+    DateTime now, T Function(DateTime start, DateTime end) elementBuilder) {
+  return List.generate(6, (i) {
+    return elementBuilder(DateTime(now.year, now.month - i, 1),
+        DateTime(now.year, now.month - i + 1, 0, 23, 59, 59));
   }).reversed.toList();
 }
 
 List<T> pastYearListBuilder<T>(
-  DateTime now,T Function(DateTime start,DateTime end) elementBuilder
-){
-  return List.generate(12, 
-  (i){
-    return elementBuilder(
-      DateTime(now.year,now.month-i,1),
-      DateTime(now.year,now.month-i+1,0,23,59,59)
-    );
+    DateTime now, T Function(DateTime start, DateTime end) elementBuilder) {
+  return List.generate(12, (i) {
+    return elementBuilder(DateTime(now.year, now.month - i, 1),
+        DateTime(now.year, now.month - i + 1, 0, 23, 59, 59));
   }).reversed.toList();
 }
 
-List<String> past24hoursTitleList(DateTime now,{String? locale}){
-  return past24hoursListBuilder(now, (_,end)=>DateFormat.H(locale).format(end));
+List<String> past24hoursTitleList(DateTime now, {String? locale}) {
+  return past24hoursListBuilder(
+      now, (_, end) => DateFormat.H(locale).format(end));
 }
 
-List<String> pastWeekTitleList(DateTime now,{String? locale}){
-  return pastWeekListBuilder(now, (_,end)=>DateFormat.E(locale).format(end));
+List<String> pastWeekTitleList(DateTime now, {String? locale}) {
+  return pastWeekListBuilder(now, (_, end) => DateFormat.E(locale).format(end));
 }
 
-List<String> pastMonthTitleList(DateTime now,{String? locale}){
-  return pastMonthListBuilder(now, (_,end)=>DateFormat.d(locale).format(end));
+List<String> pastMonthTitleList(DateTime now, {String? locale}) {
+  return pastMonthListBuilder(
+      now, (_, end) => DateFormat.d(locale).format(end));
 }
 
-List<String> past6MonthsTitleList(DateTime now,{String? locale}){
-  return past6MonthsListBuilder(now, (_,end)=>DateFormat.MMM(locale).format(end));
+List<String> past6MonthsTitleList(DateTime now, {String? locale}) {
+  return past6MonthsListBuilder(
+      now, (_, end) => DateFormat.MMM(locale).format(end));
 }
 
-List<String> pastYearTitleList(DateTime now,{String? locale}){
-  return pastYearListBuilder(now, (_,end)=>DateFormat.M(locale).format(end));
+List<String> pastYearTitleList(DateTime now, {String? locale}) {
+  return pastYearListBuilder(now, (_, end) => DateFormat.M(locale).format(end));
 }
+
+TextSpan iconTextSpan(IconData icon, {Color? color, double? size}) => TextSpan(
+      text: String.fromCharCode(icon.codePoint),
+      style: TextStyle(
+        inherit: false,
+        color: color,
+        fontSize: size,
+        fontFamily: icon.fontFamily,
+        package: icon.fontPackage,
+      ),
+    );
