@@ -23,12 +23,14 @@ class BottomShellWidget extends StatelessWidget {
     final fullPath = state.fullPath;
     if (fullPath == '/') {
       return const CupertinoNavigationBar(
+        transitionBetweenRoutes: false,
         border: Border(),
         backgroundColor: CupertinoColors.transparent,
         leading: CreateFolderButton(),
       );
     } else if (fullPath == '/sub-items/:${PathParamerterKeys.parentId.name}') {
       return const CupertinoNavigationBar(
+        transitionBetweenRoutes: false,
         border: Border(),
         backgroundColor: CupertinoColors.transparent,
         leading: CreateFolderButton(),
