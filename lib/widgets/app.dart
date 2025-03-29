@@ -17,6 +17,7 @@ import 'package:dict_app/providers/local_database_provider/setting_provider/sett
 import 'package:dict_app/providers/mlkit_translation_helper_provider/mlkit_translation_helper_provider.dart';
 import 'package:dict_app/widgets/utils/loading_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -138,20 +139,31 @@ class IsarFolderStructureApp extends StatelessWidget {
                   ),
                 ]),
             GoRoute(
-              name: 'settings',
-              path: '/settings',
-              pageBuilder: (context, state) { 
-                final isHome = state.extra as bool?;
-                return platformPage(
-                  context: context,
-                  child: SettingView(isHome: isHome ?? false,),
-                  fullscreenDialog: true);}
-            ),
+                name: 'settings',
+                path: '/settings',
+                pageBuilder: (context, state) {
+                  final isHome = state.extra as bool?;
+                  return platformPage(
+                      context: context,
+                      child: SettingView(
+                        isHome: isHome ?? false,
+                      ),
+                      fullscreenDialog: true);
+                }),
           ])
     ]);
     return PlatformApp.router(
       routerConfig: router,
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('ja'), // Japanese
+        Locale('es'), // Spanish
+      ],
     );
   }
 }
@@ -171,8 +183,13 @@ class _EagerInitialization extends ConsumerWidget {
 
     ref.watch(settingNotifierProvider);
 
-    if (![isar.value, translator.value, iap.value, localDatabase.value, connectivity.value]
-        .contains(null)) {
+    if (![
+      isar.value,
+      translator.value,
+      iap.value,
+      localDatabase.value,
+      connectivity.value
+    ].contains(null)) {
       ref.watch(logsProvider);
       return child;
     } else {
