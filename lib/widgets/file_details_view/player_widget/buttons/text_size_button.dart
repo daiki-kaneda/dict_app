@@ -1,3 +1,4 @@
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/utils/platform_counter_dialog.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:flutter/widgets.dart';
@@ -23,7 +24,7 @@ class TextSizeButton extends ConsumerWidget {
                   initialValue: snapshot.data!,
                   min: 12,
                   max: 40,
-                  titleBuilder:(_,__)=> Text('フォントサイズ')
+                  titleBuilder:(_,__)=> Text(l10n().fontSize)
                   );
                 if (newSize != null) {
                   ref

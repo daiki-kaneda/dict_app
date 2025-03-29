@@ -76,9 +76,9 @@ class DictationView extends ConsumerWidget {
         onPressed: () async {
           if (file.paragraphs.isCompleted) {
             final shouldReset = await showConfirmDialog(context,
-                title: 'リセット',
+                title: l10n().resetDialogTitle,
                 description:
-                    'すでに完全に解き終わっています.すべてリセットしますか？クリアされた回数は記録され、リセットしても正答率のデータは維持されます');
+                    l10n().resetDialogContent);
             if (shouldReset == true) {
               await ref
                   .read(fileNotifierProvider(fileId).notifier)

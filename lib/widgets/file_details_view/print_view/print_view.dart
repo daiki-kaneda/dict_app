@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dict_app/providers/connectivity_provider/connectivity_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/bottom_shell_widget.dart';
 import 'package:dict_app/widgets/file_details_view/print_view/dictation.dart';
@@ -37,8 +38,8 @@ class _PrintViewState extends ConsumerState<PrintView> {
       final connection = await ref.read(connectivityProvider.future);
       if (connection != true) {
         showNotifyDialog(navigatorKey.currentContext!,
-            title: 'エラー',
-            description: 'インターネットの接続を確認してください😓 PDFのフォントが正しく読み込まれない可能性があります');
+            title: l10n().errorDialogTitle,
+            description: l10n().fontOfflineErrorDialogContent);
         return;
       }
     });

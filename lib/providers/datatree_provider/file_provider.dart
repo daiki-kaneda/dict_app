@@ -1,4 +1,5 @@
 import 'package:dict_app/providers/logs_provider/logs_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/utils/platform_dialog.dart';
 import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
@@ -124,7 +125,7 @@ class FileNotifier extends _$FileNotifier {
                 .showEffect();
           }
           showNotifyDialog(navigatorKey.currentContext!,
-              title: '完了メッセージ', description: 'この音声のすべての文章を解きました');
+              title:l10n().completionDialogTitle, description:l10n().completionDialogContent);
         }
       case SolveStatus.paragraphSolved:
         {

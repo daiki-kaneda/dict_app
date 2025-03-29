@@ -100,8 +100,8 @@ class SubItemsProvider extends _$SubItemsProvider {
       if(connection!=true){
         showNotifyDialog(
           navigatorKey.currentContext!, 
-          title: 'エラー', 
-          description: 'インターネットの接続を確認してください😓');
+          title: l10n().errorDialogTitle, 
+          description: l10n().offlineErrorDialogContent);
         return;
       }
       final result =
@@ -112,9 +112,9 @@ class SubItemsProvider extends _$SubItemsProvider {
         final isValidate = await validateAudioLength(path);
         if (!isValidate) {
           showNotifyDialog(navigatorKey.currentContext!,
-              title: 'エラー',
+              title: l10n().errorDialogTitle,
               description:
-                  'ディクテーション用の英語の音声は$maxAudioLengthInSeconds秒以内にしてください🥺');
+                  l10n().exceedMaxAudioLengthErrorDialogContent(maxAudioLengthInSeconds));
           return;
         }
         final ext = path.split('.').lastOrNull;
@@ -145,7 +145,7 @@ class SubItemsProvider extends _$SubItemsProvider {
       }
     } catch (e) {
       showNotifyDialog(navigatorKey.currentContext!,
-          title: 'エラー', description: '予期せぬエラーが発生しました🥵');
+          title: l10n().errorDialogTitle, description: l10n().unexpectedErrorDialogContent);
       print(e.toString());
     }
   }

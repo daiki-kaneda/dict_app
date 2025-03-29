@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/utils/platform_bottom_navigation_bar.dart';
 import 'package:dict_app/widgets/utils/platform_dialog.dart';
@@ -97,8 +98,8 @@ class CreateFileButton extends ConsumerWidget {
               .hasTickets())) {
             final openStore = await showConfirmDialog(
               navigatorKey.currentContext!,
-              title: 'チケット不足',
-              description: 'チケットが足りません。ストアを開きますか？',
+              title: l10n().insufficientTicketsDialogTitle,
+              description: l10n().insufficientTicketsDialogContent
             );
             if (openStore == true)navigatorKey.currentContext?.pushNamed('store');
             return;
