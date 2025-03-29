@@ -1,7 +1,6 @@
 import 'package:dict_app/providers/datatree_provider/file_details_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/mlkit_translation_helper_provider/mlkit_translation_helper_provider.dart';
-import 'package:dict_app/widgets/utils/platform_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,21 +47,12 @@ class LlmTranslatedText extends ConsumerWidget {
     final setting = ref.watch(settingNotifierProvider);
 
     if (sentence != null) {
-      return GestureDetector(
-        onTap: () async{
-          final newCode = await showPlatformLanguagePickerSheet(context, initialLanguage: setting.value?.translationTargetLanguageCode ?? 'ja');
-          if(newCode!=null){
-            ref.read(settingNotifierProvider.notifier)
-            .updateSetting(translationTargetLanguageCode: newCode);
-          }
-        },
-        child: Text(
-          sentence,
-          textAlign: textAlign,
-          style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: (setting.value?.textSize.toDouble() ?? 20) * 0.85),
-        ),
+      return Text(
+        sentence,
+        textAlign: textAlign,
+        style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: (setting.value?.textSize.toDouble() ?? 20) * 0.85),
       );
     } else {
       return Center(
