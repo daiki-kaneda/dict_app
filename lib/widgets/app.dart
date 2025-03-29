@@ -161,8 +161,25 @@ class IsarFolderStructureApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        Locale('ja'), // Japanese
-        Locale('es'), // Spanish
+        Locale('en', ''), // English
+        Locale('zh', ''), // Chinese
+        Locale('es', ''), // Spanish
+        Locale('hi', ''), // Hindi
+        Locale('ar', ''), // Arabic
+        Locale('bn', ''), // Bengali
+        Locale('pt', ''), // Portuguese
+        Locale('ru', ''), // Russian
+        Locale('ja', ''), // Japanese
+        Locale('de', ''), // German
+        Locale('fr', ''), // French
+        Locale('ko', ''), // Korean
+        Locale('it', ''), // Italian
+        Locale('tr', ''), // Turkish
+        Locale('vi', ''), // Vietnamese
+        Locale('ta', ''), // Tamil
+        Locale('ur', ''), // Urdu
+        Locale('fa', ''), // Persian
+        Locale('id', ''), // Indonesian
       ],
     );
   }
