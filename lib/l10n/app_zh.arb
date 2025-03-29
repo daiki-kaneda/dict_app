@@ -1,0 +1,118 @@
+{
+    "@@locale": "zh",
+
+    "settings": "设置",
+    "stats": "统计",
+    "records": "记录",
+    "qanda": "问答",
+    "buyTickets": "购买票券",
+    "buy": "购买",
+
+    "general": "通用",
+    "nativeLanguage": "使用语言",
+    "showTranslations": "显示翻译",
+    "repeatAudio": "重复音频",
+    "textSize": "文本大小",
+    "fontSize": "字体大小",
+
+    "pdfSettings": "PDF设置",
+    "appendTranslation": "附加翻译",
+    "appendAnswers": "附加答案",
+    "separateWordsByParentheses": "用括号分隔单词",
+    "connectUnderline": "连接下划线",
+    "showUnderline": "显示下划线",
+    "appendPageNumbers": "附加页码",
+    "hideOnlyAlphabets": "仅隐藏字母",
+
+    "startDictation": "开始听写",
+    "startListening": "开始听力",
+
+    "createNewFolder": "创建新文件夹",
+    "createNewDictation": "创建新听写",
+    "rename": "重命名",
+    "move": "移动",
+    "delete": "删除",
+    "selectFolder": "选择文件夹",
+    "folderName": "文件夹名称",
+    "fileName": "文件名称",
+    "newFolderName": "新文件夹名称",
+    "newFileName": "新文件名称",
+
+    "period": "期间",
+    "today": "今天",
+    "thisWeek": "本周",
+    "thisMonth": "本月",
+    "lastSixMonths": "最近6个月",
+    "lastYear": "最近一年",
+    "successfulCharsWithoutHint": "无提示成功输入的字符数",
+    "completionCount": "完成次数",
+    "correctAnswerRate": "正确率",
+    "overallCorrectAnswerRate": "整体正确率",
+
+    "ticketsRemaining": "剩余票券",
+    "ticketConsumptionQuestion": "每次消耗多少张票券？",
+    "ticketConsumptionAnswer": "仅消耗一张。",
+    "ticketRestoreQuestion": "已消耗的票券可以恢复吗？",
+    "ticketRestoreAnswer": "不可以。一旦使用的票券无法恢复。",
+
+    "maxAudioLengthQuestion": "分析的音频有时长限制吗？",
+    "maxAudioLengthAnswer": "是的。每次音频的上限为{maxAudioLengthInSeconds}秒。",
+    "@maxAudioLengthAnswer": {
+        "description": "Answer stating the maximum audio length allowed, with a placeholder for the number of seconds.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "backupDataQuestion": "会备份分析数据和票券吗？",
+    "backupDataAnswer": "不会。如果删除应用或更换设备，包括分析数据和票券在内的所有数据都将被删除且无法恢复。",
+    "commercialUseDataQuestion": "分析数据可以商用吗？",
+    "commercialUseDataAnswer": "可以。分析数据可以自由使用，包括商业用途，无需注明许可。",
+
+    "errorDialogTitle": "错误",
+    "completionDialogTitle": "完成消息",
+    "resetDialogTitle": "重置",
+    "confirmMoveDialogTitle": "确认移动",
+    "insufficientTicketsDialogTitle": "票券不足",
+    "confirmDeleteDialogTitle": "确认删除",
+
+    "completionDialogContent": "您已完成此音频中的所有句子",
+    "offlineErrorDialogContent": "请检查您的网络连接 😓",
+    "exceedMaxAudioLengthErrorDialogContent": "用于听写的英语音频长度应在{maxAudioLengthInSeconds}秒以内 🥺",
+    "@exceedMaxAudioLengthErrorDialogContent": {
+        "description": "Error message shown when the audio exceeds the maximum allowed length.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "unexpectedErrorDialogContent": "发生意外错误 🥵",
+    "loadingFontsErrorDialogContent": "加载字体时出错。请检查连接环境。",
+    "fontOfflineErrorDialogContent": "请检查您的网络连接 😓 PDF字体可能无法正确加载",
+    "resetDialogContent": "您已完全完成。要全部重置吗？完成次数将被记录，即使重置后正确率数据也将保留",
+    "confirmMoveDialogContent": "移动到 {folderTitle} 吗？",
+    "@confirmMoveDialogContent": {
+        "description": "Confirmation message before moving an item to a folder.",
+        "placeholders": {
+            "folderTitle": {
+                "type": "String",
+                "example": "My Folder"
+            }
+        }
+    },
+    "insufficientTicketsDialogContent": "票券不足。要打开商店吗？",
+    "confirmDeleteDialogContent": "确定要删除 {title} 吗？一旦删除将无法恢复。",
+    "@confirmDeleteDialogContent": {
+        "description": "Confirmation message before deleting an item.",
+        "placeholders": {
+            "title": {
+                "type": "String",
+                "example": "My Dictation File"
+            }
+        }
+    }
+}

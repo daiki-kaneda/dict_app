@@ -1,0 +1,118 @@
+{
+    "@@locale": "id",
+
+    "settings": "Pengaturan",
+    "stats": "Statistik",
+    "records": "Rekaman",
+    "qanda": "Tanya Jawab",
+    "buyTickets": "Beli Tiket",
+    "buy": "Beli",
+
+    "general": "Umum",
+    "nativeLanguage": "Bahasa yang Digunakan",
+    "showTranslations": "Tampilkan Terjemahan",
+    "repeatAudio": "Ulangi Audio",
+    "textSize": "Ukuran Teks",
+    "fontSize": "Ukuran Font",
+
+    "pdfSettings": "Pengaturan PDF",
+    "appendTranslation": "Lampirkan Terjemahan",
+    "appendAnswers": "Lampirkan Jawaban",
+    "separateWordsByParentheses": "Pisahkan Kata dengan Tanda Kurung",
+    "connectUnderline": "Sambungkan Garis Bawah",
+    "showUnderline": "Tampilkan Garis Bawah",
+    "appendPageNumbers": "Lampirkan Nomor Halaman",
+    "hideOnlyAlphabets": "Sembunyikan Hanya Alfabet",
+
+    "startDictation": "Mulai Dikte",
+    "startListening": "Mulai Mendengarkan",
+
+    "createNewFolder": "Buat Folder Baru",
+    "createNewDictation": "Buat Dikte Baru",
+    "rename": "Ganti Nama",
+    "move": "Pindahkan",
+    "delete": "Hapus",
+    "selectFolder": "Pilih Folder",
+    "folderName": "Nama Folder",
+    "fileName": "Nama File",
+    "newFolderName": "Nama Folder Baru",
+    "newFileName": "Nama File Baru",
+
+    "period": "Periode",
+    "today": "Hari Ini",
+    "thisWeek": "Minggu Ini",
+    "thisMonth": "Bulan Ini",
+    "lastSixMonths": "6 Bulan Terakhir",
+    "lastYear": "Tahun Lalu",
+    "successfulCharsWithoutHint": "Jumlah Karakter Berhasil Tanpa Petunjuk",
+    "completionCount": "Jumlah Penyelesaian",
+    "correctAnswerRate": "Tingkat Jawaban Benar",
+    "overallCorrectAnswerRate": "Tingkat Jawaban Benar Keseluruhan",
+
+    "ticketsRemaining": "Sisa Tiket",
+    "ticketConsumptionQuestion": "Berapa banyak tiket yang digunakan sekali jalan?",
+    "ticketConsumptionAnswer": "Hanya satu tiket.",
+    "ticketRestoreQuestion": "Bisakah tiket yang sudah digunakan dikembalikan?",
+    "ticketRestoreAnswer": "Tidak, tiket yang sudah digunakan tidak dapat dikembalikan.",
+
+    "maxAudioLengthQuestion": "Apakah ada batas durasi audio yang akan dianalisis?",
+    "maxAudioLengthAnswer": "Ya. Batas audio adalah {maxAudioLengthInSeconds} detik sekali jalan.",
+    "@maxAudioLengthAnswer": {
+        "description": "Answer stating the maximum audio length allowed, with a placeholder for the number of seconds.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "backupDataQuestion": "Apakah data analisis dan tiket dicadangkan?",
+    "backupDataAnswer": "Tidak. Jika Anda menghapus aplikasi atau mengganti perangkat, semua data, termasuk data analisis dan tiket, akan dihapus dan tidak dapat dipulihkan.",
+    "commercialUseDataQuestion": "Bisakah data analisis digunakan untuk tujuan komersial?",
+    "commercialUseDataAnswer": "Ya. Data analisis dapat digunakan secara bebas, termasuk untuk penggunaan komersial, tanpa perlu menyebutkan lisensi.",
+
+    "errorDialogTitle": "Kesalahan",
+    "completionDialogTitle": "Pesan Penyelesaian",
+    "resetDialogTitle": "Atur Ulang",
+    "confirmMoveDialogTitle": "Konfirmasi Pemindahan",
+    "insufficientTicketsDialogTitle": "Tiket Tidak Cukup",
+    "confirmDeleteDialogTitle": "Konfirmasi Penghapusan",
+
+    "completionDialogContent": "Anda telah menyelesaikan semua kalimat dalam audio ini",
+    "offlineErrorDialogContent": "Silakan periksa koneksi internet Anda 😓",
+    "exceedMaxAudioLengthErrorDialogContent": "Audio bahasa Inggris untuk dikte harus kurang dari {maxAudioLengthInSeconds} detik 🥺",
+    "@exceedMaxAudioLengthErrorDialogContent": {
+        "description": "Error message shown when the audio exceeds the maximum allowed length.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "unexpectedErrorDialogContent": "Terjadi kesalahan tak terduga 🥵",
+    "loadingFontsErrorDialogContent": "Terjadi kesalahan saat memuat font. Silakan periksa lingkungan koneksi.",
+    "fontOfflineErrorDialogContent": "Silakan periksa koneksi internet Anda 😓 Font PDF mungkin tidak dimuat dengan benar",
+    "resetDialogContent": "Anda sudah menyelesaikannya sepenuhnya. Apakah Anda ingin mengatur ulang semuanya? Jumlah penyelesaian akan dicatat, dan data tingkat jawaban benar akan dipertahankan bahkan setelah diatur ulang",
+    "confirmMoveDialogContent": "Pindahkan ke {folderTitle}?",
+    "@confirmMoveDialogContent": {
+        "description": "Confirmation message before moving an item to a folder.",
+        "placeholders": {
+            "folderTitle": {
+                "type": "String",
+                "example": "My Folder"
+            }
+        }
+    },
+    "insufficientTicketsDialogContent": "Tiket Anda tidak cukup. Apakah Anda ingin membuka toko?",
+    "confirmDeleteDialogContent": "Apakah Anda yakin ingin menghapus {title}? Setelah dihapus, tidak dapat dipulihkan.",
+    "@confirmDeleteDialogContent": {
+        "description": "Confirmation message before deleting an item.",
+        "placeholders": {
+            "title": {
+                "type": "String",
+                "example": "My Dictation File"
+            }
+        }
+    }
+}
