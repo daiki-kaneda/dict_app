@@ -196,3 +196,7 @@ AppLocalizations l10n(){
     throw Exception('Could not get Applocalization');
   }
 }
+
+String platformLocaleName(){
+  return l10n().localeName;
+}

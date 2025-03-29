@@ -13,7 +13,6 @@ import 'package:dict_app/models/data_tree/item.dart';
 import 'package:dict_app/providers/datatree_provider/file_details_provider.dart';
 import 'package:dict_app/providers/datatree_provider/folder_provider.dart';
 import 'package:dict_app/providers/datatree_provider/sub_items_provider.dart';
-import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -329,14 +328,13 @@ class LastFileUpdatedAtText extends ConsumerWidget {
             .whereType<File>()
             .firstWhereOrNull((f) => f.id == fileId)
             ?.lastUpdatedAt));
-    final setting = ref.watch(settingNotifierProvider);
 
     return FutureBuilder(
       future: lastUpdatedAtFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Text(formatDateTime(
-              snapshot.data!, setting.value?.languageCode ?? 'en'));
+              snapshot.data!, platformLocaleName()));
         } else {
           return Container();
         }

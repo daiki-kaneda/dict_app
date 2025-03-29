@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/logs_provider/logs_provider.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/logs_view/logs_bar_chart.dart';
@@ -47,7 +46,6 @@ class LogsBarChartSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final type = ref.watch(logsFilterOptionProvider);
-    final setting = ref.watch(settingNotifierProvider);
     final now = DateTime.now();
     final types = LogPeriodType.values;
     return PlatformListSection(clipBehavior: Clip.none, children: [
@@ -66,7 +64,7 @@ class LogsBarChartSection extends ConsumerWidget {
                         key: UniqueKey(),
                         type: type,
                         now: now,
-                        locale: setting.value?.languageCode,
+                        locale:platformLocaleName()
                       ))
                   .toList()[types.indexOf(type)],
             )),
