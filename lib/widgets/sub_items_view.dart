@@ -366,7 +366,7 @@ class NoItemText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isIOS = Platform.isIOS;
-    final fontSize = MediaQuery.of(context).size.width > 600 ? 32.0 : 18.0;
+    final fontSize = isTablet(context) ? 32.0 : 18.0;
     if (isIOS) {
       return isHome
           ? Text.rich(iconDescriptionTextSpan(

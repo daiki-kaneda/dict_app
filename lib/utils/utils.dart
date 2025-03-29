@@ -181,3 +181,7 @@ TextSpan iconDescriptionTextSpan(BuildContext context,
     TextSpan(text: '→ $description', style: TextStyle(fontSize: fontSize))
   ]);
 }
+
+bool isTablet(BuildContext context){
+  return MediaQuery.of(context).size.width > 600;
+}
