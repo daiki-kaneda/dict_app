@@ -344,7 +344,7 @@ double completionRate(CompletionRateRef ref,int fileId,{bool alphabetOnly=true})
 @riverpod
 List<String> translatedSentences(TranslatedSentencesRef ref,int fileId,) {
   final setting = ref.watch(settingNotifierProvider);
-  final languageCode = setting.value?.languageCode ?? '';
+  final languageCode = setting.value?.translationTargetLanguageCode ?? '';
   final translatedSentences = ref.watch(FileNotifierProvider(fileId).select(
     (f)=>f?.paragraphs.translations.firstWhereOrNull((t)=>t.languageCode==languageCode)?.translatedSentences ?? []
   ));

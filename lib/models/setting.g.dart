@@ -20,7 +20,8 @@ Setting _$SettingFromJson(Map<String, dynamic> json) => Setting(
       showUnderlinedParts: json['showUnderlinedParts'] as bool? ?? true,
       showPageNumbers: json['showPageNumbers'] as bool? ?? true,
       hideOnlyAlphabet: json['hideOnlyAlphabet'] as bool? ?? true,
-      languageCode: json['languageCode'] as String? ?? "ja",
+      translationTargetLanguageCode:
+          json['translationTargetLanguageCode'] as String? ?? "ja",
     );
 
 Map<String, dynamic> _$SettingToJson(Setting instance) => <String, dynamic>{
@@ -36,5 +37,5 @@ Map<String, dynamic> _$SettingToJson(Setting instance) => <String, dynamic>{
       'showUnderlinedParts': instance.showUnderlinedParts,
       'showPageNumbers': instance.showPageNumbers,
       'hideOnlyAlphabet': instance.hideOnlyAlphabet,
-      'languageCode': instance.languageCode,
+      'translationTargetLanguageCode': instance.translationTargetLanguageCode,
     };

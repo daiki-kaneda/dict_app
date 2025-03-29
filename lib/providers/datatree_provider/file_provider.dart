@@ -164,7 +164,7 @@ class FileNotifier extends _$FileNotifier {
           .cast<String>()
           .toList();
       final languageCode =
-          (await ref.read(settingNotifierProvider.future)).languageCode;
+          (await ref.read(settingNotifierProvider.future)).translationTargetLanguageCode;
 
       final file = await isar.files.get(id);
       if (file == null) return args;

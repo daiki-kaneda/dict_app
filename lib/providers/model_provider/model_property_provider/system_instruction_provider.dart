@@ -12,7 +12,7 @@ class SystemInstruction extends _$SystemInstruction {
       case TranslateSenteces():
         {
           final languageCode = await ref
-              .watch(settingNotifierProvider.selectAsync((s) => s.languageCode));
+              .watch(settingNotifierProvider.selectAsync((s) => s.translationTargetLanguageCode));
           return '''
 You will be given a list of English sentences. Your task is to translate each sentence into $languageCode and return the translated sentences as a list. You should call the function sendTranslatedSentences(List<String> translatedSentences) to send the translated sentences.
 

@@ -92,7 +92,7 @@ class SettingNotifier extends _$SettingNotifier {
     final file = ref.read(fileNotifierProvider(fileId));
     if (file == null) return;
     if (file.paragraphs
-        .translatedSentences(previousSetting.languageCode)
+        .translatedSentences(previousSetting.translationTargetLanguageCode)
         .isEmpty) {
       final sentences = file.getAllSentences.map((s) => s.displayText).toList();
       ref

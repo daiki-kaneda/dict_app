@@ -153,7 +153,7 @@ class SettingView extends ConsumerWidget {
             header: const Text('Translation Language'),
             children: [
               PlatformLanguagePicker(
-                  initialLanguage: setting.languageCode,
+                  initialLanguage: setting.translationTargetLanguageCode,
                   onLanguageChanged: (code) {
                     ref
                         .read(settingNotifierProvider.notifier)

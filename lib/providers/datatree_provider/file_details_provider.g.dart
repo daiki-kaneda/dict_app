@@ -173,7 +173,7 @@ class _CompletionRateProviderElement extends AutoDisposeProviderElement<double>
 }
 
 String _$translatedSentencesHash() =>
-    r'797c899906cd7fa7b2eb30dd92050c30cd0570b8';
+    r'adb873bee1a4b54dd72e6a792685bfdac2a9e1d2';
 
 /// See also [translatedSentences].
 @ProviderFor(translatedSentences)

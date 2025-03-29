@@ -28,7 +28,7 @@ Future<Uint8List> generateDictationDocument(
   final sentences = file.getAllSentences;
   final doc = pw.Document(pageMode: PdfPageMode.outlines);
 
-  final localizedFont = await _getFont(setting.languageCode);
+  final localizedFont = await _getFont(setting.translationTargetLanguageCode);
   if (localizedFont == null) {
     showNotifyDialog(navigatorKey.currentContext!,
         title: l10n().errorDialogTitle, description: l10n().fontOfflineErrorDialogContent);
@@ -157,7 +157,7 @@ pw.Widget _buildSentenceSection(
           child: pw.Builder(
             builder: (context) {
               final translatedSentence = file.paragraphs
-                  .translatedSentences(setting.languageCode)
+                  .translatedSentences(setting.translationTargetLanguageCode)
                   .elementAtOrNull(t.$1);
               return pw.Text(translatedSentence ?? '', style: smallTextStyle);
             },
