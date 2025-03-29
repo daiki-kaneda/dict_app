@@ -12,7 +12,7 @@ class Home extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return PlatformScaffold(
         appBar: PlatformAppBar(
-          title: Text('Folder'),
+          title: Text('Folders'),
           leading: ShowSettingViewButton(
               isHome: true,
             ),
