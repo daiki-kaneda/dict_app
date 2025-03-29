@@ -1,5 +1,6 @@
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
+import 'package:dict_app/utils/language_local.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'system_instruction_provider.g.dart';
@@ -14,7 +15,7 @@ class SystemInstruction extends _$SystemInstruction {
           final languageCode = await ref
               .watch(settingNotifierProvider.selectAsync((s) => s.translationTargetLanguageCode));
           return '''
-You will be given a list of English sentences. Your task is to translate each sentence into $languageCode and return the translated sentences as a list. You should call the function sendTranslatedSentences(List<String> translatedSentences) to send the translated sentences.
+You will be given a list of English sentences. Your task is to translate each sentence into ${MainLanguageLocal().getNativeName(languageCode)} and return the translated sentences as a list. You should call the function sendTranslatedSentences(List<String> translatedSentences) to send the translated sentences.
 
 Please ensure the following:
 
