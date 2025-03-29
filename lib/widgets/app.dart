@@ -17,10 +17,10 @@ import 'package:dict_app/providers/local_database_provider/setting_provider/sett
 import 'package:dict_app/providers/mlkit_translation_helper_provider/mlkit_translation_helper_provider.dart';
 import 'package:dict_app/widgets/utils/loading_page.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -155,32 +155,8 @@ class IsarFolderStructureApp extends StatelessWidget {
     return PlatformApp.router(
       routerConfig: router,
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('en', ''), // English
-        Locale('zh', ''), // Chinese
-        Locale('es', ''), // Spanish
-        Locale('hi', ''), // Hindi
-        Locale('ar', ''), // Arabic
-        Locale('bn', ''), // Bengali
-        Locale('pt', ''), // Portuguese
-        Locale('ru', ''), // Russian
-        Locale('ja', ''), // Japanese
-        Locale('de', ''), // German
-        Locale('fr', ''), // French
-        Locale('ko', ''), // Korean
-        Locale('it', ''), // Italian
-        Locale('tr', ''), // Turkish
-        Locale('vi', ''), // Vietnamese
-        Locale('ta', ''), // Tamil
-        Locale('ur', ''), // Urdu
-        Locale('fa', ''), // Persian
-        Locale('id', ''), // Indonesian
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

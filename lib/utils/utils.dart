@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:dict_app/widgets/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 bool isAlphabet(String character) {
   final rxp = RegExp(r'[a-zA-Z]');
@@ -186,3 +188,11 @@ bool isTablet(BuildContext context){
   return MediaQuery.of(context).size.width > 600;
 }
 
+AppLocalizations l10n(){
+  try{
+  return AppLocalizations.of(navigatorKey.currentContext!)!;
+  }catch(e){
+    print(e);
+    throw Exception('Could not get Applocalization');
+  }
+}
