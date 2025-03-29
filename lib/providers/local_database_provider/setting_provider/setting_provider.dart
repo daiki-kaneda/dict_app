@@ -96,7 +96,7 @@ class SettingNotifier extends _$SettingNotifier {
         .isEmpty) {
       final sentences = file.getAllSentences.map((s) => s.displayText).toList();
       ref
-          .read(modelNotifierProvider(role: TranslateSenteces(fileId)).notifier)
+          .read(modelNotifierProvider(role: TranslateSentences(fileId)).notifier)
           .sendMessage(jsonEncode(sentences));
     }
   }

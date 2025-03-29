@@ -14,9 +14,9 @@ void main() {
   final container = createContainer();
   const int sampleFileId =0;
   container.listen(
-      modelNotifierProvider(role: const TranslateSenteces(sampleFileId)), (_, __) {});
+      modelNotifierProvider(role: const TranslateSentences(sampleFileId)), (_, __) {});
   container.listen(
-      systemInstructionProvider(role: const TranslateSenteces(sampleFileId)), (_, __) {});
+      systemInstructionProvider(role: const TranslateSentences(sampleFileId)), (_, __) {});
   group('model_provider test start', () {
     test('translate complicated sentences test', () {
       List<String> englishSentences = [
@@ -29,7 +29,7 @@ void main() {
 
       expect(
           container
-              .read(modelNotifierProvider(role: const TranslateSenteces(sampleFileId))
+              .read(modelNotifierProvider(role: const TranslateSentences(sampleFileId))
                   .notifier)
               .sendMessage(jsonEncode(englishSentences)),
           completes);

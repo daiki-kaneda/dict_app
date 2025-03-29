@@ -20,7 +20,7 @@ class FileDetailsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(ModelNotifierProvider(role: TranslateSenteces(id)));
+    ref.watch(ModelNotifierProvider(role: TranslateSentences(id)));
 
     final file = ref.watch(fileNotifierProvider(id));
     if (file == null) LoadingPage();

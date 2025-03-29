@@ -16,8 +16,8 @@ sealed class LLMRole {
   int get hashCode => Object.hash(runtimeType, id);
 }
 
-final class TranslateSenteces extends LLMRole {
-  const TranslateSenteces(this.fileId) : super(
+final class TranslateSentences extends LLMRole {
+  const TranslateSentences(this.fileId) : super(
     id:null,
     mode: FunctionCallingMode.any
     );

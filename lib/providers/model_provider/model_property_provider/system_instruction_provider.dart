@@ -9,7 +9,7 @@ class SystemInstruction extends _$SystemInstruction {
   @override
   Future<String> build({required LLMRole role}) async {
     switch (role) {
-      case TranslateSenteces():
+      case TranslateSentences():
         {
           final languageCode = await ref
               .watch(settingNotifierProvider.selectAsync((s) => s.translationTargetLanguageCode));
