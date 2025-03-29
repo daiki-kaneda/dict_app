@@ -1,4 +1,4 @@
-
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/file_details_view/listening_view/listening_page_view/listening_page_view.dart';
 import 'package:dict_app/widgets/file_details_view/player_widget/buttons/speed_button.dart';
 import 'package:dict_app/widgets/file_details_view/player_widget/player_widget.dart';
@@ -33,10 +33,12 @@ class ListeningView extends ConsumerWidget {
     void initListening() {
       final file = ref.read(fileNotifierProvider(fileId));
       final setting = ref.read(settingNotifierProvider).value;
-      if (file == null|| setting==null) return;
+      if (file == null || setting == null) return;
 
       // make translated sentences
-      ref.read(settingNotifierProvider.notifier).createTranslatedSentences(fileId);
+      ref
+          .read(settingNotifierProvider.notifier)
+          .createTranslatedSentences(fileId);
 
       // - set audio path to AudioPlayer
       final audioPath = file.audioPath;
@@ -46,9 +48,9 @@ class ListeningView extends ConsumerWidget {
       ref.read(startEndProviderProvider.notifier).setNewValue(
           file.getAllSentences.first.start!, file.getAllSentences.first.end!);
       // - set audioPlaybackRate
-      ref.read(audioPlayerNotifierProvider.notifier).setPlaybackRate(
-        setting.audioSpeed
-      );
+      ref
+          .read(audioPlayerNotifierProvider.notifier)
+          .setPlaybackRate(setting.audioSpeed);
     }
 
     return Center(
@@ -58,7 +60,12 @@ class ListeningView extends ConsumerWidget {
           context.pushNamed('listening',
               pathParameters: {'fileId': fileId.toString()});
         },
-        child: Text('リスニングを開始',style: TextStyle(fontWeight: FontWeight.bold),),
+        child: Text(
+          'リスニングを開始',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: isTablet(context) ? 32 : 18),
+        ),
       ),
     );
   }
@@ -95,7 +102,10 @@ class ListeningContentView extends ConsumerWidget {
                   ),
                   PlayerWidget(
                     fileId,
-                    trailingActions: [SpeedButton(),],)
+                    trailingActions: [
+                      SpeedButton(),
+                    ],
+                  )
                 ],
               )),
             ],

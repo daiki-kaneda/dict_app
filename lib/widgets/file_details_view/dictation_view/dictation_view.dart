@@ -95,6 +95,7 @@ class DictationView extends ConsumerWidget {
           'ディクテーションを開始',
           style: TextStyle(
             fontWeight: FontWeight.bold,
+            fontSize: isTablet(context) ? 32 :18
             ),
         ),
       ),
