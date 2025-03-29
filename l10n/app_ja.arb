@@ -1,3 +1,118 @@
 {
-    "helloWorld": "こんにちは世界！"
+    "@@locale": "ja",
+
+    "settings": "設定",
+    "stats": "統計",
+    "records": "記録",
+    "qanda": "Q&A",
+    "buyTickets": "チケット購入",
+    "buy": "購入",
+
+    "general": "一般",
+    "nativeLanguage": "使用言語",
+    "showTranslations": "翻訳を表示する",
+    "repeatAudio": "音声をリピートする",
+    "textSize": "テキストサイズ",
+    "fontSize": "フォントサイズ",
+
+    "pdfSettings": "PDF設定",
+    "appendTranslation": "翻訳をつける",
+    "appendAnswers": "答えをつける",
+    "separateWordsByParentheses": "ワードをカッコで分ける",
+    "connectUnderline": "アンダーラインをつなげる",
+    "showUnderline": "アンダーラインを表示する",
+    "appendPageNumbers": "ページ番号をつける",
+    "hideOnlyAlphabets": "アルファベットのみを隠す",
+
+    "startDictation": "ディクテーションを開始",
+    "startListening": "リスニングを開始",
+
+    "createNewFolder": "新規フォルダ作成",
+    "createNewDictation": "新規ディクテーション作成",
+    "rename": "名称変更",
+    "move": "移動",
+    "delete": "削除",
+    "selectFolder": "フォルダ選択",
+    "folderName": "フォルダ名",
+    "fileName": "ファイル名",
+    "newFolderName": "新規フォルダ名",
+    "newFileName": "新規ファイル名",
+
+    "period": "期間",
+    "today": "今日",
+    "thisWeek": "今週",
+    "thisMonth": "今月",
+    "lastSixMonths": "半年",
+    "lastYear": "一年",
+    "successfulCharsWithoutHint": "ヒントを使わずに入力した文字数",
+    "completionCount": "クリア回数",
+    "correctAnswerRate": "正答率",
+    "overallCorrectAnswerRate": "全体の正答率",
+
+    "ticketsRemaining": "残りのチケット枚数",
+    "ticketConsumptionQuestion": "一回に消費されるチケットの枚数は？",
+    "ticketConsumptionAnswer": "一枚のみです。",
+    "ticketRestoreQuestion": "一度消費したチケットを元に戻せる？",
+    "ticketRestoreAnswer": "いいえ。一度使用したチケットは復元することはできません。",
+
+    "maxAudioLengthQuestion": "解析するオーディオの長さの上限はある？",
+    "maxAudioLengthAnswer": "はい。オーディオの上限は一回{maxAudioLengthInSeconds}秒までです。",
+    "@maxAudioLengthAnswer": {
+        "description": "Answer stating the maximum audio length allowed, with a placeholder for the number of seconds.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "backupDataQuestion": "解析データやチケットのバックアップはとる？",
+    "backupDataAnswer": "いいえ。アプリを削除したり、機種変更などをすると、解析データおよびチケットなどのすべてのデータは削除され、復元できません。",
+    "commercialUseDataQuestion": "解析データは商用利用可能？",
+    "commercialUseDataAnswer": "はい。解析データはラインセンスの記載なしに商用利用を含めて自由に使用可能です。",
+
+    "errorDialogTitle": "エラー",
+    "completionDialogTitle": "完了メッセージ",
+    "resetDialogTitle": "リセット",
+    "confirmMoveDialogTitle": "確認",
+    "insufficientTicketsDialogTitle": "チケット不足",
+    "confirmDeleteDialogTitle": "削除確認",
+
+    "completionDialogContent": "この音声のすべての文章を解きました",
+    "offlineErrorDialogContent": "インターネットの接続を確認してください😓",
+    "exceedMaxAudioLengthErrorDialogContent": "ディクテーション用の英語の音声は{maxAudioLengthInSeconds}秒以内にしてください🥺",
+    "@exceedMaxAudioLengthErrorDialogContent": {
+        "description": "Error message shown when the audio exceeds the maximum allowed length.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "unexpectedErrorDialogContent": "予期せぬエラーが発生しました🥵",
+    "loadingFontsErrorDialogContent": "フォントの読み込みでエラーが発生しました。接続環境を確認してください。",
+    "fontOfflineErrorDialogContent": "インターネットの接続を確認してください😓 PDFのフォントが正しく読み込まれない可能性があります",
+    "resetDialogContent": "すでに完全に解き終わっています.すべてリセットしますか？クリアされた回数は記録され、リセットしても正答率のデータは維持されます",
+    "confirmMoveDialogContent": "{folderTitle}に移動しますか？",
+    "@confirmMoveDialogContent": {
+        "description": "Confirmation message before moving an item to a folder.",
+        "placeholders": {
+            "folderTitle": {
+                "type": "String",
+                "example": "My Folder"
+            }
+        }
+    },
+    "insufficientTicketsDialogContent": "チケットが足りません。ストアを開きますか？",
+    "confirmDeleteDialogContent": "{title}を削除してもよろしいですか？一度削除すると復元はできません。",
+    "@confirmDeleteDialogContent": {
+        "description": "Confirmation message before deleting an item.",
+        "placeholders": {
+            "title": {
+                "type": "String",
+                "example": "My Dictation File"
+            }
+        }
+    }
 }

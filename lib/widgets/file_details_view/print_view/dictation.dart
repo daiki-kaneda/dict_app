@@ -31,7 +31,7 @@ Future<Uint8List> generateDictationDocument(
   final localizedFont = await _getFont(setting.languageCode);
   if (localizedFont == null) {
     showNotifyDialog(navigatorKey.currentContext!,
-        title: '読み込みエラー', description: 'フォントの読み込みでエラーが発生しました。接続環境を確認してください。');
+        title: 'エラー', description: 'フォントの読み込みでエラーが発生しました。接続環境を確認してください。');
   }
 
   doc.addPage(
