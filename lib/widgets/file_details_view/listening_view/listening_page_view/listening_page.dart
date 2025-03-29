@@ -26,6 +26,7 @@ class ListeningPage extends ConsumerWidget {
               children: [
                 SelectableText(
                   dictationSentence.displayText,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: setting.value?.textSize.toDouble() ?? 20,
                       fontWeight: FontWeight.w500),
@@ -37,6 +38,7 @@ class ListeningPage extends ConsumerWidget {
                     builder: (_) => LlmTranslatedText(
                           fileId,
                           currentSentenceIndex: pageIndex,
+                          textAlign:TextAlign.center
                         ))
               ],
             ),

@@ -32,10 +32,11 @@ class TranslatedText extends ConsumerWidget {
 }
 
 class LlmTranslatedText extends ConsumerWidget {
-  const LlmTranslatedText(this.fileId, {super.key,required this.currentSentenceIndex});
+  const LlmTranslatedText(this.fileId, {super.key,required this.currentSentenceIndex,this.textAlign});
 
   final int fileId;
   final int currentSentenceIndex;
+  final TextAlign? textAlign;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,6 +50,7 @@ class LlmTranslatedText extends ConsumerWidget {
     if (sentence != null) {
       return Text(
         sentence,
+        textAlign: textAlign,
         style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: (setting.value?.textSize.toDouble() ?? 20)*0.85),
