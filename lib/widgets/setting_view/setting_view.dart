@@ -153,7 +153,7 @@ class SettingView extends ConsumerWidget {
                     onLanguageChanged: (code) {
                       ref
                           .read(settingNotifierProvider.notifier)
-                          .updateSetting(languageCode: code);
+                          .updateSetting(translationTargetLanguageCode: code);
                     }),
               ],
             ),

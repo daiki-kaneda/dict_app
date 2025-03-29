@@ -54,7 +54,7 @@ class Setting {
     bool? showUnderlinedParts,
     bool? showPageNumbers,
     bool? hideOnlyAlphabet,
-    String? languageCode,
+    String? translationTargetLanguageCode,
   }) {
     return Setting(
       remainingTickets: remainingTickets ?? this.remainingTickets,
@@ -71,7 +71,7 @@ class Setting {
       showUnderlinedParts: showUnderlinedParts ?? this.showUnderlinedParts,
       showPageNumbers: showPageNumbers ?? this.showPageNumbers,
       hideOnlyAlphabet: hideOnlyAlphabet ?? this.hideOnlyAlphabet,
-      translationTargetLanguageCode: languageCode ?? this.translationTargetLanguageCode,
+      translationTargetLanguageCode: translationTargetLanguageCode ?? this.translationTargetLanguageCode,
     );
   }
 
