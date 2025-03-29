@@ -60,7 +60,7 @@ class CreateFolderButton extends ConsumerWidget {
           context: context,
           builder: (context) {
             return PlatformTextFieldDialog(
-              title: 'Folder name',
+              title: l10n().folderName,
             );
           },
         );
@@ -88,7 +88,7 @@ class CreateFileButton extends ConsumerWidget {
             context: context,
             builder: (context) {
               return PlatformTextFieldDialog(
-                title: 'File name',
+                title: l10n().fileName,
               );
             },
           );
