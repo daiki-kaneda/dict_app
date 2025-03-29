@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/file_details_view/player_widget/buttons/text_size_button.dart';
 import 'package:dict_app/widgets/utils/loading_page.dart';
 import 'package:dict_app/widgets/utils/platform_picker.dart';
@@ -34,17 +35,17 @@ class SettingView extends ConsumerWidget {
       appBar: PlatformAppBar(
         cupertino: (context, platform) =>
             CupertinoNavigationBarData(backgroundColor: backgroundColor),
-        title: Text("Settings"),
+        title: Text(l10n().settings),
       ),
       body: ListView(
         children: [
           if (isDictOrListening&&!isHome)
             CupertinoListSection(
               hasLeading: false,
-              header: const Text("一般"),
+              header: Text(l10n().general),
               children: [
                 CupertinoListTile(
-                  title: const Text("翻訳を表示"),
+                  title: Text(l10n().showTranslations),
                   trailing: CupertinoSwitch(
                     value: setting.showTranslation,
                     onChanged: (value) {
@@ -54,7 +55,7 @@ class SettingView extends ConsumerWidget {
                   ),
                 ),
                 CupertinoListTile(
-                  title: const Text("音声をリピート"),
+                  title:Text(l10n().repeatAudio),
                   trailing: CupertinoSwitch(
                     value: setting.repeatAudio,
                     onChanged: (value) {
@@ -64,18 +65,18 @@ class SettingView extends ConsumerWidget {
                   ),
                 ),
                 CupertinoListTile(
-                  title: const Text("テキストサイズ"),
+                  title: Text(l10n().textSize),
                   trailing: TextSizeButton()
                 ),
               ],
             ),
           if (!isDictOrListening&&!isHome)
             CupertinoListSection(
-                header: const Text("PDF設定"),
+                header: Text(l10n().pdfSettings),
                 hasLeading: false,
                 children: [
                   PlatformListTile(
-                    title: Text('翻訳をつける'),
+                    title: Text(l10n().appendTranslation),
                     trailing: PlatformSwitch(
                         value: setting.appendTranslation,
                         onChanged: (value) {
@@ -85,7 +86,7 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                   PlatformListTile(
-                    title: Text('答えをつける'),
+                    title: Text(l10n().appendAnswers),
                     trailing: PlatformSwitch(
                         value: setting.appendAnswer,
                         onChanged: (value) {
@@ -95,7 +96,7 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                   PlatformListTile(
-                    title: Text('ワードをカッコで分ける'),
+                    title: Text(l10n().separateWordsByParentheses),
                     trailing: PlatformSwitch(
                         value: setting.separateWordsWithParentheses,
                         onChanged: (value) {
@@ -106,7 +107,7 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                   PlatformListTile(
-                    title: Text('アンダーラインをつなげる'),
+                    title: Text(l10n().connectUnderline),
                     trailing: PlatformSwitch(
                         value: setting.connectUnderlinedParts,
                         onChanged: (value) {
@@ -116,7 +117,7 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                   PlatformListTile(
-                    title: Text('アンダーラインを表示する'),
+                    title:Text(l10n().showUnderline),
                     trailing: PlatformSwitch(
                         value: setting.showUnderlinedParts,
                         onChanged: (value) {
@@ -126,7 +127,7 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                   PlatformListTile(
-                    title: Text('ページ番号をつける'),
+                    title: Text(l10n().appendPageNumbers),
                     trailing: PlatformSwitch(
                         value: setting.showPageNumbers,
                         onChanged: (value) {
@@ -136,7 +137,7 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                   PlatformListTile(
-                    title: Text('アルファベットのみを隠す'),
+                    title: Text(l10n().hideOnlyAlphabets),
                     trailing: PlatformSwitch(
                         value: setting.hideOnlyAlphabet,
                         onChanged: (value) {
@@ -149,7 +150,7 @@ class SettingView extends ConsumerWidget {
           if(isHome)
           CupertinoListSection(
             hasLeading: false,
-            header: const Text('使用言語'),
+            header: const Text('Translation Language'),
             children: [
               PlatformLanguagePicker(
                   initialLanguage: setting.languageCode,
