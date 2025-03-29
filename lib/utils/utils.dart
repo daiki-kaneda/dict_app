@@ -178,6 +178,6 @@ TextSpan iconDescriptionTextSpan(BuildContext context,
             ? CupertinoTheme.of(context).primaryColor
             : Theme.of(context).colorScheme.primary,
         size: fontSize),
-    TextSpan(text: '=> $description', style: TextStyle(fontSize: fontSize))
+    TextSpan(text: '→ $description', style: TextStyle(fontSize: fontSize))
   ]);
 }
