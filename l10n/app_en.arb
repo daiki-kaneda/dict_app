@@ -1,0 +1,118 @@
+{
+    "@@locale": "en",
+
+    "settings": "Settings",
+    "stats": "Statistics",
+    "records": "Records",
+    "qanda": "Q&A",
+    "buyTickets": "Buy Tickets",
+    "buy": "Buy",
+
+    "general": "General",
+    "nativeLanguage": "Language",
+    "showTranslations": "Show Translations",
+    "repeatAudio": "Repeat Audio",
+    "textSize": "Text Size",
+    "fontSize": "Font Size",
+
+    "pdfSettings": "PDF Settings",
+    "appendTranslation": "Append Translation",
+    "appendAnswers": "Append Answers",
+    "separateWordsByParentheses": "Separate Words by Parentheses",
+    "connectUnderline": "Connect Underline",
+    "showUnderline": "Show Underline",
+    "appendPageNumbers": "Append Page Numbers",
+    "hideOnlyAlphabets": "Hide Only Alphabets",
+
+    "startDictation": "Start Dictation",
+    "startListening": "Start Listening",
+
+    "createNewFolder": "Create New Folder",
+    "createNewDictation": "Create New Dictation",
+    "rename": "Rename",
+    "move": "Move",
+    "delete": "Delete",
+    "selectFolder": "Select Folder",
+    "folderName": "Folder Name",
+    "fileName": "File Name",
+    "newFolderName": "New Folder Name",
+    "newFileName": "New File Name",
+
+    "period": "Period",
+    "today": "Today",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "lastSixMonths": "Last 6 Months",
+    "lastYear": "Last Year",
+    "successfulCharsWithoutHint": "Successful Characters Without Hint",
+    "completionCount": "Completion Count",
+    "correctAnswerRate": "Correct Answer Rate",
+    "overallCorrectAnswerRate": "Overall Correct Answer Rate",
+
+    "ticketsRemaining": "Tickets Remaining",
+    "ticketConsumptionQuestion": "How many tickets are consumed per session?",
+    "ticketConsumptionAnswer": "Only one ticket.",
+    "ticketRestoreQuestion": "Can used tickets be restored?",
+    "ticketRestoreAnswer": "No, once used tickets cannot be restored.",
+
+    "maxAudioLengthQuestion": "Is there a limit to the length of the audio to be analyzed?",
+    "maxAudioLengthAnswer": "Yes. The audio limit is {maxAudioLengthInSeconds} seconds per session.",
+    "@maxAudioLengthAnswer": {
+        "description": "Answer stating the maximum audio length allowed, with a placeholder for the number of seconds.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "backupDataQuestion": "Are analysis data and tickets backed up?",
+    "backupDataAnswer": "No. If you delete the app or change devices, all data, including analysis data and tickets, will be deleted and cannot be recovered.",
+    "commercialUseDataQuestion": "Can the analysis data be used commercially?",
+    "commercialUseDataAnswer": "Yes. The analysis data can be used freely, including for commercial use, without attribution.",
+
+    "errorDialogTitle": "Error",
+    "completionDialogTitle": "Completion Message",
+    "resetDialogTitle": "Reset",
+    "confirmMoveDialogTitle": "Confirm Move",
+    "insufficientTicketsDialogTitle": "Insufficient Tickets",
+    "confirmDeleteDialogTitle": "Confirm Deletion",
+
+    "completionDialogContent": "You have completed all sentences in this audio",
+    "offlineErrorDialogContent": "Please check your internet connection 😓",
+    "exceedMaxAudioLengthErrorDialogContent": "The English audio for dictation must be less than {maxAudioLengthInSeconds} seconds 🥺",
+    "@exceedMaxAudioLengthErrorDialogContent": {
+        "description": "Error message shown when the audio exceeds the maximum allowed length.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "unexpectedErrorDialogContent": "An unexpected error occurred 🥵",
+    "loadingFontsErrorDialogContent": "An error occurred while loading fonts. Please check your connection environment.",
+    "fontOfflineErrorDialogContent": "Please check your internet connection 😓 PDF fonts may not load correctly",
+    "resetDialogContent": "You have already completed this fully. Do you want to reset everything? The completion count will be recorded, and the correct answer rate data will be maintained even after resetting.",
+    "confirmMoveDialogContent": "Move to {folderTitle}?",
+    "@confirmMoveDialogContent": {
+        "description": "Confirmation message before moving an item to a folder.",
+        "placeholders": {
+            "folderTitle": {
+                "type": "String",
+                "example": "My Folder"
+            }
+        }
+    },
+    "insufficientTicketsDialogContent": "You do not have enough tickets. Open the store?",
+    "confirmDeleteDialogContent": "Are you sure you want to delete {title}? It cannot be recovered once deleted.",
+    "@confirmDeleteDialogContent": {
+        "description": "Confirmation message before deleting an item.",
+        "placeholders": {
+            "title": {
+                "type": "String",
+                "example": "My Dictation File"
+            }
+        }
+    }
+}

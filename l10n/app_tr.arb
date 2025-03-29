@@ -1,0 +1,118 @@
+{
+    "@@locale": "tr",
+
+    "settings": "Ayarlar",
+    "stats": "İstatistikler",
+    "records": "Kayıtlar",
+    "qanda": "Soru & Cevap",
+    "buyTickets": "Bilet Satın Al",
+    "buy": "Satın Al",
+
+    "general": "Genel",
+    "nativeLanguage": "Kullanılan Dil",
+    "showTranslations": "Çevirileri Göster",
+    "repeatAudio": "Sesi Tekrarla",
+    "textSize": "Metin Boyutu",
+    "fontSize": "Yazı Tipi Boyutu",
+
+    "pdfSettings": "PDF Ayarları",
+    "appendTranslation": "Çeviriyi Ekle",
+    "appendAnswers": "Cevapları Ekle",
+    "separateWordsByParentheses": "Kelimeleri Parantezle Ayır",
+    "connectUnderline": "Alt Çizgileri Birleştir",
+    "showUnderline": "Alt Çizgiyi Göster",
+    "appendPageNumbers": "Sayfa Numaralarını Ekle",
+    "hideOnlyAlphabets": "Yalnızca Harfleri Gizle",
+
+    "startDictation": "Dikte Başlat",
+    "startListening": "Dinlemeye Başla",
+
+    "createNewFolder": "Yeni Klasör Oluştur",
+    "createNewDictation": "Yeni Dikte Oluştur",
+    "rename": "Yeniden Adlandır",
+    "move": "Taşı",
+    "delete": "Sil",
+    "selectFolder": "Klasör Seç",
+    "folderName": "Klasör Adı",
+    "fileName": "Dosya Adı",
+    "newFolderName": "Yeni Klasör Adı",
+    "newFileName": "Yeni Dosya Adı",
+
+    "period": "Dönem",
+    "today": "Bugün",
+    "thisWeek": "Bu Hafta",
+    "thisMonth": "Bu Ay",
+    "lastSixMonths": "Son 6 Ay",
+    "lastYear": "Geçen Yıl",
+    "successfulCharsWithoutHint": "İpucu Olmadan Başarılı Karakter Sayısı",
+    "completionCount": "Tamamlama Sayısı",
+    "correctAnswerRate": "Doğru Cevap Oranı",
+    "overallCorrectAnswerRate": "Genel Doğru Cevap Oranı",
+
+    "ticketsRemaining": "Kalan Bilet Sayısı",
+    "ticketConsumptionQuestion": "Her seferinde kaç bilet harcanır?",
+    "ticketConsumptionAnswer": "Sadece bir bilet.",
+    "ticketRestoreQuestion": "Kullanılan biletler geri alınabilir mi?",
+    "ticketRestoreAnswer": "Hayır, bir kez kullanılan biletler geri alınamaz.",
+
+    "maxAudioLengthQuestion": "Analiz edilecek sesin uzunluk sınırı var mı?",
+    "maxAudioLengthAnswer": "Evet. Sesin maksimum uzunluğu her seferinde {maxAudioLengthInSeconds} saniyedir.",
+    "@maxAudioLengthAnswer": {
+        "description": "Answer stating the maximum audio length allowed, with a placeholder for the number of seconds.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "backupDataQuestion": "Analiz verileri ve biletler yedekleniyor mu?",
+    "backupDataAnswer": "Hayır. Uygulamayı silerseniz veya cihaz değiştirirseniz, analiz verileri ve biletler dahil tüm veriler silinir ve kurtarılamaz.",
+    "commercialUseDataQuestion": "Analiz verileri ticari amaçla kullanılabilir mi?",
+    "commercialUseDataAnswer": "Evet. Analiz verileri, lisans belirtmeksizin ticari kullanım dahil serbestçe kullanılabilir.",
+
+    "errorDialogTitle": "Hata",
+    "completionDialogTitle": "Tamamlama Mesajı",
+    "resetDialogTitle": "Sıfırla",
+    "confirmMoveDialogTitle": "Taşımayı Onayla",
+    "insufficientTicketsDialogTitle": "Yetersiz Bilet",
+    "confirmDeleteDialogTitle": "Silmeyi Onayla",
+
+    "completionDialogContent": "Bu sesteki tüm cümleleri çözdünüz",
+    "offlineErrorDialogContent": "Lütfen internet bağlantınızı kontrol edin 😓",
+    "exceedMaxAudioLengthErrorDialogContent": "Dikte için İngilizce ses {maxAudioLengthInSeconds} saniyeden kısa olmalıdır 🥺",
+    "@exceedMaxAudioLengthErrorDialogContent": {
+        "description": "Error message shown when the audio exceeds the maximum allowed length.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "unexpectedErrorDialogContent": "Beklenmeyen bir hata oluştu 🥵",
+    "loadingFontsErrorDialogContent": "Yazı tipleri yüklenirken bir hata oluştu. Lütfen bağlantı ortamını kontrol edin.",
+    "fontOfflineErrorDialogContent": "Lütfen internet bağlantınızı kontrol edin 😓 PDF yazı tipleri doğru yüklenmeyebilir",
+    "resetDialogContent": "Bunu zaten tamamen çözdünüz. Her şeyi sıfırlamak istiyor musunuz? Tamamlama sayısı kaydedilecek ve sıfırlama işleminden sonra bile doğru cevap oranı verileri korunacaktır",
+    "confirmMoveDialogContent": "{folderTitle} klasörüne taşınsın mı?",
+    "@confirmMoveDialogContent": {
+        "description": "Confirmation message before moving an item to a folder.",
+        "placeholders": {
+            "folderTitle": {
+                "type": "String",
+                "example": "My Folder"
+            }
+        }
+    },
+    "insufficientTicketsDialogContent": "Yeterli biletiniz yok. Mağazayı açmak ister misiniz?",
+    "confirmDeleteDialogContent": "{title} öğesini silmek istediğinizden emin misiniz? Silindikten sonra geri alınamaz.",
+    "@confirmDeleteDialogContent": {
+        "description": "Confirmation message before deleting an item.",
+        "placeholders": {
+            "title": {
+                "type": "String",
+                "example": "My Dictation File"
+            }
+        }
+    }
+}

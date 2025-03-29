@@ -1,0 +1,118 @@
+{
+    "@@locale": "ur",
+
+    "settings": "ترتیبات",
+    "stats": "اعداد و شمار",
+    "records": "ریکارڈز",
+    "qanda": "سوال و جواب",
+    "buyTickets": "ٹکٹ خریدیں",
+    "buy": "خریدیں",
+
+    "general": "عمومی",
+    "nativeLanguage": "استعمال شدہ زبان",
+    "showTranslations": "ترجمے دکھائیں",
+    "repeatAudio": "آڈیو دہرائیں",
+    "textSize": "متن کا سائز",
+    "fontSize": "فونٹ سائز",
+
+    "pdfSettings": "پی ڈی ایف ترتیبات",
+    "appendTranslation": "ترجمہ منسلک کریں",
+    "appendAnswers": "جوابات منسلک کریں",
+    "separateWordsByParentheses": "الفاظ کو قوسین سے الگ کریں",
+    "connectUnderline": "انڈر لائن کو جوڑیں",
+    "showUnderline": "انڈر لائن دکھائیں",
+    "appendPageNumbers": "صفحہ نمبر منسلک کریں",
+    "hideOnlyAlphabets": "صرف حروف تہجی چھپائیں",
+
+    "startDictation": "املا شروع کریں",
+    "startListening": "سننا شروع کریں",
+
+    "createNewFolder": "نیا فولڈر بنائیں",
+    "createNewDictation": "نیا املا بنائیں",
+    "rename": "نام تبدیل کریں",
+    "move": "منتقل کریں",
+    "delete": "حذف کریں",
+    "selectFolder": "فولڈر منتخب کریں",
+    "folderName": "فولڈر کا نام",
+    "fileName": "فائل کا نام",
+    "newFolderName": "نیا فولڈر نام",
+    "newFileName": "نیا فائل نام",
+
+    "period": "مدت",
+    "today": "آج",
+    "thisWeek": "اس ہفتے",
+    "thisMonth": "اس مہینے",
+    "lastSixMonths": "پچھلے 6 مہینے",
+    "lastYear": "پچھلے سال",
+    "successfulCharsWithoutHint": "اشارے کے بغیر کامیاب حروف کی تعداد",
+    "completionCount": "تکمیل کی تعداد",
+    "correctAnswerRate": "درست جواب کی شرح",
+    "overallCorrectAnswerRate": "مجموعی درست جواب کی شرح",
+
+    "ticketsRemaining": "باقی ٹکٹ",
+    "ticketConsumptionQuestion": "ایک وقت میں کتنے ٹکٹ استعمال ہوتے ہیں؟",
+    "ticketConsumptionAnswer": "صرف ایک ٹکٹ۔",
+    "ticketRestoreQuestion": "کیا استعمال شدہ ٹکٹ بحال کیے جا سکتے ہیں؟",
+    "ticketRestoreAnswer": "نہیں، ایک بار استعمال شدہ ٹکٹ بحال نہیں کیے جا سکتے۔",
+
+    "maxAudioLengthQuestion": "کیا تجزیہ کرنے کے لیے آڈیو کی لمبائی کی کوئی حد ہے؟",
+    "maxAudioLengthAnswer": "ہاں۔ آڈیو کی زیادہ سے زیادہ لمبائی فی بار {maxAudioLengthInSeconds} سیکنڈ ہے۔",
+    "@maxAudioLengthAnswer": {
+        "description": "Answer stating the maximum audio length allowed, with a placeholder for the number of seconds.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "backupDataQuestion": "کیا تجزیاتی ڈیٹا اور ٹکٹوں کا بیک اپ لیا جاتا ہے؟",
+    "backupDataAnswer": "نہیں۔ اگر آپ ایپ کو حذف کرتے ہیں یا ڈیوائس تبدیل کرتے ہیں، تو تجزیاتی ڈیٹا اور ٹکٹوں سمیت تمام ڈیٹا حذف ہو جائے گا اور اسے بحال نہیں کیا جا سکتا۔",
+    "commercialUseDataQuestion": "کیا تجزیاتی ڈیٹا تجارتی طور پر استعمال کیا جا سکتا ہے؟",
+    "commercialUseDataAnswer": "ہاں۔ تجزیاتی ڈیٹا لائسنس کے ذکر کے بغیر تجارتی استعمال سمیت آزادانہ طور پر استعمال کیا جا سکتا ہے۔",
+
+    "errorDialogTitle": "خرابی",
+    "completionDialogTitle": "تکمیل کا پیغام",
+    "resetDialogTitle": "ری سیٹ کریں",
+    "confirmMoveDialogTitle": "منتقلی کی تصدیق کریں",
+    "insufficientTicketsDialogTitle": "ناکافی ٹکٹ",
+    "confirmDeleteDialogTitle": "حذف کرنے کی تصدیق کریں",
+
+    "completionDialogContent": "آپ نے اس آڈیو کے تمام جملے حل کر لیے ہیں",
+    "offlineErrorDialogContent": "براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں 😓",
+    "exceedMaxAudioLengthErrorDialogContent": "املا کے لیے انگریزی آڈیو {maxAudioLengthInSeconds} سیکنڈ سے کم ہونا چاہیے 🥺",
+    "@exceedMaxAudioLengthErrorDialogContent": {
+        "description": "Error message shown when the audio exceeds the maximum allowed length.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "unexpectedErrorDialogContent": "ایک غیر متوقع خرابی پیش آگئی 🥵",
+    "loadingFontsErrorDialogContent": "فونٹ لوڈ کرتے وقت ایک خرابی پیش آگئی۔ براہ کرم کنکشن کا ماحول چیک کریں۔",
+    "fontOfflineErrorDialogContent": "براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں 😓 پی ڈی ایف فونٹس صحیح طریقے سے لوڈ نہیں ہوسکتے ہیں",
+    "resetDialogContent": "آپ اسے پہلے ہی مکمل طور پر حل کر چکے ہیں۔ کیا آپ سب کچھ ری سیٹ کرنا چاہتے ہیں؟ تکمیل کی تعداد ریکارڈ کی جائے گی، اور ری سیٹ کرنے کے بعد بھی درست جواب کی شرح کا ڈیٹا برقرار رہے گا",
+    "confirmMoveDialogContent": "کیا {folderTitle} میں منتقل کریں؟",
+    "@confirmMoveDialogContent": {
+        "description": "Confirmation message before moving an item to a folder.",
+        "placeholders": {
+            "folderTitle": {
+                "type": "String",
+                "example": "My Folder"
+            }
+        }
+    },
+    "insufficientTicketsDialogContent": "آپ کے پاس کافی ٹکٹ نہیں ہیں۔ کیا آپ اسٹور کھولنا چاہتے ہیں؟",
+    "confirmDeleteDialogContent": "کیا آپ واقعی {title} کو حذف کرنا چاہتے ہیں؟ ایک بار حذف ہونے کے بعد اسے بحال نہیں کیا جا سکتا۔",
+    "@confirmDeleteDialogContent": {
+        "description": "Confirmation message before deleting an item.",
+        "placeholders": {
+            "title": {
+                "type": "String",
+                "example": "My Dictation File"
+            }
+        }
+    }
+}

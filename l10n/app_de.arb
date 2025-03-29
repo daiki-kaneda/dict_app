@@ -1,0 +1,118 @@
+{
+    "@@locale": "de",
+
+    "settings": "Einstellungen",
+    "stats": "Statistiken",
+    "records": "Aufzeichnungen",
+    "qanda": "F&A",
+    "buyTickets": "Tickets kaufen",
+    "buy": "Kaufen",
+
+    "general": "Allgemein",
+    "nativeLanguage": "Verwendete Sprache",
+    "showTranslations": "Übersetzungen anzeigen",
+    "repeatAudio": "Audio wiederholen",
+    "textSize": "Textgröße",
+    "fontSize": "Schriftgröße",
+
+    "pdfSettings": "PDF-Einstellungen",
+    "appendTranslation": "Übersetzung anhängen",
+    "appendAnswers": "Antworten anhängen",
+    "separateWordsByParentheses": "Wörter durch Klammern trennen",
+    "connectUnderline": "Unterstreichungen verbinden",
+    "showUnderline": "Unterstreichung anzeigen",
+    "appendPageNumbers": "Seitenzahlen anhängen",
+    "hideOnlyAlphabets": "Nur Alphabete ausblenden",
+
+    "startDictation": "Diktat starten",
+    "startListening": "Hören starten",
+
+    "createNewFolder": "Neuen Ordner erstellen",
+    "createNewDictation": "Neues Diktat erstellen",
+    "rename": "Umbenennen",
+    "move": "Verschieben",
+    "delete": "Löschen",
+    "selectFolder": "Ordner auswählen",
+    "folderName": "Ordnername",
+    "fileName": "Dateiname",
+    "newFolderName": "Neuer Ordnername",
+    "newFileName": "Neuer Dateiname",
+
+    "period": "Zeitraum",
+    "today": "Heute",
+    "thisWeek": "Diese Woche",
+    "thisMonth": "Dieser Monat",
+    "lastSixMonths": "Letzte 6 Monate",
+    "lastYear": "Letztes Jahr",
+    "successfulCharsWithoutHint": "Erfolgreiche Zeichen ohne Hinweis",
+    "completionCount": "Anzahl Abschlüsse",
+    "correctAnswerRate": "Erfolgsquote",
+    "overallCorrectAnswerRate": "Gesamte Erfolgsquote",
+
+    "ticketsRemaining": "Verbleibende Tickets",
+    "ticketConsumptionQuestion": "Wie viele Tickets werden pro Vorgang verbraucht?",
+    "ticketConsumptionAnswer": "Nur ein Ticket.",
+    "ticketRestoreQuestion": "Können verbrauchte Tickets wiederhergestellt werden?",
+    "ticketRestoreAnswer": "Nein, einmal verbrauchte Tickets können nicht wiederhergestellt werden.",
+
+    "maxAudioLengthQuestion": "Gibt es eine maximale Länge für das zu analysierende Audio?",
+    "maxAudioLengthAnswer": "Ja. Die maximale Audiolänge beträgt {maxAudioLengthInSeconds} Sekunden pro Vorgang.",
+    "@maxAudioLengthAnswer": {
+        "description": "Answer stating the maximum audio length allowed, with a placeholder for the number of seconds.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "backupDataQuestion": "Werden Analysedaten und Tickets gesichert?",
+    "backupDataAnswer": "Nein. Wenn die App gelöscht oder das Gerät gewechselt wird, werden alle Daten, einschließlich Analysedaten und Tickets, gelöscht und können nicht wiederhergestellt werden.",
+    "commercialUseDataQuestion": "Können die Analysedaten kommerziell genutzt werden?",
+    "commercialUseDataAnswer": "Ja. Die Analysedaten können frei, einschließlich für kommerzielle Zwecke, ohne Lizenzangabe verwendet werden.",
+
+    "errorDialogTitle": "Fehler",
+    "completionDialogTitle": "Abschlussnachricht",
+    "resetDialogTitle": "Zurücksetzen",
+    "confirmMoveDialogTitle": "Verschieben bestätigen",
+    "insufficientTicketsDialogTitle": "Nicht genügend Tickets",
+    "confirmDeleteDialogTitle": "Löschen bestätigen",
+
+    "completionDialogContent": "Sie haben alle Sätze dieses Audios gelöst",
+    "offlineErrorDialogContent": "Bitte überprüfen Sie Ihre Internetverbindung 😓",
+    "exceedMaxAudioLengthErrorDialogContent": "Das englische Audio für das Diktat muss kürzer als {maxAudioLengthInSeconds} Sekunden sein 🥺",
+    "@exceedMaxAudioLengthErrorDialogContent": {
+        "description": "Error message shown when the audio exceeds the maximum allowed length.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "unexpectedErrorDialogContent": "Ein unerwarteter Fehler ist aufgetreten 🥵",
+    "loadingFontsErrorDialogContent": "Beim Laden der Schriftarten ist ein Fehler aufgetreten. Bitte überprüfen Sie die Verbindungsumgebung.",
+    "fontOfflineErrorDialogContent": "Bitte überprüfen Sie Ihre Internetverbindung 😓 PDF-Schriftarten werden möglicherweise nicht korrekt geladen",
+    "resetDialogContent": "Sie haben dies bereits vollständig gelöst. Möchten Sie alles zurücksetzen? Die Anzahl der Abschlüsse wird aufgezeichnet, und die Daten zur Erfolgsquote bleiben auch nach dem Zurücksetzen erhalten",
+    "confirmMoveDialogContent": "Möchten Sie nach {folderTitle} verschieben?",
+    "@confirmMoveDialogContent": {
+        "description": "Confirmation message before moving an item to a folder.",
+        "placeholders": {
+            "folderTitle": {
+                "type": "String",
+                "example": "My Folder"
+            }
+        }
+    },
+    "insufficientTicketsDialogContent": "Nicht genügend Tickets vorhanden. Möchten Sie den Store öffnen?",
+    "confirmDeleteDialogContent": "Sind Sie sicher, dass Sie {title} löschen möchten? Einmal gelöscht, kann es nicht wiederhergestellt werden.",
+    "@confirmDeleteDialogContent": {
+        "description": "Confirmation message before deleting an item.",
+        "placeholders": {
+            "title": {
+                "type": "String",
+                "example": "My Dictation File"
+            }
+        }
+    }
+}

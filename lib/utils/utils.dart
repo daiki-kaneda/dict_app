@@ -185,3 +185,4 @@ TextSpan iconDescriptionTextSpan(BuildContext context,
 bool isTablet(BuildContext context){
   return MediaQuery.of(context).size.width > 600;
 }
+

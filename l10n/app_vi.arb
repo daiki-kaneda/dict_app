@@ -1,0 +1,118 @@
+{
+    "@@locale": "vi",
+
+    "settings": "Cài đặt",
+    "stats": "Thống kê",
+    "records": "Lịch sử",
+    "qanda": "Hỏi & Đáp",
+    "buyTickets": "Mua vé",
+    "buy": "Mua",
+
+    "general": "Chung",
+    "nativeLanguage": "Ngôn ngữ sử dụng",
+    "showTranslations": "Hiển thị bản dịch",
+    "repeatAudio": "Lặp lại âm thanh",
+    "textSize": "Cỡ chữ",
+    "fontSize": "Cỡ chữ",
+
+    "pdfSettings": "Cài đặt PDF",
+    "appendTranslation": "Đính kèm bản dịch",
+    "appendAnswers": "Đính kèm câu trả lời",
+    "separateWordsByParentheses": "Tách từ bằng dấu ngoặc đơn",
+    "connectUnderline": "Nối dấu gạch chân",
+    "showUnderline": "Hiển thị dấu gạch chân",
+    "appendPageNumbers": "Đính kèm số trang",
+    "hideOnlyAlphabets": "Chỉ ẩn chữ cái",
+
+    "startDictation": "Bắt đầu đọc chính tả",
+    "startListening": "Bắt đầu nghe",
+
+    "createNewFolder": "Tạo thư mục mới",
+    "createNewDictation": "Tạo bài đọc chính tả mới",
+    "rename": "Đổi tên",
+    "move": "Di chuyển",
+    "delete": "Xóa",
+    "selectFolder": "Chọn thư mục",
+    "folderName": "Tên thư mục",
+    "fileName": "Tên tệp",
+    "newFolderName": "Tên thư mục mới",
+    "newFileName": "Tên tệp mới",
+
+    "period": "Khoảng thời gian",
+    "today": "Hôm nay",
+    "thisWeek": "Tuần này",
+    "thisMonth": "Tháng này",
+    "lastSixMonths": "6 tháng qua",
+    "lastYear": "Năm ngoái",
+    "successfulCharsWithoutHint": "Số ký tự thành công không cần gợi ý",
+    "completionCount": "Số lần hoàn thành",
+    "correctAnswerRate": "Tỷ lệ trả lời đúng",
+    "overallCorrectAnswerRate": "Tỷ lệ trả lời đúng tổng thể",
+
+    "ticketsRemaining": "Số vé còn lại",
+    "ticketConsumptionQuestion": "Mỗi lần sử dụng bao nhiêu vé?",
+    "ticketConsumptionAnswer": "Chỉ một vé.",
+    "ticketRestoreQuestion": "Có thể khôi phục vé đã sử dụng không?",
+    "ticketRestoreAnswer": "Không, vé đã sử dụng một lần không thể khôi phục.",
+
+    "maxAudioLengthQuestion": "Có giới hạn về độ dài âm thanh cần phân tích không?",
+    "maxAudioLengthAnswer": "Có. Giới hạn âm thanh là {maxAudioLengthInSeconds} giây mỗi lần.",
+    "@maxAudioLengthAnswer": {
+        "description": "Answer stating the maximum audio length allowed, with a placeholder for the number of seconds.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "backupDataQuestion": "Dữ liệu phân tích và vé có được sao lưu không?",
+    "backupDataAnswer": "Không. Nếu bạn xóa ứng dụng hoặc đổi thiết bị, tất cả dữ liệu, bao gồm dữ liệu phân tích và vé, sẽ bị xóa và không thể khôi phục.",
+    "commercialUseDataQuestion": "Dữ liệu phân tích có thể được sử dụng cho mục đích thương mại không?",
+    "commercialUseDataAnswer": "Có. Dữ liệu phân tích có thể được sử dụng tự do, bao gồm cả mục đích thương mại, mà không cần ghi rõ giấy phép.",
+
+    "errorDialogTitle": "Lỗi",
+    "completionDialogTitle": "Thông báo hoàn thành",
+    "resetDialogTitle": "Đặt lại",
+    "confirmMoveDialogTitle": "Xác nhận di chuyển",
+    "insufficientTicketsDialogTitle": "Không đủ vé",
+    "confirmDeleteDialogTitle": "Xác nhận xóa",
+
+    "completionDialogContent": "Bạn đã giải xong tất cả các câu trong âm thanh này",
+    "offlineErrorDialogContent": "Vui lòng kiểm tra kết nối internet của bạn 😓",
+    "exceedMaxAudioLengthErrorDialogContent": "Âm thanh tiếng Anh cho bài đọc chính tả phải dưới {maxAudioLengthInSeconds} giây 🥺",
+    "@exceedMaxAudioLengthErrorDialogContent": {
+        "description": "Error message shown when the audio exceeds the maximum allowed length.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "unexpectedErrorDialogContent": "Đã xảy ra lỗi không mong muốn 🥵",
+    "loadingFontsErrorDialogContent": "Đã xảy ra lỗi khi tải phông chữ. Vui lòng kiểm tra môi trường kết nối.",
+    "fontOfflineErrorDialogContent": "Vui lòng kiểm tra kết nối internet của bạn 😓 Phông chữ PDF có thể không tải đúng cách",
+    "resetDialogContent": "Bạn đã hoàn thành toàn bộ phần này. Bạn có muốn đặt lại tất cả không? Số lần hoàn thành sẽ được ghi lại và dữ liệu tỷ lệ trả lời đúng vẫn được duy trì ngay cả sau khi đặt lại.",
+    "confirmMoveDialogContent": "Di chuyển đến {folderTitle}?",
+    "@confirmMoveDialogContent": {
+        "description": "Confirmation message before moving an item to a folder.",
+        "placeholders": {
+            "folderTitle": {
+                "type": "String",
+                "example": "My Folder"
+            }
+        }
+    },
+    "insufficientTicketsDialogContent": "Bạn không có đủ vé. Bạn có muốn mở cửa hàng không?",
+    "confirmDeleteDialogContent": "Bạn có chắc chắn muốn xóa {title} không? Sau khi xóa, không thể khôi phục.",
+    "@confirmDeleteDialogContent": {
+        "description": "Confirmation message before deleting an item.",
+        "placeholders": {
+            "title": {
+                "type": "String",
+                "example": "My Dictation File"
+            }
+        }
+    }
+}

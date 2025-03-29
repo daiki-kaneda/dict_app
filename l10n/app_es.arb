@@ -1,3 +1,118 @@
 {
-    "helloWorld": "¡Hola Mundo!"
+    "@@locale": "es",
+
+    "settings": "Ajustes",
+    "stats": "Estadísticas",
+    "records": "Registros",
+    "qanda": "Preguntas frecuentes",
+    "buyTickets": "Comprar tickets",
+    "buy": "Comprar",
+
+    "general": "General",
+    "nativeLanguage": "Idioma de uso",
+    "showTranslations": "Mostrar traducciones",
+    "repeatAudio": "Repetir audio",
+    "textSize": "Tamaño del texto",
+    "fontSize": "Tamaño de fuente",
+
+    "pdfSettings": "Ajustes de PDF",
+    "appendTranslation": "Añadir traducción",
+    "appendAnswers": "Añadir respuestas",
+    "separateWordsByParentheses": "Separar palabras con paréntesis",
+    "connectUnderline": "Conectar subrayado",
+    "showUnderline": "Mostrar subrayado",
+    "appendPageNumbers": "Añadir números de página",
+    "hideOnlyAlphabets": "Ocultar solo alfabetos",
+
+    "startDictation": "Iniciar dictado",
+    "startListening": "Iniciar escucha",
+
+    "createNewFolder": "Crear nueva carpeta",
+    "createNewDictation": "Crear nuevo dictado",
+    "rename": "Cambiar nombre",
+    "move": "Mover",
+    "delete": "Eliminar",
+    "selectFolder": "Seleccionar carpeta",
+    "folderName": "Nombre de la carpeta",
+    "fileName": "Nombre del archivo",
+    "newFolderName": "Nuevo nombre de carpeta",
+    "newFileName": "Nuevo nombre de archivo",
+
+    "period": "Periodo",
+    "today": "Hoy",
+    "thisWeek": "Esta semana",
+    "thisMonth": "Este mes",
+    "lastSixMonths": "Últimos 6 meses",
+    "lastYear": "Último año",
+    "successfulCharsWithoutHint": "Caracteres correctos sin pista",
+    "completionCount": "Número de veces completado",
+    "correctAnswerRate": "Tasa de aciertos",
+    "overallCorrectAnswerRate": "Tasa de aciertos general",
+
+    "ticketsRemaining": "Tickets restantes",
+    "ticketConsumptionQuestion": "¿Cuántos tickets se consumen cada vez?",
+    "ticketConsumptionAnswer": "Solo un ticket.",
+    "ticketRestoreQuestion": "¿Se pueden recuperar los tickets consumidos?",
+    "ticketRestoreAnswer": "No, los tickets utilizados una vez no se pueden recuperar.",
+
+    "maxAudioLengthQuestion": "¿Hay un límite de duración para el audio a analizar?",
+    "maxAudioLengthAnswer": "Sí. El límite de audio es de {maxAudioLengthInSeconds} segundos por vez.",
+    "@maxAudioLengthAnswer": {
+        "description": "Answer stating the maximum audio length allowed, with a placeholder for the number of seconds.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "backupDataQuestion": "¿Se realiza copia de seguridad de los datos de análisis y tickets?",
+    "backupDataAnswer": "No. Si eliminas la aplicación o cambias de dispositivo, todos los datos, incluidos los datos de análisis y los tickets, se eliminarán y no se podrán recuperar.",
+    "commercialUseDataQuestion": "¿Se pueden utilizar los datos de análisis con fines comerciales?",
+    "commercialUseDataAnswer": "Sí. Los datos de análisis se pueden utilizar libremente, incluido el uso comercial, sin necesidad de indicar la licencia.",
+
+    "errorDialogTitle": "Error",
+    "completionDialogTitle": "Mensaje de finalización",
+    "resetDialogTitle": "Restablecer",
+    "confirmMoveDialogTitle": "Confirmar mover",
+    "insufficientTicketsDialogTitle": "Tickets insuficientes",
+    "confirmDeleteDialogTitle": "Confirmar eliminación",
+
+    "completionDialogContent": "Has resuelto todas las frases de este audio",
+    "offlineErrorDialogContent": "Por favor, comprueba tu conexión a Internet 😓",
+    "exceedMaxAudioLengthErrorDialogContent": "El audio en inglés para el dictado debe ser inferior a {maxAudioLengthInSeconds} segundos 🥺",
+    "@exceedMaxAudioLengthErrorDialogContent": {
+        "description": "Error message shown when the audio exceeds the maximum allowed length.",
+        "placeholders": {
+            "maxAudioLengthInSeconds": {
+                "type": "int",
+                "example": "60"
+            }
+        }
+    },
+    "unexpectedErrorDialogContent": "Se ha producido un error inesperado 🥵",
+    "loadingFontsErrorDialogContent": "Se produjo un error al cargar las fuentes. Por favor, comprueba el entorno de conexión.",
+    "fontOfflineErrorDialogContent": "Por favor, comprueba tu conexión a Internet 😓 Es posible que las fuentes del PDF no se carguen correctamente",
+    "resetDialogContent": "Ya lo has completado totalmente. ¿Quieres restablecer todo? El número de veces completado se registrará y los datos de la tasa de aciertos se mantendrán incluso después de restablecer",
+    "confirmMoveDialogContent": "¿Mover a {folderTitle}?",
+    "@confirmMoveDialogContent": {
+        "description": "Confirmation message before moving an item to a folder.",
+        "placeholders": {
+            "folderTitle": {
+                "type": "String",
+                "example": "My Folder"
+            }
+        }
+    },
+    "insufficientTicketsDialogContent": "No tienes suficientes tickets. ¿Quieres abrir la tienda?",
+    "confirmDeleteDialogContent": "¿Estás seguro de que quieres eliminar {title}? Una vez eliminado, no se podrá recuperar.",
+    "@confirmDeleteDialogContent": {
+        "description": "Confirmation message before deleting an item.",
+        "placeholders": {
+            "title": {
+                "type": "String",
+                "example": "My Dictation File"
+            }
+        }
+    }
 }
