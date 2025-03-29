@@ -1,5 +1,6 @@
 import 'package:dict_app/models/data_tree/item.dart';
 import 'package:dict_app/providers/datatree_provider/sub_items_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/utils/expansion_tile/custom_expansion_tile.dart';
 import 'package:dict_app/widgets/utils/platform_dialog.dart';
@@ -68,7 +69,7 @@ class SelectTargetFolderListTile extends ConsumerWidget {
 
     void onTapTile() async {
       final confirm = await showConfirmDialog(context,
-          title: '確認', description: '${folder.title}に移動しますか？');
+          title: l10n().confirmMoveDialogTitle, description: l10n().confirmMoveDialogContent(folder.title));
       if(confirm==true)Navigator.of(navigatorKey.currentContext!).pop(folder.id);
     }
 
@@ -121,7 +122,7 @@ Future<int?> getNewFolderId(BuildContext context, int sourceId,
             onPressed: () => Navigator.of(context).pop(),
             icon: Icon(PlatformIcons(context).clear),
           ),
-          title: Text('フォルダ選択'),
+          title: Text(l10n().selectFolder),
         ),
         body: SelectFolderList(
           sourceId: sourceId,

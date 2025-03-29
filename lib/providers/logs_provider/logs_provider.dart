@@ -1,6 +1,7 @@
 import 'package:dict_app/models/data_tree/dictation_data_model/dictation_data_model.dart';
 import 'package:dict_app/models/log_entry.dart';
 import 'package:dict_app/providers/datatree_provider/isar_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -93,23 +94,23 @@ List<LogEntry> filteredLogs(FilteredLogsRef ref) {
 
 enum LogPeriodType {
   today,
-  pastWeek,
-  pastMonth,
-  pastSixMonths,
-  pastYear;
+  thisWeek,
+  thisMonth,
+  lastSixMonths,
+  lastYear;
 
   String getLabel(BuildContext context) {
     switch (this) {
       case LogPeriodType.today:
-        return '今日';
-      case LogPeriodType.pastWeek:
-        return '今週';
-      case LogPeriodType.pastMonth:
-        return '今月';
-      case LogPeriodType.pastSixMonths:
-        return '半年';
-      case LogPeriodType.pastYear:
-        return '一年';
+        return l10n().today;
+      case LogPeriodType.thisWeek:
+        return l10n().thisWeek;
+      case LogPeriodType.thisMonth:
+        return l10n().thisMonth;
+      case LogPeriodType.lastSixMonths:
+        return l10n().lastSixMonths;
+      case LogPeriodType.lastYear:
+        return l10n().lastYear;
     }
   }
 
@@ -120,7 +121,7 @@ enum LogPeriodType {
           startDate: DateTime(now.year, now.month, now.day),
           endDate: DateTime(now.year, now.month, now.day, 23, 59, 59)
         );
-      case LogPeriodType.pastWeek:
+      case LogPeriodType.thisWeek:
         return (
           startDate: DateTime(
             now.year,
@@ -129,17 +130,17 @@ enum LogPeriodType {
           ),
           endDate: DateTime(now.year, now.month, now.day, 23, 59, 59)
         );
-      case LogPeriodType.pastMonth:
+      case LogPeriodType.thisMonth:
         return (
           startDate: DateTime(now.year, now.month),
           endDate: DateTime(now.year, now.month + 1, 0, 23, 59, 59)
         );
-      case LogPeriodType.pastSixMonths:
+      case LogPeriodType.lastSixMonths:
         return (
           startDate: DateTime(now.year, now.month - 5),
           endDate: DateTime(now.year, now.month + 1, 0, 23, 59, 59)
         );
-      case LogPeriodType.pastYear:
+      case LogPeriodType.lastYear:
         return (
           startDate: DateTime(now.year, now.month - 11),
           endDate: DateTime(now.year, now.month + 1, 0, 23, 59, 59)

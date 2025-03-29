@@ -210,20 +210,20 @@ class ActionButton extends ConsumerWidget {
                   isCupertino: true,
                   context: context,
                   actions: [
-                    ActionSheetAction('名称変更', onTap: () async {
+                    ActionSheetAction(l10n().rename, onTap: () async {
                       final String? newTitle = await showPlatformDialog(
                         context: context,
                         builder: (context) {
                           return PlatformTextFieldDialog(
                             initialValue: folder.title,
-                            title: 'New folder name',
+                            title: l10n().newFolderName,
                           );
                         },
                       );
                       if (newTitle == null) return;
                       notifier.updateFolder(id, newTitle: newTitle);
                     }),
-                    ActionSheetAction('移動', onTap: () async {
+                    ActionSheetAction(l10n().move, onTap: () async {
                       final int? newParentId =
                           await getNewFolderId(context, id);
                       if (newParentId == null) return;
@@ -231,11 +231,11 @@ class ActionButton extends ConsumerWidget {
                       // rebuild SubItemsView(newParentId)
                       ref.invalidate(subItemsProviderProvider(newParentId));
                     }),
-                    ActionSheetAction('削除', onTap: () async {
+                    ActionSheetAction(l10n().delete, onTap: () async {
                       final confirm = await showConfirmDialog(context,
-                          title: 'フォルダを削除',
+                          title: l10n().confirmDeleteDialogTitle,
                           description:
-                              '${folder.title}を削除してもよろしいですか？一度削除すると復元はできません。');
+                              l10n().confirmDeleteDialogContent(folder.title));
                       if (confirm == true) notifier.deleteFolder(id);
                     })
                   ]);
@@ -250,13 +250,13 @@ class ActionButton extends ConsumerWidget {
                   isCupertino: true,
                   context: context,
                   actions: [
-                    ActionSheetAction('名称変更', onTap: () async {
+                    ActionSheetAction(l10n().rename, onTap: () async {
                       final String? newTitle = await showPlatformDialog(
                         context: context,
                         builder: (context) {
                           return PlatformTextFieldDialog(
                             initialValue: file.title,
-                            title: 'New file name',
+                            title: l10n().newFileName,
                           );
                         },
                       );
@@ -264,7 +264,7 @@ class ActionButton extends ConsumerWidget {
                       if (newTitle == null) return;
                       notifier.updateFile(id, title: newTitle);
                     }),
-                    ActionSheetAction('移動', onTap: () async {
+                    ActionSheetAction(l10n().move, onTap: () async {
                       final int? newParentId =
                           await getNewFolderId(context, id, isFileMoving: true);
                       if (newParentId == null) return;
@@ -272,11 +272,11 @@ class ActionButton extends ConsumerWidget {
                       // rebuild SubItemsView(newParentId)
                       ref.invalidate(subItemsProviderProvider(newParentId));
                     }),
-                    ActionSheetAction('削除', onTap: () async {
+                    ActionSheetAction(l10n().delete, onTap: () async {
                       final confirm = await showConfirmDialog(context,
-                          title: 'ファイルを削除',
+                          title: l10n().confirmDeleteDialogTitle,
                           description:
-                              '${file.title}を削除してもよろしいですか？一度削除すると復元はできません。');
+                              l10n().confirmDeleteDialogContent(file.title));
                       if (confirm == true) notifier.deleteFile(id);
                     })
                   ]);
@@ -373,7 +373,7 @@ class NoItemText extends StatelessWidget {
               context,
               icon: CupertinoIcons.folder_badge_plus,
               fontSize: fontSize,
-              description: '新規フォルダ作成',
+              description: l10n().createNewFolder,
             ))
           : Text.rich(
               TextSpan(children: [
@@ -381,14 +381,14 @@ class NoItemText extends StatelessWidget {
                   context,
                   icon: CupertinoIcons.folder_badge_plus,
                   fontSize: fontSize,
-                  description: '新規フォルダ作成',
+                  description: l10n().createNewFolder,
                 ),
                 TextSpan(text: '\n\n'),
                 iconDescriptionTextSpan(
                   context,
                   icon: CupertinoIcons.plus,
                   fontSize: fontSize,
-                  description: '新規ディクテーション作成',
+                  description: l10n().createNewDictation,
                 )
               ]),
               textAlign: TextAlign.center,

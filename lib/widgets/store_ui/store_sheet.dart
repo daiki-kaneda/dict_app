@@ -62,7 +62,7 @@ class CurrentTicketsTile extends ConsumerWidget {
             loading: () => null)));
     return CupertinoListTile.notched(
       leading: TicketIcon(),
-      title: Text('残りのチケット枚数:'),
+      title: Text('${l10n().ticketsRemaining}:'),
       trailing: numTicketsRemaining != null
           ? Text(numTicketsRemaining.toString())
           : PlatformCircularProgressIndicator(),
@@ -78,7 +78,7 @@ class PurchaseTicketsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoListSection.insetGrouped(
-      header: Text('チケット購入'),
+      header: Text(l10n().buyTickets),
       children: [for (final p in packages) PackageTile(package: p)],
     );
   }
@@ -108,7 +108,7 @@ class PackageTile extends ConsumerWidget {
         onPressed: () {
           ref.read(iapNotifierProvider.notifier).purchasePackage(package);
         },
-        child: Text('購入'),
+        child: Text(l10n().buy),
       ),
     );
   }
@@ -189,14 +189,14 @@ class TicketIcon extends StatelessWidget {
 }
 
 final List<(String, String)> qa = [
-  ('一回に消費されるチケットの枚数は？', '一枚のみです。'),
-  ('解析するオーディオの長さの上限はある？', 'はい。オーディオの上限は一回$maxAudioLengthInSeconds秒までです。'),
+  (l10n().ticketConsumptionQuestion, l10n().ticketConsumptionAnswer),
+  (l10n().maxAudioLengthQuestion, l10n().maxAudioLengthAnswer(maxAudioLengthInSeconds)),
   (
-    '解析データやチケットのバックアップはとる？',
-    'いいえ。アプリを削除したり、機種変更などをすると、解析データおよびチケットなどのすべてのデータは削除され、復元できません。'
+    l10n().backupDataQuestion,
+    l10n().backupDataAnswer
   ),
-  ('一度消費したチケットを元に戻せる？', 'いいえ。一度使用したチケットは復元することはできません。'),
-  ('解析データは商用利用可能？', 'はい。解析データはラインセンスの記載なしに商用利用を含めて自由に使用可能です。'),
+  (l10n().ticketRestoreQuestion, l10n().ticketRestoreAnswer),
+  (l10n().commercialUseDataQuestion, l10n().commercialUseDataAnswer),
 ];
 
 class QAndASection extends StatelessWidget {
@@ -205,7 +205,7 @@ class QAndASection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoListSection.insetGrouped(
-        header: Text('Q&A'),
+        header: Text(l10n().qanda),
         dividerMargin: 0,
         children: qa.indexed.map((t) {
           final id = t.$1.toString();

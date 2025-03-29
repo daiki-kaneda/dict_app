@@ -83,7 +83,7 @@ class PeriodPicker extends ConsumerWidget {
     final initialItem = ref.read(logsFilterOptionProvider);
     final types = LogPeriodType.values;
 
-    return PlatformListSection(header: Text('期間'), children: [
+    return PlatformListSection(header: Text(l10n().period), children: [
       SizedBox(
         height: 200,
         child: PlatformPicker(
@@ -106,7 +106,7 @@ class LogsDetails extends ConsumerWidget {
     final filteredLogs = ref.watch(filteredLogsProvider);
     return PlatformListSection(children: [
       PlatformListTile(
-        title: Text('ヒントを使わずに入力した文字数'),
+        title: Text(l10n().successfulCharsWithoutHint),
         trailing: Text(
             NumberFormat.compact().format(filteredLogs.where((l) => l.isSuccess()).length)),
       )
@@ -135,7 +135,7 @@ class PeriodTitle extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final currentType = ref.watch(logsFilterOptionProvider);
-    return Text('記録');
+    return Text(l10n().records);
   }
 }
 

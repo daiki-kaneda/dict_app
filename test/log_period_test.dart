@@ -17,28 +17,28 @@ void main() {
     });
 
     test('Past week range', () {
-      final logPeriod = LogPeriodType.pastWeek;
+      final logPeriod = LogPeriodType.thisWeek;
       final range = logPeriod.range(now);
       expect(range.startDate, DateTime(2025, 3, 20));
       expect(range.endDate, DateTime(2025, 3, 26, 23, 59, 59));
     });
 
     test('Past month range', () {
-      final logPeriod = LogPeriodType.pastMonth;
+      final logPeriod = LogPeriodType.thisMonth;
       final range = logPeriod.range(now);
       expect(range.startDate, DateTime(2025, 3, 1));
       expect(range.endDate, DateTime(2025, 3, 31, 23, 59, 59));
     });
 
     test('Past six months range', () {
-      final logPeriod = LogPeriodType.pastSixMonths;
+      final logPeriod = LogPeriodType.lastSixMonths;
       final range = logPeriod.range(now);
       expect(range.startDate, DateTime(2024, 10, 1)); 
       expect(range.endDate, DateTime(2025, 3, 31, 23, 59, 59));
     });
 
     test('Past year range', () {
-      final logPeriod = LogPeriodType.pastYear;
+      final logPeriod = LogPeriodType.lastYear;
       final range = logPeriod.range(now);
       expect(range.startDate, DateTime(2024, 4, 1)); 
       expect(range.endDate, DateTime(2025, 3, 31, 23, 59, 59)); 

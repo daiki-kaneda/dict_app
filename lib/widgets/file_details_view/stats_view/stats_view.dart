@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dict_app/providers/datatree_provider/file_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/utils/loading_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class StatsView extends ConsumerWidget {
         backgroundColor: backgroundColor,
         appBar: PlatformAppBar(
           backgroundColor: backgroundColor,
-          title: Text('統計'),
+          title: Text(l10n().stats),
         ),
         body: ListView(
           children: [
@@ -35,17 +36,17 @@ class StatsView extends ConsumerWidget {
               hasLeading: false,
               children: [
                 PlatformListTile(
-                  title: Text('クリア回数:'),
+                  title: Text('${l10n().completionCount}:'),
                   trailing: Text('${section.completedCount}'),
                 )
               ],
             ),
             CupertinoListSection.insetGrouped(
-              header: Text('正答率'),
+              header: Text(l10n().correctAnswerRate),
               hasLeading: false,
               children: [
                 PlatformListTile(
-                  title: Text('全体の正答率'),
+                  title: Text(l10n().overallCorrectAnswerRate),
                   trailing: Text(NumberFormat('0.00%')
                       .format(section.accuracy() ?? 0)),
                 ),

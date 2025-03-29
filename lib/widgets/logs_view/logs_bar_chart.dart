@@ -36,7 +36,7 @@ class LogsBarChartByType extends ConsumerWidget {
               .map((t) => [0, 6, 12, 18].contains(t.$1) ? t.$2 : '')
               .toList();
         }
-      case LogPeriodType.pastWeek:
+      case LogPeriodType.thisWeek:
         {
           logValues = pastWeekListBuilder(now, (start, end) {
             return logsNotifier
@@ -46,7 +46,7 @@ class LogsBarChartByType extends ConsumerWidget {
           });
           titles = pastWeekTitleList(now, locale: locale);
         }
-      case LogPeriodType.pastMonth:
+      case LogPeriodType.thisMonth:
         {
           logValues = pastMonthListBuilder(now, (start, end) {
             return logsNotifier
@@ -60,7 +60,7 @@ class LogsBarChartByType extends ConsumerWidget {
                   List.generate(8, (i) => i * 4).contains(t.$1) ? t.$2 : '')
               .toList();
         }
-      case LogPeriodType.pastSixMonths:
+      case LogPeriodType.lastSixMonths:
         {
           logValues = past6MonthsListBuilder(now, (start, end) {
             return logsNotifier
@@ -70,7 +70,7 @@ class LogsBarChartByType extends ConsumerWidget {
           });
           titles = past6MonthsTitleList(now, locale: locale);
         }
-      case LogPeriodType.pastYear:
+      case LogPeriodType.lastYear:
         {
           logValues = pastYearListBuilder(now, (start, end) {
             return logsNotifier

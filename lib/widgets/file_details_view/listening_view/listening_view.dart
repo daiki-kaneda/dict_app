@@ -61,7 +61,7 @@ class ListeningView extends ConsumerWidget {
               pathParameters: {'fileId': fileId.toString()});
         },
         child: Text(
-          'リスニングを開始',
+          l10n().startListening,
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: isTablet(context) ? 32 : 18),
