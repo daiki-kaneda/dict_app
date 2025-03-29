@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class SettingView extends ConsumerWidget {
-  const SettingView({super.key,this.isHome=false});
+  const SettingView({super.key, this.isHome = false});
 
   final bool isHome;
 
@@ -39,7 +39,7 @@ class SettingView extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          if (isDictOrListening&&!isHome)
+          if (isDictOrListening && !isHome)
             CupertinoListSection(
               hasLeading: false,
               header: Text(l10n().general),
@@ -49,28 +49,24 @@ class SettingView extends ConsumerWidget {
                   trailing: CupertinoSwitch(
                     value: setting.showTranslation,
                     onChanged: (value) {
-                      notifier.updateSetting(
-                          showTranslation: value);
+                      notifier.updateSetting(showTranslation: value);
                     },
                   ),
                 ),
                 CupertinoListTile(
-                  title:Text(l10n().repeatAudio),
+                  title: Text(l10n().repeatAudio),
                   trailing: CupertinoSwitch(
                     value: setting.repeatAudio,
                     onChanged: (value) {
-                      notifier.updateSetting(
-                          repeatAudio: value);
+                      notifier.updateSetting(repeatAudio: value);
                     },
                   ),
                 ),
                 CupertinoListTile(
-                  title: Text(l10n().textSize),
-                  trailing: TextSizeButton()
-                ),
+                    title: Text(l10n().textSize), trailing: TextSizeButton()),
               ],
             ),
-          if (!isDictOrListening&&!isHome)
+          if (!isDictOrListening && !isHome)
             CupertinoListSection(
                 header: Text(l10n().pdfSettings),
                 hasLeading: false,
@@ -117,7 +113,7 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                   PlatformListTile(
-                    title:Text(l10n().showUnderline),
+                    title: Text(l10n().showUnderline),
                     trailing: PlatformSwitch(
                         value: setting.showUnderlinedParts,
                         onChanged: (value) {
@@ -147,20 +143,20 @@ class SettingView extends ConsumerWidget {
                         }),
                   ),
                 ]),
-          if(isHome)
-          CupertinoListSection(
-            hasLeading: false,
-            header: const Text('Translation Language'),
-            children: [
-              PlatformLanguagePicker(
-                  initialLanguage: setting.translationTargetLanguageCode,
-                  onLanguageChanged: (code) {
-                    ref
-                        .read(settingNotifierProvider.notifier)
-                        .updateSetting(languageCode: code);
-                  }),
-            ],
-          ),
+          if (isHome)
+            CupertinoListSection(
+              hasLeading: false,
+              header: const Text('Translation Language'),
+              children: [
+                PlatformLanguagePicker(
+                    initialLanguage: setting.translationTargetLanguageCode,
+                    onLanguageChanged: (code) {
+                      ref
+                          .read(settingNotifierProvider.notifier)
+                          .updateSetting(languageCode: code);
+                    }),
+              ],
+            ),
         ],
       ),
     );
@@ -168,16 +164,18 @@ class SettingView extends ConsumerWidget {
 }
 
 class ShowSettingViewButton extends StatelessWidget {
-  const ShowSettingViewButton({super.key,this.isHome=false});
+  const ShowSettingViewButton({super.key, this.isHome = false});
 
   final bool isHome;
 
   @override
   Widget build(BuildContext context) {
     return PlatformIconButton(
-      onPressed: () => context.pushNamed('settings',extra: isHome),
-      icon: Padding(padding: EdgeInsets.zero,
-      child: Icon(PlatformIcons(context).settings),),
+      onPressed: () => context.pushNamed('settings', extra: isHome),
+      icon: Padding(
+        padding: EdgeInsets.zero,
+        child: Icon(PlatformIcons(context).settings),
+      ),
     );
   }
 }

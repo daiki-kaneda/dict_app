@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dict_app/utils/language_local.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class PlatformPicker extends StatelessWidget {
   const PlatformPicker({
@@ -65,7 +66,6 @@ class PlatformLanguagePicker extends StatefulWidget {
   final bool? useMagnifier;
   final double? magnification;
 
-
   const PlatformLanguagePicker({
     super.key,
     this.initialLanguage,
@@ -87,11 +87,11 @@ class _PlatformLanguagePickerState extends State<PlatformLanguagePicker> {
   late List<String> _languageCodes;
   int? _selectedIndex;
 
-
   @override
   void initState() {
     super.initState();
-    _languageCodes = MainLanguageLocal().supportedLanguages; // LanguageLocalから取得
+    _languageCodes =
+        MainLanguageLocal().supportedLanguages; // LanguageLocalから取得
     _languageCodes.sort(); // アルファベット順にソート
 
     // 初期選択位置を設定
@@ -110,7 +110,6 @@ class _PlatformLanguagePickerState extends State<PlatformLanguagePicker> {
     _controller.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -142,4 +141,74 @@ class _PlatformLanguagePickerState extends State<PlatformLanguagePicker> {
       ),
     );
   }
+}
+
+class PlatformLanguagePickerSheet extends StatefulWidget {
+  const PlatformLanguagePickerSheet({super.key, required this.initialLanguage});
+
+  final String initialLanguage;
+
+  @override
+  State<PlatformLanguagePickerSheet> createState() =>
+      _PlatformLanguagePickerSheetState();
+}
+
+class _PlatformLanguagePickerSheetState
+    extends State<PlatformLanguagePickerSheet> {
+  String? languageCode;
+
+  @override
+  void initState() {
+    languageCode = widget.initialLanguage;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            PlatformTextButton(
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+              child: Text('Cancel'),
+            ),
+            Text(
+              languageCode ?? '',
+              textAlign: TextAlign.center,
+            ),
+            PlatformTextButton(
+              onPressed: () {
+                Navigator.of(context).pop(languageCode);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+        PlatformLanguagePicker(
+          initialLanguage: widget.initialLanguage,
+          onLanguageChanged: (value) {
+            setState(() {
+              languageCode = value;
+            });
+          },
+        )
+      ],
+    );
+  }
+}
+
+Future<String?> showPlatformLanguagePickerSheet(
+    BuildContext context,{required String initialLanguage}) async {
+  return showPlatformModalSheet<String>(
+    context: context,
+    builder: (context) {
+      return PlatformLanguagePickerSheet(initialLanguage: initialLanguage);
+    },
+  );
 }
