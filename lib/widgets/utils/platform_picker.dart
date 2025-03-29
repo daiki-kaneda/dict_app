@@ -178,10 +178,6 @@ class _PlatformLanguagePickerSheetState
               },
               child: Text('Cancel'),
             ),
-            Text(
-              languageCode ?? '',
-              textAlign: TextAlign.center,
-            ),
             PlatformTextButton(
               onPressed: () {
                 Navigator.of(context).pop(languageCode);
