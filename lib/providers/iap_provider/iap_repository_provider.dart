@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:dict_app/providers/iap_provider/iap_status.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
+import 'package:dict_app/widgets/app.dart';
+import 'package:dict_app/widgets/utils/platform_dialog.dart';
+import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -50,28 +53,44 @@ class IapNotifier extends _$IapNotifier {
       final CustomerInfo info = await Purchases.purchasePackage(package);
       print(info.toJson());
       _purchased(package.storeProduct.identifier);
-    } catch (e) {
-      print(e);
+    } on PlatformException catch (e) {
+      var errorCode = PurchasesErrorHelper.getErrorCode(e);
+      switch (errorCode) {
+        case PurchasesErrorCode.purchaseCancelledError:
+          {
+            showNotifyDialog(navigatorKey.currentContext!,
+                title: '😭', description: '購入がキャンセルされました');
+          }
+        case PurchasesErrorCode.purchaseNotAllowedError:
+          {
+            showNotifyDialog(navigatorKey.currentContext!,
+                title: '😞', description: '購入処理中にエラーが発生しました');
+          }
+        default:
+      }
     }
   }
 
-  Future<void> _purchased(String productId)async{
+  Future<void> _purchased(String productId) async {
     final status = ProductStatus.fromId(productId);
-    if(status==null){
+    if (status == null) {
       print('User purchased something we did not prepare');
       return;
     }
     final settingNotifier = ref.read(settingNotifierProvider.notifier);
-    switch(status){
-      case ProductStatus.tickets5:{
-        settingNotifier.addTickets(amount: 5);
-      }
-      case ProductStatus.tickets10:{
-        settingNotifier.addTickets(amount: 10);
-      }
-      case ProductStatus.tickets30:{
-        settingNotifier.addTickets(amount: 30);
-      }
+    switch (status) {
+      case ProductStatus.tickets5:
+        {
+          settingNotifier.addTickets(amount: 5);
+        }
+      case ProductStatus.tickets10:
+        {
+          settingNotifier.addTickets(amount: 10);
+        }
+      case ProductStatus.tickets30:
+        {
+          settingNotifier.addTickets(amount: 30);
+        }
     }
   }
 
