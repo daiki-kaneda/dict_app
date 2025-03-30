@@ -115,6 +115,6 @@
             }
         }
     },
-    "purchase_cancelled": "購入がキャンセルされました",
-    "purchase_error": "購入処理中にエラーが発生しました"
+    "purchaseCancelled": "購入がキャンセルされました",
+    "purchaseError": "購入処理中にエラーが発生しました"
 }

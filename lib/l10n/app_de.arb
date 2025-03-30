@@ -115,6 +115,6 @@
             }
         }
     },
-    "purchase_cancelled": "Kauf wurde storniert",
-    "purchase_error": "Fehler während des Kaufvorgangs"
+    "purchaseCancelled": "Kauf wurde storniert",
+    "purchaseError": "Fehler während des Kaufvorgangs"
 }

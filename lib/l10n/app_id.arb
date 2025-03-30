@@ -115,6 +115,6 @@
             }
         }
     },
-    "purchase_cancelled": "Pembelian dibatalkan",
-    "purchase_error": "Terjadi kesalahan selama proses pembelian"
+    "purchaseCancelled": "Pembelian dibatalkan",
+    "purchaseError": "Terjadi kesalahan selama proses pembelian"
 }

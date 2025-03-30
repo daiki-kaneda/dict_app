@@ -115,6 +115,6 @@
             }
         }
     },
-    "purchase_cancelled": "Compra cancelada",
-    "purchase_error": "Ocorreu um erro durante a compra"
+    "purchaseCancelled": "Compra cancelada",
+    "purchaseError": "Ocorreu um erro durante a compra"
 }

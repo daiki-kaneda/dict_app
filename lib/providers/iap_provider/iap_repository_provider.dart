@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dict_app/providers/iap_provider/iap_status.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/widgets/utils/platform_dialog.dart';
 import 'package:flutter/services.dart';
@@ -59,12 +60,12 @@ class IapNotifier extends _$IapNotifier {
         case PurchasesErrorCode.purchaseCancelledError:
           {
             showNotifyDialog(navigatorKey.currentContext!,
-                title: '😭', description: '購入がキャンセルされました');
+                title: '😭', description: l10n().purchase_cancelled);
           }
         case PurchasesErrorCode.purchaseNotAllowedError:
           {
             showNotifyDialog(navigatorKey.currentContext!,
-                title: '😞', description: '購入処理中にエラーが発生しました');
+                title: '😞', description: l10n().purchase_error);
           }
         default:
       }

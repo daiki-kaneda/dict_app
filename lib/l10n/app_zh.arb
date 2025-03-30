@@ -115,6 +115,6 @@
             }
         }
     },
-    "purchase_cancelled": "购买已取消",
-    "purchase_error": "购买过程中发生错误"
+    "purchaseCancelled": "购买已取消",
+    "purchaseError": "购买过程中发生错误"
 }

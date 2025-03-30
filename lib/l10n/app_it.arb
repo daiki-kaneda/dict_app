@@ -115,6 +115,6 @@
             }
         }
     },
-    "purchase_cancelled": "Acquisto annullato",
-    "purchase_error": "Si è verificato un errore durante l’acquisto"
+    "purchaseCancelled": "Acquisto annullato",
+    "purchaseError": "Si è verificato un errore durante l’acquisto"
 }

@@ -115,6 +115,6 @@
             }
         }
     },
-    "purchase_cancelled": "Покупка отменена",
-    "purchase_error": "Произошла ошибка во время покупки"
+    "purchaseCancelled": "Покупка отменена",
+    "purchaseError": "Произошла ошибка во время покупки"
 }

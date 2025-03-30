@@ -115,6 +115,6 @@
             }
         }
     },
-    "purchase_cancelled": "Giao dịch đã bị hủy",
-    "purchase_error": "Đã xảy ra lỗi trong quá trình mua hàng"
+     "purchaseCancelled": "Giao dịch đã bị hủy",
+    "purchaseError": "Đã xảy ra lỗi trong quá trình mua hàng"
 }

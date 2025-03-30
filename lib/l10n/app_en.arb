@@ -115,6 +115,6 @@
             }
         }
     },
-    "purchase_cancelled": "Purchase cancelled",
-    "purchase_error": "An error occurred during the purchase"
+    "purchaseCancelled": "Purchase cancelled",
+    "purchaseError": "An error occurred during the purchase"
 }
