@@ -114,5 +114,7 @@
                 "example": "My Dictation File"
             }
         }
-    }
+    },
+    "purchase_cancelled": "Giao dịch đã bị hủy",
+    "purchase_error": "Đã xảy ra lỗi trong quá trình mua hàng"
 }

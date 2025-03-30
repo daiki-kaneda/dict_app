@@ -114,5 +114,7 @@
                 "example": "My Dictation File"
             }
         }
-    }
+    },
+    "purchase_cancelled": "Satın alma iptal edildi",
+    "purchase_error": "Satın alma işlemi sırasında hata oluştu"
 }

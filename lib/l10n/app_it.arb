@@ -114,5 +114,7 @@
                 "example": "My Dictation File"
             }
         }
-    }
+    },
+    "purchase_cancelled": "Acquisto annullato",
+    "purchase_error": "Si è verificato un errore durante l’acquisto"
 }

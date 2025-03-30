@@ -114,5 +114,7 @@
                 "example": "My Dictation File"
             }
         }
-    }
+    },
+    "purchase_cancelled": "खरीद रद्द कर दी गई",
+    "purchase_error": "खरीद प्रक्रिया में त्रुटि हुई"
 }

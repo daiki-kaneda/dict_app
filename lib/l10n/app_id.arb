@@ -114,5 +114,7 @@
                 "example": "My Dictation File"
             }
         }
-    }
+    },
+    "purchase_cancelled": "Pembelian dibatalkan",
+    "purchase_error": "Terjadi kesalahan selama proses pembelian"
 }

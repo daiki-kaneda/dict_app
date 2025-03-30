@@ -114,5 +114,7 @@
                 "example": "My Dictation File"
             }
         }
-    }
+    },
+    "purchase_cancelled": "கொள்முதல் ரத்துசெய்யப்பட்டது",
+    "purchase_error": "கொள்முதல் செயல்பாட்டில் பிழை ஏற்பட்டது"
 }

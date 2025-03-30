@@ -114,5 +114,7 @@
                 "example": "My Dictation File"
             }
         }
-    }
+    },
+    "purchase_cancelled": "ক্রয় বাতিল করা হয়েছে",
+    "purchase_error": "ক্রয় প্রক্রিয়ায় একটি ত্রুটি ঘটেছে"
 }

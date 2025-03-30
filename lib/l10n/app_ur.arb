@@ -114,5 +114,7 @@
                 "example": "My Dictation File"
             }
         }
-    }
+    },
+    "purchase_cancelled": "خریداری منسوخ کر دی گئی",
+    "purchase_error": "خریداری کے عمل کے دوران خرابی واقع ہوئی"
 }
