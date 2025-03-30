@@ -60,12 +60,12 @@ class IapNotifier extends _$IapNotifier {
         case PurchasesErrorCode.purchaseCancelledError:
           {
             showNotifyDialog(navigatorKey.currentContext!,
-                title: '😭', description: l10n().purchase_cancelled);
+                title: '😭', description: l10n().purchaseCancelled);
           }
         case PurchasesErrorCode.purchaseNotAllowedError:
           {
             showNotifyDialog(navigatorKey.currentContext!,
-                title: '😞', description: l10n().purchase_error);
+                title: '😞', description: l10n().purchaseError);
           }
         default:
       }
