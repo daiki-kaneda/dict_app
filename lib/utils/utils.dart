@@ -200,3 +200,7 @@ AppLocalizations l10n(){
 String platformLocaleName(){
   return l10n().localeName;
 }
+
+String platformLanguageCode(){
+  return Localizations.localeOf(navigatorKey.currentContext!).languageCode;
+}

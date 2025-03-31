@@ -6,6 +6,7 @@ import 'package:dict_app/providers/local_database_provider/local_data_status.dar
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
 import 'package:dict_app/providers/model_provider/model_provider.dart';
+import 'package:dict_app/utils/language_local.dart';
 import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -109,6 +110,10 @@ class SettingNotifier extends _$SettingNotifier {
   Future<void> initialSetup() async {
     final previous = await future;
     if (!previous.hasLaunchedBefore) {
+      String translationTargetLanguageCode = l10n().;
+      if(MainLanguageLocal().supportedLanguages.contains(translationTargetLanguageCode)){
+
+      };
       updateSetting(
         hasLaunchedBefore: true,
         translationTargetLanguageCode: l10n().localeName,
