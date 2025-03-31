@@ -6,6 +6,8 @@ import 'package:dict_app/providers/local_database_provider/local_data_status.dar
 import 'package:dict_app/providers/local_database_provider/local_database_provider.dart';
 import 'package:dict_app/providers/model_provider/llm_role.dart';
 import 'package:dict_app/providers/model_provider/model_provider.dart';
+import 'package:dict_app/utils/utils.dart';
+import 'package:dict_app/widgets/app.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'setting_provider.g.dart';
@@ -98,8 +100,20 @@ class SettingNotifier extends _$SettingNotifier {
         .isEmpty) {
       final sentences = file.getAllSentences.map((s) => s.displayText).toList();
       ref
-          .read(modelNotifierProvider(role: TranslateSentences(fileId)).notifier)
+          .read(
+              modelNotifierProvider(role: TranslateSentences(fileId)).notifier)
           .sendMessage(jsonEncode(sentences));
+    }
+  }
+
+  Future<void> initialSetup() async {
+    final previous = await future;
+    if (!previous.hasLaunchedBefore) {
+      updateSetting(
+        hasLaunchedBefore: true,
+        translationTargetLanguageCode: l10n().localeName,
+        textSize: isTablet(navigatorKey.currentContext!) ? 30 : 20,
+      );
     }
   }
 }

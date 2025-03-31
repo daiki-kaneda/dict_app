@@ -59,8 +59,8 @@ class IsarFolderStructureApp extends StatelessWidget {
           routes: [
             GoRoute(
               path: '/',
-              builder: (context, state) =>
-                  const _EagerInitialization(child: _BootstrapWrapper(child: Home())),
+              builder: (context, state) => const _EagerInitialization(
+                  child: _BootstrapWrapper(child: Home())),
             ),
             GoRoute(
               path: '/sub-items/:$parentIdKey',
@@ -205,9 +205,7 @@ class __BootStrapState extends ConsumerState<_BootstrapWrapper> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-          .read(settingNotifierProvider.notifier)
-          .updateSetting(translationTargetLanguageCode: l10n().localeName);
+      ref.read(settingNotifierProvider.notifier).initialSetup();
     });
     super.initState();
   }
