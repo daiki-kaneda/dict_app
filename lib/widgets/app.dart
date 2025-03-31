@@ -1,5 +1,6 @@
 import 'package:dict_app/providers/connectivity_provider/connectivity_provider.dart';
 import 'package:dict_app/providers/logs_provider/logs_provider.dart';
+import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/bottom_shell_widget.dart';
 import 'package:dict_app/widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/widgets/file_details_view/file_details_view.dart';
@@ -59,7 +60,7 @@ class IsarFolderStructureApp extends StatelessWidget {
             GoRoute(
               path: '/',
               builder: (context, state) =>
-                  const _EagerInitialization(child: Home()),
+                  const _EagerInitialization(child: _BootstrapWrapper(child: Home())),
             ),
             GoRoute(
               path: '/sub-items/:$parentIdKey',
@@ -188,6 +189,32 @@ class _EagerInitialization extends ConsumerWidget {
     } else {
       return LoadingPage();
     }
+  }
+}
+
+class _BootstrapWrapper extends ConsumerStatefulWidget {
+  const _BootstrapWrapper({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => __BootStrapState();
+}
+
+class __BootStrapState extends ConsumerState<_BootstrapWrapper> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(settingNotifierProvider.notifier)
+          .updateSetting(translationTargetLanguageCode: l10n().localeName);
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
   }
 }
 
