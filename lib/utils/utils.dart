@@ -198,7 +198,7 @@ AppLocalizations l10n(){
 }
 
 String platformLocaleName(){
-  return l10n().localeName;
+  return Platform.localeName;
 }
 
 String platformLanguageCode(){

@@ -110,13 +110,13 @@ class SettingNotifier extends _$SettingNotifier {
   Future<void> initialSetup() async {
     final previous = await future;
     if (!previous.hasLaunchedBefore) {
-      String translationTargetLanguageCode = l10n().;
-      if(MainLanguageLocal().supportedLanguages.contains(translationTargetLanguageCode)){
-
-      };
+      String translationTargetLanguageCode = platformLocaleName();
+      if(!MainLanguageLocal().supportedLanguages.contains(translationTargetLanguageCode)){
+        print('invalid languagecode:$translationTargetLanguageCode');
+      }
       updateSetting(
         hasLaunchedBefore: true,
-        translationTargetLanguageCode: l10n().localeName,
+        translationTargetLanguageCode: translationTargetLanguageCode,
         textSize: isTablet(navigatorKey.currentContext!) ? 30 : 20,
       );
     }
