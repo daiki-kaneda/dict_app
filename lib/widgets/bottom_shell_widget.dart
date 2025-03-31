@@ -97,20 +97,20 @@ class CreateFileButton extends ConsumerWidget {
               .read(settingNotifierProvider.notifier)
               .hasTickets())) {
             final openStore = await showConfirmDialog(
-              navigatorKey.currentContext!,
-              title: l10n().insufficientTicketsDialogTitle,
-              description: l10n().insufficientTicketsDialogContent
-            );
-            if (openStore == true)navigatorKey.currentContext?.pushNamed('store');
+                navigatorKey.currentContext!,
+                title: l10n().insufficientTicketsDialogTitle,
+                description: l10n().insufficientTicketsDialogContent);
+            if (openStore == true)
+              navigatorKey.currentContext?.pushNamed('store');
             return;
           }
           inSessionNotifier.sessionStart();
           await ref
               .read(subItemsProviderProvider(parentId).notifier)
               .createFileFromLocalAudio(title: title);
-          inSessionNotifier.sessionEnd();
         } catch (e) {
           print(e);
+        } finally {
           inSessionNotifier.sessionEnd();
         }
       },
