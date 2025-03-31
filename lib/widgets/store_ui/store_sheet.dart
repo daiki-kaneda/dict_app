@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:dict_app/providers/datatree_provider/sub_items_provider.dart';
 import 'package:dict_app/providers/iap_provider/iap_repository_provider.dart';
 import 'package:dict_app/providers/iap_provider/localized_price_provider.dart';
 import 'package:dict_app/providers/iap_provider/packages_provider.dart';
 import 'package:dict_app/providers/local_database_provider/setting_provider/setting_provider.dart';
 import 'package:dict_app/utils/utils.dart';
+import 'package:dict_app/widgets/sub_items_view.dart';
 import 'package:dict_app/widgets/utils/expansion_tile/custom_expansion_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,8 @@ class StoreSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final packages = ref.watch(packagesProvider('tickets')).value ?? [];
+    final sessionStatus = SessionStatus.purchaseTickets;
+    ref.watch(InSessionProvider(status: sessionStatus));
 
     return PlatformScaffold(
         backgroundColor:
@@ -28,6 +32,11 @@ class StoreSheet extends ConsumerWidget {
           cupertino: (context, platform) => CupertinoNavigationBarData(
               backgroundColor:
                   CupertinoColors.systemGroupedBackground.resolveFrom(context)),
+          trailingActions: [
+            InSessionIndicator(
+              status: sessionStatus,
+            ),
+          ],
         ),
         body: ListView(
           children: [
@@ -105,8 +114,19 @@ class PackageTile extends ConsumerWidget {
         ],
       ),
       trailing: PlatformTextButton(
-        onPressed: () {
-          ref.read(iapNotifierProvider.notifier).purchasePackage(package);
+        onPressed: () async {
+          final inSessionNotifier = ref.read(
+              InSessionProvider(status: SessionStatus.purchaseTickets)
+                  .notifier);
+          inSessionNotifier.sessionStart();
+
+          try {
+            await ref
+                .read(iapNotifierProvider.notifier)
+                .purchasePackage(package);
+          } finally {
+            inSessionNotifier.sessionEnd();
+          }
         },
         child: Text(l10n().buy),
       ),
@@ -190,11 +210,11 @@ class TicketIcon extends StatelessWidget {
 
 final List<(String, String)> qa = [
   (l10n().ticketConsumptionQuestion, l10n().ticketConsumptionAnswer),
-  (l10n().maxAudioLengthQuestion, l10n().maxAudioLengthAnswer(maxAudioLengthInSeconds)),
   (
-    l10n().backupDataQuestion,
-    l10n().backupDataAnswer
+    l10n().maxAudioLengthQuestion,
+    l10n().maxAudioLengthAnswer(maxAudioLengthInSeconds)
   ),
+  (l10n().backupDataQuestion, l10n().backupDataAnswer),
   (l10n().ticketRestoreQuestion, l10n().ticketRestoreAnswer),
   (l10n().commercialUseDataQuestion, l10n().commercialUseDataAnswer),
 ];
@@ -226,10 +246,11 @@ class QAndATile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void toggle(){
+    void toggle() {
       print('toggle');
       ref.read(expansionNotifierProvider(id).notifier).toggle();
     }
+
     return AnimatedCustomExpansionTile(
         id: id,
         initialExpand: false,
