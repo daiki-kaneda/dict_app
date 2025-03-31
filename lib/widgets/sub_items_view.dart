@@ -344,11 +344,13 @@ class LastFileUpdatedAtText extends ConsumerWidget {
 }
 
 class InSessionIndicator extends ConsumerWidget {
-  const InSessionIndicator({super.key});
+  const InSessionIndicator({super.key,this.status=SessionStatus.createNewFile});
+
+  final SessionStatus status;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final inSession = ref.watch(inSessionProvider);
+    final inSession = ref.watch(inSessionProvider(status: status));
     return AnimatedOpacity(
         opacity: inSession ? 1.0 : 0.0,
         duration: Duration(milliseconds: 200),

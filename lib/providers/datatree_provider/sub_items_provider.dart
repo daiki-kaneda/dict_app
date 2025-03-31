@@ -207,10 +207,14 @@ class SubItemsProvider extends _$SubItemsProvider {
   }
 }
 
+enum SessionStatus{
+  createNewFile,
+  purchaseTickets;
+}
 @Riverpod(keepAlive: true)
 class InSession extends _$InSession {
   @override
-  bool build() {
+  bool build({SessionStatus status=SessionStatus.createNewFile}) {
     return false;
   }
 

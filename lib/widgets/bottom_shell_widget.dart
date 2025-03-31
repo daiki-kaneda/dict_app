@@ -81,7 +81,7 @@ class CreateFileButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return PlatformIconButton(
       onPressed: () async {
-        final inSessionNotifier = ref.read(inSessionProvider.notifier);
+        final inSessionNotifier = ref.read(inSessionProvider().notifier);
         try {
           final parentId = PathParamerterKeys.parentId.getCurrentValue();
           final String? title = await showPlatformDialog(

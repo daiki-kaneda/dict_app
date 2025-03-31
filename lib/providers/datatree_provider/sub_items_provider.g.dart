@@ -171,19 +171,143 @@ class _SubItemsProviderProviderElement
   int? get parentId => (origin as SubItemsProviderProvider).parentId;
 }
 
-String _$inSessionHash() => r'0095784059bb09ee411462e8be545dfa8f5280e9';
+String _$inSessionHash() => r'710e58ac0db8a246114e99a039ecfcbc9fbf1fae';
+
+abstract class _$InSession extends BuildlessNotifier<bool> {
+  late final SessionStatus status;
+
+  bool build({
+    SessionStatus status = SessionStatus.createNewFile,
+  });
+}
 
 /// See also [InSession].
 @ProviderFor(InSession)
-final inSessionProvider = NotifierProvider<InSession, bool>.internal(
-  InSession.new,
-  name: r'inSessionProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$inSessionHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const inSessionProvider = InSessionFamily();
 
-typedef _$InSession = Notifier<bool>;
+/// See also [InSession].
+class InSessionFamily extends Family<bool> {
+  /// See also [InSession].
+  const InSessionFamily();
+
+  /// See also [InSession].
+  InSessionProvider call({
+    SessionStatus status = SessionStatus.createNewFile,
+  }) {
+    return InSessionProvider(
+      status: status,
+    );
+  }
+
+  @override
+  InSessionProvider getProviderOverride(
+    covariant InSessionProvider provider,
+  ) {
+    return call(
+      status: provider.status,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'inSessionProvider';
+}
+
+/// See also [InSession].
+class InSessionProvider extends NotifierProviderImpl<InSession, bool> {
+  /// See also [InSession].
+  InSessionProvider({
+    SessionStatus status = SessionStatus.createNewFile,
+  }) : this._internal(
+          () => InSession()..status = status,
+          from: inSessionProvider,
+          name: r'inSessionProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$inSessionHash,
+          dependencies: InSessionFamily._dependencies,
+          allTransitiveDependencies: InSessionFamily._allTransitiveDependencies,
+          status: status,
+        );
+
+  InSessionProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.status,
+  }) : super.internal();
+
+  final SessionStatus status;
+
+  @override
+  bool runNotifierBuild(
+    covariant InSession notifier,
+  ) {
+    return notifier.build(
+      status: status,
+    );
+  }
+
+  @override
+  Override overrideWith(InSession Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: InSessionProvider._internal(
+        () => create()..status = status,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        status: status,
+      ),
+    );
+  }
+
+  @override
+  NotifierProviderElement<InSession, bool> createElement() {
+    return _InSessionProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is InSessionProvider && other.status == status;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, status.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin InSessionRef on NotifierProviderRef<bool> {
+  /// The parameter `status` of this provider.
+  SessionStatus get status;
+}
+
+class _InSessionProviderElement extends NotifierProviderElement<InSession, bool>
+    with InSessionRef {
+  _InSessionProviderElement(super.provider);
+
+  @override
+  SessionStatus get status => (origin as InSessionProvider).status;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
