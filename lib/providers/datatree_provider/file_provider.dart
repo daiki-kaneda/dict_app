@@ -83,9 +83,7 @@ class FileNotifier extends _$FileNotifier {
   }
 
   Future<void> _recordResult(AnswerResult result) async {
-    ref.read(logsProvider.notifier).addLogEntry(
-      fileId: id, 
-      result: result);
+    ref.read(logsProvider.notifier).addLogEntry(fileId: id, result: result);
 
     switch (result.status) {
       case SolveStatus.unSolved:
@@ -112,6 +110,11 @@ class FileNotifier extends _$FileNotifier {
 
   Future<void> _updateUIByResult(AnswerResult result) async {
     final withoutHint = !result.solveAnyway;
+
+    void pageScroll() => ref
+        .read(SentencePageControllerProvider(id).notifier)
+        .moveToFirstUnsolvedIndex();
+
     switch (result.status) {
       case SolveStatus.unSolved:
         {
@@ -125,11 +128,12 @@ class FileNotifier extends _$FileNotifier {
                 .showEffect();
           }
           showNotifyDialog(navigatorKey.currentContext!,
-              title:l10n().completionDialogTitle, description:l10n().completionDialogContent);
+              title: l10n().completionDialogTitle,
+              description: l10n().completionDialogContent);
         }
       case SolveStatus.paragraphSolved:
         {
-          return;
+          pageScroll();
         }
       case SolveStatus.sentenceSolved:
         {
@@ -138,9 +142,7 @@ class FileNotifier extends _$FileNotifier {
                 .read(showSentenceSuccessEffectProvider(id).notifier)
                 .showEffect();
           }
-          ref
-              .read(SentencePageControllerProvider(id).notifier)
-              .moveToFirstUnsolvedIndex();
+          pageScroll();
         }
       case SolveStatus.wordSolved:
         {
@@ -163,8 +165,8 @@ class FileNotifier extends _$FileNotifier {
       final translatedSentences = (args['translatedSentences'] as List<dynamic>)
           .cast<String>()
           .toList();
-      final languageCode =
-          (await ref.read(settingNotifierProvider.future)).translationTargetLanguageCode;
+      final languageCode = (await ref.read(settingNotifierProvider.future))
+          .translationTargetLanguageCode;
 
       final file = await isar.files.get(id);
       if (file == null) return args;
