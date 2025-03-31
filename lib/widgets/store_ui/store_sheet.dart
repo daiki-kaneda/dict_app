@@ -100,6 +100,8 @@ class PackageTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final inSessionNotifier = ref.read(
+        InSessionProvider(status: SessionStatus.purchaseTickets).notifier);
     final product = package.storeProduct;
     return PlatformListTile(
       title: Row(
@@ -115,11 +117,7 @@ class PackageTile extends ConsumerWidget {
       ),
       trailing: PlatformTextButton(
         onPressed: () async {
-          final inSessionNotifier = ref.read(
-              InSessionProvider(status: SessionStatus.purchaseTickets)
-                  .notifier);
           inSessionNotifier.sessionStart();
-
           try {
             await ref
                 .read(iapNotifierProvider.notifier)
