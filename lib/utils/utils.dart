@@ -184,23 +184,19 @@ TextSpan iconDescriptionTextSpan(BuildContext context,
   ]);
 }
 
-bool isTablet(BuildContext context){
+bool isTablet(BuildContext context) {
   return MediaQuery.of(context).size.width > 600;
 }
 
-AppLocalizations l10n(){
-  try{
-  return AppLocalizations.of(navigatorKey.currentContext!)!;
-  }catch(e){
+AppLocalizations l10n() {
+  try {
+    return AppLocalizations.of(navigatorKey.currentContext!)!;
+  } catch (e) {
     print(e);
     throw Exception('Could not get Applocalization');
   }
 }
 
-String platformLocaleName(){
-  return Platform.localeName;
-}
+String platformLocaleName() => Platform.localeName;
 
-String platformLanguageCode(){
-  return Localizations.localeOf(navigatorKey.currentContext!).languageCode;
-}
+String platformLanguageCode() => Platform.localeName.split('_')[0];
