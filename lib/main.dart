@@ -12,5 +12,5 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(const ProviderScope(child:  IsarFolderStructureApp()));
+  runApp(const ProviderScope(child:  MyDictApp()));
 }

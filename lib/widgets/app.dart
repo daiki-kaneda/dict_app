@@ -1,6 +1,5 @@
 import 'package:dict_app/providers/connectivity_provider/connectivity_provider.dart';
 import 'package:dict_app/providers/logs_provider/logs_provider.dart';
-import 'package:dict_app/utils/utils.dart';
 import 'package:dict_app/widgets/bottom_shell_widget.dart';
 import 'package:dict_app/widgets/file_details_view/dictation_view/dictation_view.dart';
 import 'package:dict_app/widgets/file_details_view/file_details_view.dart';
@@ -36,8 +35,8 @@ enum PathParamerterKeys {
   }
 }
 
-class IsarFolderStructureApp extends StatelessWidget {
-  const IsarFolderStructureApp({super.key});
+class MyDictApp extends StatelessWidget {
+  const MyDictApp({super.key});
 
   @override
   Widget build(BuildContext context) {
