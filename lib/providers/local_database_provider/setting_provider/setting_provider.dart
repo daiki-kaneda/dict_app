@@ -42,6 +42,7 @@ class SettingNotifier extends _$SettingNotifier {
   }
 
   Future<void> updateSetting({
+    bool? hasLaunchedBefore,
     int? textSize,
     bool? showTranslation,
     double? audioSpeed,
@@ -57,6 +58,7 @@ class SettingNotifier extends _$SettingNotifier {
   }) async {
     final previousState = await future;
     state = AsyncData(previousState.copyWith(
+      hasLaunchedBefore: hasLaunchedBefore,
       textSize: textSize,
       showTranslation: showTranslation,
       audioSpeed: audioSpeed,

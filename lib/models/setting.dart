@@ -8,6 +8,7 @@ class Setting {
   final int remainingTickets;
 
   // General settings
+  final bool hasLaunchedBefore;
   final int textSize;
   final bool showTranslation;
   final double audioSpeed;
@@ -27,6 +28,7 @@ class Setting {
 
   const Setting({
     required this.remainingTickets,
+    this.hasLaunchedBefore=false,
     this.textSize = 20,
     this.showTranslation = true,
     this.audioSpeed = 1.0,
@@ -44,6 +46,7 @@ class Setting {
   Setting copyWith({
     int? remainingTickets,
     int? textSize,
+    bool? hasLaunchedBefore,
     bool? showTranslation,
     double? audioSpeed,
     bool? repeatAudio,
@@ -58,6 +61,7 @@ class Setting {
   }) {
     return Setting(
       remainingTickets: remainingTickets ?? this.remainingTickets,
+      hasLaunchedBefore: hasLaunchedBefore ?? this.hasLaunchedBefore,
       textSize: textSize ?? this.textSize,
       showTranslation: showTranslation ?? this.showTranslation,
       audioSpeed: audioSpeed ?? this.audioSpeed,

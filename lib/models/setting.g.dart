@@ -8,6 +8,7 @@ part of 'setting.dart';
 
 Setting _$SettingFromJson(Map<String, dynamic> json) => Setting(
       remainingTickets: (json['remainingTickets'] as num).toInt(),
+      hasLaunchedBefore: json['hasLaunchedBefore'] as bool? ?? false,
       textSize: (json['textSize'] as num?)?.toInt() ?? 20,
       showTranslation: json['showTranslation'] as bool? ?? true,
       audioSpeed: (json['audioSpeed'] as num?)?.toDouble() ?? 1.0,
@@ -26,6 +27,7 @@ Setting _$SettingFromJson(Map<String, dynamic> json) => Setting(
 
 Map<String, dynamic> _$SettingToJson(Setting instance) => <String, dynamic>{
       'remainingTickets': instance.remainingTickets,
+      'hasLaunchedBefore': instance.hasLaunchedBefore,
       'textSize': instance.textSize,
       'showTranslation': instance.showTranslation,
       'audioSpeed': instance.audioSpeed,
