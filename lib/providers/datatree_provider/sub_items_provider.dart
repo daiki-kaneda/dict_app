@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:dict_app/providers/connectivity_provider/connectivity_provider.dart';
+import 'package:dict_app/providers/datatree_provider/file_provider.dart';
 import 'package:dict_app/widgets/app.dart';
 import 'package:dict_app/models/data_tree/item.dart';
 import 'package:dict_app/providers/api_helper_provider/api_helper_provider.dart';
@@ -171,6 +172,8 @@ class SubItemsProvider extends _$SubItemsProvider {
       await isar.writeTxn(() async {
         await isar.files.put(file.copyWith(title: title, lastUpdatedAt: now()));
       });
+      // Update title of PDF in PrintView
+      ref.invalidate(fileNotifierProvider(file.id!));
     }
     ref.invalidateSelf();
   }
