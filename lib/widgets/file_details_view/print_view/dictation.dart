@@ -28,6 +28,7 @@ Future<Uint8List> generateDictationDocument(
   final sentences = file.getAllSentences;
   final doc = pw.Document(pageMode: PdfPageMode.outlines);
 
+  final englishFont = await _getFont('en');
   final localizedFont = await _getFont(setting.translationTargetLanguageCode);
   if (localizedFont == null) {
     showNotifyDialog(navigatorKey.currentContext!,
@@ -36,7 +37,7 @@ Future<Uint8List> generateDictationDocument(
 
   doc.addPage(
     pw.MultiPage(
-      theme: pw.ThemeData.withFont(base: localizedFont),
+      theme: pw.ThemeData.withFont(base: englishFont),
       pageFormat: format.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
       orientation: pw.PageOrientation.portrait,
       crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -45,7 +46,7 @@ Future<Uint8List> generateDictationDocument(
       footer: (pw.Context context) => _buildFooter(context, setting),
       build: (pw.Context context) => [
         pw.Header(level: 1, text: file.title),
-        ..._buildDictationContent(context, sentences, setting, file),
+        ..._buildDictationContent(context, sentences, setting, file,localizedFont: localizedFont),
       ],
     ),
   );
@@ -53,7 +54,7 @@ Future<Uint8List> generateDictationDocument(
   if (setting.appendAnswer) {
     doc.addPage(
       pw.MultiPage(
-        theme: pw.ThemeData.withFont(base: localizedFont),
+        theme: pw.ThemeData.withFont(base: englishFont),
         pageFormat: format.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
         orientation: pw.PageOrientation.portrait,
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -62,7 +63,7 @@ Future<Uint8List> generateDictationDocument(
             showPageNumbers: false),
         build: (pw.Context context) => [
           pw.Header(level: 2, text: 'Answers'),
-          ..._buildAnswerContent(context, sentences, setting, file),
+          ..._buildAnswerContent(context, sentences, setting, file,localizedFont: localizedFont),
         ],
       ),
     );
@@ -104,24 +105,24 @@ pw.Widget _buildFooter(pw.Context context, Setting setting,
 }
 
 List<pw.Widget> _buildDictationContent(pw.Context context,
-    List<DictationSentence> sentences, Setting setting, File file) {
+    List<DictationSentence> sentences, Setting setting, File file,{required pw.Font? localizedFont}) {
   return sentences.indexed
       .map((t) =>
-          _buildSentenceSection(context, t, setting, file, isAnswer: false))
+          _buildSentenceSection(context, t, setting, file, isAnswer: false,localizedFont: localizedFont))
       .toList();
 }
 
 List<pw.Widget> _buildAnswerContent(pw.Context context,
-    List<DictationSentence> sentences, Setting setting, File file) {
+    List<DictationSentence> sentences, Setting setting, File file,{required pw.Font? localizedFont}) {
   return sentences.indexed
       .map((t) =>
-          _buildSentenceSection(context, t, setting, file, isAnswer: true))
+          _buildSentenceSection(context, t, setting, file, isAnswer: true,localizedFont: localizedFont))
       .toList();
 }
 
 pw.Widget _buildSentenceSection(
     pw.Context context, (int, DictationSentence) t, Setting setting, File file,
-    {required bool isAnswer}) {
+    {required bool isAnswer,required pw.Font? localizedFont}) {
   final textStyle = pw.TextStyle(fontSize: 0.8 * PdfPageFormat.cm);
   final smallTextStyle = pw.TextStyle(fontSize: 0.5 * PdfPageFormat.cm);
   final greyTextStyle =
@@ -159,7 +160,9 @@ pw.Widget _buildSentenceSection(
               final translatedSentence = file.paragraphs
                   .translatedSentences(setting.translationTargetLanguageCode)
                   .elementAtOrNull(t.$1);
-              return pw.Text(translatedSentence ?? '', style: smallTextStyle);
+              return pw.Text(translatedSentence ?? '', style: smallTextStyle.copyWith(
+                font: localizedFont
+              ));
             },
           ),
         ),
