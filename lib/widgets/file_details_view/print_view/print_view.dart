@@ -95,13 +95,13 @@ class PDFShareOrPrintButton extends ConsumerWidget {
     return PlatformIconButton(
         onPressed: () {
           showCustomActionSheet(isCupertino: true, context: context, actions: [
-            ActionSheetAction('プリント', isDefaultAction: true, onTap: () {
+            ActionSheetAction(l10n().print, isDefaultAction: true, onTap: () {
               Printing.layoutPdf(
                   name: const Uuid().v4(),
                   onLayout: (format) => generateDictationDocument(format,
                       DictationDocumentData(file: file, setting: setting)));
             }),
-            ActionSheetAction('シェア', isDefaultAction: true, onTap: () async {
+            ActionSheetAction(l10n().share, isDefaultAction: true, onTap: () async {
               Printing.sharePdf(
                   filename: '${const Uuid().v4()}.pdf',
                   bytes: await generateDictationDocument(PdfPageFormat.a4,
