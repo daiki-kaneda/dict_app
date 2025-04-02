@@ -60,7 +60,7 @@ Future<Uint8List> generateDictationDocument(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         header: (pw.Context context) => _buildHeader(context, file),
         footer: (pw.Context context) => _buildFooter(context, setting,
-            showPageNumbers: false),
+            showPageNumbers: true),
         build: (pw.Context context) => [
           pw.Header(level: 2, text: 'Answers'),
           ..._buildAnswerContent(context, sentences, setting, file,localizedFont: localizedFont),
