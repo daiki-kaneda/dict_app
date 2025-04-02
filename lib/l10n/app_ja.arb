@@ -116,5 +116,7 @@
         }
     },
     "purchaseCancelled": "購入がキャンセルされました",
-    "purchaseError": "購入処理中にエラーが発生しました"
+    "purchaseError": "購入処理中にエラーが発生しました",
+    "print": "プリント",
+    "share": "シェア"
 }

@@ -116,5 +116,7 @@
         }
     },
     "purchaseCancelled": "خرید لغو شد",
-    "purchaseError": "در حین خرید خطایی رخ داد"
+    "purchaseError": "در حین خرید خطایی رخ داد",
+    "print": "چاپ",
+    "share": "اشتراک‌گذاری"
 }

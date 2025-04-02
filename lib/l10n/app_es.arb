@@ -116,5 +116,7 @@
         }
     },
     "purchaseCancelled": "Compra cancelada",
-    "purchaseError": "Se produjo un error durante la compra"
+    "purchaseError": "Se produjo un error durante la compra",
+    "print": "Imprimir",
+    "share": "Compartir"
 }

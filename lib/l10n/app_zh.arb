@@ -116,5 +116,7 @@
         }
     },
     "purchaseCancelled": "购买已取消",
-    "purchaseError": "购买过程中发生错误"
+    "purchaseError": "购买过程中发生错误",
+    "print": "打印",
+    "share": "分享"
 }

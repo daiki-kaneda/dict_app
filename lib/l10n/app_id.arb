@@ -116,5 +116,7 @@
         }
     },
     "purchaseCancelled": "Pembelian dibatalkan",
-    "purchaseError": "Terjadi kesalahan selama proses pembelian"
+    "purchaseError": "Terjadi kesalahan selama proses pembelian",
+    "print": "Cetak",
+    "share": "Bagikan"
 }

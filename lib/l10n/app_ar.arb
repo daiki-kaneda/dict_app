@@ -116,5 +116,7 @@
         }
     },
     "purchaseCancelled": "تم إلغاء الشراء",
-    "purchaseError": "حدث خطأ أثناء عملية الشراء"
+    "purchaseError": "حدث خطأ أثناء عملية الشراء",
+    "print": "طباعة",
+    "share": "مشاركة"
 }

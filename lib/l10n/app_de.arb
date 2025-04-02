@@ -116,5 +116,7 @@
         }
     },
     "purchaseCancelled": "Kauf wurde storniert",
-    "purchaseError": "Fehler während des Kaufvorgangs"
+    "purchaseError": "Fehler während des Kaufvorgangs",
+    "print": "Drucken",
+    "share": "Teilen"
 }

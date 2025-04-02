@@ -116,5 +116,7 @@
         }
     },
     "purchaseCancelled": "Satın alma iptal edildi",
-    "purchaseError": "Satın alma işlemi sırasında hata oluştu"
+    "purchaseError": "Satın alma işlemi sırasında hata oluştu",
+    "print": "Yazdır",
+    "share": "Paylaş"
 }

@@ -116,5 +116,7 @@
         }
     },
     "purchaseCancelled": "Achat annulé",
-    "purchaseError": "Une erreur est survenue lors de l’achat"
+    "purchaseError": "Une erreur est survenue lors de l’achat",
+    "print": "Imprimer",
+    "share": "Partager"
 }
