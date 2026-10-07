@@ -1,0 +1,759 @@
+openapi: 3.0.3
+info:
+  title: MyDictation API
+  version: 0.1.0
+  description: |
+    ディクテーション学習アプリのバックエンド API(ドラフト)。
+    認証は Cognito User Pool の JWT(Authorization: Bearer)。`/public/*` は未ログインでも利用できる。
+servers:
+  - url: https://api.example.com/v1
+    description: placeholder
+
+tags:
+  - name: me
+  - name: library
+  - name: upload
+  - name: files
+  - name: public
+  - name: stats
+  - name: webhooks
+
+security:
+  - cognitoJwt: []
+
+paths:
+  /me:
+    get:
+      tags: [me]
+      operationId: getMe
+      summary: プロフィールとプランを取得
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Profile' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    patch:
+      tags: [me]
+      operationId: updateMe
+      summary: 設定を更新
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProfileUpdate' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Profile' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    delete:
+      tags: [me]
+      operationId: deleteMe
+      summary: アカウントと全データを削除
+      description: DynamoDB / S3 / Cognito を連鎖削除する。非同期に完了する。
+      responses:
+        '202': { description: Accepted }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /me/usage:
+    get:
+      tags: [me]
+      operationId: getUsage
+      summary: 今月の使用量と上限
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Usage' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /library:
+    get:
+      tags: [library]
+      operationId: listLibrary
+      summary: フォルダ直下のアイテム一覧
+      parameters:
+        - name: parentId
+          in: query
+          description: 省略時はルート
+          schema: { type: string }
+        - name: updatedAfter
+          in: query
+          description: 差分同期用。この時刻以降に更新されたアイテム(削除済み含む)のみ返す
+          schema: { type: string, format: date-time }
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items: { $ref: '#/components/schemas/LibraryItem' }
+                  nextCursor: { type: string, nullable: true }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /library/folders:
+    post:
+      tags: [library]
+      operationId: createFolder
+      summary: フォルダを作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title]
+              properties:
+                title: { type: string, minLength: 1, maxLength: 200 }
+                parentId: { type: string, nullable: true }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LibraryItem' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /library/public-references:
+    post:
+      tags: [library]
+      operationId: addPublicReference
+      summary: 公開問題を自分のライブラリに追加
+      description: content は共有され、進捗のみユーザーごとに持つ。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [publicItemId]
+              properties:
+                publicItemId: { type: string }
+                parentId: { type: string, nullable: true }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LibraryItem' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /library/items/{itemId}:
+    parameters:
+      - $ref: '#/components/parameters/ItemId'
+    patch:
+      tags: [library]
+      operationId: updateItem
+      summary: タイトル変更、移動、お気に入り切り替え
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string, minLength: 1, maxLength: 200 }
+                parentId: { type: string, nullable: true }
+                isFavorite: { type: boolean }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LibraryItem' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [library]
+      operationId: deleteItem
+      summary: アイテムを削除(フォルダは配下も削除)
+      responses:
+        '204': { description: No Content }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /uploads:
+    post:
+      tags: [upload]
+      operationId: requestUpload
+      summary: 音声アップロードを開始
+      description: |
+        プランの上限(サイズ・再生時間・月次推論回数)を確認し、クォータを予約したうえで
+        S3 への presigned POST を返す。サイズ上限は presigned POST の条件で強制される。
+        再生時間は申告値であり、処理側が STT の前に音声ヘッダで再検証する。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, contentType, sizeBytes, durationSeconds]
+              properties:
+                title: { type: string, minLength: 1, maxLength: 200 }
+                parentId: { type: string, nullable: true }
+                contentType:
+                  type: string
+                  example: audio/mpeg
+                sizeBytes: { type: integer, minimum: 1 }
+                durationSeconds: { type: number, minimum: 0 }
+                translationLanguageCode:
+                  type: string
+                  description: 省略時はプロフィールの翻訳先言語
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [fileId, upload]
+                properties:
+                  fileId: { type: string }
+                  upload: { $ref: '#/components/schemas/PresignedPost' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403':
+          description: プランの上限超過
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+
+  /files/{fileId}:
+    parameters:
+      - $ref: '#/components/parameters/FileId'
+    get:
+      tags: [files]
+      operationId: getFile
+      summary: ファイルのメタデータ、処理状況、取得 URL
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FileDetail' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /files/{fileId}/progress:
+    parameters:
+      - $ref: '#/components/parameters/FileId'
+    get:
+      tags: [files]
+      operationId: getProgress
+      summary: 進捗を取得
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Progress' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      tags: [files]
+      operationId: syncProgress
+      summary: 進捗をマージして保存
+      description: |
+        マージ規則: 文ごとに `epoch` が大きい方を採用。同じ `epoch` では `bits` を OR、
+        カウンタは max。マージ結果を返す。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Progress' }
+      responses:
+        '200':
+          description: マージ後の進捗
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Progress' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: contentVersion が一致しない
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /files/{fileId}/translations/{languageCode}:
+    parameters:
+      - $ref: '#/components/parameters/FileId'
+      - $ref: '#/components/parameters/LanguageCode'
+    post:
+      tags: [files]
+      operationId: requestTranslation
+      summary: 指定言語の翻訳を要求
+      description: 既に存在する場合は 200、新規に開始した場合は 202。結果は FileDetail の translations から取得する。
+      responses:
+        '200': { description: 既に翻訳済み }
+        '202': { description: 翻訳を開始 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /files/{fileId}/publish:
+    parameters:
+      - $ref: '#/components/parameters/FileId'
+    post:
+      tags: [files]
+      operationId: publishFile
+      x-phase: 7
+      summary: 自分のファイルを公開問題にする(後続フェーズ)
+      responses:
+        '202': { description: 審査待ちとして受理 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /public/items:
+    get:
+      tags: [public]
+      operationId: listPublicItems
+      summary: 公開問題の一覧
+      security: []
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items: { $ref: '#/components/schemas/PublicItem' }
+                  nextCursor: { type: string, nullable: true }
+
+  /public/items/{publicItemId}:
+    parameters:
+      - name: publicItemId
+        in: path
+        required: true
+        schema: { type: string }
+    get:
+      tags: [public]
+      operationId: getPublicItem
+      summary: 公開問題の詳細(content と音声の URL を含む)
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PublicItemDetail' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /public/items/{publicItemId}/translations/{languageCode}:
+    parameters:
+      - name: publicItemId
+        in: path
+        required: true
+        schema: { type: string }
+      - $ref: '#/components/parameters/LanguageCode'
+    post:
+      tags: [public]
+      operationId: requestPublicTranslation
+      summary: 公開問題の翻訳を要求(共有キャッシュ)
+      description: |
+        未翻訳の言語のみ生成される。未ログインでも呼べるが、呼び出し頻度はスロットリングで制限する。
+      security: []
+      responses:
+        '200': { description: 既に翻訳済み }
+        '202': { description: 翻訳を開始 }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+
+  /stats/daily:
+    get:
+      tags: [stats]
+      operationId: listDailyStats
+      summary: 日次統計を取得
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema: { type: string, format: date }
+        - name: to
+          in: query
+          required: true
+          schema: { type: string, format: date }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [days]
+                properties:
+                  days:
+                    type: array
+                    items: { $ref: '#/components/schemas/DailyStats' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    put:
+      tags: [stats]
+      operationId: putDailyStats
+      summary: 日次統計をまとめて保存(日付をキーに上書き)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [days]
+              properties:
+                days:
+                  type: array
+                  maxItems: 31
+                  items: { $ref: '#/components/schemas/DailyStats' }
+      responses:
+        '204': { description: No Content }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /webhooks/revenuecat:
+    post:
+      tags: [webhooks]
+      operationId: revenueCatWebhook
+      summary: RevenueCat のイベントを受け取りプランを更新
+      description: 共有シークレットを `Authorization` ヘッダで検証する。冪等(イベント ID で重複排除)。
+      security:
+        - webhookSecret: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '204': { description: No Content }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+components:
+  securitySchemes:
+    cognitoJwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    webhookSecret:
+      type: apiKey
+      in: header
+      name: Authorization
+
+  parameters:
+    ItemId:
+      name: itemId
+      in: path
+      required: true
+      schema: { type: string }
+    FileId:
+      name: fileId
+      in: path
+      required: true
+      schema: { type: string }
+    LanguageCode:
+      name: languageCode
+      in: path
+      required: true
+      schema: { type: string, example: ja }
+    Cursor:
+      name: cursor
+      in: query
+      schema: { type: string }
+
+  responses:
+    BadRequest:
+      description: 入力が不正
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Unauthorized:
+      description: 認証が必要
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    NotFound:
+      description: 見つからない
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    TooManyRequests:
+      description: リクエスト過多
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+
+  schemas:
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          description: |
+            機械可読なコード。例: `invalid_request`, `unauthorized`, `not_found`,
+            `plan_audio_too_large`, `plan_audio_too_long`, `plan_quota_exceeded`, `rate_limited`
+        message: { type: string }
+
+    PlanId:
+      type: string
+      enum: [free, premium]
+
+    Profile:
+      type: object
+      required: [userId, plan, translationLanguageCode]
+      properties:
+        userId: { type: string }
+        email: { type: string, nullable: true }
+        plan: { $ref: '#/components/schemas/PlanId' }
+        planExpiresAt: { type: string, format: date-time, nullable: true }
+        translationLanguageCode: { type: string, example: ja }
+
+    ProfileUpdate:
+      type: object
+      properties:
+        translationLanguageCode: { type: string }
+
+    Usage:
+      type: object
+      required: [period, plan, limits, used]
+      properties:
+        period: { type: string, example: 2026-10 }
+        plan: { $ref: '#/components/schemas/PlanId' }
+        limits: { $ref: '#/components/schemas/PlanLimits' }
+        used:
+          type: object
+          required: [inferences, audioSeconds]
+          properties:
+            inferences: { type: integer }
+            audioSeconds: { type: number }
+
+    PlanLimits:
+      type: object
+      required: [maxAudioBytes, maxAudioSeconds, monthlyInferenceLimit]
+      properties:
+        maxAudioBytes: { type: integer }
+        maxAudioSeconds: { type: integer }
+        monthlyInferenceLimit: { type: integer }
+
+    ItemKind:
+      type: string
+      enum: [folder, file, publicReference]
+
+    FileStatus:
+      type: string
+      description: |
+        `awaitingUpload` → `processing` → `ready` | `failed`。
+        翻訳は `FileDetail.translations` で別に追跡する。
+      enum: [awaitingUpload, processing, ready, failed]
+
+    LibraryItem:
+      type: object
+      required: [itemId, kind, title, createdAt, updatedAt]
+      properties:
+        itemId: { type: string }
+        kind: { $ref: '#/components/schemas/ItemKind' }
+        parentId: { type: string, nullable: true }
+        title: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+        deleted:
+          type: boolean
+          description: 差分同期時のみ true になりうる(トゥームストーン)
+        file:
+          description: kind が file / publicReference のとき
+          allOf:
+            - $ref: '#/components/schemas/FileSummary'
+
+    FileSummary:
+      type: object
+      required: [fileId, status, durationSeconds, isFavorite]
+      properties:
+        fileId: { type: string }
+        status: { $ref: '#/components/schemas/FileStatus' }
+        durationSeconds: { type: number }
+        isFavorite: { type: boolean }
+        description: { type: string, nullable: true }
+        sourcePublicItemId: { type: string, nullable: true }
+        contentVersion: { type: integer, nullable: true }
+
+    FileDetail:
+      allOf:
+        - $ref: '#/components/schemas/FileSummary'
+        - type: object
+          required: [translations]
+          properties:
+            failureReason: { type: string, nullable: true }
+            audioUrl:
+              type: string
+              format: uri
+              description: CloudFront の署名付き URL(status が ready のとき)
+            contentUrl:
+              type: string
+              format: uri
+              description: DictationContent の JSON(status が ready のとき)
+            urlExpiresAt: { type: string, format: date-time }
+            translations:
+              type: array
+              items: { $ref: '#/components/schemas/TranslationStatus' }
+
+    TranslationStatus:
+      type: object
+      required: [languageCode, status]
+      properties:
+        languageCode: { type: string }
+        status:
+          type: string
+          enum: [pending, ready, failed]
+        url:
+          type: string
+          format: uri
+          description: Translation の JSON(status が ready のとき)
+
+    PresignedPost:
+      type: object
+      required: [url, fields, expiresAt]
+      properties:
+        url: { type: string, format: uri }
+        fields:
+          type: object
+          additionalProperties: { type: string }
+        expiresAt: { type: string, format: date-time }
+
+    PublicItem:
+      type: object
+      required: [publicItemId, title, durationSeconds]
+      properties:
+        publicItemId: { type: string }
+        title: { type: string }
+        description: { type: string, nullable: true }
+        durationSeconds: { type: number }
+        availableTranslations:
+          type: array
+          items: { type: string }
+
+    PublicItemDetail:
+      allOf:
+        - $ref: '#/components/schemas/PublicItem'
+        - type: object
+          required: [audioUrl, contentUrl, contentVersion]
+          properties:
+            audioUrl: { type: string, format: uri }
+            contentUrl: { type: string, format: uri }
+            contentVersion: { type: integer }
+            translations:
+              type: array
+              items: { $ref: '#/components/schemas/TranslationStatus' }
+
+    # S3 / CloudFront から配信される JSON(API レスポンスではなくファイル形式)
+    DictationContent:
+      type: object
+      description: |
+        サーバー生成の不変データ。文字・単語オブジェクトは含めない。
+        クライアントは単語を `sentence.text.split(' ')` で導出し、アルファベット文字に出現順で
+        0..n-1 のインデックスを振る(`Progress.sentences[].bits` と対応)。
+      required: [schemaVersion, contentVersion, language, durationSeconds, transcript, paragraphs]
+      properties:
+        schemaVersion: { type: integer, example: 1 }
+        contentVersion: { type: integer, example: 1 }
+        language: { type: string, example: en }
+        durationSeconds: { type: number }
+        transcript: { type: string }
+        sttProvider: { type: string, example: deepgram }
+        sttModel: { type: string, example: nova-2 }
+        paragraphs:
+          type: array
+          items:
+            type: object
+            required: [start, end, sentences]
+            properties:
+              start: { type: number }
+              end: { type: number }
+              sentences:
+                type: array
+                items:
+                  type: object
+                  required: [text, start, end]
+                  properties:
+                    text: { type: string }
+                    start: { type: number }
+                    end: { type: number }
+
+    Translation:
+      type: object
+      description: S3 / CloudFront から配信される JSON。`sentences` は content の全センテンスと同じ並び・同じ長さ。
+      required: [schemaVersion, contentVersion, languageCode, sentences]
+      properties:
+        schemaVersion: { type: integer, example: 1 }
+        contentVersion: { type: integer }
+        languageCode: { type: string }
+        model: { type: string, description: 翻訳に使ったモデル ID }
+        sentences:
+          type: array
+          items: { type: string }
+
+    Progress:
+      type: object
+      required: [fileId, schemaVersion, contentVersion, sentences, updatedAt]
+      properties:
+        fileId: { type: string }
+        schemaVersion: { type: integer, example: 1 }
+        contentVersion: { type: integer }
+        completedCount:
+          type: integer
+          description: ファイル全体を最後まで解いた回数
+        sentences:
+          type: array
+          description: content の全センテンスと同じ並び・同じ長さ
+          items: { $ref: '#/components/schemas/SentenceProgress' }
+        updatedAt: { type: string, format: date-time }
+
+    SentenceProgress:
+      type: object
+      required: [bits, epoch]
+      properties:
+        bits:
+          type: string
+          format: byte
+          description: |
+            アルファベット文字を出現順に 0..n-1 とし、解答済みを 1 としたビットマップ
+            (base64、バイト内は下位ビットが若いインデックス)。
+        attempts: { type: integer, minimum: 0 }
+        solvedWithoutHint: { type: integer, minimum: 0 }
+        hintSolved: { type: integer, minimum: 0 }
+        epoch:
+          type: integer
+          minimum: 0
+          description: やり直し(reset)のたびに加算。大きい方を採用する。
+
+    DailyStats:
+      type: object
+      required: [date, attempts, solvedWithoutHint, hintSolved, studySeconds]
+      properties:
+        date: { type: string, format: date }
+        attempts: { type: integer, minimum: 0 }
+        solvedWithoutHint: { type: integer, minimum: 0 }
+        hintSolved: { type: integer, minimum: 0 }
+        studySeconds: { type: integer, minimum: 0 }
